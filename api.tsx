@@ -1,3 +1,5 @@
+import * as Auth from './auth'
+
 const API_URL = 'http://localhost:8080'
 
 const COURSES_OVERVIEW_URL = `${API_URL}/course/overview`
@@ -68,8 +70,13 @@ export const userUrl = () => `${USER_URL}`
 
 
 // TODO: maybe we should also make it possible to send requests without the token
-export const authFetch = async (url: string, token: string | null = null) => {
-  const params = await createParams('GET', token)
+export const authFetch = async (url: string) => {
+  const params = await createParams('GET')
+  return fetch(url, params)
+}
+
+export const noAuthFetch = async (url: string) => {
+  const params = await noAuthCreateParams('GET')
   return fetch(url, params)
 }
 
@@ -98,10 +105,19 @@ export const authPut = async <T,>(url: string, body: T | null = null) => {
   return fetch(url, params)
 }
 
-const createParams = async (method: string, token: string | null = null): Promise<RequestInit> => {
+const noAuthCreateParams = async (method: string): Promise<RequestInit> => {
   let params: RequestInit = {method}
   const headers: HeadersInit = {'Content-Type': 'application/json'}
 
+  params = {...params, headers}
+  return params
+}
+
+const createParams = async (method: string): Promise<RequestInit> => {
+  let params: RequestInit = {method}
+  const headers: HeadersInit = {'Content-Type': 'application/json'}
+
+  const token = await Auth.getToken()
   if (token) {
     headers.Authorization = `Bearer ${token}`
   }

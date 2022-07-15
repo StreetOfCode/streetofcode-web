@@ -1,32 +1,28 @@
 import React, {useRef} from 'react'
-import type {GetServerSideProps, NextPage} from 'next'
+import type {NextPage} from 'next'
 import styled, {keyframes} from 'styled-components'
 import Flex from '../components/core/Flex'
 import Text from '../components/core/Text'
 import Heading from '../components/core/Heading'
 import Button from '../components/core/Button'
 import NavBar from '../components/NavBar'
-import {useRouter} from 'next/router'
 import {spotifyImageUrl, spotifyUrl} from '../components/landing-page/podcasts'
 import {youtubeImageUrl, youtubeUrl} from '../components/landing-page/videos'
 import VideosSlider from '../components/landing-page/VideosSlider'
 import {discordImageUrl, discordInviteUrl} from '../components/landing-page/discord'
 import TypingAnimation from '../theme/animations/TypingAnimation'
-import CoursesSlider from '../components/landing-page/CoursesSlider'
+import {CoursesSliderWrapper} from '../components/landing-page/CoursesSlider'
 import * as Api from '../api'
 import {CourseOverview} from '../types'
-import nookies from 'nookies'
+import PodcastsSlider from '../components/landing-page/PodcastsSlider'
+import Link from 'next/link'
+
 interface Props {
   courses: CourseOverview[]
 }
 
 const Home: NextPage<Props> = ({courses}) => {
   const coursesRef = useRef<null | HTMLDivElement>(null)
-  const router = useRouter()
-
-  const handleCoursesButton = () => {
-    router.push('/courses')
-  }
 
   const handleVerticalSliderClick = () => {
     if (coursesRef.current) {
@@ -35,6 +31,7 @@ const Home: NextPage<Props> = ({courses}) => {
       })
     }
   }
+
   return (
     <Wrapper>
       <GradientWrapper>
@@ -52,7 +49,11 @@ const Home: NextPage<Props> = ({courses}) => {
                 <Heading variant="h3">Pomôžeme ti na tvojej ceste začínajúceho</Heading>
                 <Heading variant="h3">programátora či začínajúcej programátorky</Heading>
               </div>
-              <Button variant="accent" size="very-large" onClick={handleCoursesButton}>online kurzy</Button>
+              <Link href={'/courses'} passHref>
+                <StyledA>
+                  <Button variant="accent" size="very-large">online kurzy</Button>
+                </StyledA>
+              </Link>
             </Flex>
             <AnimationWrapper>
               <TypingAnimation />
@@ -66,15 +67,21 @@ const Home: NextPage<Props> = ({courses}) => {
               <Heading variant="h2">Pozri si naše</Heading>
               <Heading variant="h1" color="accent">kurzy</Heading>
             </div>
-            <CoursesSlider courses={courses} />
-            <AllCoursesText
-              color="accent"
-              uppercase
-              withAccentUnderline
-              size="large"
-              onClick={handleCoursesButton}
-            >zobraziť všetky
-            </AllCoursesText>
+            <CoursesSliderWrapper initialCourses={courses} />
+            {/* TODO Zobrazit vsetky nie je alignute. */}
+            {/* TODO urobit Link component */}
+            <Link href={'/courses'} passHref>
+              <StyledA>
+                <AllCoursesText
+                  color="accent"
+                  uppercase
+                  align="center"
+                  withAccentUnderline
+                  size="large"
+                >zobraziť všetky
+                </AllCoursesText>
+              </StyledA>
+            </Link>
           </Flex>
         </Box>
       </GradientWrapper>
@@ -85,7 +92,7 @@ const Home: NextPage<Props> = ({courses}) => {
             <Heading variant="h2">pri upratovaní si môžeš pustiť náš</Heading>
             <Heading variant="h1" color="accent">podcast</Heading>
           </div>
-          {/* <PodcastsSlider /> */}
+          <PodcastsSlider />
           <Flex justifyContent="center" gap="64px">
             <a href={spotifyUrl} target="blank">
               <SpotifyIcon src={spotifyImageUrl} alt="Street of Code podcast" loading="lazy" />
@@ -173,6 +180,11 @@ const Home: NextPage<Props> = ({courses}) => {
 //     fallback: false,
 //   }
 // }
+
+const StyledA = styled.a`
+  text-decoration: none;
+  color: unset;
+`
 
 const Wrapper = styled.div`
   width: 100%;
@@ -296,12 +308,8 @@ const UsImage = styled.img`
   }
 `
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  let token: string | null = null
-  if (typeof window !== 'undefined') {
-    token = nookies.get(context)?.token
-  }
-  const response = await Api.authFetch(Api.coursesOverviewUrl(), token)
+export const getStaticProps = async () => {
+  const response = await Api.noAuthFetch(Api.coursesOverviewUrl())
 
   const courses = await response.json() as CourseOverview[]
 
@@ -309,5 +317,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {courses}, // will be passed to the page component as props
   }
 }
+
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   let token: string | null = null
+//   if (typeof window !== 'undefined') {
+//     token = nookies.get(context)?.token
+//   }
+//   const response = await Api.authFetch(Api.coursesOverviewUrl(), token)
+
+//   const courses = await response.json() as CourseOverview[]
+
+//   return {
+//     props: {courses}, // will be passed to the page component as props
+//   }
+// }
 
 export default Home

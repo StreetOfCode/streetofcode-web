@@ -2,27 +2,27 @@ import React from 'react'
 import {
   CircularProgress,
 } from '@material-ui/core'
-import {GetServerSideProps, NextPage} from 'next'
-import * as Api from '../../../api'
-import {CourseOverview} from '../../../types'
+import {GetStaticProps, NextPage} from 'next'
+import * as Api from '../../api'
+import {CourseOverview} from '../../types'
 import styled from 'styled-components'
 import Link from 'next/link'
-import Button from '../../../components/core/Button'
-import Heading from '../../../components/core/Heading'
-import Text from '../../../components/core/Text'
-import Flex from '../../../components/core/Flex'
-import BackLink from '../../../components/core/BackLink'
-import * as Utils from '../../../utils'
-import MarkdownView from '../../../components/core/MarkdownView'
+import Button from '../../components/core/Button'
+import Heading from '../../components/core/Heading'
+import Text from '../../components/core/Text'
+import Flex from '../../components/core/Flex'
+import BackLink from '../../components/core/BackLink'
+import * as Utils from '../../utils'
+import MarkdownView from '../../components/core/MarkdownView'
 import {AiOutlineClockCircle, AiOutlineQuestionCircle, AiOutlineVideoCamera} from 'react-icons/ai'
-import DifficultyIcon from '../../../theme/icons/DifficultyIcon'
-import Rating from '../../../components/core/Rating'
-import Avatar from '../../../components/core/Avatar'
-import CircullarProgressWithLabel from '../../../components/CircullarProgressWithLabel'
+import DifficultyIcon from '../../theme/icons/DifficultyIcon'
+import Rating from '../../components/core/Rating'
+import Avatar from '../../components/core/Avatar'
+import CircullarProgressWithLabel from '../../components/CircullarProgressWithLabel'
 import {useRouter} from 'next/router'
-import CourseContent from '../../../components/domain/course/CourseContent'
-import PageContentWrapper from '../../../components/PageContentWrapper'
-import NavBar from '../../../components/NavBar'
+import CourseContent from '../../components/domain/course/CourseContent'
+import PageContentWrapper from '../../components/PageContentWrapper'
+import NavBar from '../../components/NavBar'
 
 
 type Props = {
@@ -220,13 +220,38 @@ const StyledA = styled.a`
   color: unset;
 `
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const response = await Api.authFetch(Api.courseOverviewUrl(context?.params?.id))
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const response = await Api.authFetch(Api.courseOverviewUrl(context?.params?.id))
+
+//   const courseOverview = await response.json() as CourseOverview
+
+//   return {
+//     props: {courseOverview}, // will be passed to the page component as props
+//   }
+// }
+
+// toto je pre jeden kurz
+export const getStaticProps: GetStaticProps = async (context) => {
+  const response = await Api.noAuthFetch(Api.courseOverviewUrl(context?.params?.id))
 
   const courseOverview = await response.json() as CourseOverview
 
   return {
     props: {courseOverview}, // will be passed to the page component as props
+  }
+}
+
+// tomuto povieme ze vsetky idecka ktore najdu v tom requeste tak nech to prebuildi na serveri a nachysta
+export const getStaticPaths = async () => {
+  const response = await Api.noAuthFetch(Api.coursesOverviewUrl())
+  const courses = await response.json() as CourseOverview[]
+
+  const ids = courses.map((course) => course.id)
+  const paths = ids.map((id) => ({params: {id: id.toString()}}))
+
+  return {
+    paths,
+    fallback: false,
   }
 }
 

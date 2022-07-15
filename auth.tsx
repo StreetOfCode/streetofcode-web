@@ -1,87 +1,31 @@
-import React, {useState, useEffect, useContext, createContext} from 'react'
 import {getAuth,
   getRedirectResult,
   GithubAuthProvider,
   GoogleAuthProvider,
   browserLocalPersistence,
-  signInWithRedirect,
-  User} from 'firebase/auth'
-import nookies from 'nookies'
-import {firebase} from './firebaseClient'
+  signInWithRedirect} from 'firebase/auth'
+import {firebase} from './firebase'
 
-const AuthContext = createContext<{ user: User | null }>({
-  user: null,
-})
+export const auth = getAuth(firebase)
+auth.setPersistence(browserLocalPersistence)
 
-export function AuthProvider({children}: any) {
-  const [user, setUser] = useState<User | null>(null)
+export const googleProvider = new GoogleAuthProvider()
+export const githubProvider = new GithubAuthProvider()
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      (window as any).nookies = nookies
-    }
-    return getAuth(firebase.getApp()).onIdTokenChanged(async (user) => {
-      console.log('token changed!')
-      if (!user) {
-        console.log('no token found...')
-        setUser(null)
-        nookies.destroy(null, 'token')
-        nookies.set(null, 'token', '', {path: '/'})
-        return
-      }
+export const getUser = () => auth.currentUser
 
-      console.log('updating token...')
-      const token = await user.getIdToken()
-      setUser(user)
-      nookies.destroy(null, 'token')
-      nookies.set(null, 'token', token, {path: '/'})
-    })
-  }, [])
+export const getToken = async () => await getUser()?.getIdToken()
 
-  // force refresh the token every 10 minutes
-  useEffect(() => {
-    const handle = setInterval(async () => {
-      console.log('refreshing token...')
-      const user = getAuth(firebase.getApp()).currentUser
-      if (user) await user.getIdToken(true)
-    }, 10 * 60 * 1000)
-    return () => clearInterval(handle)
-  }, [])
-
-  return (
-    <AuthContext.Provider value={{user}}>
-      {children}
-    </AuthContext.Provider>
-  )
+export const getUserAfterRedirect = async () => {
+  return (await getRedirectResult(auth))?.user
 }
 
+export const signOut = async () => await auth.signOut()
 
-export const useAuth = () => {
-  return useContext(AuthContext)
+export const loginWithGoogle = () => {
+  signInWithRedirect(auth, googleProvider)
 }
 
-// export const auth = getAuth(firebase)
-// auth.setPersistence(browserLocalPersistence)
-
-// export const googleProvider = new GoogleAuthProvider()
-// export const githubProvider = new GithubAuthProvider()
-
-// export const getUser = () => auth.currentUser
-
-// export const getToken = async () => await getUser()?.getIdToken()
-
-// export const getUserAfterRedirect = async () => {
-//   return (await getRedirectResult(auth))?.user
-// }
-
-// export const signOut = async () => await auth.signOut()
-
-// export const loginWithGoogle = () => {
-//   signInWithRedirect(auth, googleProvider)
-// }
-
-// export const loginWithGithub = () => {
-//   signInWithRedirect(auth, githubProvider)
-// }
-
-
+export const loginWithGithub = () => {
+  signInWithRedirect(auth, githubProvider)
+}

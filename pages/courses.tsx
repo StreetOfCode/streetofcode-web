@@ -1,5 +1,5 @@
 import React from 'react'
-import {GetServerSideProps, NextPage} from 'next'
+import {NextPage} from 'next'
 import Flex from '../components/core/Flex'
 import Heading from '../components/core/Heading'
 import Text from '../components/core/Text'
@@ -86,8 +86,8 @@ const CoursesPageContent = ({courses}: Props) => {
   // )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const response = await Api.authFetch(Api.coursesOverviewUrl())
+export const getStaticProps = async () => {
+  const response = await Api.noAuthFetch(Api.coursesOverviewUrl())
 
   const courses = await response.json() as CourseOverview[]
 
@@ -95,5 +95,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
     props: {courses}, // will be passed to the page component as props
   }
 }
+
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const response = await Api.authFetch(Api.coursesOverviewUrl())
+
+//   const courses = await response.json() as CourseOverview[]
+
+//   return {
+//     props: {courses}, // will be passed to the page component as props
+//   }
+// }
 
 export default CoursesPage

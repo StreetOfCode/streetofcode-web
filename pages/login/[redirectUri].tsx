@@ -1,19 +1,18 @@
 import {CircularProgress} from '@material-ui/core'
 import React from 'react'
 import styled, {css} from 'styled-components'
-import * as Auth from '../auth'
+import * as Auth from '../../auth'
 import {FaGoogle, FaGithub} from 'react-icons/fa'
-import BackLink from '../components/core/BackLink'
-import Button from '../components/core/Button'
-import Flex from '../components/core/Flex'
-import Heading from '../components/core/Heading'
-import useUser from './hooks/useUser'
+import BackLink from '../../components/core/BackLink'
+import Button from '../../components/core/Button'
+import Flex from '../../components/core/Flex'
+import Heading from '../../components/core/Heading'
 import {useRouter} from 'next/router'
 import {NextPage} from 'next'
+import {useAuth} from '../../AuthUserContext'
 
 const LoginPage: NextPage = () => {
-  const {user, isLoading, logout} = useUser()
-  // const {user} = Auth.useAuth()
+  const {user, isLoading, logout} = useAuth()
 
   const router = useRouter()
 

@@ -24,13 +24,12 @@
     "clsx": "^1.2.1",
     "firebase": "^9.9.0",
     "next": "12.2.1",
-    "nookies": "^2.5.2",
     "react": "18.2.0",
     "react-admin": "^4.2.2",
-    "react-admin-firebase": "^4.0.2",
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",
     "react-markdown": "^8.0.3",
+    "react-query": "^3.39.1",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {

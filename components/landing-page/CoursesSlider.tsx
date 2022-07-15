@@ -1,9 +1,33 @@
 import Link from 'next/link'
-import React from 'react'
+import React, {} from 'react'
 import styled from 'styled-components'
+import {useAuth} from '../../AuthUserContext'
+import {QueryGuard} from '../../QueryGuard'
 import {CourseOverview} from '../../types'
+import {useGetCourses} from '../api/courses'
 import CourseCard from '../domain/course/CourseCard'
 import Slider from '../Slider'
+
+export const CoursesSliderWrapper = ({initialCourses}: { initialCourses: CourseOverview[] }) => {
+  const {user} = useAuth()
+  const getCoursesQuery = useGetCourses(!!user)
+
+  if (user) {
+    return (
+      <QueryGuard {...getCoursesQuery}>
+        {(courses: CourseOverview[]) => {
+          return (
+            <CoursesSlider courses={courses} />
+          )
+        }}
+      </QueryGuard>
+    )
+  } else {
+    return (
+      <CoursesSlider courses={initialCourses} />
+    )
+  }
+}
 
 const CoursesSlider = ({courses}: { courses: CourseOverview[] }) => {
   return (
@@ -28,4 +52,4 @@ const StyledA = styled.a`
   color: unset;
 `
 
-export default CoursesSlider
+export default CoursesSliderWrapper

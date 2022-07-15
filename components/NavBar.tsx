@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Flex from './core/Flex'
 import Text from './core/Text'
 import {useRouter} from 'next/router'
-// import LogInOrOutButton from './domain/buttons/LogInOrOutButton'
+import LogInOrOutButton from './domain/course/buttons/LogInOrOutButton'
 
 const NavBar = () => {
   const router = useRouter()
@@ -18,7 +18,7 @@ const NavBar = () => {
           <MenuItem href="#" passHref><a><Text uppercase>články</Text></a></MenuItem>
           <MenuItem href="#" passHref><a><Text uppercase>O projekte</Text></a></MenuItem>
         </MenuItems>
-        {/* <LogInOrOutButton /> */}
+        <LogInOrOutButton />
       </Flex>
     </Wrapper>)
 }
