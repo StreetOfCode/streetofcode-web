@@ -19,7 +19,7 @@ type JustifyContent =
   | 'center'
   | 'space-between'
   | 'space-around'
-type AlignItems = 'stretch' | 'flex-start' | 'flex-end' | 'center'
+export type AlignItems = 'stretch' | 'flex-start' | 'flex-end' | 'center'
 type AlignContent = 'normal' | 'center' | 'space-between' | 'space-around'
 
 const Flex = ({

@@ -6,7 +6,6 @@ import {GetStaticProps, NextPage} from 'next'
 import * as Api from '../../api'
 import {CourseOverview} from '../../types'
 import styled from 'styled-components'
-import Link from 'next/link'
 import Button from '../../components/core/Button'
 import Heading from '../../components/core/Heading'
 import Text from '../../components/core/Text'
@@ -23,6 +22,11 @@ import {useRouter} from 'next/router'
 import CourseContent from '../../components/domain/course/CourseContent'
 import PageContentWrapper from '../../components/PageContentWrapper'
 import NavBar from '../../components/NavBar'
+import {useAuth} from '../../AuthUserContext'
+import {QueryGuard} from '../../QueryGuard'
+import {useGetCourseOverview} from '../../components/api/courseOverview'
+import CourseReviews from '../../components/domain/course-review/CourseReviews'
+import NextLink from '../../components/core/NextLink'
 
 
 type Props = {
@@ -30,19 +34,35 @@ type Props = {
 }
 
 const CourseDetailPage: NextPage<Props> = ({courseOverview}: Props) => {
-  return (
-    <>
-      <NavBar />
-      <CourseDetailContent courseOverview={courseOverview} />
-    </>
-  )
+  const {user} = useAuth()
+  const getCourseOverview = useGetCourseOverview(courseOverview.id, !!user)
+
+  if (user) {
+    return (
+      <QueryGuard {...getCourseOverview}>
+        {(courseOverview: CourseOverview) => {
+          return (
+            <>
+              <NavBar />
+              <CourseDetailContent courseOverview={courseOverview} />
+            </>
+          )
+        }}
+      </QueryGuard>
+    )
+  } else {
+    return (
+      <>
+        <NavBar />
+        <CourseDetailContent courseOverview={courseOverview} />
+      </>
+    )
+  }
 }
 
 const CourseDetailContent = ({courseOverview}: {courseOverview: CourseOverview}) => {
-  // const {user, isLoading: isUserLoading} = useUser()
+  const {user, isLoading} = useAuth()
 
-  // const location = useLocation()
-  // const history = useHistory()
   const router = useRouter()
 
   if (!courseOverview.thumbnailUrl && !courseOverview.trailerUrl) return null
@@ -97,33 +117,22 @@ const CourseDetailContent = ({courseOverview}: {courseOverview: CourseOverview})
           <Heading variant="h2" normalWeight>Obsah</Heading>
           <CourseContent course={courseOverview} />
           {/* TODO add course review is not finished */}
-          {/* <CourseReviews courseId={courseOverview.id} /> */}
+          <CourseReviews courseId={courseOverview.id} />
         </Flex>
 
         <CardFlex direction="column" gap="12px" alignSelf="flex-start">
           {renderThubmnailOrTrailer()}
-          {/* {isUserLoading && <CircularProgress />} */}
-          <LinkWrapper href={url} passHref>
-            <StyledA>
-              <StyledButton variant="accent">
-                {courseOverview.userProgressMetadata ? 'pokračovať v kurze' : 'spustiť kurz'}
-              </StyledButton>
-            </StyledA>
-          </LinkWrapper>
-          {/* {!isUserLoading && user && <LinkWrapper href={url} passHref>
-            <StyledA>
-              <StyledButton variant="accent">
-                {courseOverview.userProgressMetadata ? 'pokračovať v kurze' : 'spustiť kurz'}
-              </StyledButton>
-            </StyledA>
-          </LinkWrapper>} */}
-          {/* {!isUserLoading && !user && (
-            <LinkWrapper href={`/login/${encodeURIComponent(location.pathname)}`} passHref>
-              <StyledA>
-                <StyledButton variant="accent">Pre spustenie kurzu sa najprv prihlás</StyledButton>
-              </StyledA>
-            </LinkWrapper>
-          )} */}
+          {isLoading && <CircularProgress />}
+          {!isLoading && user && <NextLink href={url} alignSelf="stretch">
+            <StyledButton variant="accent">
+              {courseOverview.userProgressMetadata ? 'pokračovať v kurze' : 'spustiť kurz'}
+            </StyledButton>
+          </NextLink>}
+          {!isLoading && !user && (
+            <NextLink href={`/login/${encodeURIComponent(location.pathname)}`} alignSelf="stretch">
+              <StyledButton variant="accent">Pre spustenie kurzu sa najprv prihlás</StyledButton>
+            </NextLink>
+          )}
           <Flex justifyContent="space-between" alignSelf="stretch">
             <Flex direction="column" alignItems="flex-start" alignSelf="flex-start" gap="12px">
               <CourseInfoItem>
@@ -179,12 +188,6 @@ const CourseInfoItem = styled.div<{clickable?: boolean}>`
   }
 `
 
-const LinkWrapper = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-  align-self: stretch;
-`
-
 const StyledButton = styled(Button)`
   width: 100%;
 `
@@ -215,22 +218,6 @@ const VideoWrapper = styled.div`
   }
 `
 
-const StyledA = styled.a`
-  text-decoration: none;
-  color: unset;
-`
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const response = await Api.authFetch(Api.courseOverviewUrl(context?.params?.id))
-
-//   const courseOverview = await response.json() as CourseOverview
-
-//   return {
-//     props: {courseOverview}, // will be passed to the page component as props
-//   }
-// }
-
-// toto je pre jeden kurz
 export const getStaticProps: GetStaticProps = async (context) => {
   const response = await Api.noAuthFetch(Api.courseOverviewUrl(context?.params?.id))
 
@@ -241,7 +228,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 }
 
-// tomuto povieme ze vsetky idecka ktore najdu v tom requeste tak nech to prebuildi na serveri a nachysta
 export const getStaticPaths = async () => {
   const response = await Api.noAuthFetch(Api.coursesOverviewUrl())
   const courses = await response.json() as CourseOverview[]

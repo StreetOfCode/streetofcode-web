@@ -1,10 +1,9 @@
-import Link from 'next/link'
 import React, {} from 'react'
-import styled from 'styled-components'
 import {useAuth} from '../../AuthUserContext'
 import {QueryGuard} from '../../QueryGuard'
 import {CourseOverview} from '../../types'
 import {useGetCourses} from '../api/courses'
+import NextLink from '../core/NextLink'
 import CourseCard from '../domain/course/CourseCard'
 import Slider from '../Slider'
 
@@ -33,23 +32,12 @@ const CoursesSlider = ({courses}: { courses: CourseOverview[] }) => {
   return (
     <Slider items={courses} showItemsCount={3} itemLayout={(course, i) => {
       return (
-        <StyledLink key={i} href={`/course/${course.id}`} passHref>
-          <StyledA>
-            <CourseCard course={course} />
-          </StyledA>
-        </StyledLink>
+        <NextLink key={i} href={`/course/${course.id}`}>
+          <CourseCard course={course} />
+        </NextLink>
       )}}
     />
   )
 }
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-`
-
-const StyledA = styled.a`
-  text-decoration: none;
-  color: unset;
-`
 
 export default CoursesSliderWrapper

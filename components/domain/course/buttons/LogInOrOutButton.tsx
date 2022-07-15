@@ -9,6 +9,7 @@ import {QueryGuard} from '../../../../QueryGuard'
 import {SocUser} from '../../../../types'
 import {useGetUser} from '../../../api/user'
 import Button from '../../../core/Button'
+import NextLink from '../../../core/NextLink'
 import UserAvatar from '../user/UserAvatar'
 
 
@@ -18,24 +19,17 @@ const LogInOrOutButton = () => {
   const router = useRouter()
   const useGetSocUser = useGetUser(!isLoading) // call when ready
 
-  // TODO kebyze chcem refetchnut
-  // useEffect(() => {
-  //   useGetSocUser.refetch()
-  // }, [user])
-
   if (isLoading) return <CircularProgress />
 
   return (
     <QueryGuard {...useGetSocUser}>
       {(socUser: SocUser | null) => {
         return (<>
-          {(!user || !socUser) && <LinkWrapper href={`/login/${encodeURIComponent(router.pathname)}`} passHref>
-            <StyledA>
-              <Button>
-                Prihlásiť
-              </Button>
-            </StyledA>
-          </LinkWrapper>}
+          {(!user || !socUser) && <NextLink href={`/login/${encodeURIComponent(router.pathname)}`}>
+            <Button>
+              Prihlásiť
+            </Button>
+          </NextLink>}
 
           {user && socUser &&
           <DropdownMenu.Root>
@@ -61,11 +55,6 @@ const LogInOrOutButton = () => {
     </QueryGuard>
   )
 }
-
-const StyledA = styled.a`
-  text-decoration: none;
-  color: unset;
-`
 
 const StyledUserAvatar = styled(UserAvatar)`
   &:hover {
@@ -98,9 +87,6 @@ const DropDownItem = styled(DropdownMenu.Item)`
 
 const DropwDownMenuArrow = styled(DropdownMenu.Arrow)`
   fill: black;
-`
-
-const LinkWrapper = styled(Link)`
 `
 
 export default LogInOrOutButton

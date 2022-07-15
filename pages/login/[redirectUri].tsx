@@ -20,6 +20,8 @@ const LoginPage: NextPage = () => {
     router.push(decodeURIComponent(router.query.redirectUri))
   }
 
+  // TODO ked sa lognem zo stranky course detail tak potom ten redirect vyhodi chybu
+
   return (
     <FlexWrapper direction="column" alignItems="center" gap="16px" justifyContent="center">
       <Logo alt="Logo" src="soc_logo.png" />

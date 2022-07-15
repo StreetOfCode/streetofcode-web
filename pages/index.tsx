@@ -15,7 +15,7 @@ import {CoursesSliderWrapper} from '../components/landing-page/CoursesSlider'
 import * as Api from '../api'
 import {CourseOverview} from '../types'
 import PodcastsSlider from '../components/landing-page/PodcastsSlider'
-import Link from 'next/link'
+import NextLink from '../components/core/NextLink'
 
 interface Props {
   courses: CourseOverview[]
@@ -49,11 +49,9 @@ const Home: NextPage<Props> = ({courses}) => {
                 <Heading variant="h3">Pomôžeme ti na tvojej ceste začínajúceho</Heading>
                 <Heading variant="h3">programátora či začínajúcej programátorky</Heading>
               </div>
-              <Link href={'/courses'} passHref>
-                <StyledA>
-                  <Button variant="accent" size="very-large">online kurzy</Button>
-                </StyledA>
-              </Link>
+              <NextLink href={'/courses'}>
+                <Button variant="accent" size="very-large">online kurzy</Button>
+              </NextLink>
             </Flex>
             <AnimationWrapper>
               <TypingAnimation />
@@ -70,18 +68,16 @@ const Home: NextPage<Props> = ({courses}) => {
             <CoursesSliderWrapper initialCourses={courses} />
             {/* TODO Zobrazit vsetky nie je alignute. */}
             {/* TODO urobit Link component */}
-            <Link href={'/courses'} passHref>
-              <StyledA>
-                <AllCoursesText
-                  color="accent"
-                  uppercase
-                  align="center"
-                  withAccentUnderline
-                  size="large"
-                >zobraziť všetky
-                </AllCoursesText>
-              </StyledA>
-            </Link>
+            <NextLink href={'/courses'} alignSelf="center">
+              <AllCoursesText
+                color="accent"
+                uppercase
+                align="center"
+                withAccentUnderline
+                size="large"
+              >zobraziť všetky
+              </AllCoursesText>
+            </NextLink>
           </Flex>
         </Box>
       </GradientWrapper>
@@ -180,11 +176,6 @@ const Home: NextPage<Props> = ({courses}) => {
 //     fallback: false,
 //   }
 // }
-
-const StyledA = styled.a`
-  text-decoration: none;
-  color: unset;
-`
 
 const Wrapper = styled.div`
   width: 100%;

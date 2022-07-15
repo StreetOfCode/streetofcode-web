@@ -1,31 +1,20 @@
-import Link from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
 import {CourseOverview} from '../../../types'
+import NextLink from '../../core/NextLink'
 import CourseCard from './CourseCard'
 
 const Courses = ({courses}: { courses: CourseOverview[] }) => {
   return (
     <Wrapper>
       {courses.map((c) => (
-        <StyledLink key={c.id} href={`/course/${c.id}`} passHref>
-          <StyledA>
-            <CourseCard course={c} />
-          </StyledA>
-        </StyledLink>
+        <NextLink key={c.id} href={`/course/${c.id}`}>
+          <CourseCard course={c} />
+        </NextLink>
       ))}
     </Wrapper>
   )
 }
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-`
-
-const StyledA = styled.a`
-  text-decoration: none;
-  color: unset;
-`
 
 const Wrapper = styled.div`
   display: grid;
