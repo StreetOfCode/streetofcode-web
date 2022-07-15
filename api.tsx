@@ -45,6 +45,9 @@ export const resetProgressUrl = () => `${RESET_PROGRESS_URL}`
 const AUTHOR_OVERVIEW_URL = `${API_URL}/author/`
 export const authorOverviewUrl = (authorId: number) => `${AUTHOR_OVERVIEW_URL}${authorId}/overview`
 
+const AUTHOR_IDS_URL = `${API_URL}/author/id`
+export const authorIdsUrl = () => AUTHOR_IDS_URL
+
 const SEND_FEEDBACK_URL = `${API_URL}/email-feedback`
 export const sendFeedbackUrl = () => `${SEND_FEEDBACK_URL}`
 
