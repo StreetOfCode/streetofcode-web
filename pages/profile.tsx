@@ -23,6 +23,13 @@ import NavBar from '../components/NavBar'
 
 const ProfilePage: NextPage = () => {
   const getSocUser = useGetUser(true)
+  const {user} = useAuth()
+  const router = useRouter()
+
+  if (!user) {
+    // this page can be seen only by logged in users
+    router.replace({pathname: `/login/${encodeURIComponent(location.pathname)}`})
+  }
 
   return (
     <QueryGuard {...getSocUser}>

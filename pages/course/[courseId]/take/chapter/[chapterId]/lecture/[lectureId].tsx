@@ -14,6 +14,7 @@ import CourseSidebar from '../../../../../../../components/domain/course/CourseS
 import LectureDetail from '../../../../../../../components/domain/lecture/LectureDetail'
 import {useRouter} from 'next/router'
 import {useGetCourseProgressOverview} from '../../../../../../../components/api/courseProgress'
+import {useAuth} from '../../../../../../../AuthUserContext'
 
 type Props = {
   courseId: string
@@ -34,6 +35,13 @@ export interface ResourcesProps {
 
 const TakeCoursePage: NextPage<Props> = ({courseId, chapterId, lectureId}: Props) => {
   const getCourseOverview = useGetCourseOverview(Number(courseId), true)
+  const {user} = useAuth()
+  const router = useRouter()
+
+  if (!user) {
+    // this page can be seen only by logged in users
+    router.replace({pathname: `/login/${encodeURIComponent(location.pathname)}`})
+  }
 
   return (
     <QueryGuard {...getCourseOverview}>

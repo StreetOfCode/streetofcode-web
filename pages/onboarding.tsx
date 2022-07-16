@@ -182,8 +182,8 @@ const OnboardingPage: NextPage = () => {
   if (user == null || isLoading) return <CircularProgress />
 
   if (!router.query || !router.query.from) {
-    // if user visits onboarding page by manually writing url then he will be redirected back
-    router.back()
+    // if user visits onboarding page by manually writing url then he will be redirected to landing page
+    router.push('/')
   }
 
   const handleFinishOnboarding = async () => {
@@ -211,9 +211,9 @@ const OnboardingPage: NextPage = () => {
   return (
     <Wrapper>
       <NavBarWrapper justifyContent="space-between">
-        <Logo alt="Logo" src="/assets/soc_logo.png" />
+        <Logo alt="Logo" src="soc_logo.png" />
         <Heading variant="h3" normalWeight withAccentUnderline>Onboarding</Heading>
-        <Logo alt="Logo" src="/assets/soc_logo.png" style={{visibility: 'hidden'}} />
+        <Logo alt="Logo" src="soc_logo.png" style={{visibility: 'hidden'}} />
       </NavBarWrapper>
       <WrapperFlex
         direction="column"
