@@ -1,13 +1,14 @@
 import Link from 'next/link'
-import React from 'react'
+import React, {HTMLAttributes} from 'react'
 import styled from 'styled-components'
+import {UrlObject} from 'url'
 import {AlignItems} from './Flex'
 
 type Props = {
   className?: string
-  href: string
+  href: string | UrlObject
   alignSelf?: AlignItems
-} & React.AnchorHTMLAttributes<HTMLAnchorElement>
+} & HTMLAttributes<HTMLElement>
 
 const NextLink = ({className, href, alignSelf, children, ...props}: Props) => {
   return (

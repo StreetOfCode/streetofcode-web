@@ -4,4 +4,5 @@ export const theme = {
   accentColor: '#7E50E6',
   greyBackgroundColor: '#DDDDDD',
   dangerColor: '#CB2041',
+  successColor: '#4CBF6B',
 }

@@ -1,10 +1,10 @@
-import Link from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
 import Flex from './core/Flex'
 import Text from './core/Text'
 import {useRouter} from 'next/router'
-import LogInOrOutButton from './domain/course/buttons/LogInOrOutButton'
+import LogInOrOutButton from './domain/buttons/LogInOrOutButton'
+import NextLink from './core/NextLink'
 
 const NavBar = () => {
   const router = useRouter()
@@ -14,9 +14,9 @@ const NavBar = () => {
       <Logo alt="Logo" src="soc_logo.png" onClick={() => router.push('/')} />
       <Flex>
         <MenuItems justifyContent="center" gap={'3em'}>
-          <MenuItem href="/courses" passHref><a><Text uppercase>kurzy</Text></a></MenuItem>
-          <MenuItem href="#" passHref><a><Text uppercase>články</Text></a></MenuItem>
-          <MenuItem href="#" passHref><a><Text uppercase>O projekte</Text></a></MenuItem>
+          <NextLink href="/courses"><Text uppercase>kurzy</Text></NextLink>
+          <NextLink href="#"><Text uppercase>články</Text></NextLink>
+          <NextLink href="#"><Text uppercase>O projekte</Text></NextLink>
         </MenuItems>
         <LogInOrOutButton />
       </Flex>
@@ -38,10 +38,6 @@ const MenuItems = styled(Flex)`
     text-decoration: none;
     color: unset;
   }
-`
-
-const MenuItem = styled(Link)`
-  text-decoration: none;
 `
 
 const Logo = styled.img`

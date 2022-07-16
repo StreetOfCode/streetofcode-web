@@ -11,7 +11,7 @@ import NavBar from '../components/NavBar'
 import {useAuth} from '../AuthUserContext'
 import {useGetCourses} from '../components/api/courses'
 import {QueryGuard} from '../QueryGuard'
-import VoteNextCourse from '../components/domain/course/vote/VoteNextCourse'
+import VoteNextCourse from '../components/domain/vote/VoteNextCourse'
 
 interface Props {
   courses: CourseOverview[]

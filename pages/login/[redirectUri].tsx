@@ -17,7 +17,7 @@ const LoginPage: NextPage = () => {
   const router = useRouter()
 
   if (user && router?.query?.redirectUri) {
-    router.push(decodeURIComponent(router.query.redirectUri))
+    router.push(decodeURIComponent((router.query.redirectUri) as string))
   }
 
   // TODO ked sa lognem zo stranky course detail tak potom ten redirect vyhodi chybu
@@ -52,7 +52,9 @@ const LoginPage: NextPage = () => {
               </Button>
             </div>
           )}
-          {router.query?.redirectUri && (<BackLink to={decodeURIComponent(router.query.redirectUri)} text={'Späť'} />)}
+          {router.query?.redirectUri && (
+            <BackLink to={decodeURIComponent((router.query.redirectUri) as string)} text={'Späť'} />)
+          }
         </>
       )}
     </FlexWrapper>

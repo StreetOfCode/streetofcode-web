@@ -205,6 +205,7 @@ export type QuestionId = string & { _type: 'QuestionId' }
 export interface QuizQuestionUserAnswer {
   id: number;
   question: QuizQuestion;
+  isCorrect: boolean;
   answer: QuizQuestionAnswer[];
 }
 

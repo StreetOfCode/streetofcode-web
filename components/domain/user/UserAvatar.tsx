@@ -1,8 +1,8 @@
 import React, {HTMLAttributes} from 'react'
 import styled from 'styled-components'
-import {createAvatarName} from '../../../../utils'
-import Avatar from '../../../core/Avatar'
-import Flex from '../../../core/Flex'
+import {createAvatarName} from '../../../utils'
+import Avatar from '../../core/Avatar'
+import Flex from '../../core/Flex'
 
 type Props = {
   imageUrl?: string

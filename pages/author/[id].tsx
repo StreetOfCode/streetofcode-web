@@ -7,7 +7,7 @@ import Flex from '../../components/core/Flex'
 import Avatar from '../../components/core/Avatar'
 import Heading from '../../components/core/Heading'
 import Courses from '../../components/domain/course/Courses'
-import {GetStaticProps, NextPage} from 'next'
+import {GetStaticProps, GetStaticPropsContext, NextPage} from 'next'
 import {useAuth} from '../../AuthUserContext'
 import {useGetAuthorOverview} from '../../components/api/authorOverview'
 import PageContentWrapper from '../../components/PageContentWrapper'
@@ -80,8 +80,9 @@ const StyledDescription = styled(Text)`
   max-width: 600px;
 `
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const response = await Api.noAuthFetch(Api.authorOverviewUrl(context?.params?.id))
+export const getStaticProps: GetStaticProps = async (context: GetStaticPropsContext) => {
+  const authorId = context?.params?.id as string
+  const response = await Api.noAuthFetch(Api.authorOverviewUrl(parseInt(authorId, 2)))
 
   const authorOverview = await response.json() as AuthorOverview
 

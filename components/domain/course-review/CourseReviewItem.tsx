@@ -9,7 +9,7 @@ import Rating from '../../core/Rating'
 import EditCourseReview from './EditCourseReview'
 import {useDeleteCourseReview} from '../../api/courseReviews'
 import {useAuth} from '../../../AuthUserContext'
-import UserAvatar from '../course/user/UserAvatar'
+import UserAvatar from '../user/UserAvatar'
 
 type CourseReviewItemProps = {
   review: CourseReview

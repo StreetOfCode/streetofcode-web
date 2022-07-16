@@ -3,30 +3,30 @@ import {
   CircularProgress,
 } from '@material-ui/core'
 import {GetStaticProps, NextPage} from 'next'
-import * as Api from '../../api'
-import {CourseOverview} from '../../types'
+import * as Api from '../../../api'
+import {CourseOverview} from '../../../types'
 import styled from 'styled-components'
-import Button from '../../components/core/Button'
-import Heading from '../../components/core/Heading'
-import Text from '../../components/core/Text'
-import Flex from '../../components/core/Flex'
-import BackLink from '../../components/core/BackLink'
-import * as Utils from '../../utils'
-import MarkdownView from '../../components/core/MarkdownView'
+import Button from '../../../components/core/Button'
+import Heading from '../../../components/core/Heading'
+import Text from '../../../components/core/Text'
+import Flex from '../../../components/core/Flex'
+import BackLink from '../../../components/core/BackLink'
+import * as Utils from '../../../utils'
+import MarkdownView from '../../../components/core/MarkdownView'
 import {AiOutlineClockCircle, AiOutlineQuestionCircle, AiOutlineVideoCamera} from 'react-icons/ai'
-import DifficultyIcon from '../../theme/icons/DifficultyIcon'
-import Rating from '../../components/core/Rating'
-import Avatar from '../../components/core/Avatar'
-import CircullarProgressWithLabel from '../../components/CircullarProgressWithLabel'
+import DifficultyIcon from '../../../theme/icons/DifficultyIcon'
+import Rating from '../../../components/core/Rating'
+import Avatar from '../../../components/core/Avatar'
+import CircullarProgressWithLabel from '../../../components/CircullarProgressWithLabel'
 import {useRouter} from 'next/router'
-import CourseContent from '../../components/domain/course/CourseContent'
-import PageContentWrapper from '../../components/PageContentWrapper'
-import NavBar from '../../components/NavBar'
-import {useAuth} from '../../AuthUserContext'
-import {QueryGuard} from '../../QueryGuard'
-import {useGetCourseOverview} from '../../components/api/courseOverview'
-import CourseReviews from '../../components/domain/course-review/CourseReviews'
-import NextLink from '../../components/core/NextLink'
+import CourseContent from '../../../components/domain/course/CourseContent'
+import PageContentWrapper from '../../../components/PageContentWrapper'
+import NavBar from '../../../components/NavBar'
+import {useAuth} from '../../../AuthUserContext'
+import {QueryGuard} from '../../../QueryGuard'
+import {useGetCourseOverview} from '../../../components/api/courseOverview'
+import CourseReviews from '../../../components/domain/course-review/CourseReviews'
+import NextLink from '../../../components/core/NextLink'
 
 
 type Props = {
@@ -219,7 +219,8 @@ const VideoWrapper = styled.div`
 `
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const response = await Api.noAuthFetch(Api.courseOverviewUrl(context?.params?.id))
+  const courseId = context?.params?.courseId as string
+  const response = await Api.noAuthFetch(Api.courseOverviewUrl(parseInt(courseId, 2)))
 
   const courseOverview = await response.json() as CourseOverview
 
@@ -233,7 +234,7 @@ export const getStaticPaths = async () => {
   const courses = await response.json() as CourseOverview[]
 
   const ids = courses.map((course) => course.id)
-  const paths = ids.map((id) => ({params: {id: id.toString()}}))
+  const paths = ids.map((id) => ({params: {courseId: id.toString()}}))
 
   return {
     paths,

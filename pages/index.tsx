@@ -66,8 +66,6 @@ const Home: NextPage<Props> = ({courses}) => {
               <Heading variant="h1" color="accent">kurzy</Heading>
             </div>
             <CoursesSliderWrapper initialCourses={courses} />
-            {/* TODO Zobrazit vsetky nie je alignute. */}
-            {/* TODO urobit Link component */}
             <NextLink href={'/courses'} alignSelf="center">
               <AllCoursesText
                 color="accent"
@@ -148,34 +146,6 @@ const Home: NextPage<Props> = ({courses}) => {
     </Wrapper>
   )
 }
-
-// // toto je pre jeden article
-// export const getStaticProps = async (context) => {
-//   const response = await Api.authFetch(Api.coursesOverviewUrl())
-
-//   const courses = await response.json() as CourseOverview[]
-
-//   return {
-//     props: {
-//       courses,
-//     },
-//   }
-// }
-
-// // tomuto povieme ze vsetky idecka ktore najdu v tom requeste tak nech to prebuildi na serveri a nachysta
-// export const getStaticPaths = async () => {
-//   const res = await fetch('https://jsonplaceholder.typicode.com/posts')
-
-//   const articles = await res.json()
-
-//   const ids = articles.map((article) => article.id)
-//   const paths = ids.map((id) => ({params: {id: id.toString()}}))
-
-//   return {
-//     paths,
-//     fallback: false,
-//   }
-// }
 
 const Wrapper = styled.div`
   width: 100%;
@@ -308,19 +278,5 @@ export const getStaticProps = async () => {
     props: {courses}, // will be passed to the page component as props
   }
 }
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   let token: string | null = null
-//   if (typeof window !== 'undefined') {
-//     token = nookies.get(context)?.token
-//   }
-//   const response = await Api.authFetch(Api.coursesOverviewUrl(), token)
-
-//   const courses = await response.json() as CourseOverview[]
-
-//   return {
-//     props: {courses}, // will be passed to the page component as props
-//   }
-// }
 
 export default Home
