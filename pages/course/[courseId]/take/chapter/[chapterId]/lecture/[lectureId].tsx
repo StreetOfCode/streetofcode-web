@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {GetServerSideProps, NextPage} from 'next'
-import {ChapterOverview, CourseOverview, CourseProgressOverview, LectureOverview} from '../../../../../../../types'
+import {ChapterOverview, CourseOverview, LectureOverview} from '../../../../../../../types'
 import {useGetCourseOverview} from '../../../../../../../components/api/courseOverview'
 import {QueryGuard} from '../../../../../../../QueryGuard'
 import Button from '../../../../../../../components/core/Button'
@@ -11,14 +11,14 @@ import BackLink from '../../../../../../../components/core/BackLink'
 import styled from 'styled-components'
 import Flex from '../../../../../../../components/core/Flex'
 import CourseSidebar from '../../../../../../../components/domain/course/CourseSidebar'
-import * as Api from '../../../../../../../api'
 import LectureDetail from '../../../../../../../components/domain/lecture/LectureDetail'
 import {useRouter} from 'next/router'
+import {useGetCourseProgressOverview} from '../../../../../../../components/api/courseProgress'
 
 type Props = {
   courseId: string
-  chapterId?: string
-  lectureId?: string
+  chapterId: string
+  lectureId: string
 }
 
 interface GetPrevAndNextUrlResponse {
@@ -50,51 +50,10 @@ const TakeCoursePage: NextPage<Props> = ({courseId, chapterId, lectureId}: Props
 
 const TakeCoursePageContent = (
   {courseOverview, chapterId, lectureId}:
-  {courseOverview: CourseOverview, chapterId?: string, lectureId?: string},
+  {courseOverview: CourseOverview, chapterId: string, lectureId: string},
 ) => {
-  const [
-    courseProgressOverview,
-    setCourseProgressOverview,
-  ] = useState<CourseProgressOverview | null>(null)
-
   const router = useRouter()
-
-  const resetLectureFunction = async (resetLectureId: number) => {
-    await Api.authPost(Api.resetProgressUrl(), {lectureId: resetLectureId})
-
-    const response = await Api.authFetch(Api.courseProgressOverviewUrl(courseOverview.id))
-    if (response.ok) {
-      setCourseProgressOverview(await response.json())
-    }
-  }
-
-  const updateLectureProgressFunction = async (lectureId: number) => {
-    await Api.authPost(Api.updateProgressLectureUrl(lectureId))
-
-    const response = await Api.authFetch(Api.courseProgressOverviewUrl(courseOverview.id))
-
-    if (response.ok) {
-      setCourseProgressOverview(await response.json())
-    }
-  }
-
-  // TODO have progress with react-query. Now courseCards are out of sync
-  useEffect(() => {
-    const updateProgress = async () => {
-      // TODO: don't call always, only if not yet viewed
-      if (lectureId) {
-        await Api.authPost(Api.updateProgressLectureUrl(parseInt(lectureId, 10)))
-      }
-
-      const response = await Api.authFetch(Api.courseProgressOverviewUrl(courseOverview.id))
-
-      if (response.ok) {
-        setCourseProgressOverview(await response.json())
-      }
-    }
-
-    updateProgress()
-  }, [lectureId, courseOverview.id])
+  const getCourseProgressOverview = useGetCourseProgressOverview(Number(courseOverview.id))
 
   const getPrevAndNextUrl = (
     courseOverview: CourseOverview,
@@ -166,22 +125,22 @@ const TakeCoursePageContent = (
     return (<>
       <ContentNavbarFlex justifyContent="space-between">
         {previousLectureUrl
-          ? <NextLink href={previousLectureUrl} alignSelf="flex-start">
+          ? <StyledNextLink href={previousLectureUrl} textAlign="left">
             <Button variant="outline" withoutUppercase normalWeight>
               Predošlá lekcia
             </Button>
-          </NextLink>
+          </StyledNextLink>
           : <EmptyBox />
         }
 
         <Heading variant="h2" normalWeight withAccentUnderline>{currentLecture?.name}</Heading>
 
         {nextLectureUrl
-          ? <NextLink href={nextLectureUrl} alignSelf="flex-end">
+          ? <StyledNextLink href={nextLectureUrl} textAlign="right">
             <Button variant="outline" withoutUppercase normalWeight>
               Ďalšia lekcia
             </Button>
-          </NextLink>
+          </StyledNextLink>
           : <EmptyBox />
         }
       </ContentNavbarFlex>
@@ -220,20 +179,21 @@ const TakeCoursePageContent = (
       <WrapperFlex alignSelf="stretch" flex="1">
         <Sidebar>
           <BackLink to={`/course/${courseOverview.id}`} text={'Späť na kurz'} />
-          {courseProgressOverview && (
-            <CourseSidebar
-              courseProgressOverview={courseProgressOverview}
-              courseId={courseOverview.id.toString()}
-              chapterId={chapterId}
-              lectureId={lectureId}
-              resetLectureFunction={resetLectureFunction}
-              updateProgressLectureFuntion={updateLectureProgressFunction}
-              hasResources={!!courseOverview.resources}
-            />
-          )}
+          <QueryGuard {...getCourseProgressOverview}>
+            {(courseProgressOverview) => (
+              <CourseSidebar
+                courseProgressOverview={courseProgressOverview}
+                courseId={courseOverview.id.toString()}
+                chapterId={chapterId}
+                lectureId={lectureId}
+                hasResources={!!courseOverview.resources}
+              />
+            )}
+          </QueryGuard>
+
         </Sidebar>
         <Content>
-          {(lectureId && chapterId) && (<Lecture lectureId={parseInt(lectureId, 2)} />)}
+          {(lectureId && chapterId) && (<Lecture lectureId={Number(lectureId)} />)}
           {(!lectureId && !chapterId) && (<Resources />)}
         </Content>
       </WrapperFlex>
@@ -265,6 +225,11 @@ const EmptyBox = styled.div`
 
 const ContentNavbarFlex = styled(Flex)`
   margin-bottom: 32px;
+`
+
+const StyledNextLink = styled(NextLink)<{textAlign: string}>`
+  flex: 1;
+  text-align: ${(props) => props.textAlign};
 `
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

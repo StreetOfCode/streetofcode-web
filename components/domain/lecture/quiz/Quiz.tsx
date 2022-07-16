@@ -46,15 +46,13 @@ const Quiz = ({quiz, lecture}: {quiz: IQuiz, lecture: Lecture}) => {
                 {
                   quizQuestions.map((q) => {
                     return (
-                      <>
-                        <QuizQuestion
-                          key={q.id}
-                          question={q}
-                          questionNumber={quiz.questionIds.length}
-                          onQuestionFinished={(isAnsweredCorrectly: boolean) =>
-                            setQuestionFinished(q.id, isAnsweredCorrectly)}
-                        />
-                      </>
+                      <QuizQuestion
+                        key={q.id}
+                        question={q}
+                        questionNumber={quiz.questionIds.length}
+                        onQuestionFinished={(isAnsweredCorrectly: boolean) =>
+                          setQuestionFinished(q.id, isAnsweredCorrectly)}
+                      />
                     )
                   })
                 }

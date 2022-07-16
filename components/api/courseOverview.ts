@@ -4,7 +4,7 @@ import {CourseOverview} from '../../types'
 
 const P = 'courseOverview'
 
-const queryKeys = {
+export const queryKeys = {
   get: (courseId: number) => [P, courseId.toString()],
 }
 

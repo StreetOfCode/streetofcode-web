@@ -12,8 +12,8 @@ type Props = {
 
 const NextLink = ({className, href, alignSelf, children, ...props}: Props) => {
   return (
-    <StyledLink className={className} href={href} {...props} passHref>
-      <StyledA alignSelf={alignSelf}>
+    <StyledLink href={href} {...props} passHref>
+      <StyledA className={className} alignSelf={alignSelf}>
         {children}
       </StyledA>
     </StyledLink>

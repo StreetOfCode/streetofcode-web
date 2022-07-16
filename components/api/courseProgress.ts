@@ -2,12 +2,15 @@ import {useMutation, useQuery} from 'react-query'
 import * as Api from '../../api'
 import queryClient from '../../queryClient'
 import {CourseProgressOverview} from '../../types'
+import {queryKeys as courseQueryKeys} from './courses'
+import {queryKeys as courseOverviewQueryKeys} from './courseOverview'
+
 
 const P = 'courseProgress'
 
 export const mutationKeys = {
-  resetLecture: (lectureId: number) => [P, 'resetLecture', lectureId.toString()],
-  updateLecture: (lectureId: number) => [P, 'updateLecture', lectureId.toString()],
+  resetLecture: () => [P, 'resetLecture'],
+  updateLecture: () => [P, 'updateLecture'],
 }
 
 const queryKeys = {
@@ -54,24 +57,42 @@ export const useGetCourseProgressOverview = (courseId: number) => {
     })
 }
 
-export const useResetLecture = (lectureId: number) => {
+export const useResetLecture = (courseId: number) => {
   return useMutation(
-    mutationKeys.resetLecture(lectureId),
-    () => resetLecture(lectureId),
+    mutationKeys.resetLecture(),
+    (lectureId: number) => resetLecture(lectureId),
     {
       onSuccess: (data) => {
-        queryClient.setQueryData(P, data)
+        queryClient.setQueryData(queryKeys.get(courseId), data)
+
+        Promise.all(
+          [
+            courseQueryKeys.getCourses,
+            courseOverviewQueryKeys.get(courseId),
+          ].map(
+            (key) => queryClient.invalidateQueries(key),
+          ),
+        )
       },
     })
 }
 
-export const useUpdateProgressLecture = (lectureId: number) => {
+export const useUpdateProgressLecture = (courseId: number) => {
   return useMutation(
-    mutationKeys.updateLecture(lectureId),
-    () => updateProgressLecture(lectureId),
+    mutationKeys.updateLecture(),
+    (lectureId: number) => updateProgressLecture(lectureId),
     {
       onSuccess: (data) => {
-        queryClient.setQueryData(P, data)
+        queryClient.setQueryData(queryKeys.get(courseId), data)
+
+        Promise.all(
+          [
+            courseQueryKeys.getCourses,
+            courseOverviewQueryKeys.get(courseId),
+          ].map(
+            (key) => queryClient.invalidateQueries(key),
+          ),
+        )
       },
     })
 }

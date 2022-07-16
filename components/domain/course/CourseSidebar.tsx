@@ -1,4 +1,4 @@
-import React, {HTMLAttributes} from 'react'
+import React, {HTMLAttributes, useEffect} from 'react'
 import styled, {keyframes} from 'styled-components'
 import {ChapterProgressOverview, CourseProgressOverview, LectureProgressOverview} from '../../../types'
 import Flex from '../../core/Flex'
@@ -14,15 +14,14 @@ import * as Utils from '../../../utils'
 import CircullarProgressWithLabel from '../../CircullarProgressWithLabel'
 import {useRouter} from 'next/router'
 import NextLink from '../../core/NextLink'
+import {useResetLecture, useUpdateProgressLecture} from '../../api/courseProgress'
 
 type Props = {
   className?: string
   courseProgressOverview: CourseProgressOverview
   courseId: string
-  chapterId?: string
-  lectureId?: string
-  resetLectureFunction: (lectureId: number) => void
-  updateProgressLectureFuntion: (lectureId: number) => void
+  chapterId: string
+  lectureId: string
   hasResources?: boolean
 } & HTMLAttributes<HTMLElement>
 
@@ -34,13 +33,28 @@ const CourseSidebar = ({
   courseId,
   chapterId,
   lectureId,
-  resetLectureFunction,
-  updateProgressLectureFuntion,
   hasResources,
   ...props
 }: Props) => {
 
   const router = useRouter()
+  const resetLecture = useResetLecture(Number(courseId))
+  const updateProgressLecture = useUpdateProgressLecture(Number(courseId))
+
+  useEffect(() => {
+    const maybeUpdateProgressLecture = async () => {
+      // if lecture is not already viewed
+      if (!courseProgressOverview.chapters
+        .find((chapter) =>
+          chapter.lectures.find((lecture) => lecture.id === Number(lectureId) && lecture.viewed),
+        )
+      ) {
+        await updateProgressLecture.mutateAsync(Number(lectureId))
+      }
+    }
+
+    maybeUpdateProgressLecture()
+  }, [lectureId])
 
   const getChapterLengthInfo = (chapter: ChapterProgressOverview): React.ReactNode => {
     return (
@@ -58,18 +72,18 @@ const CourseSidebar = ({
     router.push(`/course/${courseId}/take/chapter/${chapterId}/lecture/${lectureId}`)
   }
 
-  const handleResetLectureProgress = (e: React.MouseEvent, lectureId: number) => {
+  const handleResetLectureProgress = async (e: React.MouseEvent, lectureId: number) => {
     e.preventDefault()
     e.stopPropagation()
 
-    resetLectureFunction(lectureId)
+    await resetLecture.mutateAsync(lectureId)
   }
 
-  const handleUpdateLectureProgress = (e: React.MouseEvent, lectureId: number) => {
+  const handleUpdateLectureProgress = async (e: React.MouseEvent, lectureId: number) => {
     e.preventDefault()
     e.stopPropagation()
 
-    updateProgressLectureFuntion(lectureId)
+    await updateProgressLecture.mutateAsync(lectureId)
   }
 
   const handleResourcesClick = () => {
@@ -142,9 +156,9 @@ const CourseSidebar = ({
                       <Flex direction="column" alignItems="flex-start" gap="2px">
                         <StyledText>{lecture.name}</StyledText>
                         {lecture.videoDurationSeconds > 0 &&
-                        <StyledText size="small">
-                          {Utils.formatDurationFromSeconds(lecture.videoDurationSeconds)}
-                        </StyledText>
+                          <StyledText size="small">
+                            {Utils.formatDurationFromSeconds(lecture.videoDurationSeconds)}
+                          </StyledText>
                         }
                       </Flex>
                     </Flex>
@@ -153,7 +167,7 @@ const CourseSidebar = ({
                       <MdCheckBox onClick={(e) => handleResetLectureProgress(e, lecture.id)} />
                     }
                     {!lecture.viewed &&
-                    <MdCheckBoxOutlineBlank onClick={(e) => handleUpdateLectureProgress(e, lecture.id)} />
+                      <MdCheckBoxOutlineBlank onClick={(e) => handleUpdateLectureProgress(e, lecture.id)} />
                     }
                   </Flex>
                 </ItemContent>
