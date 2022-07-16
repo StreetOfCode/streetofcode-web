@@ -5,6 +5,9 @@ const API_URL = 'http://localhost:8080'
 const COURSES_OVERVIEW_URL = `${API_URL}/course/overview`
 export const coursesOverviewUrl = () => COURSES_OVERVIEW_URL
 
+const COURSE_IDS_URL = `${API_URL}/course/id`
+export const courseIdsUrl = () => COURSE_IDS_URL
+
 const MY_COURSES_URL = `${API_URL}/course/my-courses`
 export const myCoursesUrl = () => MY_COURSES_URL
 
@@ -72,7 +75,6 @@ const USER_URL = `${API_URL}/user`
 export const userUrl = () => `${USER_URL}`
 
 
-// TODO: maybe we should also make it possible to send requests without the token
 export const authFetch = async (url: string) => {
   const params = await createParams('GET')
   return fetch(url, params)

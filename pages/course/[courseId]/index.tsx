@@ -30,12 +30,13 @@ import NextLink from '../../../components/core/NextLink'
 
 
 type Props = {
-  courseOverview: CourseOverview
+  courseId: number
+  courseOverview: null | CourseOverview
 }
 
-const CourseDetailPage: NextPage<Props> = ({courseOverview}: Props) => {
+const CourseDetailPage: NextPage<Props> = ({courseId, courseOverview}: Props) => {
   const {user} = useAuth()
-  const getCourseOverview = useGetCourseOverview(courseOverview.id, !!user)
+  const getCourseOverview = useGetCourseOverview(courseId, !!user)
 
   if (user) {
     return (
@@ -49,6 +50,12 @@ const CourseDetailPage: NextPage<Props> = ({courseOverview}: Props) => {
           )
         }}
       </QueryGuard>
+    )
+  } else if (!courseOverview) {
+    // this can happend when unathorized (not admin) user tries to access course which is not public
+    // TODO
+    return (
+      <h1>Not authorized page</h1>
     )
   } else {
     return (
@@ -220,20 +227,24 @@ const VideoWrapper = styled.div`
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const courseId = context?.params?.courseId as string
-  const response = await Api.noAuthFetch(Api.courseOverviewUrl(parseInt(courseId, 2)))
+  const response = await Api.noAuthFetch(Api.courseOverviewUrl(Number(courseId)))
 
-  const courseOverview = await response.json() as CourseOverview
-
-  return {
-    props: {courseOverview}, // will be passed to the page component as props
+  if (!response.ok) {
+    return {
+      props: {courseId, courseOverview: null},
+    }
+  } else {
+    const courseOverview = await response.json() as CourseOverview
+    return {
+      props: {courseId, courseOverview},
+    }
   }
 }
 
 export const getStaticPaths = async () => {
-  const response = await Api.noAuthFetch(Api.coursesOverviewUrl())
-  const courses = await response.json() as CourseOverview[]
+  const response = await Api.noAuthFetch(Api.courseIdsUrl())
+  const ids = await response.json() as number[]
 
-  const ids = courses.map((course) => course.id)
   const paths = ids.map((id) => ({params: {courseId: id.toString()}}))
 
   return {

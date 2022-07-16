@@ -33,7 +33,7 @@ export interface ResourcesProps {
 }
 
 const TakeCoursePage: NextPage<Props> = ({courseId, chapterId, lectureId}: Props) => {
-  const getCourseOverview = useGetCourseOverview(parseInt(courseId, 10), true)
+  const getCourseOverview = useGetCourseOverview(Number(courseId), true)
 
   return (
     <QueryGuard {...getCourseOverview}>
@@ -83,7 +83,7 @@ const TakeCoursePageContent = (
       if (next.chapter) break
 
       for (const lecture of chapter.lectures) {
-        if (parseInt(lectureId, 10) === lecture.id) {
+        if (Number(lectureId) === lecture.id) {
           found = true
           current = {chapter, lecture}
         } else if (found) {

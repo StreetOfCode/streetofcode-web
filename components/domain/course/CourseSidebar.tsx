@@ -148,7 +148,7 @@ const CourseSidebar = ({
                 <ItemContent
                   key={lecture.id}
                   onClick={(e) => handleLectureOnClick(e, chapter.id, lecture.id)}
-                  selected={lectureId !== undefined && lecture.id === parseInt(lectureId, 10)}
+                  selected={lectureId !== undefined && lecture.id === Number(lectureId)}
                 >
                   <Flex gap="12px" justifyContent="space-between" flex="1">
                     <Flex gap="8px">

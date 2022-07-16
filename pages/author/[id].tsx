@@ -82,7 +82,7 @@ const StyledDescription = styled(Text)`
 
 export const getStaticProps: GetStaticProps = async (context: GetStaticPropsContext) => {
   const authorId = context?.params?.id as string
-  const response = await Api.noAuthFetch(Api.authorOverviewUrl(parseInt(authorId, 2)))
+  const response = await Api.noAuthFetch(Api.authorOverviewUrl(Number(authorId)))
 
   const authorOverview = await response.json() as AuthorOverview
 
