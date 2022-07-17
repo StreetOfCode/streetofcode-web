@@ -10,24 +10,25 @@ import styled from 'styled-components'
 import {useAuth} from '../../../AuthUserContext'
 import Loading from '../../Loading'
 
-const nextCourseVotedStorageKey = 'nextCoureVoted'
+const nextCourseVotedStorageKey = 'nextCourseVoted'
 
 type VoteStatus = 'NOT_VOTED' | 'VOTE_JUST_SUBMITTED' | 'ALREADY_VOTED'
 
 const VoteNextCourse = () => {
   const [selectedNextCourses, setSelectedNextCourses] = useState<number[]>([])
   const {user, isLoading} = useAuth()
-  const [voteStatus, setVoteStatus] = useState<VoteStatus>('NOT_VOTED')
+  const [voteStatus, setVoteStatus] = useState<VoteStatus>('ALREADY_VOTED')
+  const getVoteNextCourse = useGetNextCourseOptions()
 
   useEffect(() => {
-    // TODO not working properly now with nextjs
     // TODO create service for localStorage
     if (localStorage.getItem(nextCourseVotedStorageKey) != null) {
       setVoteStatus('ALREADY_VOTED')
+    } else {
+      setVoteStatus('NOT_VOTED')
     }
   }, [])
 
-  const getVoteNextCourse = useGetNextCourseOptions()
 
   const handleOnSelected = (nextCourseVoteId: number) => {
     if (selectedNextCourses.includes(nextCourseVoteId)) {
@@ -40,26 +41,21 @@ const VoteNextCourse = () => {
   const handleOnSubmit = async () => {
     if (selectedNextCourses.length === 0) return
 
-    const response = await Api.authPost<VoteNextCoursesRequest>(Api.voteNextUrl(), {
+    await Api.authPost<VoteNextCoursesRequest>(Api.voteNextUrl(), {
       courseVoteOptionIds: selectedNextCourses,
     })
 
-    if (!response.ok) {
-      // TODO handle error
-      return
-    } else {
-      if (!user) {
-        localStorage.setItem(nextCourseVotedStorageKey, 'true')
-      }
-
-      setVoteStatus('VOTE_JUST_SUBMITTED')
+    if (!user) {
+      localStorage.setItem(nextCourseVotedStorageKey, 'true')
     }
+
+    setVoteStatus('VOTE_JUST_SUBMITTED')
   }
 
   if (isLoading) return <Loading />
 
   if (voteStatus === 'VOTE_JUST_SUBMITTED') {
-    return (<Text align="center">
+    return (<Text align="center" style={{alignSelf: 'center'}}>
       Ďakujeme, tvoj hlas bol zarátaný.
     </Text>)
   } else if (voteStatus === 'ALREADY_VOTED') {
