@@ -86,10 +86,6 @@ const CourseSidebar = ({
     await updateProgressLecture.mutateAsync(lectureId)
   }
 
-  const handleResourcesClick = () => {
-    router.push(`/course/${courseId}/take/resources`)
-  }
-
   const progressValuePercent =
     (courseProgressOverview.lecturesViewed / courseProgressOverview.courseLecturesCount) * 100
 
@@ -120,7 +116,7 @@ const CourseSidebar = ({
               href={{pathname: `/course/${courseId}/take/resources`, query: {chapterId, lectureId}}}
               alignSelf="center"
             >
-              <ResourcesWrapper gap="8px" onClick={() => handleResourcesClick()}>
+              <ResourcesWrapper gap="8px">
                 <Text withAccentUnderline>Materiály</Text>
                 <GrNotes />
               </ResourcesWrapper>

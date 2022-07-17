@@ -1,12 +1,11 @@
 import React from 'react'
 import {GetServerSideProps, NextPage} from 'next'
-import {ChapterOverview, CourseOverview, LectureOverview} from '../../../../../../../types'
+import {CourseOverview} from '../../../../../../../types'
 import {useGetCourseOverview} from '../../../../../../../components/api/courseOverview'
 import {QueryGuard} from '../../../../../../../QueryGuard'
 import Button from '../../../../../../../components/core/Button'
 import NextLink from '../../../../../../../components/core/NextLink'
 import Heading from '../../../../../../../components/core/Heading'
-import MarkdownView from '../../../../../../../components/core/MarkdownView'
 import BackLink from '../../../../../../../components/core/BackLink'
 import styled from 'styled-components'
 import Flex from '../../../../../../../components/core/Flex'
@@ -15,22 +14,12 @@ import LectureDetail from '../../../../../../../components/domain/lecture/Lectur
 import {useRouter} from 'next/router'
 import {useGetCourseProgressOverview} from '../../../../../../../components/api/courseProgress'
 import {useAuth} from '../../../../../../../AuthUserContext'
+import {getPrevAndNextUrl, GetPrevAndNextUrlResponse} from '../../../../../../../utils'
 
 type Props = {
   courseId: string
   chapterId: string
   lectureId: string
-}
-
-interface GetPrevAndNextUrlResponse {
-  currentLecture: LectureOverview | undefined
-  previousLectureUrl: string | undefined
-  nextLectureUrl: string | undefined
-}
-
-export interface ResourcesProps {
-  chapterId: number | undefined
-  lectureId: number | undefined
 }
 
 const TakeCoursePage: NextPage<Props> = ({courseId, chapterId, lectureId}: Props) => {
@@ -60,75 +49,14 @@ const TakeCoursePageContent = (
   {courseOverview, chapterId, lectureId}:
   {courseOverview: CourseOverview, chapterId: string, lectureId: string},
 ) => {
-  const router = useRouter()
   const getCourseProgressOverview = useGetCourseProgressOverview(Number(courseOverview.id))
 
-  const getPrevAndNextUrl = (
-    courseOverview: CourseOverview,
-  ): GetPrevAndNextUrlResponse | undefined => {
-    if (!lectureId || !chapterId) return undefined
-
-    const chapters = courseOverview?.chapters ?? null
-    if (chapters == null) return undefined
-
-    let current: { chapter: null | ChapterOverview; lecture: null | LectureOverview } = {
-      chapter: null,
-      lecture: null,
-    }
-
-    let previous: {
-      chapter: null | ChapterOverview
-      lecture: null | LectureOverview
-    } = {chapter: null, lecture: null}
-
-    let next: {
-      chapter: null | ChapterOverview
-      lecture: null | LectureOverview
-    } = {chapter: null, lecture: null}
-
-    let found = false
-    for (const chapter of chapters) {
-      if (next.chapter) break
-
-      for (const lecture of chapter.lectures) {
-        if (Number(lectureId) === lecture.id) {
-          found = true
-          current = {chapter, lecture}
-        } else if (found) {
-          next = {chapter, lecture}
-          break
-        }
-
-        if (!found) {
-          previous = {chapter, lecture}
-        }
-      }
-    }
-
-    let previousLectureUrl
-    if (previous.chapter != null && previous.lecture != null) {
-      previousLectureUrl =
-      `/course/${courseOverview.id}/take/chapter/${previous.chapter?.id}/lecture/${previous.lecture?.id}`
-    }
-
-    let nextLectureUrl
-    if (next.chapter != null && next.lecture != null) {
-      nextLectureUrl = `/course/${courseOverview.id}/take/chapter/${next.chapter?.id}/lecture/${next.lecture?.id}`
-    }
-
-    return {
-      currentLecture: current.lecture || undefined,
-      previousLectureUrl,
-      nextLectureUrl,
-    }
-  }
-
-  const Lecture = ({lectureId}: {lectureId: number}) => {
+  const Lecture = () => {
     const {
       currentLecture,
       previousLectureUrl,
       nextLectureUrl,
-    } = getPrevAndNextUrl(courseOverview) || ({} as GetPrevAndNextUrlResponse)
+    } = getPrevAndNextUrl(courseOverview, lectureId, chapterId) || ({} as GetPrevAndNextUrlResponse)
 
     return (<>
       <ContentNavbarFlex justifyContent="space-between">
@@ -152,33 +80,7 @@ const TakeCoursePageContent = (
           : <EmptyBox />
         }
       </ContentNavbarFlex>
-      <LectureDetail lectureId={lectureId} />
-    </>)
-  }
-
-  const Resources = () => {
-    if (!courseOverview.resources) return null
-
-    let lectureUrl
-    if (router.query && router.query.chapterId && router.query.lectureId) {
-      const chapterId = router.query.chapterId as string
-      const lectureId = router.query.lectureId as string
-      lectureUrl = `/course/${courseOverview.id}/take/chapter/${chapterId}/lecture/${lectureId}`
-    }
-
-    return (<>
-      <ContentNavbarFlex justifyContent="space-between">
-        {lectureUrl
-          ? <NextLink href={lectureUrl} alignSelf="flex-start">
-            <Button variant="outline" withoutUppercase normalWeight>
-              Späť
-            </Button>
-          </NextLink>
-          : <EmptyBox />}
-        <Heading variant="h2" normalWeight withAccentUnderline>Materiály</Heading>
-        <EmptyBox />
-      </ContentNavbarFlex>
-      <MarkdownView children={courseOverview.resources} />
+      <LectureDetail lectureId={Number(lectureId)} />
     </>)
   }
 
@@ -198,11 +100,9 @@ const TakeCoursePageContent = (
               />
             )}
           </QueryGuard>
-
         </Sidebar>
         <Content>
-          {(lectureId && chapterId) && (<Lecture lectureId={Number(lectureId)} />)}
-          {(!lectureId && !chapterId) && (<Resources />)}
+          <Lecture />
         </Content>
       </WrapperFlex>
     </>

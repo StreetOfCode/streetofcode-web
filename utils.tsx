@@ -1,4 +1,4 @@
-import {CourseOverview, UserProgressMetadata} from './types'
+import {ChapterOverview, CourseOverview, LectureOverview, UserProgressMetadata} from './types'
 
 /***
  * i.e from 287 => 4h 47minút
@@ -29,6 +29,76 @@ export const getTakeCourseUrl = (course: CourseOverview) => {
   const lectureId = course.userProgressMetadata?.nextLectureId ?? course.chapters[0].lectures[0].id
   return `/course/${course.id}/take/chapter/${chapterId}/lecture/${lectureId}`
 }
+
+export interface GetPrevAndNextUrlResponse {
+  currentLecture: LectureOverview | undefined
+  previousLectureUrl: string | undefined
+  nextLectureUrl: string | undefined
+}
+
+// creates links for previous and next lecture url based on current lecture and chapter id
+export const getPrevAndNextUrl = (
+  courseOverview: CourseOverview,
+  lectureId?: string,
+  chapterId?: string,
+): GetPrevAndNextUrlResponse | undefined => {
+  if (!lectureId || !chapterId) return undefined
+
+  const chapters = courseOverview?.chapters ?? null
+  if (chapters == null) return undefined
+
+  let current: { chapter: null | ChapterOverview; lecture: null | LectureOverview } = {
+    chapter: null,
+    lecture: null,
+  }
+
+  let previous: {
+      chapter: null | ChapterOverview
+      lecture: null | LectureOverview
+    } = {chapter: null, lecture: null}
+
+  let next: {
+      chapter: null | ChapterOverview
+      lecture: null | LectureOverview
+    } = {chapter: null, lecture: null}
+
+  let found = false
+  for (const chapter of chapters) {
+    if (next.chapter) break
+
+    for (const lecture of chapter.lectures) {
+      if (Number(lectureId) === lecture.id) {
+        found = true
+        current = {chapter, lecture}
+      } else if (found) {
+        next = {chapter, lecture}
+        break
+      }
+
+      if (!found) {
+        previous = {chapter, lecture}
+      }
+    }
+  }
+
+  let previousLectureUrl
+  if (previous.chapter != null && previous.lecture != null) {
+    previousLectureUrl =
+      `/course/${courseOverview.id}/take/chapter/${previous.chapter?.id}/lecture/${previous.lecture?.id}`
+  }
+
+  let nextLectureUrl
+  if (next.chapter != null && next.lecture != null) {
+    nextLectureUrl = `/course/${courseOverview.id}/take/chapter/${next.chapter?.id}/lecture/${next.lecture?.id}`
+  }
+
+  return {
+    currentLecture: current.lecture || undefined,
+    previousLectureUrl,
+    nextLectureUrl,
+  }
+}
+
 
 export const emailRegex =  /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/
 
