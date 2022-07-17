@@ -8,7 +8,6 @@ import Heading from '../components/core/Heading'
 import styled from 'styled-components'
 import UserAvatar from '../components/domain/user/UserAvatar'
 import Courses from '../components/domain/course/Courses'
-
 import Button from '../components/core/Button'
 import TextField from '../components/core/TextField'
 import {emailRegex} from '../utils'

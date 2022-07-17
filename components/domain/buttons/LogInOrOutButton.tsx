@@ -1,4 +1,3 @@
-import {CircularProgress} from '@material-ui/core'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
@@ -10,6 +9,7 @@ import {SocUser} from '../../../types'
 import {useGetUser} from '../../api/user'
 import Button from '../../core/Button'
 import NextLink from '../../core/NextLink'
+import Loading from '../../Loading'
 import UserAvatar from '../user/UserAvatar'
 
 
@@ -19,7 +19,7 @@ const LogInOrOutButton = () => {
   const router = useRouter()
   const useGetSocUser = useGetUser(!isLoading) // call when ready
 
-  if (isLoading) return <CircularProgress />
+  if (isLoading) return <Loading />
 
   return (
     <QueryGuard {...useGetSocUser}>

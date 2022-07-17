@@ -1,10 +1,10 @@
-import {CircularProgress} from '@material-ui/core'
 import React, {ChangeEvent, SyntheticEvent, useState} from 'react'
 import styled from 'styled-components'
 import Button from '../../core/Button'
 import Flex from '../../core/Flex'
 import Rating from '../../core/Rating'
 import TextField from '../../core/TextField'
+import Loading from '../../Loading'
 
 type EditableCourseReviewProps = {
   /* Props for existing course review */
@@ -47,7 +47,7 @@ const EditableCourseReview = (
           <Rating name="half-rating-read" value={rating} onChange={onRatingChanged} style={{marginBottom: '12px'}} />
         }
       />
-      {isLoading && <CircularProgress />}
+      {isLoading && <Loading />}
       {!isLoading && (
         <Flex alignItems="flex-end" gap="12px" alignSelf="flex-start">
           <SubmitButton variant="accent" onClick={handleOnSubmit}>

@@ -1,9 +1,9 @@
-import {CircularProgress} from '@material-ui/core'
 import React, {ChangeEvent, useState} from 'react'
 import styled from 'styled-components'
 import Button from '../../core/Button'
 import Flex from '../../core/Flex'
 import TextField from '../../core/TextField'
+import Loading from '../../Loading'
 
 type EditableLectureCommentProps = {
   /* Props for existing lecture comment */
@@ -39,7 +39,7 @@ const EditableLectureComment = (
         maxLength={360}
         label="Sem napíš svoj komentár"
       />
-      {isLoading && <CircularProgress />}
+      {isLoading && <Loading />}
       {!isLoading && (
         <Flex alignItems="flex-end" gap="12px" alignSelf="flex-start">
           <SubmitButton variant="accent" onClick={handleOnSubmit}>

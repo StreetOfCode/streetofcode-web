@@ -1,4 +1,3 @@
-import {CircularProgress} from '@material-ui/core'
 import React from 'react'
 import styled from 'styled-components'
 import useEditItemActions from '../../../hooks/useEditItemActions'
@@ -10,6 +9,7 @@ import EditCourseReview from './EditCourseReview'
 import {useDeleteCourseReview} from '../../api/courseReviews'
 import {useAuth} from '../../../AuthUserContext'
 import UserAvatar from '../user/UserAvatar'
+import Loading from '../../Loading'
 
 type CourseReviewItemProps = {
   review: CourseReview
@@ -30,7 +30,7 @@ const CourseReviewItem = ({review}: CourseReviewItemProps) => {
     dialogTitle: 'Zmazať hodnotenie?',
   })
 
-  if (isLoading) return <CircularProgress />
+  if (isLoading) return <Loading />
 
   const isUpdatingAllowed = review.userId === userId
 

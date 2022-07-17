@@ -1,7 +1,4 @@
 import React from 'react'
-import {
-  CircularProgress,
-} from '@material-ui/core'
 import {GetStaticProps, NextPage} from 'next'
 import * as Api from '../../../api'
 import {CourseOverview} from '../../../types'
@@ -27,6 +24,7 @@ import {QueryGuard} from '../../../QueryGuard'
 import {useGetCourseOverview} from '../../../components/api/courseOverview'
 import CourseReviews from '../../../components/domain/course-review/CourseReviews'
 import NextLink from '../../../components/core/NextLink'
+import Loading from '../../../components/Loading'
 
 
 type Props = {
@@ -129,7 +127,7 @@ const CourseDetailContent = ({courseOverview}: {courseOverview: CourseOverview})
 
         <CardFlex direction="column" gap="12px" alignSelf="flex-start">
           {renderThubmnailOrTrailer()}
-          {isLoading && <CircularProgress />}
+          {isLoading && <Loading />}
           {!isLoading && user && <NextLink href={url} alignSelf="stretch">
             <StyledButton variant="accent">
               {courseOverview.userProgressMetadata ? 'pokračovať v kurze' : 'spustiť kurz'}

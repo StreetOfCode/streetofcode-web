@@ -1,4 +1,3 @@
-import {CircularProgress} from '@material-ui/core'
 import React from 'react'
 import styled, {css} from 'styled-components'
 import * as Auth from '../../auth'
@@ -10,6 +9,7 @@ import Heading from '../../components/core/Heading'
 import {useRouter} from 'next/router'
 import {NextPage} from 'next'
 import {useAuth} from '../../AuthUserContext'
+import Loading from '../../components/Loading'
 
 const LoginPage: NextPage = () => {
   const {user, isLoading, logout} = useAuth()
@@ -26,7 +26,7 @@ const LoginPage: NextPage = () => {
     <FlexWrapper direction="column" alignItems="center" gap="16px" justifyContent="center">
       <Logo alt="Logo" src="soc_logo.png" />
       <Heading variant="h4" align="center" withAccentUnderline normalWeight>Prihlásenie</Heading>
-      {isLoading && <CircularProgress />}
+      {isLoading && <Loading />}
       {!isLoading && (
         <>
           {!user && (

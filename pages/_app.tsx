@@ -9,8 +9,8 @@ import queryClient from '../queryClient'
 import {AuthContextProvider, useAuth} from '../AuthUserContext'
 import {useRouter} from 'next/router'
 import {useGetUser} from '../components/api/user'
-import {CircularProgress} from '@material-ui/core'
 import {QueryGuard} from '../QueryGuard'
+import Loading from '../components/Loading'
 import '../theme/animations/TypingAnimation.css'
 
 const OnboardingProtectionRoute = ({children}: {children: React.ReactNode}) => {
@@ -19,7 +19,7 @@ const OnboardingProtectionRoute = ({children}: {children: React.ReactNode}) => {
   const router = useRouter()
 
   if (isLoading) {
-    return <CircularProgress />
+    return <Loading />
   }
 
   if (user) {

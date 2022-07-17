@@ -1,4 +1,3 @@
-import {CircularProgress} from '@material-ui/core'
 import React from 'react'
 import styled from 'styled-components'
 import {LectureComment} from '../../../types'
@@ -10,6 +9,7 @@ import LectureCommentItem from './LectureCommentItem'
 import {QueryGuard} from '../../../QueryGuard'
 import {useGetLectureComments} from '../../api/lectureComments'
 import {useAuth} from '../../../AuthUserContext'
+import Loading from '../../Loading'
 
 type LectureCommentsProps = {
   lectureId: number
@@ -22,7 +22,7 @@ const LectureComments = ({lectureId}: LectureCommentsProps) => {
 
   const useLectureComments = useGetLectureComments(lectureId)
 
-  if (isLoading) return <CircularProgress />
+  if (isLoading) return <Loading />
 
   return (
     <QueryGuard {...useLectureComments}>

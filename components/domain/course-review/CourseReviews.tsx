@@ -1,4 +1,3 @@
-import {CircularProgress} from '@material-ui/core'
 import React from 'react'
 import styled from 'styled-components'
 import {useGetCourseReviewsOverview} from '../../api/courseReviewOverviews'
@@ -11,6 +10,7 @@ import AddCourseReview from './AddCourseReview'
 import CourseReviewItem from './CourseReviewItem'
 import Rating from '../../core/Rating'
 import {useAuth} from '../../../AuthUserContext'
+import Loading from '../../Loading'
 
 interface CourseReviewsProps {
   courseId: number;
@@ -26,7 +26,7 @@ const CourseReviews = ({courseId}: CourseReviewsProps) => {
     && getCourseReviewsQuery.data.some((courseReview) => courseReview.userId === userId)
   const canAddReview = userId && !hasUserReview
 
-  if (isLoading) return <CircularProgress />
+  if (isLoading) return <Loading />
 
   return (
     <WrapperFlex direction="column"  gap="32px" alignSelf="flex-start">

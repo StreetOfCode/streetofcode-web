@@ -1,4 +1,3 @@
-import {CircularProgress} from '@material-ui/core'
 import React from 'react'
 import styled from 'styled-components'
 import {useAuth} from '../../../AuthUserContext'
@@ -7,6 +6,7 @@ import {LectureComment} from '../../../types'
 import {useDeleteLectureComment} from '../../api/lectureComments'
 import Flex from '../../core/Flex'
 import Text from '../../core/Text'
+import Loading from '../../Loading'
 import UserAvatar from '../user/UserAvatar'
 import EditLectureComment from './EditLectureComment'
 
@@ -29,7 +29,7 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
     dialogTitle: 'Zmazať komentár?',
   })
 
-  if (isLoading) return <CircularProgress />
+  if (isLoading) return <Loading />
 
   const isUpdatingAllowed = comment.userId === userId
 

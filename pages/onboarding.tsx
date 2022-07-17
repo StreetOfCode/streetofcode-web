@@ -1,4 +1,3 @@
-import {CircularProgress} from '@material-ui/core'
 import {NextPage} from 'next'
 import {useRouter} from 'next/router'
 import React, {ChangeEvent, useState} from 'react'
@@ -12,6 +11,7 @@ import Heading from '../components/core/Heading'
 import Text from '../components/core/Text'
 import TextField from '../components/core/TextField'
 import UserAvatar from '../components/domain/user/UserAvatar'
+import Loading from '../components/Loading'
 import {emailRegex} from '../utils'
 
 const TOTAL_STEPS = 3
@@ -179,7 +179,7 @@ const OnboardingPage: NextPage = () => {
 
   const useAddSocUser = useAddUser()
 
-  if (user == null || isLoading) return <CircularProgress />
+  if (user == null || isLoading) return <Loading />
 
   if (!router.query || !router.query.from) {
     // if user visits onboarding page by manually writing url then he will be redirected to landing page

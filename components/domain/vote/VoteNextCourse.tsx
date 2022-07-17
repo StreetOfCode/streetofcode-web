@@ -1,4 +1,3 @@
-import {CircularProgress} from '@material-ui/core'
 import React, {useEffect, useState} from 'react'
 import {useGetNextCourseOptions} from '../../api/voteNextCourse'
 import {QueryGuard} from '../../../QueryGuard'
@@ -9,6 +8,7 @@ import Flex from '../../core/Flex'
 import Text from '../../core/Text'
 import styled from 'styled-components'
 import {useAuth} from '../../../AuthUserContext'
+import Loading from '../../Loading'
 
 const nextCourseVotedStorageKey = 'nextCoureVoted'
 
@@ -56,7 +56,7 @@ const VoteNextCourse = () => {
     }
   }
 
-  if (isLoading) return <CircularProgress />
+  if (isLoading) return <Loading />
 
   if (voteStatus === 'VOTE_JUST_SUBMITTED') {
     return (<Text align="center">

@@ -1,8 +1,9 @@
-import {Button, CircularProgress, FormControl, TextField, Typography} from '@material-ui/core'
+import {Button, FormControl, TextField, Typography} from '@material-ui/core'
 import {NextPage} from 'next'
 import React, {ChangeEvent, useState} from 'react'
 import styled from 'styled-components'
 import * as Api from '../api'
+import Loading from '../components/Loading'
 import NavBar from '../components/NavBar'
 import PageContentWrapper from '../components/PageContentWrapper'
 import {SendFeedbackRequest} from '../types'
@@ -106,7 +107,7 @@ const FeedbackPage: NextPage = () => {
               multiline
               rows={6}
             />
-            {isLoading && <CircularProgress />}
+            {isLoading && <Loading />}
             {!isLoading && (
               <Button variant="contained" color="primary" onClick={onAdd}>
                 Odoslať

@@ -9,6 +9,9 @@ module.exports = {
     node: true,
     browser: true,
   },
+  globals: {
+    JSX: true,
+  },
   rules: {
     'indent': ['error', 2],
     '@typescript-eslint/no-explicit-any': [
