@@ -4,6 +4,7 @@ import queryClient from '../../queryClient'
 import {CourseReview, CourseReviewAddRequest, CourseReviewEditRequest} from '../../types'
 import {queryKeys as courseReviewOverviewsQueryKeys} from './courseReviewOverviews'
 import {queryKeys as courseQueryKeys} from './courses'
+import {queryKeys as courseOverviewKeys} from './courseOverview'
 
 const P = 'courseReviews'
 
@@ -86,6 +87,7 @@ export const useAddCourseReview = (courseId: number) => {
             queryKeys.get(courseId),
             courseQueryKeys.getCourses,
             courseReviewOverviewsQueryKeys.get(courseId),
+            courseOverviewKeys.get(courseId),
           ].map(
             (key) => queryClient.invalidateQueries(key),
           ),
@@ -110,6 +112,7 @@ export const useEditCourseReview = (reviewId: number, courseId: number) => {
             queryKeys.get(courseId),
             courseQueryKeys.getCourses,
             courseReviewOverviewsQueryKeys.get(courseId),
+            courseOverviewKeys.get(courseId),
           ].map(
             (key) => queryClient.invalidateQueries(key),
           ),
@@ -131,6 +134,7 @@ export const useDeleteCourseReview = (reviewId: number, courseId: number) => {
             queryKeys.get(courseId),
             courseQueryKeys.getCourses,
             courseReviewOverviewsQueryKeys.get(courseId),
+            courseOverviewKeys.get(courseId),
           ].map(
             (key) => queryClient.invalidateQueries(key),
           ),
