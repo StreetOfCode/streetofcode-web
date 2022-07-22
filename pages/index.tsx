@@ -218,12 +218,12 @@ const VerticalSlider = styled.div`
     position: absolute;
     content: "";
     display: block;
-    width: 17px;
-    height: 17px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     background-color: ${(props) => props.theme.accentColor};
     top: 43px;
-    left: 3px;
+    left: 2px;
 
     animation: ${verticalSliderAnimation} 2.5s linear infinite;
   }

@@ -11,4 +11,6 @@ const nextConfig = {
 
 }
 
+// We use removeImports because of MDEditor (in react-admin part)
+// https://github.com/uiwjs/react-md-editor
 module.exports = removeImports(nextConfig)
