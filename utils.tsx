@@ -17,6 +17,12 @@ export const formatDurationFromSeconds = (seconds: number) => {
   return `${minutes}m ${seconds}s`
 }
 
+/***
+ * i.e from '2007-12-03T10:15:30+01:00' => '03/12/2007, 10:15:30'
+ */
+export const formatDate = (date: Date) => {
+  return new Date(date).toLocaleString('en-GB')
+}
 
 export const getCourseProgressPercent = (
   {lecturesViewed, courseLecturesCount}: UserProgressMetadata,

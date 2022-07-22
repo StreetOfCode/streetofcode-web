@@ -24,29 +24,29 @@ const CourseReviewItem = ({review}: CourseReviewItemProps) => {
     await deleteCourseReviewMutation.mutateAsync()
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const isUpdatingAllowed = review.userId === userId
+
   const [isEditing, onEdited, onEditCancelled, EditItemActions] = useEditItemActions({
     deleteAction: onDelete,
     dialogTitle: 'Zmazať hodnotenie?',
+    disabled: !isUpdatingAllowed,
   })
 
   if (isLoading) return <Loading />
 
-  const isUpdatingAllowed = review.userId === userId
-
   return (
     <ReviewItem>
       <Flex gap="12px" alignSelf="stretch">
-        <Flex direction="column" alignSelf="flex-start">
+        <Flex direction="column" alignSelf="flex-start" gap="8px">
           <UserAvatar imageUrl={review.imageUrl} name={review.userName} sizePx={40} />
-          <Text align="center">{review.userName}</Text>
+          <EditItemActions />
         </Flex>
         {!isEditing && (
           <ReviewField>
             <Flex direction="column" alignItems="flex-start" gap="8px">
               <Flex justifyContent="space-between" alignSelf="stretch">
                 <Rating readOnly value={review.rating} />
-                {isUpdatingAllowed && <EditItemActions />}
+                <Text>{review.userName}</Text>
               </Flex>
               <Text>{review.text}</Text>
             </Flex>

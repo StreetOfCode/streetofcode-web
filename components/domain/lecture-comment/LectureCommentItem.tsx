@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {useAuth} from '../../../AuthUserContext'
 import useEditItemActions from '../../../hooks/useEditItemActions'
 import {LectureComment} from '../../../types'
+import {formatDate} from '../../../utils'
 import {useDeleteLectureComment} from '../../api/lectureComments'
 import Flex from '../../core/Flex'
 import Text from '../../core/Text'
@@ -24,31 +25,33 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
     await deleteLectureCommentMutation.mutateAsync()
   }
 
+  const isUpdatingAllowed = comment.userId === userId
+
   const [isEditing, onEdited, onEditCancelled, EditItemActions] = useEditItemActions({
     deleteAction: onDelete,
     dialogTitle: 'Zmazať komentár?',
+    disabled: !isUpdatingAllowed,
   })
 
   if (isLoading) return <Loading />
 
-  const isUpdatingAllowed = comment.userId === userId
-
   return (
     <CommentItem>
       <Flex gap="12px" alignSelf="stretch">
-        <Flex direction="column" alignSelf="flex-start">
+        <Flex direction="column" alignSelf="flex-start" gap="8px">
           <UserAvatar imageUrl={comment.imageUrl} name={comment.userName} sizePx={40} />
-          <Text align="center">{comment.userName}</Text>
+          <EditItemActions />
         </Flex>
         {!isEditing && (
-          <ReviewField>
-            <Flex gap="8px" justifyContent="space-between">
-              <Text>{comment.commentText}</Text>
-              <Flex justifyContent="space-between" alignSelf="flex-start">
-                {isUpdatingAllowed && <EditItemActions />}
+          <CommentField>
+            <Flex direction="column" alignItems="flex-start" gap="8px">
+              <Flex justifyContent="space-between" alignSelf="stretch">
+                <Text>{formatDate(comment.updatedAt)}</Text>
+                <Text>{comment.userName}</Text>
               </Flex>
+              <Text>{comment.commentText}</Text>
             </Flex>
-          </ReviewField>
+          </CommentField>
         )}
         {isEditing && (
           <EditLectureComment
@@ -67,7 +70,7 @@ const CommentItem = styled.div`
   align-self: stretch;
 `
 
-const ReviewField = styled.div`
+const CommentField = styled.div`
   width: 100%;
   padding: 12px;
   border-radius: 12px;

@@ -9,9 +9,11 @@ import Flex from '../components/core/Flex'
 const useEditItemActions = ({
   deleteAction,
   dialogTitle,
+  disabled,
 }: {
   deleteAction: () => Promise<void>
   dialogTitle: string
+  disabled?: boolean
 }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false)
   const [isConfirmingDelete, setIsConfirmingDelete] = useState<boolean>(false)
@@ -44,7 +46,7 @@ const useEditItemActions = ({
   const EditItemActions: FC = (): ReactElement => {
 
     return (
-      <>
+      <Wrapper disabled={disabled}>
         <Flex gap="8px">
           <StyledIconButton aria-label="edit" onClick={onEditToggle}>
             <StyledEditIcon />
@@ -61,11 +63,15 @@ const useEditItemActions = ({
           onSecondaryButtonClick={handleConfirmDeleteDialogClose}
           onPrimaryButtonClick={onDelete}
         />
-      </>
+      </Wrapper>
     )
   }
   return [isEditing, onEdited, onEditCancelled, EditItemActions] as const
 }
+
+const Wrapper = styled.div<{disabled?: boolean}>`
+  visibility: ${(props) => props.disabled && 'hidden'};
+`
 
 const StyledIconButton = styled(IconButton)`
   padding: 0px !important;
