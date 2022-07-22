@@ -256,7 +256,6 @@ export interface AddSocUser {
 
 export interface EditSocUser {
   name: string,
-  email: string;
   imageUrl: null | string;
   receiveNewsletter: boolean;
 }

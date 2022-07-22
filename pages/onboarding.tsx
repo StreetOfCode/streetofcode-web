@@ -12,7 +12,6 @@ import Text from '../components/core/Text'
 import TextField from '../components/core/TextField'
 import UserAvatar from '../components/domain/user/UserAvatar'
 import Loading from '../components/Loading'
-import {emailRegex} from '../utils'
 
 const TOTAL_STEPS = 3
 
@@ -59,30 +58,17 @@ const ConfirmName = ({currentStep, displayName, imageUrl, onStepForward}: Confir
 
 type NewsletterProps = {
   currentStep: number,
-  newsletterEmail: string
+  email: string
   receiveNewsletter: boolean
   onStepForward: (email: string, newsletter: boolean) => void
   onStepBack: () => void
 }
 
-const Newsletter = ({currentStep, newsletterEmail, receiveNewsletter, onStepForward, onStepBack}: NewsletterProps) => {
-  const [email, setEmail] = useState(newsletterEmail || '')
-  const [emailError, setEmailError] = useState('')
+const Newsletter = ({currentStep, email, receiveNewsletter, onStepForward, onStepBack}: NewsletterProps) => {
   const [newsletter, setNewsletter] = useState(receiveNewsletter)
 
-  const onEmailChanged = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value)
-    setEmailError('')
-  }
-
   const onSubmit = () => {
-    if (!email.trim()) {
-      setEmailError('Email nemôže byť prázdny')
-    } else if (!emailRegex.test(email)) {
-      setEmailError('Nesprávny formát emailu')
-    } else {
-      onStepForward(email, newsletter)
-    }
+    onStepForward(email, newsletter)
   }
 
   return (
@@ -92,16 +78,10 @@ const Newsletter = ({currentStep, newsletterEmail, receiveNewsletter, onStepForw
         <Text>Prihlás sa na odber našich noviniek a medzi prvými sa dozvieš o nových kurzoch, videách,
           podcastoch a všeličom ďalšom, čo podnikneme. Neboj sa, nebudeme ťa spamovať a občas ta potešíme aj nejakou
           tou programátorskou radou.</Text>
-        <TextField
-          text={email}
-          onTextChanged={onEmailChanged}
-          label="Email"
-          errorText={emailError}
-        />
         <CheckBox
           checked={newsletter}
           onToggle={(newValue) => setNewsletter(newValue)}
-          label={'Chcem dostávať príležitostné maily'}
+          label={`Chcem dostávať príležitostné maily (${email})`}
         />
         <Button variant="accent" onClick={onSubmit}>Pokračovať</Button>
         <Flex justifyContent="space-between" alignSelf="stretch">
@@ -174,8 +154,8 @@ const OnboardingPage: NextPage = () => {
   const [name, setName] = useState(user?.displayName || '')
   const [sendDiscordInvitation, setSendDiscordInvitation] = useState(true)
   const [receiveNewsletter, setReceiveNewsletter] = useState(true)
-  const [newsletterEmail, setNewsletterEmail] = useState(user?.email || '')
   const [loading, setLoading] = useState(false)
+  const email = user?.email || ''
 
   const useAddSocUser = useAddUser()
 
@@ -192,7 +172,7 @@ const OnboardingPage: NextPage = () => {
       await useAddSocUser.mutateAsync({
         id: user.uid,
         name,
-        email: newsletterEmail,
+        email,
         imageUrl: user.photoURL,
         receiveNewsletter,
         sendDiscordInvitation,
@@ -234,11 +214,10 @@ const OnboardingPage: NextPage = () => {
         />}
         {currentStep === 1 && <Newsletter
           currentStep={currentStep}
-          newsletterEmail={newsletterEmail || ''}
+          email={email}
           receiveNewsletter={receiveNewsletter}
           onStepBack={() => setCurrentStep(currentStep - 1)}
           onStepForward={(email, receiveNewsletter) => {
-            setNewsletterEmail(email)
             setReceiveNewsletter(receiveNewsletter)
             setCurrentStep(currentStep + 1)
           }}
@@ -246,7 +225,7 @@ const OnboardingPage: NextPage = () => {
         />}
         {currentStep === 2 && <DiscordServer
           currentStep={currentStep}
-          email={newsletterEmail}
+          email={email}
           sendDiscordInvitation={sendDiscordInvitation}
           onStepBack={() => setCurrentStep(currentStep - 1)}
           onStepForward={async (sendInvitation) => {

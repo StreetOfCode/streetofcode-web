@@ -10,7 +10,6 @@ import UserAvatar from '../components/domain/user/UserAvatar'
 import Courses from '../components/domain/course/Courses'
 import Button from '../components/core/Button'
 import TextField from '../components/core/TextField'
-import {emailRegex} from '../utils'
 import {useEditUser, useGetUser} from '../components/api/user'
 import {NextPage} from 'next'
 import {useAuth} from '../AuthUserContext'
@@ -50,8 +49,6 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
   const [name, setName] = useState(socUser?.name || '')
   const [nameError, setNameError] = useState('')
   const [nameEditing, setNameEditing] = useState(false)
-  const [email, setEmail] = useState(socUser?.email || '')
-  const [emailError, setEmailError] = useState('')
   const [changeLoading, setChangeLoading] = useState(false)
   const {logout} = useAuth()
   const getMyCoursesQuery = useGetMyCourses()
@@ -77,7 +74,6 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
       try {
         await editSocUser.mutateAsync({
           name,
-          email: socUser.email,
           imageUrl: socUser.imageUrl,
           receiveNewsletter: socUser.receiveNewsletter,
         })
@@ -95,30 +91,19 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
     setNameEditing(false)
   }
 
-  const onEmailChanged = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value)
-    setEmailError('')
-  }
 
   const submitChangedNewsletter = async () => {
-    if (!email.trim()) {
-      setEmailError('Email nemôže byť prázdny')
-    } else if (!emailRegex.test(email)) {
-      setEmailError('Nesprávny formát emailu')
-    } else {
-      setChangeLoading(true)
-      try {
-        await editSocUser.mutateAsync({
-          name,
-          email: socUser.email,
-          imageUrl: socUser.imageUrl,
-          receiveNewsletter: true,
-        })
-      } catch (err) {
-        setChangeLoading(false)
-      } finally {
-        setChangeLoading(false)
-      }
+    setChangeLoading(true)
+    try {
+      await editSocUser.mutateAsync({
+        name,
+        imageUrl: socUser.imageUrl,
+        receiveNewsletter: true,
+      })
+    } catch (err) {
+      setChangeLoading(false)
+    } finally {
+      setChangeLoading(false)
     }
   }
 
@@ -126,13 +111,6 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
     return (
       <Flex direction="column" gap="16px" alignItems="flex-start">
         <Heading variant="h3" withAccentUnderline normalWeight>Odber noviniek</Heading>
-        <StyledTextField
-          text={email}
-          onTextChanged={onEmailChanged}
-          maxLength={64}
-          label="Email"
-          errorText={emailError}
-        />
         <Button
           disabled={changeLoading}
           variant="accent"
