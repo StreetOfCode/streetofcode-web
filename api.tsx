@@ -1,6 +1,6 @@
 import * as Auth from './auth'
 
-const API_URL = 'http://localhost:8080'
+const API_URL = 'http://localhost:8080' // TODO
 
 const COURSES_OVERVIEW_URL = `${API_URL}/course/overview`
 export const coursesOverviewUrl = () => COURSES_OVERVIEW_URL
