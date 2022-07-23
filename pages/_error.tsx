@@ -6,7 +6,7 @@ import NavBar from '../components/NavBar'
 import Heading from '../components/core/Heading'
 import NextLink from '../components/core/NextLink'
 
-const NotFoundPage: NextPage = () => {
+const ErrorPage: NextPage = () => {
   return (
     <>
       <NavBar />
@@ -22,4 +22,4 @@ const NotFoundPage: NextPage = () => {
   )
 }
 
-export default NotFoundPage
+export default ErrorPage

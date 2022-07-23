@@ -11,6 +11,7 @@ import {useRouter} from 'next/router'
 import {useGetUser} from '../components/api/user'
 import {QueryGuard} from '../QueryGuard'
 import Loading from '../components/Loading'
+import ErrorBoundary from '../components/domain/ErrorBoundary'
 import '../theme/animations/TypingAnimation.css'
 
 const OnboardingProtectionRoute = ({children}: {children: React.ReactNode}) => {
@@ -48,27 +49,30 @@ function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter()
 
   return (
-    <ThemeProvider theme={theme}>
-      <AuthContextProvider>
-        <RootWrapper>
-          <QueryClientProvider client={queryClient}>
-            <GlobalStyles />
-            {routesThatDontNeedOnBoardingProtection.includes(router.pathname) &&
+    <ErrorBoundary>
+      <ThemeProvider theme={theme}>
+        <AuthContextProvider>
+          <RootWrapper>
+            <QueryClientProvider client={queryClient}>
+              <GlobalStyles />
+              {routesThatDontNeedOnBoardingProtection.includes(router.pathname) &&
               <>
                 <Component {...pageProps} />
                 <Footer />
               </>
-            }
-            {!routesThatDontNeedOnBoardingProtection.includes(router.pathname) &&
+              }
+              {!routesThatDontNeedOnBoardingProtection.includes(router.pathname) &&
               <OnboardingProtectionRoute>
                 <Component {...pageProps} />
                 <Footer />
               </OnboardingProtectionRoute>
-            }
-          </QueryClientProvider>
-        </RootWrapper>
-      </AuthContextProvider>
-    </ThemeProvider>
+              }
+            </QueryClientProvider>
+          </RootWrapper>
+        </AuthContextProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
+
   )
 }
 
