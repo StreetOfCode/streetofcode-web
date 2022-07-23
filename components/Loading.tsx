@@ -1,13 +1,18 @@
-import {CircularProgress} from '@mui/material'
+import styled from 'styled-components'
 import React from 'react'
 import Flex from './core/Flex'
+import {CircularProgress} from '@mui/material'
 
 const Loading = () => {
   return (
-    <Flex direction="column" justifyContent="center">
+    <WrapperFlex direction="column" justifyContent="center">
       <CircularProgress />
-    </Flex>
+    </WrapperFlex>
   )
 }
+
+const WrapperFlex = styled(Flex)`
+  flex: 1;
+`
 
 export default Loading

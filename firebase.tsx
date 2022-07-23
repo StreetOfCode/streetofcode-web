@@ -2,7 +2,7 @@ import {initializeApp} from 'firebase/app'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBYS2iRogvuU6mbHuHDoB1XaELDGUKeBp8',
-  authDomain: 'course-platform-5ebc0.firebaseapp.com',
+  authDomain: 'course-platform-5ebc0.firebaseapp.com', // TODO change to our domain
   projectId: 'course-platform-5ebc0',
   storageBucket: 'course-platform-5ebc0.appspot.com',
   messagingSenderId: '476289106525',

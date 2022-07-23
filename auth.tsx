@@ -16,9 +16,7 @@ export const getUser = () => auth.currentUser
 
 export const getToken = async () => await getUser()?.getIdToken()
 
-export const getUserAfterRedirect = async () => {
-  return (await getRedirectResult(auth))?.user
-}
+export const getRedirectResults = async () => await getRedirectResult(auth)
 
 export const signOut = async () => await auth.signOut()
 

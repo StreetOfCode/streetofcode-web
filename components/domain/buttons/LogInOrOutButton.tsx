@@ -25,7 +25,7 @@ const LogInOrOutButton = () => {
     <QueryGuard {...useGetSocUser}>
       {(socUser: SocUser | null) => {
         return (<>
-          {(!user || !socUser) && <NextLink href={`/login/${encodeURIComponent(router.pathname)}`}>
+          {(!user || !socUser) && <NextLink href={`/login/${encodeURIComponent(router.asPath)}`}>
             <Button>
               Prihlásiť
             </Button>
