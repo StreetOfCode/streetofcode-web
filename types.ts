@@ -7,6 +7,7 @@ export interface Difficulty {
 export interface Author {
   id: number;
   name: string;
+  slug: string;
   imageUrl: string;
   coursesTitle: string;
   email: string;
@@ -56,6 +57,7 @@ export interface LectureComment {
 export interface CourseOverview {
   id: number;
   name: string;
+  slug: string;
   shortDescription: string;
   longDescription: string;
   resources: null | string;
@@ -168,6 +170,7 @@ export interface LectureCommentAddRequest {
 export interface AuthorOverview {
   id: number;
   name: string;
+  slug: string;
   imageUrl: string;
   coursesTitle: string;
   email: string;

@@ -1,19 +1,19 @@
 import React from 'react'
 import {GetServerSideProps, NextPage} from 'next'
-import {useGetCourseOverview} from '../../../../../../../components/api/courseOverview'
-import {QueryGuard} from '../../../../../../../QueryGuard'
+import {useGetCourseOverview} from '../../../../../../components/api/courseOverview'
+import {QueryGuard} from '../../../../../../QueryGuard'
 import {useRouter} from 'next/router'
-import {useAuth} from '../../../../../../../AuthUserContext'
-import TakeCourse from '../../../../../../../components/domain/course/TakeCourse'
+import {useAuth} from '../../../../../../AuthUserContext'
+import TakeCourse from '../../../../../../components/domain/course/TakeCourse'
 
 type Props = {
-  courseId: string
+  courseSlug: string
   chapterId: string
   lectureId: string
 }
 
-const TakeCoursePage: NextPage<Props> = ({courseId, chapterId, lectureId}: Props) => {
-  const getCourseOverview = useGetCourseOverview(Number(courseId), true)
+const TakeCoursePage: NextPage<Props> = ({courseSlug, chapterId, lectureId}: Props) => {
+  const getCourseOverview = useGetCourseOverview(courseSlug, true)
   const {user} = useAuth()
   const router = useRouter()
 
@@ -37,13 +37,13 @@ const TakeCoursePage: NextPage<Props> = ({courseId, chapterId, lectureId}: Props
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const courseId = context?.params?.courseId as string
+  const courseSlug = context?.params?.slug as string
   const chapterId = context?.params?.chapterId as string
   const lectureId = context?.params?.lectureId as string
 
   return {
     props: {
-      courseId,
+      courseSlug,
       chapterId,
       lectureId,
     },

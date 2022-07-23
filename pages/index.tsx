@@ -49,7 +49,7 @@ const Home: NextPage<Props> = ({courses}) => {
                 <Heading variant="h3">Pomôžeme ti na tvojej ceste začínajúceho</Heading>
                 <Heading variant="h3">programátora či začínajúcej programátorky</Heading>
               </div>
-              <NextLink href={'/courses'}>
+              <NextLink href={'/kurzy'}>
                 <Button variant="accent" size="very-large">online kurzy</Button>
               </NextLink>
             </Flex>
@@ -66,7 +66,7 @@ const Home: NextPage<Props> = ({courses}) => {
               <Heading variant="h1" color="accent">kurzy</Heading>
             </div>
             <CoursesSliderWrapper initialCourses={courses} />
-            <NextLink href={'/courses'} alignSelf="center">
+            <NextLink href={'/kurzy'} alignSelf="center">
               <AllCoursesText
                 color="accent"
                 uppercase

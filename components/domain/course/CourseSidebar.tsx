@@ -20,6 +20,7 @@ type Props = {
   className?: string
   courseProgressOverview: CourseProgressOverview
   courseId: string
+  courseSlug: string
   chapterId: string
   lectureId: string
   hasResources?: boolean
@@ -31,6 +32,7 @@ const CourseSidebar = ({
   className,
   courseProgressOverview,
   courseId,
+  courseSlug,
   chapterId,
   lectureId,
   hasResources,
@@ -38,8 +40,8 @@ const CourseSidebar = ({
 }: Props) => {
 
   const router = useRouter()
-  const resetLecture = useResetLecture(Number(courseId))
-  const updateProgressLecture = useUpdateProgressLecture(Number(courseId))
+  const resetLecture = useResetLecture(Number(courseId), courseSlug)
+  const updateProgressLecture = useUpdateProgressLecture(Number(courseId), courseSlug)
 
   useEffect(() => {
     const maybeUpdateProgressLecture = async () => {
@@ -69,7 +71,7 @@ const CourseSidebar = ({
     e.preventDefault()
     e.stopPropagation()
 
-    router.push(`/course/${courseId}/take/chapter/${chapterId}/lecture/${lectureId}`)
+    router.push(`/kurzy/${courseSlug}/kapitola/${chapterId}/lekcia/${lectureId}`)
   }
 
   const handleResetLectureProgress = async (e: React.MouseEvent, lectureId: number) => {
@@ -113,7 +115,7 @@ const CourseSidebar = ({
 
           {hasResources &&
             <NextLink
-              href={{pathname: `/course/${courseId}/take/resources`, query: {chapterId, lectureId}}}
+              href={{pathname: `/kurzy/${courseSlug}/zdroje`, query: {chapterId, lectureId}}}
               alignSelf="center"
             >
               <ResourcesWrapper gap="8px">

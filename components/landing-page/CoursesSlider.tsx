@@ -32,7 +32,7 @@ const CoursesSlider = ({courses}: { courses: CourseOverview[] }) => {
   return (
     <Slider items={courses} showItemsCount={3} itemLayout={(course, i) => {
       return (
-        <NextLink key={i} href={`/course/${course.id}`}>
+        <NextLink key={i} href={`/kruzy/${course.slug}`}>
           <CourseCard course={course} />
         </NextLink>
       )}}

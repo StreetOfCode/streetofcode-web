@@ -37,7 +37,7 @@ const LogInOrOutButton = () => {
               <StyledUserAvatar imageUrl={socUser.imageUrl || ''} name={socUser.name} sizePx={40} />
             </Trigger>
             <StyledContent sideOffset={3}>
-              <Link href={'/profile'}>
+              <Link href={'/profil'}>
                 <DropDownItem>
                   Moje kurzy a nastavenia
                 </DropDownItem>

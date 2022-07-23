@@ -17,6 +17,7 @@ const CourseList = (props) => {
         <ReferenceField label="Course" source="id" reference="course" link="show">
           <TextField source="name" />
         </ReferenceField>
+        <TextField source="slug" />
         <TextField source="status" />
         <TextField source="shortDescription" />
         <ReferenceField label="Author" source="author.id" reference="author">

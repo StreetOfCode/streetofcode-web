@@ -13,6 +13,7 @@ const CourseCreate = (props) => {
           <SelectInput optionText="name" />
         </ReferenceInput>
         <TextInput required source="name" />
+        <TextInput required source="slug" />
         <TextInput required source="shortDescription" />
         <MarkdownInput source="longDescription" />
         <MarkdownInput source="resources" />

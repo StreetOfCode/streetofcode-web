@@ -6,6 +6,7 @@ const AuthorList = (props) => {
     <List {...props}>
       <Datagrid>
         <TextField source="name" />
+        <TextField source="slug" />
         <TextField source="description" />
         <TextField source="imageUrl" />
         <TextField source="coursesTitle" />

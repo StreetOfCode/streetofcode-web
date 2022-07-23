@@ -4,13 +4,14 @@ import {CourseReview} from '../../../types'
 import EditableCourseReview from './EditableCourseReview'
 
 type EditCourseReviewProps = {
+  courseSlug: string
   review: CourseReview
   onCancelled: () => void
   onEdited: () => void
 }
 
-const EditCourseReview = ({review, onCancelled, onEdited}: EditCourseReviewProps) => {
-  const editCourseReviewMutation = useEditCourseReview(review.id, review.courseId)
+const EditCourseReview = ({courseSlug, review, onCancelled, onEdited}: EditCourseReviewProps) => {
+  const editCourseReviewMutation = useEditCourseReview(review.id, review.courseId, courseSlug)
 
   const onEdit = async (rating: number, text: string) => {
     await editCourseReviewMutation.mutateAsync({

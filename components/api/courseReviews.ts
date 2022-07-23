@@ -76,7 +76,7 @@ export const useGetCourseReviews = (courseId: number) => {
     })
 }
 
-export const useAddCourseReview = (courseId: number) => {
+export const useAddCourseReview = (courseId: number, courseSlug: string) => {
   return useMutation(
     mutationKeys.add,
     (courseReview: CourseReviewAddRequest) => addCourseReview(courseReview),
@@ -87,7 +87,7 @@ export const useAddCourseReview = (courseId: number) => {
             queryKeys.get(courseId),
             courseQueryKeys.getCourses,
             courseReviewOverviewsQueryKeys.get(courseId),
-            courseOverviewKeys.get(courseId),
+            courseOverviewKeys.get(courseSlug),
           ].map(
             (key) => queryClient.invalidateQueries(key),
           ),
@@ -95,7 +95,7 @@ export const useAddCourseReview = (courseId: number) => {
     })
 }
 
-export const useEditCourseReview = (reviewId: number, courseId: number) => {
+export const useEditCourseReview = (reviewId: number, courseId: number, courseSlug: string) => {
   return useMutation(
     mutationKeys.edit(reviewId),
     ({
@@ -112,7 +112,7 @@ export const useEditCourseReview = (reviewId: number, courseId: number) => {
             queryKeys.get(courseId),
             courseQueryKeys.getCourses,
             courseReviewOverviewsQueryKeys.get(courseId),
-            courseOverviewKeys.get(courseId),
+            courseOverviewKeys.get(courseSlug),
           ].map(
             (key) => queryClient.invalidateQueries(key),
           ),
@@ -121,7 +121,7 @@ export const useEditCourseReview = (reviewId: number, courseId: number) => {
   )
 }
 
-export const useDeleteCourseReview = (reviewId: number, courseId: number) => {
+export const useDeleteCourseReview = (reviewId: number, courseId: number, courseSlug: string) => {
   return useMutation(
     mutationKeys.delete(reviewId),
     () => {
@@ -134,7 +134,7 @@ export const useDeleteCourseReview = (reviewId: number, courseId: number) => {
             queryKeys.get(courseId),
             courseQueryKeys.getCourses,
             courseReviewOverviewsQueryKeys.get(courseId),
-            courseOverviewKeys.get(courseId),
+            courseOverviewKeys.get(courseSlug),
           ].map(
             (key) => queryClient.invalidateQueries(key),
           ),

@@ -31,7 +31,7 @@ const CourseContent = ({className, course, ...props}: Props) => {
     e.preventDefault()
     e.stopPropagation()
 
-    router.push(`/course/${course.id}/take/chapter/${chapterId}/lecture/${lectureId}`)
+    router.push(`/kurzy/${course.slug}/kapitola/${chapterId}/lekcia/${lectureId}`)
   }
 
 

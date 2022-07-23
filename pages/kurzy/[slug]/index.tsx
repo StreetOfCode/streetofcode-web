@@ -28,13 +28,13 @@ import Loading from '../../../components/Loading'
 
 
 type Props = {
-  courseId: number
+  slug: string
   courseOverview: null | CourseOverview
 }
 
-const CourseDetailPage: NextPage<Props> = ({courseId, courseOverview}: Props) => {
+const CourseDetailPage: NextPage<Props> = ({slug, courseOverview}: Props) => {
   const {user} = useAuth()
-  const getCourseOverview = useGetCourseOverview(courseId, !!user)
+  const getCourseOverview = useGetCourseOverview(slug, !!user)
 
   if (user) {
     return (
@@ -51,9 +51,8 @@ const CourseDetailPage: NextPage<Props> = ({courseId, courseOverview}: Props) =>
     )
   } else if (!courseOverview) {
     // this can happend when unathorized (not admin) user tries to access course which is not public
-    // TODO
     return (
-      <h1>Not authorized page</h1>
+      <h1>Pre tento kurz nemáš dostatočné oprávnenie</h1>
     )
   } else {
     return (
@@ -89,8 +88,8 @@ const CourseDetailContent = ({courseOverview}: {courseOverview: CourseOverview})
     }
   }
 
-  const handleAuthorClicked = (authorId: number) => {
-    router.push(`/author/${authorId}`)
+  const handleAuthorClicked = (authorSlug: string) => {
+    router.push(`/lektor/${authorSlug}`)
   }
 
   const renderThubmnailOrTrailer = (): React.ReactNode => {
@@ -113,7 +112,7 @@ const CourseDetailContent = ({courseOverview}: {courseOverview: CourseOverview})
   }
   return (
     <PageContentWrapper>
-      <BackLink to={'/courses'} text={'Späť na kurzy'} />
+      <BackLink to={'/kurzy'} text={'Späť na kurzy'} />
       <Flex justifyContent="space-between">
         <Flex direction="column" alignSelf="flex-start" alignItems="flex-start" gap="32px" style={{maxWidth: '50%'}}>
           <Heading variant="h1" normalWeight>{courseOverview.name}</Heading>
@@ -121,8 +120,7 @@ const CourseDetailContent = ({courseOverview}: {courseOverview: CourseOverview})
           <MarkdownView children={courseOverview.longDescription} />
           <Heading variant="h2" normalWeight>Obsah</Heading>
           <CourseContent course={courseOverview} />
-          {/* TODO add course review is not finished */}
-          <CourseReviews courseId={courseOverview.id} />
+          <CourseReviews courseOverview={courseOverview} />
         </Flex>
 
         <CardFlex direction="column" gap="12px" alignSelf="flex-start">
@@ -163,7 +161,7 @@ const CourseDetailContent = ({courseOverview}: {courseOverview: CourseOverview})
                 <Rating readOnly value={courseOverview.reviewsOverview.averageRating} />
                 <Text>({courseOverview.reviewsOverview.numberOfReviews})</Text>
               </CourseInfoItem>
-              <CourseInfoItem clickable onClick={() => handleAuthorClicked(courseOverview.author.id)}>
+              <CourseInfoItem clickable onClick={() => handleAuthorClicked(courseOverview.author.slug)}>
                 <Avatar altName={courseOverview.author.name} src={courseOverview.author.imageUrl} />
                 <Text>{courseOverview.author.name}</Text>
               </CourseInfoItem>
@@ -224,26 +222,26 @@ const VideoWrapper = styled.div`
 `
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const courseId = context?.params?.courseId as string
-  const response = await Api.noAuthFetch(Api.courseOverviewUrl(Number(courseId)))
+  const slug = context?.params?.slug as string
+  const response = await Api.noAuthFetch(Api.courseOverviewUrl(slug))
 
   if (!response.ok) {
     return {
-      props: {courseId, courseOverview: null},
+      props: {slug, courseOverview: null},
     }
   } else {
     const courseOverview = await response.json() as CourseOverview
     return {
-      props: {courseId, courseOverview},
+      props: {slug, courseOverview},
     }
   }
 }
 
 export const getStaticPaths = async () => {
-  const response = await Api.noAuthFetch(Api.courseIdsUrl())
-  const ids = await response.json() as number[]
+  const response = await Api.noAuthFetch(Api.courseSlugsUrl())
+  const slugs = await response.json() as string[]
 
-  const paths = ids.map((id) => ({params: {courseId: id.toString()}}))
+  const paths = slugs.map((slug) => ({params: {slug}}))
 
   return {
     paths,

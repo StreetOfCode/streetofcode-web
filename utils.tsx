@@ -33,7 +33,7 @@ export const getCourseProgressPercent = (
 export const getTakeCourseUrl = (course: CourseOverview) => {
   const chapterId = course.userProgressMetadata?.nextChapterId ?? course.chapters[0].id
   const lectureId = course.userProgressMetadata?.nextLectureId ?? course.chapters[0].lectures[0].id
-  return `/course/${course.id}/take/chapter/${chapterId}/lecture/${lectureId}`
+  return `/kurzy/${course.slug}/kapitola/${chapterId}/lekcia/${lectureId}`
 }
 
 export interface GetPrevAndNextUrlResponse {
@@ -90,12 +90,12 @@ export const getPrevAndNextUrl = (
   let previousLectureUrl
   if (previous.chapter != null && previous.lecture != null) {
     previousLectureUrl =
-      `/course/${courseOverview.id}/take/chapter/${previous.chapter?.id}/lecture/${previous.lecture?.id}`
+      `/kurzy/${courseOverview.slug}/kapitola/${previous.chapter?.id}/lekcia/${previous.lecture?.id}`
   }
 
   let nextLectureUrl
   if (next.chapter != null && next.lecture != null) {
-    nextLectureUrl = `/course/${courseOverview.id}/take/chapter/${next.chapter?.id}/lecture/${next.lecture?.id}`
+    nextLectureUrl = `/kurzy/${courseOverview.slug}/kapitola/${next.chapter?.id}/lekcia/${next.lecture?.id}`
   }
 
   return {

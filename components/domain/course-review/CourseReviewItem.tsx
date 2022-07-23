@@ -13,12 +13,13 @@ import Loading from '../../Loading'
 
 type CourseReviewItemProps = {
   review: CourseReview
+  courseSlug: string
 }
 
-const CourseReviewItem = ({review}: CourseReviewItemProps) => {
+const CourseReviewItem = ({review, courseSlug}: CourseReviewItemProps) => {
   const {userId, isLoading} = useAuth()
 
-  const deleteCourseReviewMutation = useDeleteCourseReview(review.id, review.courseId)
+  const deleteCourseReviewMutation = useDeleteCourseReview(review.id, review.courseId, courseSlug)
 
   const onDelete = async () => {
     await deleteCourseReviewMutation.mutateAsync()
@@ -53,7 +54,7 @@ const CourseReviewItem = ({review}: CourseReviewItemProps) => {
           </ReviewField>
         )}
         {isEditing &&
-          <EditCourseReview review={review} onCancelled={onEditCancelled} onEdited={onEdited} />
+          <EditCourseReview review={review} onCancelled={onEditCancelled} onEdited={onEdited} courseSlug={courseSlug} />
         }
       </Flex>
     </ReviewItem>

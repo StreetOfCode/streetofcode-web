@@ -8,7 +8,7 @@ const Courses = ({courses}: { courses: CourseOverview[] }) => {
   return (
     <Wrapper>
       {courses.map((c) => (
-        <NextLink key={c.id} href={`/course/${c.id}`}>
+        <NextLink key={c.id} href={`/kurzy/${c.slug}`}>
           <CourseCard course={c} />
         </NextLink>
       ))}

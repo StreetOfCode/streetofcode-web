@@ -11,13 +11,17 @@ import CourseReviewItem from './CourseReviewItem'
 import Rating from '../../core/Rating'
 import {useAuth} from '../../../AuthUserContext'
 import Loading from '../../Loading'
+import {CourseOverview} from '../../../types'
 
 interface CourseReviewsProps {
-  courseId: number;
+  courseOverview: CourseOverview;
 }
 
-const CourseReviews = ({courseId}: CourseReviewsProps) => {
+const CourseReviews = ({courseOverview}: CourseReviewsProps) => {
   const {userId, isLoading} = useAuth()
+
+  const courseId = courseOverview.id
+  const courseSlug = courseOverview.slug
 
   const getCourseReviewsQuery = useGetCourseReviews(courseId)
   const getCourseReviewsOverviewQuery = useGetCourseReviewsOverview(courseId)
@@ -42,13 +46,13 @@ const CourseReviews = ({courseId}: CourseReviewsProps) => {
         )}
       </QueryGuard>
 
-      {canAddReview && <AddCourseReview courseId={courseId} />}
+      {canAddReview && <AddCourseReview courseId={courseId} courseSlug={courseSlug} />}
 
       <QueryGuard {...getCourseReviewsQuery}>
         {(courseReviews) => (
           <Flex direction="column" gap="16px" alignSelf="stretch">
             {courseReviews.map((courseReview) => (
-              <CourseReviewItem key={courseReview.id} review={courseReview} />
+              <CourseReviewItem key={courseReview.id} review={courseReview} courseSlug={courseSlug} />
             ))}
           </Flex>
         )}

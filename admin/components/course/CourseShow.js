@@ -46,6 +46,7 @@ const CourseShow = (props) => {
           <TextField source="name" />
         </ReferenceField>
         <TextField source="name" />
+        <TextField source="slug" />
         <TextField source="shortDescription" />
         <MarkdownField addLabel source="longDescription" />
         <MarkdownField addLabel source="resources" />

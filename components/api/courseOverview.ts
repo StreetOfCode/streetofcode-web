@@ -5,11 +5,11 @@ import {CourseOverview} from '../../types'
 const P = 'courseOverview'
 
 export const queryKeys = {
-  get: (courseId: number) => [P, courseId.toString()],
+  get: (slug: string) => [P, slug],
 }
 
-const fetchCourseOverview = async (courseId: number) => {
-  const response = await Api.authFetch(Api.courseOverviewUrl(courseId))
+const fetchCourseOverview = async (slug: string) => {
+  const response = await Api.authFetch(Api.courseOverviewUrl(slug))
 
   if (!response.ok) {
     // TODO
@@ -19,8 +19,8 @@ const fetchCourseOverview = async (courseId: number) => {
   return (await response.json()) as CourseOverview
 }
 
-export const useGetCourseOverview = (courseId: number, enabled: boolean | undefined) => {
-  return useQuery(queryKeys.get(courseId), () => fetchCourseOverview(courseId), {
+export const useGetCourseOverview = (slug: string, enabled: boolean | undefined) => {
+  return useQuery(queryKeys.get(slug), () => fetchCourseOverview(slug), {
     cacheTime: 60000,
     staleTime: 60000,
     enabled,

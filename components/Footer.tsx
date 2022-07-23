@@ -65,7 +65,7 @@ const Footer = () => {
         </Flex>
         <Flex justifyContent="flex-end" flex="1">
           <Flex direction="column" gap={'24px'} alignItems="stretch">
-            <MenuItem href="/courses">
+            <MenuItem href="/kurzy">
               <Text color="primary" uppercase>kurzy</Text>
             </MenuItem>
             <MenuItem href="#">

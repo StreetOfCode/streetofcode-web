@@ -14,7 +14,7 @@ const NavBar = () => {
       <Logo alt="Logo" src="soc_logo.png" onClick={() => router.push('/')} />
       <Flex>
         <MenuItems justifyContent="center" gap={'3em'}>
-          <NextLink href="/courses"><Text uppercase>kurzy</Text></NextLink>
+          <NextLink href="/kurzy"><Text uppercase>kurzy</Text></NextLink>
           <NextLink href="#"><Text uppercase>články</Text></NextLink>
           <NextLink href="#"><Text uppercase>O projekte</Text></NextLink>
         </MenuItems>

@@ -60,7 +60,7 @@ const TakeCourse = ({resourcesMode, courseOverview, chapterId, lectureId}: Props
   const Resources = () => {
     if (!courseOverview.resources) return null
 
-    const lectureUrl = `/course/${courseOverview.id}/take/chapter/${chapterId}/lecture/${lectureId}`
+    const lectureUrl = `/kurzy/${courseOverview.slug}/kapitola/${chapterId}/lekcia/${lectureId}`
 
     return (<>
       <ContentNavbarFlex justifyContent="space-between">
@@ -80,12 +80,13 @@ const TakeCourse = ({resourcesMode, courseOverview, chapterId, lectureId}: Props
     <>
       <WrapperFlex alignSelf="stretch" flex="1">
         <Sidebar>
-          <BackLink to={`/course/${courseOverview.id}`} text={'Späť na kurz'} />
+          <BackLink to={`/kurzy/${courseOverview.slug}`} text={'Späť na kurz'} />
           <QueryGuard {...getCourseProgressOverview}>
             {(courseProgressOverview) => (
               <CourseSidebar
                 courseProgressOverview={courseProgressOverview}
                 courseId={courseOverview.id.toString()}
+                courseSlug={courseOverview.slug}
                 chapterId={chapterId}
                 lectureId={lectureId}
                 hasResources={!!courseOverview.resources}

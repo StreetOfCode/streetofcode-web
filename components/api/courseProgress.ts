@@ -57,7 +57,7 @@ export const useGetCourseProgressOverview = (courseId: number) => {
     })
 }
 
-export const useResetLecture = (courseId: number) => {
+export const useResetLecture = (courseId: number, courseSlug: string) => {
   return useMutation(
     mutationKeys.resetLecture(),
     (lectureId: number) => resetLecture(lectureId),
@@ -68,7 +68,7 @@ export const useResetLecture = (courseId: number) => {
         Promise.all(
           [
             courseQueryKeys.getCourses,
-            courseOverviewQueryKeys.get(courseId),
+            courseOverviewQueryKeys.get(courseSlug),
           ].map(
             (key) => queryClient.invalidateQueries(key),
           ),
@@ -77,7 +77,7 @@ export const useResetLecture = (courseId: number) => {
     })
 }
 
-export const useUpdateProgressLecture = (courseId: number) => {
+export const useUpdateProgressLecture = (courseId: number, courseSlug: string) => {
   return useMutation(
     mutationKeys.updateLecture(),
     (lectureId: number) => updateProgressLecture(lectureId),
@@ -88,7 +88,7 @@ export const useUpdateProgressLecture = (courseId: number) => {
         Promise.all(
           [
             courseQueryKeys.getCourses,
-            courseOverviewQueryKeys.get(courseId),
+            courseOverviewQueryKeys.get(courseSlug),
           ].map(
             (key) => queryClient.invalidateQueries(key),
           ),

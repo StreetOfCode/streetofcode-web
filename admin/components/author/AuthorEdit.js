@@ -7,6 +7,7 @@ const AuthorEdit = (props) => {
       <SimpleForm>
         <NumberInput disabled source="id" />
         <TextInput source="name" />
+        <TextInput source="slug" />
         <TextInput source="description" />
         <TextInput required source="imageUrl" />
         <TextInput required source="coursesTitle" />

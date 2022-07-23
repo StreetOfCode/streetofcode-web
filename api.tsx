@@ -5,14 +5,14 @@ const API_URL = 'http://localhost:8080' // TODO
 const COURSES_OVERVIEW_URL = `${API_URL}/course/overview`
 export const coursesOverviewUrl = () => COURSES_OVERVIEW_URL
 
-const COURSE_IDS_URL = `${API_URL}/course/id`
-export const courseIdsUrl = () => COURSE_IDS_URL
+const COURSE_SLUGS_URL = `${API_URL}/course/slug`
+export const courseSlugsUrl = () => COURSE_SLUGS_URL
 
 const MY_COURSES_URL = `${API_URL}/course/my-courses`
 export const myCoursesUrl = () => MY_COURSES_URL
 
 const COURSE_OVERVIEW_URL = `${API_URL}/course/overview/`
-export const courseOverviewUrl = (courseId: number) => `${COURSE_OVERVIEW_URL}${courseId}`
+export const courseOverviewUrl = (slug: string) => `${COURSE_OVERVIEW_URL}${slug}`
 
 const COURSE_PROGRESS_OVERVIEW_URL = `${API_URL}/progress/overview/`
 export const courseProgressOverviewUrl = (courseId: number) => `${COURSE_PROGRESS_OVERVIEW_URL}${courseId}`
@@ -46,10 +46,10 @@ const RESET_PROGRESS_URL = `${API_URL}/progress/reset`
 export const resetProgressUrl = () => `${RESET_PROGRESS_URL}`
 
 const AUTHOR_OVERVIEW_URL = `${API_URL}/author/`
-export const authorOverviewUrl = (authorId: number) => `${AUTHOR_OVERVIEW_URL}${authorId}/overview`
+export const authorOverviewUrl = (slug: string) => `${AUTHOR_OVERVIEW_URL}${slug}/overview`
 
-const AUTHOR_IDS_URL = `${API_URL}/author/id`
-export const authorIdsUrl = () => AUTHOR_IDS_URL
+const AUTHOR_SLUGS_URL = `${API_URL}/author/slug`
+export const authorSlugssUrl = () => AUTHOR_SLUGS_URL
 
 const SEND_FEEDBACK_URL = `${API_URL}/email-feedback`
 export const sendFeedbackUrl = () => `${SEND_FEEDBACK_URL}`

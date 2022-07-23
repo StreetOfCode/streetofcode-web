@@ -21,7 +21,7 @@ type Props = {
 
 const AuthorPage: NextPage<Props> = ({authorOverview}: Props) => {
   const {user} = useAuth()
-  const getAuthorOverviewQuery = useGetAuthorOverview(authorOverview.id, !!user)
+  const getAuthorOverviewQuery = useGetAuthorOverview(authorOverview.slug, !!user)
 
   if (user) {
     return (<QueryGuard {...getAuthorOverviewQuery}>
@@ -81,8 +81,8 @@ const StyledDescription = styled(Text)`
 `
 
 export const getStaticProps: GetStaticProps = async (context: GetStaticPropsContext) => {
-  const authorId = context?.params?.id as string
-  const response = await Api.noAuthFetch(Api.authorOverviewUrl(Number(authorId)))
+  const slug = context?.params?.slug as string
+  const response = await Api.noAuthFetch(Api.authorOverviewUrl(slug))
 
   const authorOverview = await response.json() as AuthorOverview
 
@@ -92,11 +92,11 @@ export const getStaticProps: GetStaticProps = async (context: GetStaticPropsCont
 }
 
 export const getStaticPaths = async () => {
-  const response = await Api.noAuthFetch(Api.authorIdsUrl())
+  const response = await Api.noAuthFetch(Api.authorSlugssUrl())
 
-  const ids = await response.json() as number[]
+  const ids = await response.json() as string[]
 
-  const paths = ids.map((id) => ({params: {id: id.toString()}}))
+  const paths = ids.map((slug) => ({params: {slug}}))
 
   return {
     paths,
