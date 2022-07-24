@@ -87,7 +87,7 @@ const Home: NextPage<Props> = ({courses}) => {
             <Heading variant="h1" color="accent">podcast</Heading>
           </div>
           <PodcastsSlider />
-          <Flex justifyContent="center" gap="64px">
+          <Flex justifyContent="center" gap="64px" alignSelf="center">
             <a href={spotifyUrl} target="blank">
               <SpotifyIcon src={spotifyImageUrl} alt="Street of Code podcast" loading="lazy" />
             </a>

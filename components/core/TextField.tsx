@@ -11,6 +11,7 @@ type Props = {
   maxLength?: number
   itemBefore?: React.ReactNode
   errorText?: string
+  disabled?: boolean
 } & HTMLAttributes<HTMLElement>
 
 const TextField = ({
@@ -21,6 +22,7 @@ const TextField = ({
   maxLength,
   itemBefore,
   errorText,
+  disabled,
   ...props}: Props,
 ) => {
   return (
@@ -34,6 +36,7 @@ const TextField = ({
         minRows={1}
         maxRows={6}
         fullWidth
+        disabled={disabled}
         inputProps={{
           maxLength,
         }}
@@ -58,7 +61,7 @@ const ErrorMessage = styled.span`
   font-size: 14px;
 `
 
-const StyledTextField = styled(MuiTextField)`
+const StyledTextField = styled(MuiTextField)<{disabled?: boolean}>`
 
   .MuiFormHelperText-root {
     color: #545454;

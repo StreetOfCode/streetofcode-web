@@ -64,7 +64,7 @@ const VoteNextCourse = () => {
     return (
       <QueryGuard {...getVoteNextCourse}>
         {(nextCourseOptions) => nextCourseOptions.length > 0 ? (
-          <Flex direction="column" gap="22px">
+          <Flex direction="column" gap="22px" alignSelf="center">
             <Text align="center">
               Keď chceš, aby sme spravili dáky kurz, tak zahlasuj
               a možno (ale len možno) budeš vypočutý/á!

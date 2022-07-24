@@ -1,134 +1,195 @@
-import {Button, FormControl, TextField, Typography} from '@material-ui/core'
 import {NextPage} from 'next'
 import React, {ChangeEvent, useState} from 'react'
 import styled from 'styled-components'
 import * as Api from '../api'
-import Loading from '../components/Loading'
+import Button from '../components/core/Button'
+import Flex from '../components/core/Flex'
+import Heading from '../components/core/Heading'
+import Text from '../components/core/Text'
+import TextField from '../components/core/TextField'
+import {discordInviteUrl} from '../components/landing-page/discord'
 import NavBar from '../components/NavBar'
 import PageContentWrapper from '../components/PageContentWrapper'
 import {SendFeedbackRequest} from '../types'
 import {emailRegex} from '../utils'
 
-const FEEDBACK_INFO_TEXT = `Chceš nám niečo povedať? Či už je to niečo pozitívne, negatívne,
-niečo nefunguje či máš nejaký nápad ako by sme mohli stránku a obsah vylepšiť, tak všetko chceme vedieť`
-const SUCCESSFULLY_SENT_EMAIL_TEXT = 'Email bol úspešne poslaný, ďakujeme pekne.'
 
-// TODO rething this whole page and redesign
+const SUCCESSFULLY_SENT_EMAIL_TEXT = 'Email bol úspešne poslaný, ďakujeme pekne.'
+const FAILED_SENT_EMAIL_TEXT = 'Email sa nepodarilo odoslať'
+
 
 const FeedbackPage: NextPage = () => {
-  const [emailSuccessfullySentText, setEmailSuccessfullySentText] = useState<boolean>(false)
-  const [emailText, setEmailText] = useState<string>('')
-  const [emailTextError, setEmailTextError] = useState<boolean>(false)
+  const [emailSentSuccess, setEmailSentSuccess] = useState<boolean>(false)
+  const [emailSentError, setEmailSentError] = useState<boolean>(false)
+  const [message, setMessage] = useState<string>('')
+  const [messageError, setMessageError] = useState<string>('')
   const [email, setEmail] = useState<string>('')
-  const [emailError, setEmailError] = useState<boolean>(false)
+  const [emailError, setEmailError] = useState<string>('')
   const [subject, setSubject] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const getFeedbackText = () => {
-    if (emailSuccessfullySentText) {
-      return SUCCESSFULLY_SENT_EMAIL_TEXT
-    }
-    return FEEDBACK_INFO_TEXT
-  }
 
   const onEmailChanged = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmailError(false)
     setEmail(e.target.value)
+    setEmailError('')
   }
 
   const onSubjectChanged = (e: ChangeEvent<HTMLInputElement>) => {
     setSubject(e.target.value)
   }
 
-  const onEmailTextChanged = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmailTextError(false)
-    setEmailText(e.target.value)
+  const onMessageChanged = (e: ChangeEvent<HTMLInputElement>) => {
+    setMessage(e.target.value)
+    setMessageError('')
   }
 
-  const onAdd = async () => {
-    setIsLoading(true)
-
-    if (!emailText) {
-      setEmailTextError(true)
-      setIsLoading(false)
-      return
-    }
-
-    if (!email) {
-      setEmailError(true)
-      setIsLoading(false)
+  const onSubmit = async () => {
+    if (!email.trimEnd()) {
+      setEmailError('Email je prádzny')
       return
     } else if (!emailRegex.test(email)) {
-      setEmailError(true)
-      setIsLoading(false)
+      setEmailError('Email má nesprávny formát')
       return
     }
 
-    setEmailError(false)
-    setEmailTextError(false)
-
-    const result = await Api.authPost<SendFeedbackRequest>(Api.sendFeedbackUrl(), {
-      email,
-      subject,
-      emailText,
-    })
-
-    if (!result.ok) {
-      // TODO handle error
-      setIsLoading(false)
+    if (!message.trimEnd()) {
+      setMessageError('Správa je prázdna')
       return
     }
 
-    setEmailSuccessfullySentText(true)
-    setIsLoading(false)
+    try {
+      setIsLoading(true)
+      const result = await Api.authPost<SendFeedbackRequest>(Api.sendFeedbackUrl(), {
+        email,
+        subject,
+        emailText: message,
+      })
 
-    setEmailText('')
-    setEmail('')
-    setSubject('')
+      if (!result.ok) {
+        setEmailSentError(true)
+      } else {
+        setEmailSentSuccess(true)
+      }
+    } catch (err) {
+      setEmailSentError(true)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const renderDiscordLink = (text: string) => {
+    return <a href={discordInviteUrl} target="blank">{text}</a>
   }
 
   return (
     <>
       <NavBar />
       <PageContentWrapper>
-        <Wrapper>
-          <Form>
-            <Typography variant="h6" component="h6">
-              {getFeedbackText()}
-            </Typography>
-            <TextField label="Email" required value={email} onChange={onEmailChanged} error={emailError} />
-            <TextField label="Predmet" value={subject} onChange={onSubjectChanged} />
-            <TextField
-              label="Správa"
-              required
-              value={emailText}
-              onChange={onEmailTextChanged}
-              error={emailTextError}
-              multiline
-              rows={6}
-            />
-            {isLoading && <Loading />}
-            {!isLoading && (
-              <Button variant="contained" color="primary" onClick={onAdd}>
-                Odoslať
+        <Flex justifyContent="space-between" alignItems="flex-start">
+          <Flex direction="column" gap="32px" alignItems="flex-start">
+            <FAQItem direction="column" gap="8px" alignItems="flex-start">
+              <Heading variant="h3">
+                Kde vám môžem napísať?
+              </Heading>
+              <Text>
+                Najviac by sme preferovali, kebyže nám napíšeš na {renderDiscordLink('Discorde')}.
+                Avšak môžeš nám napísať priamo mail na info@streetofcode.sk, alebo nám napís na Instagrame či FB,
+                alebo použi formulár na tejto stránke.
+              </Text>
+            </FAQItem>
+            <FAQItem direction="column" gap="8px" alignItems="flex-start">
+              <Heading variant="h3">
+                Ako môžem nahlásiť problém?
+              </Heading>
+              <Text>
+                Ak si našiel alebo našla nejakú chybu, či už vizuálneho alebo funkcionálneho charakteru,
+                tak najlepšie bude, ak nám napíšes podrobnosti do mailu alebo na {renderDiscordLink('Discorde')}.
+              </Text>
+              <Text>Do správy prosím napíš:</Text>
+              <StyledUL>
+                <li>Zariadenie, na ktorom sa chyba prejavila (mobil, tablet, desktop/notebook)</li>
+                <li>Popis chyby</li>
+                <li>Pribaliť screenshoty (ak máš)</li>
+              </StyledUL>
+            </FAQItem>
+            <FAQItem direction="column" gap="8px" alignItems="flex-start">
+              <Heading variant="h3">
+                Chýba vám kurz, ktorý potrebujem
+              </Heading>
+              <Text>
+                Ak si myslíš, že by tu určite nemal chýbať nejaký kurz, tak nám daj vedieť aký,
+                a možno ho pripravíme.
+              </Text>
+            </FAQItem>
+            <FAQItem direction="column" gap="8px" alignItems="flex-start">
+              <Heading variant="h3">
+                Chcem s vami spolupracovať
+              </Heading>
+              <Text>
+                Radi si tvoj nápad na spoluprácu vypočujeme. Napíš nám o čo ide a učite sa ti ozveme.
+              </Text>
+            </FAQItem>
+          </Flex>
+          <FormWrapper>
+            <Flex direction="column" alignItems="flex-start" gap="20px">
+              <Heading normalWeight variant="h4" align="left" withAccentUnderline>Tvoj email</Heading>
+              <TextField
+                text={email}
+                onTextChanged={onEmailChanged}
+                label="jozko.mrkvicka@gmail.com"
+                errorText={emailError}
+                disabled={isLoading || emailSentSuccess || emailSentError}
+              />
+              <Heading normalWeight variant="h4" align="left" withAccentUnderline>Predmet správy</Heading>
+              <TextField
+                text={subject}
+                onTextChanged={onSubjectChanged}
+                label="Chcem nahlásiť problém / Mám nápad"
+                maxLength={128}
+                disabled={isLoading || emailSentSuccess || emailSentError}
+              />
+              <Heading normalWeight variant="h4" align="left" withAccentUnderline>Správa</Heading>
+              <TextField
+                text={message}
+                onTextChanged={onMessageChanged}
+                errorText={messageError}
+                maxLength={1024}
+                disabled={isLoading || emailSentSuccess || emailSentError}
+              />
+              <Button
+                variant="accent"
+                disabled={isLoading || emailSentSuccess || emailSentError}
+                onClick={onSubmit}
+              >Odoslať správu
               </Button>
-            )}
-          </Form>
-        </Wrapper>
+              {emailSentSuccess && <Text>{SUCCESSFULLY_SENT_EMAIL_TEXT}</Text>}
+              {emailSentError && <Text>{FAILED_SENT_EMAIL_TEXT}</Text>}
+            </Flex>
+          </FormWrapper>
+        </Flex>
       </PageContentWrapper>
     </>
-
   )
 }
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const FAQItem = styled(Flex)`
+  width: 600px;
 `
 
-const Form = styled(FormControl)`
-  width: 50%;
+const StyledUL = styled.ul`
+  margin: 0;
+  margin-left: 16px;
+  padding: 0;
+
+  li {
+    margin: 6px;
+    padding: 0;
+  }
 `
+
+const FormWrapper = styled.div`
+  width: 400px;
+`
+
 
 export default FeedbackPage

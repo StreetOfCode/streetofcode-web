@@ -11,6 +11,7 @@ import {FaDiscord, FaSpotify} from 'react-icons/fa'
 import {SiPatreon} from 'react-icons/si'
 import styled from 'styled-components'
 import Flex from './core/Flex'
+import NextLink from './core/NextLink'
 import Text from './core/Text'
 
 const Footer = () => {
@@ -65,24 +66,24 @@ const Footer = () => {
         </Flex>
         <Flex justifyContent="flex-end" flex="1">
           <Flex direction="column" gap={'24px'} alignItems="stretch">
-            <MenuItem href="/kurzy">
+            <NextLink href="/kurzy">
               <Text color="primary" uppercase>kurzy</Text>
-            </MenuItem>
-            <MenuItem href="#">
+            </NextLink>
+            <NextLink href="#">
               <Text color="primary" uppercase>články</Text>
-            </MenuItem>
-            <MenuItem href="#">
+            </NextLink>
+            <NextLink href="#">
               <Text color="primary" uppercase>O projekte</Text>
-            </MenuItem>
-            <MenuItem href="#">
+            </NextLink>
+            <NextLink href="#">
               <Text color="primary" uppercase>videá</Text>
-            </MenuItem>
-            <MenuItem href="#">
+            </NextLink>
+            <NextLink href="#">
               <Text color="primary" uppercase>podcasty</Text>
-            </MenuItem>
-            <MenuItem href="#">
-              <Text color="primary" uppercase>kontakt</Text>
-            </MenuItem>
+            </NextLink>
+            <NextLink href="/feedback">
+              <Text color="primary" uppercase>feedback</Text>
+            </NextLink>
           </Flex>
         </Flex>
       </WrapperFlex>
@@ -107,10 +108,6 @@ const SocialIconLink = styled.a`
   &:hover {
     color: ${(props) => props.theme.greyBackgroundColor};
   }
-`
-
-const MenuItem = styled.a`
-  text-decoration: none;
 `
 
 const Logo = styled.img`

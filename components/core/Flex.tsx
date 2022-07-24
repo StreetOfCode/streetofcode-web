@@ -41,7 +41,7 @@ const Flex = ({
       justifyContent={justifyContent || 'flex-start'}
       alignItems={alignItems || 'center'}
       alignContent={alignContent || 'normal'}
-      alignSelf={alignSelf || 'center'}
+      alignSelf={alignSelf}
       gap={gap}
       flex={flex}
       {...props}
