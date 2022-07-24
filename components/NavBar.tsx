@@ -15,7 +15,7 @@ const NavBar = () => {
       <Flex>
         <MenuItems justifyContent="center" gap={'3em'}>
           <NextLink href="/kurzy"><Text uppercase>kurzy</Text></NextLink>
-          <NextLink href="#"><Text uppercase>o projekte</Text></NextLink>
+          <NextLink href="/o-projekte"><Text uppercase>o projekte</Text></NextLink>
           <NextLink href="/feedback"><Text uppercase>feedback</Text></NextLink>
         </MenuItems>
         <LogInOrOutButton />

@@ -72,7 +72,7 @@ const Footer = () => {
             <NextLink href="#">
               <Text color="primary" uppercase>články</Text>
             </NextLink>
-            <NextLink href="#">
+            <NextLink href="/o-projekte">
               <Text color="primary" uppercase>O projekte</Text>
             </NextLink>
             <NextLink href="#">
