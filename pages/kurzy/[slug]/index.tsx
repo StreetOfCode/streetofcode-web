@@ -155,7 +155,6 @@ const CourseDetailContent = ({courseOverview}: {courseOverview: CourseOverview})
                 <Text>{quizzesCount} {Utils.numOfQuizzesText(quizzesCount)}</Text>
               </CourseInfoItem>}
             </Flex>
-            {/* TODO when course review is changed then reload this component */}
             <Flex direction="column" alignItems="flex-start" alignSelf="flex-start" gap="12px">
               <CourseInfoItem>
                 <Rating readOnly value={courseOverview.reviewsOverview.averageRating} />

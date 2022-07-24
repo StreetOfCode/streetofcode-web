@@ -12,7 +12,7 @@ const fetchCourseReviewsOverview = async (courseId: number) => {
   const response = await Api.authFetch(Api.courseReviewsOverviewUrl(courseId))
 
   if (!response.ok) {
-    throw Error('Courses error - TBD')
+    throw Error('Nepodarilo sa načítať kurzové hodnotenia')
   }
 
   return (await response.json()) as CourseReviewsOverview

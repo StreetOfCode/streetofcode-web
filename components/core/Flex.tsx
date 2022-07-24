@@ -13,7 +13,7 @@ type Props = {
 } & HTMLAttributes<HTMLDivElement>
 
 type Direction = 'row' | 'column'
-type JustifyContent =
+export type JustifyContent =
   | 'flex-start'
   | 'flex-end'
   | 'center'

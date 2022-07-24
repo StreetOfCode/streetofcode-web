@@ -15,7 +15,7 @@ const fetchNextCourseOptions = async () => {
     if (response.status === 412) {
       return []
     } else {
-      throw Error('getNextCourseOptions - TBD')
+      throw Error('Nepodarilo sa načítať kurzy pre hlasovanie')
     }
   }
 

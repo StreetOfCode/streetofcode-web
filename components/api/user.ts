@@ -28,7 +28,7 @@ const addUser = async (addUser: AddSocUser) => {
   const result = await Api.authPost<AddSocUser>(Api.userUrl(), addUser)
 
   if (!result.ok) {
-    throw Error('Add user error - TBD')
+    throw Error('Nepodarilo sa pridať používateľa')
   }
 
   return (await result.json()) as SocUser
@@ -38,7 +38,7 @@ const editUser = async (editUser: EditSocUser) => {
   const result = await Api.authPut<EditSocUser>(Api.userUrl(), editUser)
 
   if (!result.ok) {
-    throw Error('Edit user error - TBD')
+    throw Error('Nepodarilo sa zmeniť tvoj profil')
   }
 
   return (await result.json()) as SocUser

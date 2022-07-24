@@ -1,4 +1,7 @@
-import {ChapterOverview, CourseOverview, LectureOverview, UserProgressMetadata} from './types'
+import React from 'react'
+import {AiOutlinePlayCircle, AiOutlineQuestionCircle} from 'react-icons/ai'
+import {CgNotes} from 'react-icons/cg'
+import {ChapterOverview, CourseOverview, LectureOverview, LectureType, UserProgressMetadata} from './types'
 
 /***
  * i.e from 287 => 4h 47minút
@@ -34,6 +37,16 @@ export const getTakeCourseUrl = (course: CourseOverview) => {
   const chapterId = course.userProgressMetadata?.nextChapterId ?? course.chapters[0].id
   const lectureId = course.userProgressMetadata?.nextLectureId ?? course.chapters[0].lectures[0].id
   return `/kurzy/${course.slug}/kapitola/${chapterId}/lekcia/${lectureId}`
+}
+
+export const getLectureTypeIcon = (lectureType: LectureType) => {
+  if (lectureType === 'VIDEO') {
+    return <AiOutlinePlayCircle />
+  } else if (lectureType === 'TEXT') {
+    return <CgNotes />
+  } else {
+    return <AiOutlineQuestionCircle />
+  }
 }
 
 export interface GetPrevAndNextUrlResponse {

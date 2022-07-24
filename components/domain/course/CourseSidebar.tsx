@@ -1,12 +1,9 @@
 import React, {HTMLAttributes, useEffect} from 'react'
 import styled, {keyframes} from 'styled-components'
-import {ChapterProgressOverview, CourseProgressOverview, LectureProgressOverview} from '../../../types'
+import {ChapterProgressOverview, CourseProgressOverview} from '../../../types'
 import Flex from '../../core/Flex'
 import {ChevronDownIcon} from '@radix-ui/react-icons'
-import {AiOutlinePlayCircle, AiOutlineQuestionCircle} from 'react-icons/ai'
-import {MdCheckBoxOutlineBlank, MdCheckBox} from 'react-icons/md'
 import {GrNotes} from 'react-icons/gr'
-import {CgNotes} from 'react-icons/cg'
 import * as Accordion from '@radix-ui/react-accordion'
 import Heading from '../../core/Heading'
 import Text from '../../core/Text'
@@ -15,6 +12,7 @@ import CircullarProgressWithLabel from '../../CircullarProgressWithLabel'
 import {useRouter} from 'next/router'
 import NextLink from '../../core/NextLink'
 import {useResetLecture, useUpdateProgressLecture} from '../../api/courseProgress'
+import CheckBox from '../../core/CheckBox'
 
 type Props = {
   className?: string
@@ -74,33 +72,16 @@ const CourseSidebar = ({
     router.push(`/kurzy/${courseSlug}/kapitola/${chapterId}/lekcia/${lectureId}`)
   }
 
-  const handleResetLectureProgress = async (e: React.MouseEvent, lectureId: number) => {
-    e.preventDefault()
-    e.stopPropagation()
-
-    await resetLecture.mutateAsync(lectureId)
-  }
-
-  const handleUpdateLectureProgress = async (e: React.MouseEvent, lectureId: number) => {
-    e.preventDefault()
-    e.stopPropagation()
-
-    await updateProgressLecture.mutateAsync(lectureId)
+  const handleLectureCheckboxOnClick = async (checkboxValue: boolean, lectureId: number) => {
+    if (checkboxValue) {
+      await updateProgressLecture.mutateAsync(lectureId)
+    } else {
+      await resetLecture.mutateAsync(lectureId)
+    }
   }
 
   const progressValuePercent =
     (courseProgressOverview.lecturesViewed / courseProgressOverview.courseLecturesCount) * 100
-
-
-  const renderLectureTypeIcon = (lecture: LectureProgressOverview) => {
-    if (lecture.lectureType === 'VIDEO') {
-      return <AiOutlinePlayCircle />
-    } else if (lecture.lectureType === 'TEXT') {
-      return <CgNotes />
-    } else {
-      return <AiOutlineQuestionCircle />
-    }
-  }
 
   return (
     <>
@@ -150,7 +131,7 @@ const CourseSidebar = ({
                 >
                   <Flex gap="12px" justifyContent="space-between" flex="1">
                     <Flex gap="8px">
-                      {renderLectureTypeIcon(lecture)}
+                      {Utils.getLectureTypeIcon(lecture.lectureType)}
                       <Flex direction="column" alignItems="flex-start" gap="2px">
                         <StyledText>{lecture.name}</StyledText>
                         {lecture.videoDurationSeconds > 0 &&
@@ -160,13 +141,11 @@ const CourseSidebar = ({
                         }
                       </Flex>
                     </Flex>
-                    {/* TODO use CheckBox core component */}
-                    {lecture.viewed &&
-                      <MdCheckBox onClick={(e) => handleResetLectureProgress(e, lecture.id)} />
-                    }
-                    {!lecture.viewed &&
-                      <MdCheckBoxOutlineBlank onClick={(e) => handleUpdateLectureProgress(e, lecture.id)} />
-                    }
+                    <CheckBox
+                      checked={lecture.viewed}
+                      onToggle={(newValue) => handleLectureCheckboxOnClick(newValue, lecture.id)}
+                      alignSelf="center"
+                    />
                   </Flex>
                 </ItemContent>
               ))}
@@ -238,10 +217,12 @@ const ItemContent = styled(Accordion.Content)<{selected?: boolean}>`
     animation: ${closeContentAnimation} 300ms ease-out forwards;
   };
 
-  color: ${(props) => props.selected ? props.theme.accentColor : 'unset'};
+  svg {
+    color: ${(props) => props.selected ? props.theme.accentColor : props.theme.secondaryColor};
+  }
 
   ${StyledText} {
-    color: ${(props) => props.selected ? props.theme.accentColor  : 'unset'};
+    color: ${(props) => props.selected ? props.theme.accentColor  : props.theme.secondaryColor};
   }
 `
 

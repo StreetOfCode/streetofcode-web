@@ -4,7 +4,7 @@ import NextLink from '../../core/NextLink'
 import MarkdownView from '../../core/MarkdownView'
 import BackLink from '../../core/BackLink'
 import styled from 'styled-components'
-import Flex from '../../core/Flex'
+import Flex, {JustifyContent} from '../../core/Flex'
 import Heading from '../../core/Heading'
 import CourseSidebar from './CourseSidebar'
 import LectureDetail from '../lecture/LectureDetail'
@@ -33,22 +33,26 @@ const TakeCourse = ({resourcesMode, courseOverview, chapterId, lectureId}: Props
     return (<>
       <ContentNavbarFlex justifyContent="space-between">
         {previousLectureUrl
-          ? <StyledNextLink href={previousLectureUrl} textAlign="left">
-            <Button variant="outline" withoutUppercase normalWeight>
-              Predošlá lekcia
-            </Button>
-          </StyledNextLink>
+          ? <Box justifyContent="flex-start">
+            <NextLink href={previousLectureUrl}>
+              <Button variant="outline" withoutUppercase normalWeight>
+                Predošlá lekcia
+              </Button>
+            </NextLink>
+          </Box>
           : <EmptyBox />
         }
 
         <Heading variant="h2" normalWeight withAccentUnderline>{currentLecture?.name}</Heading>
 
         {nextLectureUrl
-          ? <StyledNextLink href={nextLectureUrl} textAlign="right">
-            <Button variant="outline" withoutUppercase normalWeight>
-              Ďalšia lekcia
-            </Button>
-          </StyledNextLink>
+          ? <Box justifyContent="flex-end">
+            <NextLink href={nextLectureUrl}>
+              <Button variant="outline" withoutUppercase normalWeight>
+                Ďalšia lekcia
+              </Button>
+            </NextLink>
+          </Box>
           : <EmptyBox />
         }
       </ContentNavbarFlex>
@@ -64,11 +68,13 @@ const TakeCourse = ({resourcesMode, courseOverview, chapterId, lectureId}: Props
 
     return (<>
       <ContentNavbarFlex justifyContent="space-between">
-        <StyledNextLink href={lectureUrl} textAlign="left">
-          <Button variant="outline" withoutUppercase normalWeight>
-            Späť
-          </Button>
-        </StyledNextLink>
+        <Box justifyContent="flex-start">
+          <NextLink href={lectureUrl}>
+            <Button variant="outline" withoutUppercase normalWeight>
+              Späť
+            </Button>
+          </NextLink>
+        </Box>
         <Heading variant="h2" normalWeight withAccentUnderline>Materiály</Heading>
         <EmptyBox />
       </ContentNavbarFlex>
@@ -124,9 +130,11 @@ const EmptyBox = styled.div`
   visibility: hidden;
   flex: 1;
 `
-const StyledNextLink = styled(NextLink)<{textAlign: string}>`
+
+const Box = styled.div<{justifyContent: JustifyContent}>`
+  display: flex;
   flex: 1;
-  text-align: ${(props) => props.textAlign};
+  justify-content: ${(props) => props.justifyContent};
 `
 
 const ContentNavbarFlex = styled(Flex)`

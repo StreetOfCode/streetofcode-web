@@ -21,7 +21,7 @@ const fetchCourseProgressOverview = async (courseId: number) => {
   const response = await Api.authFetch(Api.courseProgressOverviewUrl(courseId))
 
   if (!response.ok) {
-    throw Error('Courses error - TBD')
+    throw Error('Nepodarilo sa načítať priebeh kurzu')
   }
 
   return (await response.json()) as CourseProgressOverview
@@ -31,7 +31,7 @@ const resetLecture = async (lectureId: number) => {
   const result = await Api.authPost(Api.resetProgressUrl(), {lectureId})
 
   if (!result.ok) {
-    throw Error('Courses error - TBD')
+    throw Error('Nepodarilo sa resetnúť priebeh lekcie')
   }
 
   return (await result.json()) as CourseProgressOverview
@@ -41,7 +41,7 @@ const updateProgressLecture = async (lectureId: number) => {
   const result = await Api.authPost(Api.updateProgressLectureUrl(lectureId))
 
   if (!result.ok) {
-    throw Error('Courses error - TBD')
+    throw Error('Nepodarilo sa aktualizovať priebeh lekcie')
   }
 
   return (await result.json()) as CourseProgressOverview

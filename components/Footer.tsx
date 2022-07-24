@@ -111,7 +111,6 @@ const SocialIconLink = styled.a`
 
 const MenuItem = styled.a`
   text-decoration: none;
-  // TODO add hover effect
 `
 
 const Logo = styled.img`

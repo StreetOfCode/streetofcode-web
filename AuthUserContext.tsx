@@ -3,7 +3,7 @@ import {useRouter} from 'next/router'
 import React, {createContext, useContext, useEffect, useState} from 'react'
 import * as Auth from './auth'
 
-// dummy logout TODO
+// dummy logout, won't be used
 const logout = () => {
   return
 }

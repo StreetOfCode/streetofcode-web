@@ -12,8 +12,7 @@ const fetchQuizzesByLectureId = async (lectureId: number) => {
   const response = await Api.authFetch(Api.quizByLectureUrl(lectureId))
 
   if (!response.ok) {
-    // TODO
-    throw Error('fetchQuizzesByLectureId error - TBD')
+    throw Error('Nepodarilo sa načítať kvíz')
   }
 
   return (await response.json()) as Quiz[]

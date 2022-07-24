@@ -2,7 +2,6 @@ import React, {HTMLAttributes} from 'react'
 import styled, {keyframes} from 'styled-components'
 import * as Accordion from '@radix-ui/react-accordion'
 import {ChapterOverview, CourseOverview} from '../../../types'
-import {AiOutlinePlayCircle, AiOutlineFileText} from 'react-icons/ai'
 import Heading from '../../core/Heading'
 import Text from '../../core/Text'
 import Flex from '../../core/Flex'
@@ -56,9 +55,7 @@ const CourseContent = ({className, course, ...props}: Props) => {
                 }
               >
                 <Flex gap="12px">
-                  {/* TODO we need to introduce lectureType */}
-                  {lecture.videoDurationSeconds > 0 && <AiOutlinePlayCircle />}
-                  {lecture.videoDurationSeconds === 0 && <AiOutlineFileText />}
+                  {Utils.getLectureTypeIcon(lecture.lectureType)}
                   <StyledText>{lecture.name}</StyledText>
                 </Flex>
                 <Flex>

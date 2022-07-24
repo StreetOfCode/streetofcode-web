@@ -12,8 +12,7 @@ const fetchAuthorOverview = async (slug: string) => {
   const response = await Api.authFetch(Api.authorOverviewUrl(slug))
 
   if (!response.ok) {
-    // TODO
-    throw Error('authors error - TBD')
+    throw Error('Nepodarilo sa načítať lektora')
   }
 
   return (await response.json()) as AuthorOverview

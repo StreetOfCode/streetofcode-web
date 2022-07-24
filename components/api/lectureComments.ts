@@ -19,7 +19,7 @@ const fetchLectureComments = async (lectureId: number) => {
   const response = await Api.authFetch(Api.lectureCommentsUrl(lectureId))
 
   if (!response.ok) {
-    throw Error('Lecture comments error - TBD')
+    throw Error('Nepodarilo sa načítať komenty')
   }
 
   return (await response.json()) as LectureComment[]
@@ -32,7 +32,7 @@ const addLectureComment = async (lectureId: number, lectureComment: LectureComme
   )
 
   if (!result.ok) {
-    throw Error('Lecture comments error - TBD')
+    throw Error('Nepodarilo sa pridať koment')
   }
 
   return (await result.json()) as LectureComment
@@ -48,7 +48,7 @@ const editLectureComment = async (
   )
 
   if (!result.ok) {
-    throw Error('Lecture comments error - TBD')
+    throw Error('Nepodarilo sa zmeniť koment')
   }
 
   return (await result.json()) as LectureComment
@@ -63,7 +63,7 @@ const deleteLectureComment = async (
   )
 
   if (!result.ok) {
-    throw Error('Lecture comments error - TBD')
+    throw Error('Nepodarilo sa vymazať koment')
   }
 }
 

@@ -22,7 +22,7 @@ const fetchCourseReviews = async (courseId: number) => {
   const response = await Api.authFetch(Api.courseReviewsUrl(courseId))
 
   if (!response.ok) {
-    throw Error('Courses error - TBD')
+    throw Error('Nepodarilo sa načítať kurzové hodnotenia')
   }
 
   return (await response.json()) as CourseReview[]
@@ -32,7 +32,7 @@ const addCourseReview = async (addRequest: CourseReviewAddRequest) => {
   const result = await Api.authPost<CourseReviewAddRequest>(Api.addCourseReviewUrl(), addRequest)
 
   if (!result.ok) {
-    throw Error('Courses error - TBD')
+    throw Error('Nepodarilo sa pridať hodnotenie kurzu')
   }
 
   return (await result.json()) as CourseReview
@@ -47,7 +47,7 @@ const editCourseReview = async (
   )
 
   if (!result.ok) {
-    throw Error('Courses error - TBD')
+    throw Error('Nepodarilo sa zmeniť hodnotenie kurzu')
   }
 
   return (await result.json()) as CourseReview
@@ -61,7 +61,7 @@ const deleteCourseReview = async (
   )
 
   if (!result.ok) {
-    throw Error('Courses error - TBD')
+    throw Error('Nepodarilo sa vymazať hodnotenie kurzu')
   }
 
   return (await result.json()) as CourseReview

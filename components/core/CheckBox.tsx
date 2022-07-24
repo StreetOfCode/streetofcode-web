@@ -1,7 +1,7 @@
 import React, {HTMLAttributes} from 'react'
 import {MdCheckBoxOutlineBlank, MdCheckBox} from 'react-icons/md'
 import styled from 'styled-components'
-import Flex from './Flex'
+import Flex, {AlignItems} from './Flex'
 import Text from './Text'
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
   onToggle: (newValue: boolean) => void
   checkedColor?: string
   size?: string
-  borderColor?: string
+  alignSelf?: AlignItems
 } & HTMLAttributes<HTMLElement>
 
 const CheckBox = ({
@@ -23,6 +23,7 @@ const CheckBox = ({
   checked,
   label,
   onToggle,
+  alignSelf,
   ...props
 }: Props) => {
 
@@ -41,7 +42,7 @@ const CheckBox = ({
     <WrapperFlex
       className={className}
       {...props}
-      alignSelf="flex-start"
+      alignSelf={alignSelf || 'flex-start'}
       gap="8px"
       onClick={(e) => handleClick(e)}
       disabled={disabled}
