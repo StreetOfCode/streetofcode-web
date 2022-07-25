@@ -38,16 +38,16 @@ const CourseReviewItem = ({review, courseSlug}: CourseReviewItemProps) => {
   return (
     <ReviewItem>
       <Flex gap="12px" alignSelf="stretch">
-        <Flex direction="column" alignSelf="flex-start" gap="8px">
-          <UserAvatar imageUrl={review.imageUrl} name={review.userName} sizePx={40} />
+        <LeftColumn direction="column" alignSelf="stretch" gap="8px" justifyContent="center">
+          <UserAvatar imageUrl={review.imageUrl} name={review.userName} sizePx={42} />
           <EditItemActions />
-        </Flex>
+        </LeftColumn>
         {!isEditing && (
           <ReviewField>
             <Flex direction="column" alignItems="flex-start" gap="8px">
               <Flex justifyContent="space-between" alignSelf="stretch">
                 <Rating readOnly value={review.rating} />
-                <Text>{review.userName}</Text>
+                <Text size="very-small">{review.userName}</Text>
               </Flex>
               <Text>{review.text}</Text>
             </Flex>
@@ -64,6 +64,10 @@ const CourseReviewItem = ({review, courseSlug}: CourseReviewItemProps) => {
 
 const ReviewItem = styled.div`
   align-self: stretch;
+`
+
+const LeftColumn = styled(Flex)`
+  width: 70px;
 `
 
 const ReviewField = styled.div`
