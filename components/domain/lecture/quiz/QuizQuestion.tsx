@@ -160,6 +160,9 @@ export const QuizQuestion = ({
                   direction="column"
                   color={isToggled ? 'white' : 'black'}
                   borderColor={wasAnsweredCorrectly !== null && isToggled ? checkedColor : theme.accentColor}
+                  onClick={() => {
+                    if (!wasAnsweredCorrectly) onAnswerSelected(a)
+                  }}
                 >
                   <CheckBox
                     label={a.text}
@@ -167,7 +170,7 @@ export const QuizQuestion = ({
                     checkedColor="white"
                     onToggle={() => onAnswerSelected(a)}
                     checked={selectedAnswerIds.includes(a.id)}
-                    size="24px"
+                    size="20px"
                   />
                 </WrappedFlex>
               )
@@ -226,4 +229,5 @@ const WrappedFlex = styled(Flex)<{backgroundColor?: string, color?: string, bord
   color: ${(props) => props.color};
   justify-content: center;
   background-color: ${(props) => props.backgroundColor};
+  cursor: pointer;
 `
