@@ -6,8 +6,8 @@ import Flex from './Flex'
 type Props = {
   className?: string
   variant?: Variant
-  withoutUppercase?: boolean
-  normalWeight?: boolean
+  uppercase?: boolean
+  bold?: boolean
   disabled?: boolean
   size?: Size
   iconBefore?: React.ReactNode
@@ -20,7 +20,7 @@ const variantStyleValues = {
   accent: {
     color: theme.primaryColor,
     backgroundColor: theme.accentColor,
-    border: 'none',
+    border: `2px solid ${theme.accentColor}`,
   },
   default: {
     color: theme.secondaryColor,
@@ -53,8 +53,8 @@ const Button = ({
   children,
   className,
   variant,
-  withoutUppercase,
-  normalWeight,
+  uppercase,
+  bold,
   disabled,
   size,
   iconBefore,
@@ -64,8 +64,8 @@ const Button = ({
     <StyledButton
       className={className}
       variant={variant || 'default'}
-      withoutUppercase={withoutUppercase}
-      normalWeight={normalWeight}
+      uppercase={uppercase}
+      bold={bold}
       disabled={disabled}
       size={size || 'default'}
       {...props}
@@ -80,21 +80,21 @@ const Button = ({
 
 const StyledButton = styled.button<{
   variant: Variant,
-  withoutUppercase?: boolean,
-  normalWeight?: boolean,
+  uppercase?: boolean,
+  bold?: boolean,
   disabled?: boolean,
   size: Size
 }>`
   background-color: ${(props) => variantStyleValues[props.variant].backgroundColor};
   color: ${(props) => variantStyleValues[props.variant].color};
   border: ${(props) => variantStyleValues[props.variant].border};
-  padding: .75em 1.25em;
+  padding: .5em 1.25em;
   border-radius: 10px;
   font-size: ${(props) => sizeStyleValues[props.size].fontSize};
-  font-weight: ${(props) => props.normalWeight ? 'normal' : 'bold'};
+  font-weight: ${(props) => props.bold ? 'bold' : 'normal'};
   opacity: ${(props) => props.disabled && 0.7};
 
-  text-transform: ${(props) => props.withoutUppercase ? 'unset' : 'uppercase'};
+  text-transform: ${(props) => props.uppercase ? 'uppercase' : 'unset'};
 
   &:hover {
     cursor: ${(props) => !props.disabled && 'pointer'};
