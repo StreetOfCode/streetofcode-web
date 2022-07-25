@@ -38,16 +38,16 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
   return (
     <CommentItem>
       <Flex gap="12px" alignSelf="stretch">
-        <Flex direction="column" alignSelf="flex-start" gap="8px">
-          <UserAvatar imageUrl={comment.imageUrl} name={comment.userName} sizePx={40} />
+        <LeftColumn direction="column" alignSelf="stretch" gap="8px" justifyContent="center">
+          <UserAvatar imageUrl={comment.imageUrl} name={comment.userName} sizePx={42} />
           <EditItemActions />
-        </Flex>
+        </LeftColumn>
         {!isEditing && (
           <CommentField>
             <Flex direction="column" alignItems="flex-start" gap="8px">
               <Flex justifyContent="space-between" alignSelf="stretch">
-                <Text>{formatDate(comment.updatedAt)}</Text>
-                <Text>{comment.userName}</Text>
+                <Text size="very-small">{formatDate(comment.updatedAt)}</Text>
+                <Text size="very-small">{comment.userName}</Text>
               </Flex>
               <Text>{comment.commentText}</Text>
             </Flex>
@@ -68,6 +68,10 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
 
 const CommentItem = styled.div`
   align-self: stretch;
+`
+
+const LeftColumn = styled(Flex)`
+  width: 70px;
 `
 
 const CommentField = styled.div`
