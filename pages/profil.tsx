@@ -114,7 +114,6 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
         <Button
           disabled={changeLoading}
           variant="accent"
-          withoutUppercase
           onClick={submitChangedNewsletter}
           style={{alignSelf: 'stretch'}}
         >Prihlásiť sa na odber noviniek</Button>
@@ -136,11 +135,10 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
           <Button
             disabled={changeLoading}
             variant="accent"
-            withoutUppercase
             style={{flex: 1}}
             onClick={submitChangedName}
           >Potvrdiť</Button>
-          <Button disabled={changeLoading} withoutUppercase style={{flex: 1}} onClick={cancelEditName}>Zrušiť</Button>
+          <Button disabled={changeLoading} style={{flex: 1}} onClick={cancelEditName}>Zrušiť</Button>
         </Flex>
       </Flex>
     )

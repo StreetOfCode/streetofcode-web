@@ -72,7 +72,6 @@ const VoteNextCourse = () => {
             <Flex gap="12px">
               {nextCourseOptions.map((courseOption) =>
                 (<CourseOptionButton
-                  normalWeight
                   key={courseOption.id}
                   onClick={() => handleOnSelected(courseOption.id)}
                   selected={selectedNextCourses.includes(courseOption.id)}

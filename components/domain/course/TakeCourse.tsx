@@ -35,7 +35,7 @@ const TakeCourse = ({resourcesMode, courseOverview, chapterId, lectureId}: Props
         {previousLectureUrl
           ? <Box justifyContent="flex-start">
             <NextLink href={previousLectureUrl}>
-              <Button variant="outline" withoutUppercase normalWeight>
+              <Button variant="outline">
                 Predošlá lekcia
               </Button>
             </NextLink>
@@ -48,7 +48,7 @@ const TakeCourse = ({resourcesMode, courseOverview, chapterId, lectureId}: Props
         {nextLectureUrl
           ? <Box justifyContent="flex-end">
             <NextLink href={nextLectureUrl}>
-              <Button variant="outline" withoutUppercase normalWeight>
+              <Button variant="outline">
                 Ďalšia lekcia
               </Button>
             </NextLink>
@@ -70,7 +70,7 @@ const TakeCourse = ({resourcesMode, courseOverview, chapterId, lectureId}: Props
       <ContentNavbarFlex justifyContent="space-between">
         <Box justifyContent="flex-start">
           <NextLink href={lectureUrl}>
-            <Button variant="outline" withoutUppercase normalWeight>
+            <Button variant="outline">
               Späť
             </Button>
           </NextLink>

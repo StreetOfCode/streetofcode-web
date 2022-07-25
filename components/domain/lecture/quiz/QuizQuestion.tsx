@@ -179,7 +179,6 @@ export const QuizQuestion = ({
       <Flex alignSelf="stretch" justifyContent="space-between">
         { wasAnsweredCorrectly === null &&
           <Button
-            withoutUppercase
             disabled={selectedAnswerIds.length === 0}
             variant="accent"
             onClick={() => onSubmit()}
@@ -187,8 +186,6 @@ export const QuizQuestion = ({
         { wasAnsweredCorrectly && <AnswerFeedbackText>Správne!</AnswerFeedbackText>}
         { wasAnsweredCorrectly === false &&
         <TryAgainButton
-          withoutUppercase
-          normalWeight
           onClick={() => {
             setAnsweredCorrectly(null)
             setSelectedAnswerIds([])

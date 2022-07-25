@@ -43,10 +43,10 @@ const EditableLectureComment = (
       {!isLoading && (
         <Flex alignItems="flex-end" gap="12px" alignSelf="flex-start">
           <SubmitButton variant="accent" onClick={handleOnSubmit}>
-            {initialText && 'upraviť komentár'}
-            {!initialText && 'pridať komentár'}
+            {initialText && 'Upraviť komentár'}
+            {!initialText && 'Pridať komentár'}
           </SubmitButton>
-          {onEditCancelled && <Button onClick={onEditCancelled}>zrušiť</Button>}
+          {onEditCancelled && <Button onClick={onEditCancelled}>Zrušiť</Button>}
         </Flex>
       )}
     </WrapperFlex>

@@ -128,7 +128,7 @@ const CourseDetailContent = ({courseOverview}: {courseOverview: CourseOverview})
           {isLoading && <Loading />}
           {!isLoading && user && <NextLink href={url} alignSelf="stretch">
             <StyledButton variant="accent">
-              {courseOverview.userProgressMetadata ? 'pokračovať v kurze' : 'spustiť kurz'}
+              {courseOverview.userProgressMetadata ? 'Pokračovať v kurze' : 'Spustiť kurz'}
             </StyledButton>
           </NextLink>}
           {!isLoading && !user && (

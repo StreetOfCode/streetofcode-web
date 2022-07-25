@@ -51,10 +51,10 @@ const EditableCourseReview = (
       {!isLoading && (
         <Flex alignItems="flex-end" gap="12px" alignSelf="flex-start">
           <SubmitButton variant="accent" onClick={handleOnSubmit}>
-            {initialText && 'upraviť hodnotenie'}
-            {!initialText && 'pridať hodnotenie'}
+            {initialText && 'Upraviť hodnotenie'}
+            {!initialText && 'Pridať hodnotenie'}
           </SubmitButton>
-          {onEditCancelled && <Button onClick={onEditCancelled}>zrušiť</Button>}
+          {onEditCancelled && <Button onClick={onEditCancelled}>Zrušiť</Button>}
         </Flex>
 
       )}

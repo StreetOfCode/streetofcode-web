@@ -49,13 +49,11 @@ const LoginPage: NextPage = () => {
           {!user && (
             <>
               <GoogleButton
-                withoutUppercase
                 iconBefore={<FaGoogle />}
                 onClick={() => Auth.loginWithGoogle()}
               >Prihlásiť cez Google
               </GoogleButton>
               <GithubButton
-                withoutUppercase
                 iconBefore={<FaGithub />}
                 onClick={() => Auth.loginWithGithub()}
               >Prihlásiť cez GitHub
