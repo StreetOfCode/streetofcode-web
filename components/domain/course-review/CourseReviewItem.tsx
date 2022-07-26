@@ -38,7 +38,7 @@ const CourseReviewItem = ({review, courseSlug}: CourseReviewItemProps) => {
   return (
     <ReviewItem>
       <Flex gap="12px" alignSelf="stretch">
-        <LeftColumn direction="column" alignSelf="stretch" gap="8px" justifyContent="center">
+        <LeftColumn direction="column" alignSelf="flex-start" gap="8px" justifyContent="center">
           <UserAvatar imageUrl={review.imageUrl} name={review.userName} sizePx={42} />
           <EditItemActions />
         </LeftColumn>

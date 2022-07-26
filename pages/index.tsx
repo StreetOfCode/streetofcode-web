@@ -51,7 +51,7 @@ const Home: NextPage<Props> = ({courses}) => {
                 <Heading variant="h3">programátora či začínajúcej programátorky</Heading>
               </div>
               <NextLink href={'/kurzy'}>
-                <Button variant="accent" size="very-large">online kurzy</Button>
+                <Button variant="accent" size="very-large" uppercase bold>online kurzy</Button>
               </NextLink>
             </Flex>
             <AnimationWrapper>
