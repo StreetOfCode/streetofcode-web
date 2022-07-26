@@ -26,7 +26,7 @@ const TextField = ({
   ...props}: Props,
 ) => {
   return (
-    <InputBox className={className} {...props}>
+    <InputBox className={className} style={{paddingTop: itemBefore ? '12px' : '4px'}} {...props}>
       {itemBefore}
       <StyledTextField
         placeholder={label}
