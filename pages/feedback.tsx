@@ -93,8 +93,8 @@ const FeedbackPage: NextPage = () => {
               </Heading>
               <Text>
                 Najviac by sme preferovali, kebyže nám napíšeš na {renderDiscordLink('Discorde')}.
-                Avšak môžeš nám napísať priamo mail na info@streetofcode.sk, alebo nám napís na Instagrame či FB,
-                alebo použi formulár na tejto stránke.
+                Avšak môžeš nám napísať priamo mail na <strong>info@streetofcode.sk</strong>,
+                na Instagrame či FB alebo použi formulár na tejto stránke.
               </Text>
             </FAQItem>
             <FAQItem direction="column" gap="8px" alignItems="flex-start">
@@ -102,14 +102,14 @@ const FeedbackPage: NextPage = () => {
                 Ako môžem nahlásiť problém?
               </Heading>
               <Text>
-                Ak si našiel alebo našla nejakú chybu, či už vizuálneho alebo funkcionálneho charakteru,
-                tak najlepšie bude, ak nám napíšes podrobnosti do mailu alebo na {renderDiscordLink('Discorde')}.
+                Ak si našiel alebo našla nejakú chybu, či už vizuálneho alebo funkčného charakteru,
+                najlepšie bude, ak nám napíšes podrobnosti do mailu alebo na {renderDiscordLink('Discorde')}.
               </Text>
               <Text>Do správy prosím napíš:</Text>
               <StyledUL>
-                <li>Zariadenie, na ktorom sa chyba prejavila (mobil, tablet, desktop/notebook)</li>
+                <li>Zariadenie, na ktorom sa chyba prejavila (mobil, tablet, počítač)</li>
                 <li>Popis chyby</li>
-                <li>Pribaliť screenshoty (ak máš)</li>
+                <li>Pribal prosím ťa aj screenshoty, ak máš</li>
               </StyledUL>
             </FAQItem>
             <FAQItem direction="column" gap="8px" alignItems="flex-start">
@@ -117,7 +117,7 @@ const FeedbackPage: NextPage = () => {
                 Chýba vám kurz, ktorý potrebujem
               </Heading>
               <Text>
-                Ak si myslíš, že by tu určite nemal chýbať nejaký kurz, tak nám daj vedieť aký,
+                Ak si myslíš, že by tu určite nemal chýbať nejaký kurz, tak nám daj vedieť aký
                 a možno ho pripravíme.
               </Text>
             </FAQItem>
@@ -126,7 +126,7 @@ const FeedbackPage: NextPage = () => {
                 Chcem s vami spolupracovať
               </Heading>
               <Text>
-                Radi si tvoj nápad na spoluprácu vypočujeme. Napíš nám o čo ide a učite sa ti ozveme.
+                Radi si tvoj nápad na spoluprácu vypočujeme. Napíš nám o čo ide a určite sa ti ozveme.
               </Text>
             </FAQItem>
           </Flex>
