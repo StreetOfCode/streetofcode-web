@@ -38,7 +38,7 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
   return (
     <CommentItem>
       <Flex gap="12px" alignSelf="stretch">
-        <LeftColumn direction="column" alignSelf="stretch" gap="8px" justifyContent="center">
+        <LeftColumn direction="column" alignSelf="flex-start" gap="8px" justifyContent="center">
           <UserAvatar imageUrl={comment.imageUrl} name={comment.userName} sizePx={42} />
           <EditItemActions />
         </LeftColumn>
