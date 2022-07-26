@@ -26,7 +26,7 @@ const Footer = () => {
     <Background>
       <WrapperFlex justifyContent="space-between">
         <Flex direction="column" alignSelf="stretch" justifyContent="space-between" alignItems="flex-start" flex="1">
-          <Logo alt="Logo" src="soc_logo.png" onClick={() => router.push('/')} />
+          <Logo alt="Logo" src="/soc_logo.png" onClick={() => router.push('/')} />
           <div>
             <Text color="primary" size="small">Street of Code o.z.</Text>
             <Text color="primary" size="small">Hlaváčiková 29</Text>
