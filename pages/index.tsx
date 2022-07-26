@@ -16,6 +16,7 @@ import * as Api from '../api'
 import {CourseOverview} from '../types'
 import PodcastsSlider from '../components/landing-page/PodcastsSlider'
 import NextLink from '../components/core/NextLink'
+import {device} from '../theme/device'
 
 interface Props {
   courses: CourseOverview[]
@@ -177,7 +178,7 @@ const Box = styled.div<{paddingBottom?: string, paddingTop?: string}>`
   > * {
     margin-right: 2em;
     margin-left: 2em;
-    width: clamp(920px, 100%, 1200px);
+    width: clamp(360px, 100%, 1200px);
     align-self: center;
     flex-grow: 1;
   }
@@ -193,6 +194,10 @@ const AnimationWrapper = styled.div`
   padding-top: 24px;
   svg {
     overflow: visible;
+  }
+
+  @media ${device.mobile} {
+    display: none;
   }
 `
 

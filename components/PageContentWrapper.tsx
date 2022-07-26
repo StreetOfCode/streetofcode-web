@@ -13,8 +13,7 @@ const Wrapper = styled.div`
   align-self: center;
   padding-top: 100px;
   padding-bottom: 100px;
-  max-width: 1200px;
-  width: 100%;
+  width: clamp(360px, 100%, 1200px);
 `
 
 export default PageContentWrapper
