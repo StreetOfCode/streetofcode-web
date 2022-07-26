@@ -13,7 +13,7 @@ const NavBar = () => {
 
   return (
     <WrapperFlex alignSelf="center" justifyContent="space-between">
-      <Logo alt="Logo" src="soc_logo.png" onClick={() => router.push('/')} />
+      <Logo alt="Logo" src="/soc_logo.png" onClick={() => router.push('/')} />
       <MenuIcon />
       <MenuFlex>
         <MenuItems justifyContent="center" gap={'3em'}>
