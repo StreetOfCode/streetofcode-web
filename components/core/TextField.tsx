@@ -26,7 +26,7 @@ const TextField = ({
   ...props}: Props,
 ) => {
   return (
-    <InputBox className={className} style={{paddingTop: itemBefore ? '12px' : '4px'}} {...props}>
+    <InputBox className={className} itemBefore={itemBefore} {...props}>
       {itemBefore}
       <StyledTextField
         placeholder={label}
@@ -48,9 +48,10 @@ const TextField = ({
   )
 }
 
-const InputBox = styled.div`
+const InputBox = styled.div<{itemBefore?: React.ReactNode}>`
   width: 100%;
   padding: 12px;
+  padding-top: ${(props) => props.itemBefore ? '12px' : '4px'};
   padding-bottom: 4px;
   border-radius: 12px;
   border: 1px solid ${(props) => props.theme.accentColor};
