@@ -64,7 +64,8 @@ const Home: NextPage<Props> = ({courses}) => {
               <Heading variant="h2">Pozri si naše</Heading>
               <Heading variant="h1" color="accent">kurzy</Heading>
             </div>
-            <CoursesSliderWrapper initialCourses={courses} />
+            <CoursesSlider showCoursesCount={3} courses={courses} />
+            <MobileCoursesSlider showCoursesCount={1} courses={courses} />
             <NextLink href={'/kurzy'} alignSelf="center">
               <AllCoursesText
                 color="accent"
@@ -85,15 +86,16 @@ const Home: NextPage<Props> = ({courses}) => {
             <Heading variant="h2">pri upratovaní si môžeš pustiť náš</Heading>
             <Heading variant="h1" color="accent">podcast</Heading>
           </div>
-          <PodcastsSlider />
-          <Flex justifyContent="center" gap="64px" alignSelf="center">
+          <PodcastSliderStyled showPodcastsCount={3} />
+          <MobilePodcastSlider showPodcastsCount={1} />
+          <PodcastSocialsFlex justifyContent="center" gap="64px" alignSelf="center">
             <a href={spotifyUrl} target="blank">
               <SpotifyIcon src={spotifyImageUrl} alt="Street of Code podcast" loading="lazy" />
             </a>
             <a href={youtubeUrl} target="blank">
               <YoutubeIcon src={youtubeImageUrl} alt="Street of Code video" loading="lazy" />
             </a>
-          </Flex>
+          </PodcastSocialsFlex>
         </Flex>
       </Box>
       <Box>
@@ -103,7 +105,8 @@ const Home: NextPage<Props> = ({courses}) => {
             <Heading variant="h2">zostane čas, tak si môžeš pozrieť naše</Heading>
             <Heading variant="h1" color="accent">videá</Heading>
           </div>
-          <VideosSlider />
+          <VideosSliderStyled showVideosCount={2} />
+          <MobileVideosSlider showVideosCount={1} />
           <a href={youtubeUrl} target="blank" style={{alignSelf: 'center'}}>
             <YoutubeIcon src={youtubeImageUrl} alt="Street of Code video" loading="lazy" />
           </a>
@@ -118,7 +121,7 @@ const Home: NextPage<Props> = ({courses}) => {
             <Heading variant="h1" color="accent">Discorde</Heading>
             <a href={discordInviteUrl} target="blank">
               <DiscordButton variant="accent" size="large">
-                pridaj sa!
+                Pridaj sa!
               </DiscordButton>
             </a>
           </div>
@@ -126,12 +129,12 @@ const Home: NextPage<Props> = ({courses}) => {
         </Flex>
       </Box>
       <Box>
-        <Flex direction="column" gap="32px">
-          <div style={{alignSelf: 'flex-start'}}>
+        <Flex direction="column" gap="32px" alignItems="flex-start">
+          <div>
             <Heading variant="h2" inline>A kto sme vlastne</Heading>
             <Heading variant="h1" color="accent" inline> my?</Heading>
           </div>
-          <Flex gap="32px" justifyContent="space-between" alignItems="flex-start">
+          <AboutUsContentWrapper gap="32px" justifyContent="space-between" alignItems="flex-start">
             <UsImage src="http://streetofcode.sk/wp-content/uploads/2022/06/P1200649-scaled.jpg" alt="Street of Code" />
             <Heading variant="h3" normalWeight>
               Sme dvaja kamaráti, full-time programátori, ktorí sa rozhodli,
@@ -139,7 +142,7 @@ const Home: NextPage<Props> = ({courses}) => {
               Niečo, čo by potenciálne mohlo aj pomôcť iným ľudom.
               Preto sme sa rozhodli vytvoriť Street of Code.
             </Heading>
-          </Flex>
+          </AboutUsContentWrapper>
         </Flex>
       </Box>
     </Wrapper>
@@ -183,6 +186,56 @@ const Box = styled.div`
     margin-bottom: 16px;
   }
 `
+
+const CoursesSlider = styled(CoursesSliderWrapper)`
+  @media ${device.tablet} {
+    display: none;
+  }
+`
+
+const MobileCoursesSlider = styled(CoursesSliderWrapper)`
+  display: none;
+
+  @media ${device.tablet} {
+    display: flex;;
+  }
+`
+
+const PodcastSliderStyled = styled(PodcastsSlider)`
+  @media ${device.tablet} {
+    display: none;
+  }
+`
+
+const MobilePodcastSlider = styled(PodcastsSlider)`
+  display: none;
+
+  @media ${device.tablet} {
+    display: flex;;
+  }
+`
+
+const VideosSliderStyled = styled(VideosSlider)`
+  @media ${device.tablet} {
+    display: none;
+  }
+`
+
+const MobileVideosSlider = styled(VideosSlider)`
+  display: none;
+
+  @media ${device.tablet} {
+    display: flex;
+  }
+`
+
+const PodcastSocialsFlex = styled(Flex)`
+  @media ${device.tablet} {
+    flex-direction: column;
+    gap: 32px;
+  }
+`
+
 
 const HeroSection = styled(Flex)`
   padding-top: 3em;
@@ -251,6 +304,14 @@ const DiscordImage = styled.img`
     transition: 250ms ease-in-out;
     box-shadow: 1px 8px 20px #D6D6D6;
   }
+
+  @media ${device.tablet} {
+    max-height: 300px;
+  }
+
+  @media ${device.mobile} {
+    display: none;
+  }
 `
 
 const SpotifyIcon = styled.img`
@@ -271,6 +332,16 @@ const UsImage = styled.img`
     transform: scale(1.1);
     transition: 250ms ease-in-out;
     box-shadow: 1px 8px 20px #D6D6D6;
+  }
+
+  @media ${device.tablet} {
+    max-height: 250px;
+  }
+`
+
+const AboutUsContentWrapper = styled(Flex)`
+  @media ${device.tablet} {
+    flex-direction: column;
   }
 `
 

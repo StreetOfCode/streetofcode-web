@@ -1,13 +1,18 @@
-import React from 'react'
+import React, {HTMLAttributes} from 'react'
 import styled from 'styled-components'
 import Flex from '../core/Flex'
 import Heading from '../core/Heading'
 import Slider from '../Slider'
 import {podcasts} from './podcasts'
 
-const PodcastsSlider = () => {
+type Props = {
+  className?: string
+  showPodcastsCount: number
+} & HTMLAttributes<HTMLElement>
+
+const PodcastsSlider = ({className, showPodcastsCount}: Props) => {
   return (
-    <Slider items={podcasts} showItemsCount={3} itemLayout={(podcast, i) => {
+    <Slider className={className} items={podcasts} showItemsCount={showPodcastsCount} itemLayout={(podcast, i) => {
       return (
         <Flex key={i} direction="column" gap="16px">
           <Heading variant="h3">{podcast.title}</Heading>

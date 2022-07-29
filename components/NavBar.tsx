@@ -87,7 +87,6 @@ const CloseMenuIcon = styled(AiOutlineClose)`
 `
 
 const MenuFlex = styled(Flex)`
-
   @media ${device.mobile} {
     display: none;
   }

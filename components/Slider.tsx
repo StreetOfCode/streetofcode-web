@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import styled, {css} from 'styled-components'
 import {FaChevronLeft, FaChevronRight} from 'react-icons/fa'
 import Flex from '../components/core/Flex'
+import {device} from '../theme/device'
 
 const getInitialWindow = (numberOfItems: number, showItemsCount: number) => {
   // We want start and end be in the middle (based on numberOfItems)
@@ -28,6 +29,7 @@ const getInitialWindow = (numberOfItems: number, showItemsCount: number) => {
 }
 
 type Props<T> = {
+  className?: string;
   items: T[];
   showItemsCount: number;
   itemLayout: (item: T, index: number) => React.ReactElement;
@@ -38,7 +40,7 @@ type SliderWindow = {
   end: number;
 };
 
-const Slider = <T,>({items, itemLayout, showItemsCount}: Props<T>) => {
+const Slider = <T,>({className, items, itemLayout, showItemsCount}: Props<T>) => {
   const [{start, end}, setWindow] = useState<SliderWindow>(
     getInitialWindow(items.length, showItemsCount),
   )
@@ -56,25 +58,37 @@ const Slider = <T,>({items, itemLayout, showItemsCount}: Props<T>) => {
   }
 
   return (
-    <Flex justifyContent="space-between" gap="32px" alignSelf="stretch">
+    <WrapperFlex className={className} justifyContent="space-between" gap="32px" alignSelf="stretch">
       <IconLeft onClick={handleLeftIconClick} disabled={start === 0} />
       {items.slice(start, end + 1).map((item, i) => itemLayout(item, i))}
       <IconRight
         onClick={handRightIconClick}
         disabled={end === items.length - 1}
       />
-    </Flex>
+    </WrapperFlex>
   )
 }
+
+const WrapperFlex = styled(Flex)`
+  @media ${device.mobile} {
+    gap: 8px;
+  }
+`
 
 const iconStyle = css<{ disabled: boolean }>`
   width: 40px;
   height: 40px;
   color: ${(props) => props.theme.accentColor};
   opacity: ${(props) => props.disabled && 0.7};
+  flex-shrink: 0;
 
   &:hover {
     cursor: ${(props) => (props.disabled ? 'unset' : 'pointer')};
+  }
+
+  @media ${device.mobile} {
+    width: 24px;
+    height: 24px;
   }
 `
 

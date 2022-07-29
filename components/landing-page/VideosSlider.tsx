@@ -1,12 +1,17 @@
-import React from 'react'
+import React, {HTMLAttributes} from 'react'
 import styled from 'styled-components'
 import Flex from '../core/Flex'
 import Slider from '../Slider'
 import {videos} from './videos'
 
-const VideosSlider = () => {
+type Props = {
+  className?: string
+  showVideosCount: number
+} & HTMLAttributes<HTMLElement>
+
+const VideosSlider = ({className, showVideosCount}: Props) => {
   return (
-    <Slider items={videos} showItemsCount={2} itemLayout={(video, i) => {
+    <Slider className={className} items={videos} showItemsCount={showVideosCount} itemLayout={(video, i) => {
       return (
         <Flex key={i} direction="column" gap="16px">
           <a href={video.youtubeUrl} target="blank">

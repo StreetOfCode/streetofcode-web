@@ -1,4 +1,4 @@
-import React, {} from 'react'
+import React, {HTMLAttributes} from 'react'
 import {useAuth} from '../../AuthUserContext'
 import {QueryGuard} from '../../QueryGuard'
 import {CourseOverview} from '../../types'
@@ -7,7 +7,13 @@ import NextLink from '../core/NextLink'
 import CourseCard from '../domain/course/CourseCard'
 import Slider from '../Slider'
 
-export const CoursesSliderWrapper = ({initialCourses}: { initialCourses: CourseOverview[] }) => {
+type Props = {
+  className?: string
+  courses: CourseOverview[]
+  showCoursesCount: number
+} & HTMLAttributes<HTMLElement>
+
+export const CoursesSliderWrapper = ({className, courses, showCoursesCount}: Props) => {
   const {user} = useAuth()
   const getCoursesQuery = useGetCourses(!!user)
 
@@ -16,21 +22,21 @@ export const CoursesSliderWrapper = ({initialCourses}: { initialCourses: CourseO
       <QueryGuard {...getCoursesQuery}>
         {(courses: CourseOverview[]) => {
           return (
-            <CoursesSlider courses={courses} />
+            <CoursesSlider className={className} showCoursesCount={showCoursesCount} courses={courses} />
           )
         }}
       </QueryGuard>
     )
   } else {
     return (
-      <CoursesSlider courses={initialCourses} />
+      <CoursesSlider className={className} showCoursesCount={showCoursesCount} courses={courses} />
     )
   }
 }
 
-const CoursesSlider = ({courses}: { courses: CourseOverview[] }) => {
+const CoursesSlider = ({className, courses, showCoursesCount}: Props) => {
   return (
-    <Slider items={courses} showItemsCount={3} itemLayout={(course, i) => {
+    <Slider className={className} items={courses} showItemsCount={showCoursesCount} itemLayout={(course, i) => {
       return (
         <NextLink key={i} href={`/kurzy/${course.slug}`}>
           <CourseCard course={course} />
@@ -39,5 +45,6 @@ const CoursesSlider = ({courses}: { courses: CourseOverview[] }) => {
     />
   )
 }
+
 
 export default CoursesSliderWrapper

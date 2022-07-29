@@ -2,7 +2,7 @@ import React, {HTMLAttributes} from 'react'
 import styled from 'styled-components'
 import {device} from '../../theme/device'
 
-type Props  = {
+type Props = {
   className?: string
   inline?: boolean
   variant: Variant
@@ -47,13 +47,13 @@ const Heading = ({
 }
 
 const styleValues = {
-  mobile: {
-    title: {fontSize: '52px', lineHeight: '1.0'},
-    h1: {fontSize: '42px', lineHeight: '1.1'},
-    h2: {fontSize: '32px', lineHeight: '1.2'},
-    h3: {fontSize: '18px', lineHeight: '1.3'},
-    h4: {fontSize: '20px', lineHeight: '1.4'},
-    h5: {fontSize: '16px', lineHeight: '1.4'},
+  default: {
+    title: {fontSize: '112px', lineHeight: '1.0'},
+    h1: {fontSize: '86px', lineHeight: '1.1'},
+    h2: {fontSize: '48px', lineHeight: '1.2'},
+    h3: {fontSize: '32px', lineHeight: '1.3'},
+    h4: {fontSize: '24px', lineHeight: '1.4'},
+    h5: {fontSize: '22px', lineHeight: '1.4'},
   },
   tablet: {
     title: {fontSize: '86px', lineHeight: '1.0'},
@@ -63,13 +63,13 @@ const styleValues = {
     h4: {fontSize: '22px', lineHeight: '1.4'},
     h5: {fontSize: '18px', lineHeight: '1.4'},
   },
-  default: {
-    title: {fontSize: '112px', lineHeight: '1.0'},
-    h1: {fontSize: '86px', lineHeight: '1.1'},
-    h2: {fontSize: '48px', lineHeight: '1.2'},
-    h3: {fontSize: '32px', lineHeight: '1.3'},
-    h4: {fontSize: '24px', lineHeight: '1.4'},
-    h5: {fontSize: '22px', lineHeight: '1.4'},
+  mobile: {
+    title: {fontSize: '52px', lineHeight: '1.0'},
+    h1: {fontSize: '42px', lineHeight: '1.1'},
+    h2: {fontSize: '32px', lineHeight: '1.2'},
+    h3: {fontSize: '22px', lineHeight: '1.3'},
+    h4: {fontSize: '20px', lineHeight: '1.4'},
+    h5: {fontSize: '16px', lineHeight: '1.4'},
   },
 }
 
