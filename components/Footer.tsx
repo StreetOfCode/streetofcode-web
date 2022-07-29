@@ -10,6 +10,7 @@ import {
 import {FaDiscord, FaSpotify} from 'react-icons/fa'
 import {SiPatreon} from 'react-icons/si'
 import styled from 'styled-components'
+import {device} from '../theme/device'
 import Flex from './core/Flex'
 import NextLink from './core/NextLink'
 import Text from './core/Text'
@@ -25,15 +26,21 @@ const Footer = () => {
   return (
     <Background>
       <WrapperFlex justifyContent="space-between">
-        <Flex direction="column" alignSelf="stretch" justifyContent="space-between" alignItems="flex-start" flex="1">
+        <LogoWithAddressFlex
+          direction="column"
+          alignSelf="stretch"
+          justifyContent="space-between"
+          alignItems="flex-start"
+          flex="1"
+        >
           <Logo alt="Logo" src="/soc_logo.png" onClick={() => router.push('/')} />
           <div>
             <Text color="primary" size="small">Street of Code o.z.</Text>
             <Text color="primary" size="small">Hlaváčiková 29</Text>
             <Text color="primary" size="small">84105, Bratislava</Text>
           </div>
-        </Flex>
-        <Flex direction="column" alignSelf="flex-end" gap="24px">
+        </LogoWithAddressFlex>
+        <SocialsWithCopyright direction="column" alignSelf="flex-end" gap="24px">
           <Text color="primary">Copyright © {getCurrentYear()} Street of Code</Text>
           <Flex gap="8px">
             <SocialIconLink href="https://github.com/StreetOfCode" target="_blank">
@@ -63,8 +70,8 @@ const Footer = () => {
               <AiFillYoutube size={iconSize} />
             </SocialIconLink>
           </Flex>
-        </Flex>
-        <Flex justifyContent="flex-end" flex="1">
+        </SocialsWithCopyright>
+        <NavigationFlex justifyContent="flex-end" flex="1">
           <Flex direction="column" gap={'24px'} alignItems="stretch">
             <NextLink href="/kurzy">
               <Text color="primary" uppercase>kurzy</Text>
@@ -85,7 +92,7 @@ const Footer = () => {
               <Text color="primary" uppercase>feedback</Text>
             </NextLink>
           </Flex>
-        </Flex>
+        </NavigationFlex>
       </WrapperFlex>
     </Background>
   )
@@ -96,11 +103,37 @@ const Background = styled.div`
 `
 
 const WrapperFlex = styled(Flex)`
-  padding: 2.5em 0;
-  width: clamp(920px, 100%, 1200px);
+  padding: 24px 32px;
+  width: clamp(360px, 100%, 1200px);
   margin: 0 auto;
+
+  @media ${device.mobile} {
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
 `
 
+const LogoWithAddressFlex = styled(Flex)`
+  @media ${device.mobile} {
+    flex-direction: row;
+    justify-content: center;
+    gap: 32px;
+    order: 2;
+  }
+`
+const SocialsWithCopyright = styled(Flex)`
+  @media ${device.mobile} {
+    align-self: center;
+    order: 3;
+  }
+`
+
+const NavigationFlex = styled(Flex)`
+  @media ${device.mobile} {
+    order: 1;
+  }
+`
 
 const SocialIconLink = styled.a`
   color: ${(props) => props.theme.primaryColor};
