@@ -9,6 +9,7 @@ import Text from '../../core/Text'
 import styled from 'styled-components'
 import {useAuth} from '../../../AuthUserContext'
 import Loading from '../../Loading'
+import {device} from '../../../theme/device'
 
 const nextCourseVotedStorageKey = 'nextCourseVoted'
 
@@ -69,7 +70,7 @@ const VoteNextCourse = () => {
               Keď chceš, aby sme spravili dáky kurz, tak zahlasuj
               a možno (ale len možno) budeš vypočutý/á!
             </Text>
-            <Flex gap="12px">
+            <CourseOptionsWrapper>
               {nextCourseOptions.map((courseOption) =>
                 (<CourseOptionButton
                   key={courseOption.id}
@@ -77,7 +78,7 @@ const VoteNextCourse = () => {
                   selected={selectedNextCourses.includes(courseOption.id)}
                 >{courseOption.name}</CourseOptionButton>),
               )}
-            </Flex>
+            </CourseOptionsWrapper>
             <Button
               variant="accent"
               onClick={handleOnSubmit}
@@ -99,6 +100,16 @@ const CourseOptionButton = styled(Button)<{selected: boolean}>`
   &:hover {
     transform: scale(1.1);
     transition: 100ms ease-in-out;
+  }
+`
+
+const CourseOptionsWrapper = styled.div`
+  display: flex;
+  gap: 12px;
+
+  @media ${device.tablet} {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
   }
 `
 
