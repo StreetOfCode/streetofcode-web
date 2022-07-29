@@ -14,6 +14,7 @@ import PageContentWrapper from '../../components/PageContentWrapper'
 import {useRouter} from 'next/router'
 import NavBar from '../../components/NavBar'
 import {QueryGuard} from '../../QueryGuard'
+import {device} from '../../theme/device'
 
 type Props = {
   authorOverview: AuthorOverview
@@ -54,14 +55,14 @@ const AuthorPageContent = ({authorOverview}: {authorOverview: AuthorOverview}) =
     <PageContentWrapper>
       <GoBackText size="small" onClick={handleGoBack}>&larr; Späť</GoBackText>
       <Flex direction="column" gap="32px">
-        <Flex alignSelf="flex-start" gap="32px">
+        <AboutAuthorFlex alignSelf="flex-start" gap="32px">
           <Avatar altName={authorOverview.name} src={authorOverview.imageUrl} sizePx={250} />
           <Flex direction="column" gap="16px" alignSelf="flex-start" alignItems="flex-start">
             <Heading variant="h2" withAccentUnderline normalWeight>{authorOverview.name}</Heading>
             <StyledDescription>{authorOverview.description}</StyledDescription>
             <Text size="small">Kontaktovať ma môžeš na {authorOverview.email}</Text>
           </Flex>
-        </Flex>
+        </AboutAuthorFlex>
 
         <Flex direction="column" gap="32px" alignSelf="flex-start" alignItems="flex-start">
           <Heading variant="h3" withAccentUnderline normalWeight>{authorOverview.coursesTitle}</Heading>
@@ -78,6 +79,12 @@ const GoBackText = styled(Text)`
 `
 const StyledDescription = styled(Text)`
   max-width: 600px;
+`
+
+const AboutAuthorFlex = styled(Flex)`
+  @media ${device.mobile} {
+    flex-direction: column;
+  }
 `
 
 export const getStaticProps: GetStaticProps = async (context: GetStaticPropsContext) => {

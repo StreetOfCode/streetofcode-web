@@ -30,7 +30,7 @@ const PodcastImage = styled.img`
   width: 300px;
   height: 300px;
   border-radius: 22px;
-  border: ${(props) => `4px solid ${props.theme.accentColor}`};
+  border: ${(props) => `2px solid ${props.theme.accentColor}`};
   transition: 250ms ease-in-out;
 
   &:hover {

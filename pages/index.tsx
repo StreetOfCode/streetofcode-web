@@ -294,7 +294,7 @@ const DiscordButton = styled(Button)`
 const DiscordImage = styled.img`
   max-height: 425px;
   border-radius: 22px;
-  border: ${(props) => `4px solid ${props.theme.accentColor}`};
+  border: ${(props) => `2px solid ${props.theme.accentColor}`};
   transform: rotate(10deg);
 
   transition: 250ms ease-in-out;
@@ -325,7 +325,7 @@ const YoutubeIcon = styled.img`
 const UsImage = styled.img`
   max-height: 425px;
   border-radius: 22px;
-  border: ${(props) => `4px solid ${props.theme.accentColor}`};
+  border: ${(props) => `2px solid ${props.theme.accentColor}`};
   transition: 250ms ease-in-out;
 
    &:hover {
@@ -336,6 +336,15 @@ const UsImage = styled.img`
 
   @media ${device.tablet} {
     max-height: 250px;
+  }
+
+  @media ${device.mobile} {
+    border: ${(props) => `2px solid ${props.theme.accentColor}`};
+    &:hover {
+      transform: unset;
+      transition: unset;
+      box-shadow: unset;
+    }
   }
 `
 

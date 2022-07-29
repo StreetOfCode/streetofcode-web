@@ -97,10 +97,12 @@ const MobileMenuFlex = styled(Flex)<{open: boolean}>`
 
   @media ${device.mobile} {
     display: ${(props) => props.open ? 'flex' : 'none'};
+    align-items: flex-start;
     position: absolute;
     padding: 24px 32px;
     top: 95px;
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
     left: 0;
     z-index: 1;
     background-color: ${(props) => props.theme.primaryColor};

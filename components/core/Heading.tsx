@@ -64,7 +64,7 @@ const styleValues = {
     h5: {fontSize: '18px', lineHeight: '1.4'},
   },
   mobile: {
-    title: {fontSize: '52px', lineHeight: '1.0'},
+    title: {fontSize: '48px', lineHeight: '1.0'},
     h1: {fontSize: '42px', lineHeight: '1.1'},
     h2: {fontSize: '32px', lineHeight: '1.2'},
     h3: {fontSize: '22px', lineHeight: '1.3'},
