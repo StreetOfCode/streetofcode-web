@@ -25,6 +25,7 @@ import {useGetCourseOverview} from '../../../components/api/courseOverview'
 import CourseReviews from '../../../components/domain/course-review/CourseReviews'
 import NextLink from '../../../components/core/NextLink'
 import Loading from '../../../components/Loading'
+import {device} from '../../../theme/device'
 
 
 type Props = {
@@ -113,15 +114,15 @@ const CourseDetailContent = ({courseOverview}: {courseOverview: CourseOverview})
   return (
     <PageContentWrapper>
       <BackLink to={'/kurzy'} text={'Späť na kurzy'} />
-      <Flex justifyContent="space-between">
-        <Flex direction="column" alignSelf="flex-start" alignItems="flex-start" gap="32px" style={{maxWidth: '50%'}}>
+      <WrapperFlex justifyContent="space-between">
+        <CourseDetailsFlex direction="column" alignSelf="flex-start" alignItems="flex-start" gap="32px">
           <Heading variant="h1" normalWeight>{courseOverview.name}</Heading>
           <Text size="large">{courseOverview.shortDescription}</Text>
           <MarkdownView children={courseOverview.longDescription} />
           <Heading variant="h2" normalWeight>Obsah</Heading>
           <CourseContent course={courseOverview} />
           <CourseReviews courseOverview={courseOverview} />
-        </Flex>
+        </CourseDetailsFlex>
 
         <CardFlex direction="column" gap="12px" alignSelf="flex-start">
           {renderThubmnailOrTrailer()}
@@ -171,11 +172,27 @@ const CourseDetailContent = ({courseOverview}: {courseOverview: CourseOverview})
             </Flex>
           </Flex>
         </CardFlex>
-      </Flex>
+      </WrapperFlex>
     </PageContentWrapper>
 
   )
 }
+
+const WrapperFlex = styled(Flex)`
+  @media ${device.mobile} {
+    flex-direction: column;
+    gap: 32px;
+  }
+`
+
+const CourseDetailsFlex = styled(Flex)`
+  max-width: 50%;
+
+  @media ${device.mobile} {
+    max-width: 100%;
+    order: 2;
+  }
+`
 
 const CourseInfoItem = styled.div<{clickable?: boolean}>`
   display: flex;
@@ -198,6 +215,16 @@ const CardFlex = styled(Flex)`
   width: 400px;
   position: sticky;
   top: 80px;
+
+  @media ${device.tablet} {
+    position: static;
+  }
+
+  @media ${device.mobile} {
+    align-self: center;
+    width: 100%;
+    order: 1;
+  }
 `
 
 const CardImage = styled.img``

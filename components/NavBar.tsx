@@ -31,7 +31,7 @@ const NavBar = () => {
       <MobileMenuFlex open={mobileNavbarOpen}>
         <MenuItems direction="column" alignItems="flex-start" gap={'32px'}>
           {!user && <NextLink href={`/login/${encodeURIComponent(router.asPath)}`}><Text>Prihlásiť</Text></NextLink>}
-          <NextLink styleIfActive href="/profile"><Text>Moje kurzy a nastavenia</Text></NextLink>
+          <NextLink styleIfActive href="/profil"><Text>Moje kurzy a nastavenia</Text></NextLink>
           <NextLink styleIfActive href="/o-projekte"><Text>O projekte</Text></NextLink>
           <NextLink styleIfActive href="/feedback"><Text>Feedback</Text></NextLink>
           {user && <LogoutText onClick={logout}>Odhlásiť</LogoutText>}
@@ -45,11 +45,11 @@ const WrapperFlex = styled(Flex)<{mobileNavbarOpen: boolean}>`
   margin: 0 auto;
   padding: 24px 32px;
   width: clamp(360px, 100%, 1200px);
+  position: relative;
 
   @media ${device.mobile} {
     background-color: ${(props) => props.mobileNavbarOpen && props.theme.primaryColor};
     width: ${(props) => props.mobileNavbarOpen && '100vw'};
-    padding: ${(props) => props.mobileNavbarOpen && '24px 32px'};
     position: ${(props) => props.mobileNavbarOpen && 'absolute'};
   }
 `
@@ -99,7 +99,7 @@ const MobileMenuFlex = styled(Flex)<{open: boolean}>`
     display: ${(props) => props.open ? 'flex' : 'none'};
     position: absolute;
     padding: 24px 32px;
-    top: 100px;
+    top: 95px;
     width: 100%;
     left: 0;
     z-index: 1;

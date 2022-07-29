@@ -8,6 +8,7 @@ import Flex from '../../core/Flex'
 import * as Utils from '../../../utils'
 import {useRouter} from 'next/router'
 import {ChevronDownIcon} from '@radix-ui/react-icons'
+import {device} from '../../../theme/device'
 
 type Props = {
   className?: string
@@ -94,7 +95,11 @@ const Trigger = styled(Accordion.Trigger)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 650px;
+  width: 600px;
+
+  @media ${device.mobile} {
+    width: 100%;
+  }
 `
 
 const Item = styled(Accordion.Item)`

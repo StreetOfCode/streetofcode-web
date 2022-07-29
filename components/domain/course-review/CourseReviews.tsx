@@ -12,6 +12,7 @@ import Rating from '../../core/Rating'
 import {useAuth} from '../../../AuthUserContext'
 import Loading from '../../Loading'
 import {CourseOverview} from '../../../types'
+import {device} from '../../../theme/device'
 
 interface CourseReviewsProps {
   courseOverview: CourseOverview;
@@ -63,6 +64,10 @@ const CourseReviews = ({courseOverview}: CourseReviewsProps) => {
 
 const WrapperFlex = styled(Flex)`
   width: 500px;
+
+  @media ${device.mobile} {
+    width: 100%;
+  }
 `
 
 

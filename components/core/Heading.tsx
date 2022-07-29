@@ -49,7 +49,7 @@ const Heading = ({
 const styleValues = {
   default: {
     title: {fontSize: '112px', lineHeight: '1.0'},
-    h1: {fontSize: '86px', lineHeight: '1.1'},
+    h1: {fontSize: '72px', lineHeight: '1.1'},
     h2: {fontSize: '48px', lineHeight: '1.2'},
     h3: {fontSize: '32px', lineHeight: '1.3'},
     h4: {fontSize: '24px', lineHeight: '1.4'},
@@ -57,7 +57,7 @@ const styleValues = {
   },
   tablet: {
     title: {fontSize: '86px', lineHeight: '1.0'},
-    h1: {fontSize: '70px', lineHeight: '1.1'},
+    h1: {fontSize: '60px', lineHeight: '1.1'},
     h2: {fontSize: '36px', lineHeight: '1.2'},
     h3: {fontSize: '28px', lineHeight: '1.3'},
     h4: {fontSize: '22px', lineHeight: '1.4'},
