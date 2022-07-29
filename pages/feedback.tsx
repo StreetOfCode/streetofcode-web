@@ -10,6 +10,7 @@ import TextField from '../components/core/TextField'
 import {discordInviteUrl} from '../components/landing-page/discord'
 import NavBar from '../components/NavBar'
 import PageContentWrapper from '../components/PageContentWrapper'
+import {device} from '../theme/device'
 import {SendFeedbackRequest} from '../types'
 import {emailRegex} from '../utils'
 
@@ -85,9 +86,9 @@ const FeedbackPage: NextPage = () => {
     <>
       <NavBar />
       <PageContentWrapper>
-        <Flex justifyContent="space-between" alignItems="flex-start">
-          <Flex direction="column" gap="32px" alignItems="flex-start">
-            <FAQItem direction="column" gap="8px" alignItems="flex-start">
+        <WrapperFlex justifyContent="space-between" alignItems="flex-start" gap="32px">
+          <FAQItemsFlex direction="column" gap="32px" alignItems="flex-start">
+            <Flex direction="column" gap="8px" alignItems="flex-start">
               <Heading variant="h3">
                 Kde vám môžem napísať?
               </Heading>
@@ -96,8 +97,8 @@ const FeedbackPage: NextPage = () => {
                 Avšak môžeš nám napísať priamo mail na <strong>info@streetofcode.sk</strong>,
                 na Instagrame či FB alebo použi formulár na tejto stránke.
               </Text>
-            </FAQItem>
-            <FAQItem direction="column" gap="8px" alignItems="flex-start">
+            </Flex>
+            <Flex direction="column" gap="8px" alignItems="flex-start">
               <Heading variant="h3">
                 Ako môžem nahlásiť problém?
               </Heading>
@@ -111,8 +112,8 @@ const FeedbackPage: NextPage = () => {
                 <li>Popis chyby</li>
                 <li>Pribal prosím ťa aj screenshoty, ak máš</li>
               </StyledUL>
-            </FAQItem>
-            <FAQItem direction="column" gap="8px" alignItems="flex-start">
+            </Flex>
+            <Flex direction="column" gap="8px" alignItems="flex-start">
               <Heading variant="h3">
                 Chýba vám kurz, ktorý potrebujem
               </Heading>
@@ -120,16 +121,16 @@ const FeedbackPage: NextPage = () => {
                 Ak si myslíš, že by tu určite nemal chýbať nejaký kurz, tak nám daj vedieť aký
                 a možno ho pripravíme.
               </Text>
-            </FAQItem>
-            <FAQItem direction="column" gap="8px" alignItems="flex-start">
+            </Flex>
+            <Flex direction="column" gap="8px" alignItems="flex-start">
               <Heading variant="h3">
                 Chcem s vami spolupracovať
               </Heading>
               <Text>
                 Radi si tvoj nápad na spoluprácu vypočujeme. Napíš nám o čo ide a určite sa ti ozveme.
               </Text>
-            </FAQItem>
-          </Flex>
+            </Flex>
+          </FAQItemsFlex>
           <FormWrapper>
             <Flex direction="column" alignItems="flex-start" gap="20px">
               <Heading normalWeight variant="h4" align="left" withAccentUnderline>Tvoj email</Heading>
@@ -166,14 +167,29 @@ const FeedbackPage: NextPage = () => {
               {emailSentError && <Text>{FAILED_SENT_EMAIL_TEXT}</Text>}
             </Flex>
           </FormWrapper>
-        </Flex>
+        </WrapperFlex>
       </PageContentWrapper>
     </>
   )
 }
 
-const FAQItem = styled(Flex)`
+const FAQItemsFlex = styled(Flex)`
   width: 600px;
+
+  @media ${device.tablet} {
+    width: 50%;
+  }
+
+  @media ${device.mobile} {
+    width: 100%;
+  }
+`
+
+const WrapperFlex = styled(Flex)`
+  @media ${device.mobile} {
+    flex-direction: column;
+    gap: 64px;
+  }
 `
 
 const StyledUL = styled.ul`
@@ -189,6 +205,14 @@ const StyledUL = styled.ul`
 
 const FormWrapper = styled.div`
   width: 400px;
+
+  @media ${device.tablet} {
+    width: 50%;
+  }
+
+  @media ${device.mobile} {
+    width: 100%;
+  }
 `
 
 
