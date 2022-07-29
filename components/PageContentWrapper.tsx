@@ -11,8 +11,7 @@ const PageContentWrapper = ({children}: HTMLAttributes<HTMLElement>) => {
 const Wrapper = styled.div`
   flex: 1;
   align-self: center;
-  padding-top: 50px;
-  padding-bottom: 100px;
+  padding: 50px 32px 100px 32px;
   width: clamp(360px, 100%, 1200px);
 `
 

@@ -12,6 +12,7 @@ import {NextPage} from 'next'
 import {useAuth} from '../../AuthUserContext'
 import Loading from '../../components/Loading'
 import {FirebaseError} from 'firebase/app'
+import PageContentWrapper from '../../components/PageContentWrapper'
 
 const LoginPage: NextPage = () => {
   const {user, isLoading, logout} = useAuth()
@@ -35,44 +36,46 @@ const LoginPage: NextPage = () => {
   }
 
   return (
-    <FlexWrapper direction="column" alignItems="center" gap="16px" justifyContent="center">
-      <Logo alt="Logo" src="soc_logo.png" />
-      {differentCredentialsError && <Text align="center" weight="bold">
-        Pokúsil/a si sa prihlásiť s emailom, s ktorým si sa už v minulosti prihlásil/a cez inú službu.
-        Ak si sa teraz pokúsil/a prihlásiť cez GitHub, tak sa prosím prihlás cez Google. Naopak ak si sa teraz
-        pokúsil/a prihlásiť cez Google, tak sa prosím prihlás cez Github.
-      </Text>}
-      <Heading variant="h4" align="center" withAccentUnderline normalWeight>Prihlásenie</Heading>
-      {isLoading && <Loading />}
-      {!isLoading && (
-        <>
-          {!user && (
-            <>
-              <GoogleButton
-                iconBefore={<FaGoogle />}
-                onClick={() => Auth.loginWithGoogle()}
-              >Prihlásiť cez Google
-              </GoogleButton>
-              <GithubButton
-                iconBefore={<FaGithub />}
-                onClick={() => Auth.loginWithGithub()}
-              >Prihlásiť cez GitHub
-              </GithubButton>
-            </>
-          )}
-          {user && (
-            <div>
-              <Button variant="outline" color="primary" onClick={logout}>
-                Logout
-              </Button>
-            </div>
-          )}
-          {router.query?.redirectUri && (
-            <BackLink to={decodeURIComponent((router.query.redirectUri) as string)} text={'Späť'} />)
-          }
-        </>
-      )}
-    </FlexWrapper>
+    <PageContentWrapper>
+      <FlexWrapper direction="column" alignItems="center" gap="16px" justifyContent="center">
+        <Logo alt="Logo" src="/soc_logo.png" />
+        {differentCredentialsError && <Text align="center" weight="bold">
+          Pokúsil/a si sa prihlásiť s emailom, s ktorým si sa už v minulosti prihlásil/a cez inú službu.
+          Ak si sa teraz pokúsil/a prihlásiť cez GitHub, tak sa prosím prihlás cez Google. Naopak ak si sa teraz
+          pokúsil/a prihlásiť cez Google, tak sa prosím prihlás cez Github.
+        </Text>}
+        <Heading variant="h4" align="center" withAccentUnderline normalWeight>Prihlásenie</Heading>
+        {isLoading && <Loading />}
+        {!isLoading && (
+          <>
+            {!user && (
+              <>
+                <GoogleButton
+                  iconBefore={<FaGoogle />}
+                  onClick={() => Auth.loginWithGoogle()}
+                >Prihlásiť cez Google
+                </GoogleButton>
+                <GithubButton
+                  iconBefore={<FaGithub />}
+                  onClick={() => Auth.loginWithGithub()}
+                >Prihlásiť cez GitHub
+                </GithubButton>
+              </>
+            )}
+            {user && (
+              <div>
+                <Button variant="outline" color="primary" onClick={logout}>
+                  Logout
+                </Button>
+              </div>
+            )}
+            {router.query?.redirectUri && (
+              <BackLink to={decodeURIComponent((router.query.redirectUri) as string)} text={'Späť'} />)
+            }
+          </>
+        )}
+      </FlexWrapper>
+    </PageContentWrapper>
   )
 }
 
@@ -104,6 +107,7 @@ const GithubButton = styled(Button)`
 const FlexWrapper = styled(Flex)`
   min-height: 100vh;
   width: 500px;
+  margin: 0 auto;
 `
 
 const Logo = styled.img`

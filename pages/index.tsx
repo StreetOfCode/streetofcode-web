@@ -36,9 +36,7 @@ const Home: NextPage<Props> = ({courses}) => {
   return (
     <Wrapper>
       <GradientWrapper>
-        <Box paddingTop="0" paddingBottom="0">
-          <NavBar />
-        </Box>
+        <NavBar />
         <Box>
           <HeroSection gap="16px" justifyContent="space-between">
             <Flex direction="column" gap="48px" alignItems="flex-start" alignSelf="stretch">
@@ -165,15 +163,13 @@ const AllCoursesText = styled(Text)`
   }
 `
 
-const Box = styled.div<{paddingBottom?: string, paddingTop?: string}>`
+const Box = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
 
-  padding-top: ${(props) => props.paddingTop || '3em'};
-  padding-bottom: ${(props) => props.paddingBottom || '3em'};
-
-  margin-bottom: 75px;
+  padding: 24px 32px;
+  margin-bottom: 64px;
 
   > * {
     margin-right: 2em;
@@ -182,10 +178,14 @@ const Box = styled.div<{paddingBottom?: string, paddingTop?: string}>`
     align-self: center;
     flex-grow: 1;
   }
+
+  @media ${device.mobile} {
+    margin-bottom: 16px;
+  }
 `
 
 const HeroSection = styled(Flex)`
-  padding-top: 1em;
+  padding-top: 3em;
   padding-bottom: 1em;
 `
 
