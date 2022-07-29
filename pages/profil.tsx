@@ -17,6 +17,7 @@ import {useGetMyCourses} from '../components/api/myCourses'
 import {useRouter} from 'next/router'
 import PageContentWrapper from '../components/PageContentWrapper'
 import NavBar from '../components/NavBar'
+import {device} from '../theme/device'
 
 
 const ProfilePage: NextPage = () => {
@@ -109,7 +110,7 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
 
   const renderNewsletterSignUp = () => {
     return (
-      <Flex direction="column" gap="16px" alignItems="flex-start">
+      <NewsletterFlexWrapper direction="column" gap="16px" alignItems="flex-start">
         <Heading variant="h3" withAccentUnderline normalWeight>Odber noviniek</Heading>
         <Button
           disabled={changeLoading}
@@ -117,7 +118,7 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
           onClick={submitChangedNewsletter}
           style={{alignSelf: 'stretch'}}
         >Prihlásiť sa na odber noviniek</Button>
-      </Flex>
+      </NewsletterFlexWrapper>
     )
   }
 
@@ -148,8 +149,8 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
     <>
       <GoBackText size="small" onClick={handleGoBack}>&larr; Späť</GoBackText>
       <Flex direction="column" gap="32px" alignItems="flex-start">
-        <Flex justifyContent="space-between" alignSelf="stretch" gap="16px">
-          <Flex alignSelf="flex-start" gap="32px">
+        <ProfileInfoWithNewsletterFlex justifyContent="space-between" alignSelf="stretch" gap="16px">
+          <ProfileInfoFlex alignSelf="flex-start" gap="32px">
             <UserAvatar imageUrl={socUser.imageUrl || ''} name={socUser.name} sizePx={150} />
             <Flex direction="row" gap="16px" alignSelf="flex-start" alignItems="center">
               {!nameEditing &&
@@ -159,10 +160,10 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
               </>}
               {nameEditing && renderEditNameTextField()}
             </Flex>
-          </Flex>
+          </ProfileInfoFlex>
 
           {!socUser.receiveNewsletter && renderNewsletterSignUp()}
-        </Flex>
+        </ProfileInfoWithNewsletterFlex>
 
         <QueryGuard {...getMyCoursesQuery}>
           {(courses) =>
@@ -185,8 +186,30 @@ const StyledEditIcon = styled(EditIcon)`
   }
 `
 
+const ProfileInfoWithNewsletterFlex = styled(Flex)`
+  @media ${device.tablet} {
+    flex-direction: column;
+    gap: 32px;
+  }
+`
+
+const ProfileInfoFlex = styled(Flex)`
+  @media ${device.mobile} {
+    flex-direction: column;
+  }
+`
+
+const NewsletterFlexWrapper = styled(Flex)`
+  @media ${device.tablet} {
+    align-self: flex-start;
+  }
+`
+
 const StyledTextField = styled(TextField)`
   width: 340px;
+  @media ${device.mobile} {
+    width: 100%;
+  }
 `
 
 const GoBackText = styled(Text)`
