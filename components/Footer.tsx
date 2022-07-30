@@ -1,5 +1,6 @@
 import {useRouter} from 'next/router'
 import React from 'react'
+import Image from 'next/image'
 import {
   AiFillFacebook,
   AiFillGithub,
@@ -33,7 +34,9 @@ const Footer = () => {
           alignItems="flex-start"
           flex="1"
         >
-          <Logo alt="Logo" src="/soc_logo.png" onClick={() => router.push('/')} />
+          <LogoWrapper>
+            <LogoImage alt="Logo" src="/soc_logo.png" layout="fill" onClick={() => router.push('/')} />
+          </LogoWrapper>
           <div>
             <Text color="primary" size="small">Street of Code o.z.</Text>
             <Text color="primary" size="small">Hlaváčiková 29</Text>
@@ -143,9 +146,14 @@ const SocialIconLink = styled.a`
   }
 `
 
-const Logo = styled.img`
+const LogoWrapper = styled.div`
+  margin-left: -24px;
+  position: relative;
+  aspect-ratio: 3 / 1;
   height: 60px;
-  margin-left: -1em;
+`
+
+const LogoImage = styled(Image)`
   filter: invert(100%);
 `
 

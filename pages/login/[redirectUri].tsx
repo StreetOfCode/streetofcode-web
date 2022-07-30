@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import Image from 'next/image'
 import styled, {css} from 'styled-components'
 import * as Auth from '../../auth'
 import {FaGoogle, FaGithub} from 'react-icons/fa'
@@ -39,7 +40,9 @@ const LoginPage: NextPage = () => {
   return (
     <PageContentWrapper>
       <FlexWrapper direction="column" alignItems="center" gap="16px" justifyContent="center">
-        <Logo alt="Logo" src="/soc_logo.png" />
+        <LogoWrapper>
+          <Image layout="fill" alt="Logo" src="/soc_logo.png" />
+        </LogoWrapper>
         {differentCredentialsError && <Text align="center" weight="bold">
           Pokúsil/a si sa prihlásiť s emailom, s ktorým si sa už v minulosti prihlásil/a cez inú službu.
           Ak si sa teraz pokúsil/a prihlásiť cez GitHub, tak sa prosím prihlás cez Google. Naopak ak si sa teraz
@@ -115,9 +118,10 @@ const FlexWrapper = styled(Flex)`
   }
 `
 
-const Logo = styled.img`
+const LogoWrapper = styled.div`
+  position: relative;
+  aspect-ratio: 3 / 1;
   width: 200px;
-  height: auto;
 `
 
 export default LoginPage

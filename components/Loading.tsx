@@ -12,6 +12,7 @@ const Loading = () => {
 }
 
 const WrapperFlex = styled(Flex)`
+  align-self: center;
   flex: 1;
 `
 

@@ -8,7 +8,9 @@ const nextConfig = {
     styledComponents: true,
     emotion: true,
   },
-
+  images: {
+    domains: ['streetofcode.sk', 'googleusercontent.com'],
+  },
 }
 
 // We use removeImports because of MDEditor (in react-admin part)

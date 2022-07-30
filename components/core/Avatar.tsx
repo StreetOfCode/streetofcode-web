@@ -1,34 +1,31 @@
-import React, {HTMLAttributes} from 'react'
+import React from 'react'
+import Image from 'next/image'
 import styled from 'styled-components'
 
 type Props = {
   className?: string
   altName: string
   src: string
-  sizePx?: number
-} & HTMLAttributes<HTMLElement>
+  sizePx: number
+}
 
 /***
  * Avatar is circle shaped image
  */
-const Avatar = ({className, altName, src, sizePx, ...props}: Props) => {
+const Avatar = ({className, altName, src, sizePx}: Props) => {
   return (
     <StyledAvatar
       className={className}
-      referrerPolicy="no-referrer"
-      loading="lazy"
       alt={altName}
       src={src}
-      sizePx={sizePx}
-      {...props}
+      width={sizePx}
+      height={sizePx}
     />
   )
 }
 
-const StyledAvatar = styled.img<{sizePx?: number}>`
+const StyledAvatar = styled(Image)`
   border-radius: 50%;
-  aspect-ratio: 1;
-  width: ${(props) => `${props.sizePx}px`};
 `
 
 export default Avatar

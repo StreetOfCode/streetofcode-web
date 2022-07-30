@@ -1,5 +1,6 @@
 import React, {useRef} from 'react'
-import type {NextPage} from 'next'
+import {NextPage} from 'next'
+import Image from 'next/image'
 import styled, {keyframes} from 'styled-components'
 import Flex from '../components/core/Flex'
 import Text from '../components/core/Text'
@@ -90,10 +91,10 @@ const Home: NextPage<Props> = ({courses}) => {
           <MobilePodcastSlider showPodcastsCount={1} />
           <PodcastSocialsFlex justifyContent="center" gap="64px" alignSelf="center">
             <a href={spotifyUrl} target="blank">
-              <SpotifyIcon src={spotifyImageUrl} alt="Street of Code podcast" loading="lazy" />
+              <Image src={spotifyImageUrl} alt="Street of Code podcast" width="280" height="63" />
             </a>
             <a href={youtubeUrl} target="blank">
-              <YoutubeIcon src={youtubeImageUrl} alt="Street of Code video" loading="lazy" />
+              <Image src={youtubeImageUrl} alt="Street of Code video" width="280" height="63" />
             </a>
           </PodcastSocialsFlex>
         </Flex>
@@ -108,7 +109,7 @@ const Home: NextPage<Props> = ({courses}) => {
           <VideosSliderStyled showVideosCount={2} />
           <MobileVideosSlider showVideosCount={1} />
           <a href={youtubeUrl} target="blank" style={{alignSelf: 'center'}}>
-            <YoutubeIcon src={youtubeImageUrl} alt="Street of Code video" loading="lazy" />
+            <Image src={youtubeImageUrl} alt="Street of Code video" width="280" height="63" />
           </a>
         </Flex>
       </Box>
@@ -125,7 +126,13 @@ const Home: NextPage<Props> = ({courses}) => {
               </DiscordButton>
             </a>
           </div>
-          <DiscordImage src={discordImageUrl} alt="Street of Code Discord" loading="lazy" />
+          <DiscordImage>
+            <StyledImage
+              src={discordImageUrl}
+              alt="Street of Code Discord"
+              layout="fill"
+            />
+          </DiscordImage>
         </Flex>
       </Box>
       <Box>
@@ -135,7 +142,13 @@ const Home: NextPage<Props> = ({courses}) => {
             <Heading variant="h1" color="accent" inline> my?</Heading>
           </div>
           <AboutUsContentWrapper gap="32px" justifyContent="space-between" alignItems="flex-start">
-            <UsImage src="http://streetofcode.sk/wp-content/uploads/2022/06/P1200649-scaled.jpg" alt="Street of Code" />
+            <UsImage>
+              <StyledImage
+                src="http://streetofcode.sk/wp-content/uploads/2022/06/P1200649-scaled.jpg"
+                alt="Street of Code"
+                layout="fill"
+              />
+            </UsImage>
             <Heading variant="h3" normalWeight>
               Sme dvaja kamaráti, full-time programátori, ktorí sa rozhodli,
               že by chceli robiť okrem práce aj niečo navyše.
@@ -297,22 +310,23 @@ const DiscordButton = styled(Button)`
   margin-top: 24px;
 `
 
-const DiscordImage = styled.img`
-  max-height: 425px;
-  border-radius: 22px;
-  border: ${(props) => `2px solid ${props.theme.accentColor}`};
-  transform: rotate(10deg);
+const DiscordImage = styled.div`
+  position: relative;
+  flex-shrink: 0;
 
+  width: 200px;
+  aspect-ratio: 0.55;
+
+  transform: rotate(10deg);
   transition: 250ms ease-in-out;
 
   &:hover {
     transform: scale(1.1) rotate(10deg);
     transition: 250ms ease-in-out;
-    box-shadow: 1px 8px 20px #D6D6D6;
   }
 
   @media ${device.tablet} {
-    max-height: 300px;
+    width: 160px;
   }
 
   @media ${device.mobile} {
@@ -320,38 +334,37 @@ const DiscordImage = styled.img`
   }
 `
 
-const SpotifyIcon = styled.img`
-  max-width: 320px;
-`
 
-const YoutubeIcon = styled.img`
-  max-width: 320px;
-`
+const UsImage = styled.div`
+  position: relative;
+  flex-shrink: 0;
 
-const UsImage = styled.img`
-  max-height: 425px;
-  border-radius: 22px;
-  border: ${(props) => `2px solid ${props.theme.accentColor}`};
+  width: 400px;
+  aspect-ratio: 4 / 3;
+
   transition: 250ms ease-in-out;
 
    &:hover {
     transform: scale(1.1);
     transition: 250ms ease-in-out;
-    box-shadow: 1px 8px 20px #D6D6D6;
   }
 
   @media ${device.tablet} {
-    max-height: 250px;
+    width: 300px;
   }
 
   @media ${device.mobile} {
-    border: ${(props) => `2px solid ${props.theme.accentColor}`};
     &:hover {
       transform: unset;
       transition: unset;
       box-shadow: unset;
     }
   }
+`
+
+const StyledImage = styled(Image)`
+  border-radius: 22px;
+  border: ${(props) => `2px solid ${props.theme.accentColor} !important`};
 `
 
 const AboutUsContentWrapper = styled(Flex)`

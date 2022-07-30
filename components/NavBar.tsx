@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import Image from 'next/image'
 import styled, {css} from 'styled-components'
 import Flex from './core/Flex'
 import Text from './core/Text'
@@ -17,7 +18,9 @@ const NavBar = () => {
 
   return (
     <WrapperFlex alignSelf="center" justifyContent="space-between" mobileNavbarOpen={mobileNavbarOpen}>
-      <Logo alt="Logo" src="/soc_logo.png" onClick={() => router.push('/')} />
+      <LogoWrapper>
+        <Image layout="fill" alt="Logo" src="/soc_logo.png" onClick={() => router.push('/')} />
+      </LogoWrapper>
       {!mobileNavbarOpen && <OpenMenuIcon onClick={() => setMobileNavbarOpen(!mobileNavbarOpen)} />}
       {mobileNavbarOpen && <CloseMenuIcon onClick={() => setMobileNavbarOpen(!mobileNavbarOpen)} />}
       <MenuFlex>
@@ -108,9 +111,10 @@ const MobileMenuFlex = styled(Flex)<{open: boolean}>`
     background-color: ${(props) => props.theme.primaryColor};
   }
 `
-
-const Logo = styled.img`
+const LogoWrapper = styled.div`
   margin-left: -24px;
+  position: relative;
+  aspect-ratio: 3 / 1;
   height: 60px;
 
   &:hover {

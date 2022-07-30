@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import styled from 'styled-components'
 import {AiOutlineClockCircle, AiOutlineVideoCamera, AiOutlineQuestionCircle} from 'react-icons/ai'
 import Flex from '../../core/Flex'
@@ -36,7 +37,7 @@ const CourseCard = ({course}: { course: CourseOverview }) => {
           <Text align="center">{course.shortDescription}</Text>
         </Flex>
         <Flex direction="column" gap="12px">
-          <CourseImage loading="lazy" alt={`${course.name}`} src={course.iconUrl} />
+          <Image alt={`${course.name}`} src={course.iconUrl} width={100} height={100} />
           <Rating readOnly value={course.reviewsOverview.averageRating} />
         </Flex>
       </Flex>
@@ -63,7 +64,7 @@ const CourseCard = ({course}: { course: CourseOverview }) => {
         <Flex direction="column" alignItems="flex-start" alignSelf="flex-end" gap="12px">
           {progressValuePercent && <CircullarProgressWithLabel value={progressValuePercent} accentColor />}
           <CourseInfoItem>
-            <Avatar altName={course.author?.name} src={course.author?.imageUrl} />
+            <Avatar altName={course.author?.name} src={course.author?.imageUrl} sizePx={25} />
             <Text size="small">{course.author?.name}</Text>
           </CourseInfoItem>
 
@@ -88,17 +89,12 @@ const WrapperFlex = styled(Flex)`
   }
 `
 
-const CourseImage = styled.img`
-  width: 100px;
-  height: 100px;
-`
-
 const CourseInfoItem = styled.div`
   display: flex;
   gap: 12px;
   align-items: center;
 
-  svg, img {
+  svg {
     width: 25px;
     height: 25px;
     color: ${(props) => props.theme.secondaryColor};

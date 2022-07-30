@@ -95,9 +95,9 @@ const Trigger = styled(Accordion.Trigger)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 600px;
+  width: 550px;
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     width: 100%;
   }
 `

@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import {GetStaticProps, NextPage} from 'next'
 import * as Api from '../../../api'
 import {CourseOverview} from '../../../types'
@@ -108,13 +109,15 @@ const CourseDetailContent = ({courseOverview}: {courseOverview: CourseOverview})
     } else {
       if (!courseOverview.thumbnailUrl) return null
 
-      return <CardImage alt={courseOverview.name} src={courseOverview.thumbnailUrl} />
+      return (<CardImageWrapper>
+        <Image alt={courseOverview.name} src={courseOverview.thumbnailUrl} layout="fill" />
+      </CardImageWrapper>)
     }
   }
   return (
     <PageContentWrapper>
       <BackLink to={'/kurzy'} text={'Späť na kurzy'} />
-      <WrapperFlex justifyContent="space-between">
+      <WrapperFlex justifyContent="space-between" gap="24px">
         <CourseDetailsFlex direction="column" alignSelf="flex-start" alignItems="flex-start" gap="32px">
           <Heading variant="h1" normalWeight>{courseOverview.name}</Heading>
           <Text size="large">{courseOverview.shortDescription}</Text>
@@ -162,7 +165,7 @@ const CourseDetailContent = ({courseOverview}: {courseOverview: CourseOverview})
                 <Text>({courseOverview.reviewsOverview.numberOfReviews})</Text>
               </CourseInfoItem>
               <CourseInfoItem clickable onClick={() => handleAuthorClicked(courseOverview.author.slug)}>
-                <Avatar altName={courseOverview.author.name} src={courseOverview.author.imageUrl} />
+                <Avatar altName={courseOverview.author.name} src={courseOverview.author.imageUrl} sizePx={28} />
                 <Text>{courseOverview.author.name}</Text>
               </CourseInfoItem>
               {progressValuePercent && <CourseInfoItem>
@@ -201,7 +204,7 @@ const CourseInfoItem = styled.div<{clickable?: boolean}>`
 
   cursor: ${(props) => props.clickable ? 'pointer' : 'unset'};
 
-  svg, img {
+  svg {
     width: 28px;
     height: 28px;
   }
@@ -227,7 +230,12 @@ const CardFlex = styled(Flex)`
   }
 `
 
-const CardImage = styled.img``
+const CardImageWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+`
 
 // TODO make VideoWrapper component (use here and in LectureDetail)
 const VideoWrapper = styled.div`

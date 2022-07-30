@@ -1,4 +1,5 @@
 import {NextPage} from 'next'
+import Image from 'next/image'
 import {useRouter} from 'next/router'
 import React, {ChangeEvent, useState} from 'react'
 import styled from 'styled-components'
@@ -41,7 +42,7 @@ const ConfirmName = ({currentStep, displayName, imageUrl, onStepForward}: Confir
 
   return (
     <PageContent>
-      <UserAvatar imageUrl={imageUrl || ''} name={name} sizePx={150}  style={{margin: '0 auto'}} />
+      <UserAvatar imageUrl={imageUrl || ''} name={name} sizePx={150} />
       <Flex direction="column" alignItems="flex-start" gap="20px">
         <Heading normalWeight variant="h3" align="left" withAccentUnderline>Meno</Heading>
         <TextField
@@ -192,9 +193,11 @@ const OnboardingPage: NextPage = () => {
   return (
     <Wrapper>
       <NavBarWrapper justifyContent="space-between">
-        <Logo alt="Logo" src="soc_logo.png" />
+        <LogoWrapper>
+          <Image layout="fill" alt="Logo" src="/soc_logo.png" />
+        </LogoWrapper>
         <Heading variant="h3" normalWeight withAccentUnderline>Onboarding</Heading>
-        <Logo alt="Logo" src="soc_logo.png" style={{visibility: 'hidden'}} />
+        <LogoWrapper style={{visibility: 'hidden'}} />
       </NavBarWrapper>
       <WrapperFlex
         direction="column"
@@ -258,8 +261,9 @@ const NavBarWrapper = styled(Flex)`
   margin-bottom: 200px;
 `
 
-const Logo = styled.img`
-  margin-left: -1em;
+const LogoWrapper = styled.div`
+  position: relative;
+  aspect-ratio: 3 / 1;
   height: 60px;
 `
 
