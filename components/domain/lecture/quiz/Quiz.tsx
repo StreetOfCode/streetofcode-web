@@ -7,6 +7,7 @@ import Flex from '../../../core/Flex'
 import Text from '../../../core/Text'
 import styled from 'styled-components'
 import {useGetQuizQuestionsByQuiz} from '../../../api/quizQuestions'
+import {device} from '../../../../theme/device'
 
 
 const Quiz = ({quiz, lecture}: {quiz: IQuiz, lecture: Lecture}) => {
@@ -31,18 +32,18 @@ const Quiz = ({quiz, lecture}: {quiz: IQuiz, lecture: Lecture}) => {
   const quizQuestionsByQuiz = useGetQuizQuestionsByQuiz(quiz.id)
 
   return (
-    <Flex direction="column">
+    <WrapperFlex direction="column">
       <QueryGuard {...quizQuestionsByQuiz}>
         {(quizQuestions) => {
           return (
-            <Flex gap="36px" direction="column">
-              <Flex direction="column" gap="36px">
+            <Flex gap="32px" direction="column" alignSelf="stretch" alignItems="stretch">
+              <Flex direction="column" gap="24px">
                 { lecture.content && lecture.videoUrl &&
                   <Heading variant="h2" withAccentUnderline normalWeight align="center" >{ quiz.title }</Heading> }
                 <Heading variant="h4" align="center" normalWeight>{ quiz.subtitle }</Heading>
               </Flex>
 
-              <QuizQuestionWrapperFlex direction="column" gap="60px">
+              <Flex direction="column" gap="60px">
                 {
                   quizQuestions.map((q) => {
                     return (
@@ -62,7 +63,7 @@ const Quiz = ({quiz, lecture}: {quiz: IQuiz, lecture: Lecture}) => {
                   <h1>{quiz.finishedMessage}</h1>
                 }
 
-              </QuizQuestionWrapperFlex>
+              </Flex>
             </Flex>
           )
         }}
@@ -71,7 +72,7 @@ const Quiz = ({quiz, lecture}: {quiz: IQuiz, lecture: Lecture}) => {
       <MarginedText align="right" weight="bold">
         {questionsFinished.length}/{quiz.questionIds.length} správnych odpovedí
       </MarginedText>
-    </Flex>
+    </WrapperFlex>
   )
 }
 
@@ -80,8 +81,16 @@ const MarginedText = styled(Text)`
   align-self: flex-end;
 `
 
-const QuizQuestionWrapperFlex = styled(Flex)`
-  width: 450px;
+const WrapperFlex = styled(Flex)`
+  width: 500px;
+
+  @media ${device.tablet} {
+    width: 400px;
+  }
+
+  @media ${device.mobile} {
+    width: 100%;
+  }
 `
 
 export default Quiz

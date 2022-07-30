@@ -13,6 +13,7 @@ import {useAuth} from '../../AuthUserContext'
 import Loading from '../../components/Loading'
 import {FirebaseError} from 'firebase/app'
 import PageContentWrapper from '../../components/PageContentWrapper'
+import {device} from '../../theme/device'
 
 const LoginPage: NextPage = () => {
   const {user, isLoading, logout} = useAuth()
@@ -108,6 +109,10 @@ const FlexWrapper = styled(Flex)`
   min-height: 100vh;
   width: 500px;
   margin: 0 auto;
+
+  @media ${device.mobile} {
+    width: 100%;
+  }
 `
 
 const Logo = styled.img`

@@ -28,10 +28,10 @@ const ConfirmActionDialog = ({
   onSecondaryButtonClick?: () => void
 }) => {
 
-  const Transition = React.forwardRef(function Transition(
+  const Transition = React.forwardRef((
     props: TransitionProps & { children?: React.ReactElement },
     ref: React.Ref<unknown>,
-  ) {
+  ) => {
     return <Slide direction="up" ref={ref} {...props} />
   })
 
@@ -64,7 +64,7 @@ const ConfirmActionDialog = ({
 }
 
 const DialogContentWrapper = styled.div`
-  min-width: 400px;
+  min-width: 300px;
   min-height: 100px;
 `
 

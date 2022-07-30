@@ -13,6 +13,7 @@ import {useRouter} from 'next/router'
 import NextLink from '../../core/NextLink'
 import {useResetLecture, useUpdateProgressLecture} from '../../api/courseProgress'
 import CheckBox from '../../core/CheckBox'
+import {device} from '../../../theme/device'
 
 type Props = {
   className?: string
@@ -25,7 +26,6 @@ type Props = {
 } & HTMLAttributes<HTMLElement>
 
 
-// TODO verticall scrollbar if necessary
 const CourseSidebar = ({
   className,
   courseProgressOverview,
@@ -86,7 +86,7 @@ const CourseSidebar = ({
   return (
     <>
       <Flex direction="column" gap="16px" className={className} {...props}>
-        <Flex justifyContent="space-between" alignSelf="stretch">
+        <TopWrapperFlex justifyContent="space-between" alignSelf="stretch">
           <Flex gap="12px" alignSelf="flex-start">
             <CircullarProgressWithLabel value={progressValuePercent} accentColor />
             <Text>
@@ -105,11 +105,14 @@ const CourseSidebar = ({
               </ResourcesWrapper>
             </NextLink>
           }
-        </Flex>
+        </TopWrapperFlex>
 
         <AccordionRoot
           type="multiple"
-          defaultValue={courseProgressOverview.chapters.map((chapter) => chapter.id.toString())
+          defaultValue={
+            courseProgressOverview.chapters
+              .filter((chapter) => chapter.id === Number(chapterId))
+              .map((chapter) => chapter.id.toString())
           }
         >
           {courseProgressOverview.chapters.map((chapter) => (
@@ -168,6 +171,14 @@ const AccordionRoot = styled(Accordion.Root)`
   }
 `
 
+const TopWrapperFlex = styled(Flex)`
+  @media ${device.tablet} {
+    align-self: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+`
+
 const Header = styled(Accordion.Header)`
   margin: 0;
   padding: 0 4px 4px 4px;
@@ -215,6 +226,7 @@ const ItemContent = styled(Accordion.Content)<{selected?: boolean}>`
 
   [data-state=closed] & {
     animation: ${closeContentAnimation} 300ms ease-out forwards;
+    overflow: hidden;
   };
 
   svg {

@@ -10,6 +10,7 @@ import {QueryGuard} from '../../../QueryGuard'
 import {useGetLectureComments} from '../../api/lectureComments'
 import {useAuth} from '../../../AuthUserContext'
 import Loading from '../../Loading'
+import {device} from '../../../theme/device'
 
 type LectureCommentsProps = {
   lectureId: number
@@ -74,6 +75,14 @@ const LectureCommentsContent = ({
 
 const WrapperFlex = styled(Flex)`
   width: 500px;
+
+  @media ${device.tablet} {
+    width: 400px;
+  }
+
+  @media ${device.mobile} {
+    width: 100%;
+  }
 `
 
 

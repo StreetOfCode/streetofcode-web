@@ -10,8 +10,8 @@ type Props = {
 
 const BackLink = ({className, text, to, ...props}: Props) => {
   return (
-    <StyledLink className={className} href={to} {...props} passHref>
-      <StyledA>
+    <StyledLink href={to} {...props} passHref>
+      <StyledA className={className}>
         &larr; {text}
       </StyledA>
     </StyledLink>

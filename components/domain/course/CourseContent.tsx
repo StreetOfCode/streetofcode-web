@@ -141,6 +141,7 @@ const ItemContent = styled(Accordion.Content)`
 
   [data-state=closed] & {
     animation: ${closeContentAnimation} 300ms ease-out forwards;
+    overflow: hidden;
   };
 `
 
