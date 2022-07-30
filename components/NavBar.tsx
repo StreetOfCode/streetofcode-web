@@ -31,7 +31,7 @@ const NavBar = () => {
       <MobileMenuFlex open={mobileNavbarOpen}>
         <MenuItems direction="column" alignItems="flex-start" gap={'32px'}>
           {!user && <NextLink href={`/login/${encodeURIComponent(router.asPath)}`}><Text>Prihlásiť</Text></NextLink>}
-          <NextLink styleIfActive href="/profil"><Text>Moje kurzy a nastavenia</Text></NextLink>
+          {user && <NextLink styleIfActive href="/profil"><Text>Moje kurzy a nastavenia</Text></NextLink>}
           <NextLink styleIfActive href="/o-projekte"><Text>O projekte</Text></NextLink>
           <NextLink styleIfActive href="/feedback"><Text>Feedback</Text></NextLink>
           {user && <LogoutText onClick={logout}>Odhlásiť</LogoutText>}
