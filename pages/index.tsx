@@ -39,7 +39,7 @@ const Home: NextPage<Props> = ({courses}) => {
         <NavBar />
         <Box>
           <HeroSection gap="16px" justifyContent="space-between">
-            <Flex direction="column" gap="48px" alignItems="flex-start" alignSelf="stretch">
+            <HeroSectionTextFles direction="column" gap="48px" alignItems="flex-start" alignSelf="stretch">
               <div>
                 <Heading variant="title" noWrap>Nauč sa s nami</Heading>
                 <Heading variant="title" color="accent">programovať</Heading>
@@ -51,7 +51,7 @@ const Home: NextPage<Props> = ({courses}) => {
               <NextLink href={'/kurzy'}>
                 <Button variant="accent" size="very-large" uppercase bold>online kurzy</Button>
               </NextLink>
-            </Flex>
+            </HeroSectionTextFles>
             <AnimationWrapper>
               <TypingAnimation />
             </AnimationWrapper>
@@ -184,6 +184,12 @@ const Box = styled.div`
 
   @media ${device.mobile} {
     margin-bottom: 16px;
+  }
+`
+
+const HeroSectionTextFles = styled(Flex)`
+  @media ${device.mobile} {
+    gap: 32px;
   }
 `
 

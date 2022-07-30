@@ -12,6 +12,7 @@ import Text from '../components/core/Text'
 import TextField from '../components/core/TextField'
 import UserAvatar from '../components/domain/user/UserAvatar'
 import Loading from '../components/Loading'
+import {device} from '../theme/device'
 
 const TOTAL_STEPS = 3
 
@@ -242,15 +243,18 @@ const OnboardingPage: NextPage = () => {
 export default OnboardingPage
 
 const Wrapper = styled.div`
-  width: 100%;
+  margin: 0 auto;
+  width: clamp(360px, 100%, 1200px);
   flex: 1;
   margin-bottom: 150px;
+
+  @media ${device.mobile} {
+    width: 100%;
+  }
 `
 
 const NavBarWrapper = styled(Flex)`
-  padding: 1em 0em;
-  width: clamp(920px, 100%, 1200px);
-  margin: 0 auto;
+  padding: 24px 32px;
   margin-bottom: 200px;
 `
 
@@ -265,6 +269,7 @@ const PageContent = styled.div`
 `
 
 const WrapperFlex = styled(Flex)`
+  padding: 0 32px;
   max-width: 440px;
   margin: 0 auto;
 `
