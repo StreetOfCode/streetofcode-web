@@ -1,6 +1,7 @@
 import {NextPage} from 'next'
 import Head from 'next/head'
 import React, {ChangeEvent, useState} from 'react'
+import {useGoogleReCaptcha} from 'react-google-recaptcha-v3'
 import styled from 'styled-components'
 import * as Api from '../api'
 import Button from '../components/core/Button'
@@ -14,6 +15,7 @@ import PageContentWrapper from '../components/PageContentWrapper'
 import {device} from '../theme/device'
 import {SendFeedbackRequest} from '../types'
 import {emailRegex} from '../utils'
+import {useAuth} from '../AuthUserContext'
 
 
 const SUCCESSFULLY_SENT_EMAIL_TEXT = 'Email bol úspešne poslaný, ďakujeme pekne.'
@@ -30,6 +32,7 @@ const Header = () => {
 
 
 const FeedbackPage: NextPage = () => {
+  const {user} = useAuth()
   const [emailSentSuccess, setEmailSentSuccess] = useState<boolean>(false)
   const [emailSentError, setEmailSentError] = useState<boolean>(false)
   const [message, setMessage] = useState<string>('')
@@ -38,6 +41,7 @@ const FeedbackPage: NextPage = () => {
   const [emailError, setEmailError] = useState<string>('')
   const [subject, setSubject] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const {executeRecaptcha} = useGoogleReCaptcha()
 
 
   const onEmailChanged = (e: ChangeEvent<HTMLInputElement>) => {
@@ -70,11 +74,24 @@ const FeedbackPage: NextPage = () => {
 
     try {
       setIsLoading(true)
-      const result = await Api.authPost<SendFeedbackRequest>(Api.sendFeedbackUrl(), {
-        email,
-        subject,
-        emailText: message,
-      })
+
+      let result: Response | undefined
+
+      if (!user && executeRecaptcha) {
+        const token = await executeRecaptcha('vote')
+        result = await Api.authPost<SendFeedbackRequest>(Api.sendFeedbackUrl(), {
+          email,
+          subject,
+          emailText: message,
+          recaptchaToken: token,
+        })
+      } else {
+        result = await Api.authPost<SendFeedbackRequest>(Api.sendFeedbackUrl(), {
+          email,
+          subject,
+          emailText: message,
+        })
+      }
 
       if (!result.ok) {
         setEmailSentError(true)

@@ -12,6 +12,7 @@ import {useGetUser} from '../components/api/user'
 import {QueryGuard} from '../QueryGuard'
 import Loading from '../components/Loading'
 import ErrorBoundary from '../components/domain/ErrorBoundary'
+import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3'
 import '../theme/animations/TypingAnimation.css'
 
 const OnboardingProtectionRoute = ({children}: {children: React.ReactNode}) => {
@@ -50,27 +51,29 @@ function MyApp({Component, pageProps}: AppProps) {
 
   return (
     <ErrorBoundary>
-      <ThemeProvider theme={theme}>
-        <AuthContextProvider>
-          <RootWrapper>
-            <QueryClientProvider client={queryClient}>
-              <GlobalStyles />
-              {routesThatDontNeedOnBoardingProtection.includes(router.pathname) &&
-              <>
-                <Component {...pageProps} />
-                <Footer />
-              </>
-              }
-              {!routesThatDontNeedOnBoardingProtection.includes(router.pathname) &&
-              <OnboardingProtectionRoute>
-                <Component {...pageProps} />
-                <Footer />
-              </OnboardingProtectionRoute>
-              }
-            </QueryClientProvider>
-          </RootWrapper>
-        </AuthContextProvider>
-      </ThemeProvider>
+      <GoogleReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY || ''}>
+        <ThemeProvider theme={theme}>
+          <AuthContextProvider>
+            <RootWrapper>
+              <QueryClientProvider client={queryClient}>
+                <GlobalStyles />
+                {routesThatDontNeedOnBoardingProtection.includes(router.pathname) &&
+                <>
+                  <Component {...pageProps} />
+                  <Footer />
+                </>
+                }
+                {!routesThatDontNeedOnBoardingProtection.includes(router.pathname) &&
+                <OnboardingProtectionRoute>
+                  <Component {...pageProps} />
+                  <Footer />
+                </OnboardingProtectionRoute>
+                }
+              </QueryClientProvider>
+            </RootWrapper>
+          </AuthContextProvider>
+        </ThemeProvider>
+      </GoogleReCaptchaProvider>
     </ErrorBoundary>
 
   )

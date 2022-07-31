@@ -182,6 +182,7 @@ export interface SendFeedbackRequest {
   email: string;
   subject: null | string;
   emailText: string;
+  recaptchaToken?: string
 }
 
 export type QuizId = string & { _type: 'QuizId' }
@@ -238,6 +239,7 @@ export interface NextCourseVoteOption {
 
 export interface VoteNextCoursesRequest {
   courseVoteOptionIds: number[];
+  recaptchaToken?: string
 }
 
 export interface SocUser {

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useGetNextCourseOptions} from '../../api/voteNextCourse'
+import {useGoogleReCaptcha} from 'react-google-recaptcha-v3'
 import {QueryGuard} from '../../../QueryGuard'
 import {VoteNextCoursesRequest} from '../../../types'
 import Button from '../../core/Button'
@@ -20,6 +21,8 @@ const VoteNextCourse = () => {
   const {user, isLoading} = useAuth()
   const [voteStatus, setVoteStatus] = useState<VoteStatus>('ALREADY_VOTED')
   const getVoteNextCourse = useGetNextCourseOptions()
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false)
+  const {executeRecaptcha} = useGoogleReCaptcha()
 
   useEffect(() => {
     // TODO create service for localStorage
@@ -42,14 +45,25 @@ const VoteNextCourse = () => {
   const handleOnSubmit = async () => {
     if (selectedNextCourses.length === 0) return
 
-    await Api.authPost<VoteNextCoursesRequest>(Api.voteNextUrl(), {
-      courseVoteOptionIds: selectedNextCourses,
-    })
+    setSubmitLoading(true)
+
+    if (!user && executeRecaptcha) {
+      const token = await executeRecaptcha('vote')
+      await Api.authPost<VoteNextCoursesRequest>(Api.voteNextUrl(), {
+        courseVoteOptionIds: selectedNextCourses,
+        recaptchaToken: token,
+      })
+    } else {
+      await Api.authPost<VoteNextCoursesRequest>(Api.voteNextUrl(), {
+        courseVoteOptionIds: selectedNextCourses,
+      })
+    }
 
     if (!user) {
       localStorage.setItem(nextCourseVotedStorageKey, 'true')
     }
 
+    setSubmitLoading(false)
     setVoteStatus('VOTE_JUST_SUBMITTED')
   }
 
@@ -82,7 +96,7 @@ const VoteNextCourse = () => {
             <Button
               variant="accent"
               onClick={handleOnSubmit}
-              disabled={selectedNextCourses.length === 0}
+              disabled={selectedNextCourses.length === 0 || submitLoading}
             >Odoslať</Button>
           </Flex>
         ) : null }
