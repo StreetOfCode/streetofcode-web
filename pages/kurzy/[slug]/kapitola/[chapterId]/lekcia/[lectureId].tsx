@@ -1,15 +1,28 @@
 import React from 'react'
+import Head from 'next/head'
 import {GetServerSideProps, NextPage} from 'next'
 import {useGetCourseOverview} from '../../../../../../components/api/courseOverview'
 import {QueryGuard} from '../../../../../../QueryGuard'
 import {useRouter} from 'next/router'
 import {useAuth} from '../../../../../../AuthUserContext'
 import TakeCourse from '../../../../../../components/domain/course/TakeCourse'
+import {CourseOverview} from '../../../../../../types'
 
 type Props = {
   courseSlug: string
   chapterId: string
   lectureId: string
+}
+
+const Header = ({course}: {course: CourseOverview}) => {
+  return (
+    <Head>
+      <title>{course.name}</title>
+      <meta name="description">{course.shortDescription}</meta>
+      {/* TODO discuss this */}
+      <meta name="robots" content="noindex" />
+    </Head>
+  )
 }
 
 const TakeCoursePage: NextPage<Props> = ({courseSlug, chapterId, lectureId}: Props) => {
@@ -25,12 +38,16 @@ const TakeCoursePage: NextPage<Props> = ({courseSlug, chapterId, lectureId}: Pro
   return (
     <QueryGuard {...getCourseOverview}>
       {(courseOverview) =>
-        (<TakeCourse
-          resourcesMode={false}
-          courseOverview={courseOverview}
-          chapterId={chapterId}
-          lectureId={lectureId}
-        />)
+        (
+          <>
+            <Header course={courseOverview} />
+            <TakeCourse
+              resourcesMode={false}
+              courseOverview={courseOverview}
+              chapterId={chapterId}
+              lectureId={lectureId}
+            />
+          </>)
       }
     </QueryGuard>
   )

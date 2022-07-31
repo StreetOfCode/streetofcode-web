@@ -1,4 +1,5 @@
 import React from 'react'
+import Head from 'next/head'
 import Image from 'next/image'
 import {GetStaticProps, NextPage} from 'next'
 import * as Api from '../../../api'
@@ -34,6 +35,15 @@ type Props = {
   courseOverview: null | CourseOverview
 }
 
+const Header = ({course}: {course: CourseOverview}) => {
+  return (
+    <Head>
+      <title>{course.name}</title>
+      <meta name="description">{course.shortDescription}</meta>
+    </Head>
+  )
+}
+
 const CourseDetailPage: NextPage<Props> = ({slug, courseOverview}: Props) => {
   const {user} = useAuth()
   const getCourseOverview = useGetCourseOverview(slug, !!user)
@@ -44,6 +54,7 @@ const CourseDetailPage: NextPage<Props> = ({slug, courseOverview}: Props) => {
         {(courseOverview: CourseOverview) => {
           return (
             <>
+              <Header course={courseOverview} />
               <NavBar />
               <CourseDetailContent courseOverview={courseOverview} />
             </>
@@ -59,6 +70,7 @@ const CourseDetailPage: NextPage<Props> = ({slug, courseOverview}: Props) => {
   } else {
     return (
       <>
+        <Header course={courseOverview} />
         <NavBar />
         <CourseDetailContent courseOverview={courseOverview} />
       </>

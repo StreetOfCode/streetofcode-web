@@ -1,4 +1,5 @@
 import {NextPage} from 'next'
+import Head from 'next/head'
 import React, {ChangeEvent, useState} from 'react'
 import styled from 'styled-components'
 import * as Api from '../api'
@@ -17,6 +18,15 @@ import {emailRegex} from '../utils'
 
 const SUCCESSFULLY_SENT_EMAIL_TEXT = 'Email bol úspešne poslaný, ďakujeme pekne.'
 const FAILED_SENT_EMAIL_TEXT = 'Email sa nepodarilo odoslať'
+
+const Header = () => {
+  return (
+    <Head>
+      <title>Stret of Code | Feedback</title>
+      <meta name="description">Chceme tvoj feedback</meta>
+    </Head>
+  )
+}
 
 
 const FeedbackPage: NextPage = () => {
@@ -84,6 +94,7 @@ const FeedbackPage: NextPage = () => {
 
   return (
     <>
+      <Header />
       <NavBar />
       <PageContentWrapper>
         <WrapperFlex justifyContent="space-between" alignItems="flex-start" gap="32px">

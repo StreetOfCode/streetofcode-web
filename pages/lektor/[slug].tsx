@@ -1,4 +1,5 @@
 import React from 'react'
+import Head from 'next/head'
 import styled from 'styled-components'
 import {AuthorOverview} from '../../types'
 import Text from '../../components/core/Text'
@@ -20,6 +21,15 @@ type Props = {
   authorOverview: AuthorOverview
 }
 
+const Header = ({author}: {author: AuthorOverview}) => {
+  return (
+    <Head>
+      <title>{author.name}</title>
+      <meta name="description">{`Street of Code lektor ${author.name}`}</meta>
+    </Head>
+  )
+}
+
 const AuthorPage: NextPage<Props> = ({authorOverview}: Props) => {
   const {user} = useAuth()
   const getAuthorOverviewQuery = useGetAuthorOverview(authorOverview.slug, !!user)
@@ -28,6 +38,7 @@ const AuthorPage: NextPage<Props> = ({authorOverview}: Props) => {
     return (<QueryGuard {...getAuthorOverviewQuery}>
       {(authorOverview) => {
         return (<>
+          <Header author={authorOverview} />
           <NavBar />
           <AuthorPageContent authorOverview={authorOverview} />
         </>)
@@ -36,6 +47,7 @@ const AuthorPage: NextPage<Props> = ({authorOverview}: Props) => {
   } else {
     return (
       <>
+        <Header author={authorOverview} />
         <NavBar />
         <AuthorPageContent authorOverview={authorOverview} />
       </>

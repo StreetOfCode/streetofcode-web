@@ -1,4 +1,5 @@
 import React from 'react'
+import Head from 'next/head'
 import {NextPage} from 'next'
 import Flex from '../../components/core/Flex'
 import Heading from '../../components/core/Heading'
@@ -17,6 +18,15 @@ interface Props {
   courses: CourseOverview[]
 }
 
+const Header = () => {
+  return (
+    <Head>
+      <title>Stret of Code | Kurzy</title>
+      <meta name="description">Naučíme ťa programovať</meta>
+    </Head>
+  )
+}
+
 const CoursesPage: NextPage<Props> = ({courses}) => {
   const {user} = useAuth()
   const getCoursesQuery = useGetCourses(!!user)
@@ -27,6 +37,7 @@ const CoursesPage: NextPage<Props> = ({courses}) => {
         {(courses: CourseOverview[]) => {
           return (
             <>
+              <Header />
               <NavBar />
               <CoursesPageContent courses={courses} />
             </>
@@ -37,6 +48,7 @@ const CoursesPage: NextPage<Props> = ({courses}) => {
   } else {
     return (
       <>
+        <Header />
         <NavBar />
         <CoursesPageContent courses={courses} />
       </>
