@@ -1,4 +1,5 @@
 import React from 'react'
+import * as Sentry from '@sentry/react'
 import type {AppProps} from 'next/app'
 import GlobalStyles from '../globalStyles'
 import styled, {ThemeProvider} from 'styled-components'
@@ -11,8 +12,8 @@ import {useRouter} from 'next/router'
 import {useGetUser} from '../components/api/user'
 import {QueryGuard} from '../QueryGuard'
 import Loading from '../components/Loading'
-import ErrorBoundary from '../components/domain/ErrorBoundary'
 import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3'
+import ErrorBoundaryFallBack from '../components/domain/ErrorBoundaryFallBack'
 import '../theme/animations/TypingAnimation.css'
 
 const OnboardingProtectionRoute = ({children}: {children: React.ReactNode}) => {
@@ -50,7 +51,7 @@ function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter()
 
   return (
-    <ErrorBoundary>
+    <Sentry.ErrorBoundary fallback={<ErrorBoundaryFallBack />}>
       <GoogleReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY || ''}>
         <ThemeProvider theme={theme}>
           <AuthContextProvider>
@@ -74,8 +75,7 @@ function MyApp({Component, pageProps}: AppProps) {
           </AuthContextProvider>
         </ThemeProvider>
       </GoogleReCaptchaProvider>
-    </ErrorBoundary>
-
+    </Sentry.ErrorBoundary>
   )
 }
 
