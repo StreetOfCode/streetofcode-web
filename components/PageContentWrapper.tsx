@@ -1,9 +1,12 @@
 import React, {HTMLAttributes} from 'react'
 import styled from 'styled-components'
 
+type Props = {
+  className?: string
+} & HTMLAttributes<HTMLElement>
 
-const PageContentWrapper = ({children}: HTMLAttributes<HTMLElement>) => {
-  return (<Wrapper>
+const PageContentWrapper = ({className, children, ...props}: Props) => {
+  return (<Wrapper className={className} {...props}>
     {children}
   </Wrapper>)
 }
