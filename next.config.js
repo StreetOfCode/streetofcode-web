@@ -10,7 +10,7 @@ const nextConfig = {
     emotion: true,
   },
   images: {
-    domains: ['streetofcode.sk', 'googleusercontent.com'],
+    domains: ['streetofcode.sk', 'lh3.googleusercontent.com'],
   },
   future: {
     webpack5: true, // by default, if you customize webpack config, they switch back to version 4.

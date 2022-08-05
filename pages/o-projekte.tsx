@@ -17,7 +17,7 @@ import {discordInviteUrl} from '../components/landing-page/discord'
 const Header = () => {
   return (
     <Head>
-      <title>Stret of Code</title>
+      <title>Street of Code</title>
       <meta name="description">Miesto, kde sa naučíš programovať</meta>
     </Head>
   )

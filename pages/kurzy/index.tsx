@@ -21,7 +21,7 @@ interface Props {
 const Header = () => {
   return (
     <Head>
-      <title>Stret of Code | Kurzy</title>
+      <title>Street of Code | Kurzy</title>
       <meta name="description">Naučíme ťa programovať</meta>
     </Head>
   )

@@ -83,7 +83,7 @@ const Newsletter = ({currentStep, email, receiveNewsletter, onStepForward, onSte
         <CheckBox
           checked={newsletter}
           onToggle={(newValue) => setNewsletter(newValue)}
-          label={`Chcem dostávať príležitostné maily (${email})`}
+          label={`Poslať potvrdzujúci email (${email})`}
         />
         <Button variant="accent" onClick={onSubmit}>Pokračovať</Button>
         <Flex justifyContent="space-between" alignSelf="stretch">

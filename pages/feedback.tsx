@@ -24,7 +24,7 @@ const FAILED_SENT_EMAIL_TEXT = 'Email sa nepodarilo odoslať'
 const Header = () => {
   return (
     <Head>
-      <title>Stret of Code | Feedback</title>
+      <title>Street of Code | Feedback</title>
       <meta name="description">Chceme tvoj feedback</meta>
     </Head>
   )
