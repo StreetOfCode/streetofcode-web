@@ -21,12 +21,11 @@ import DifficultyShow from './components/difficulty/DifficultyShow'
 import LectureCreate from './components/lecture/LectureCreate'
 import LectureEdit from './components/lecture/LectureEdit'
 import LectureShow from './components/lecture/LectureShow'
-// import {firebaseAuthProvider} from '../firebase'
 import Button from '../components/core/Button'
 import LoginPage from '../pages/login/[redirectUri]'
 import {useAuth} from '../AuthUserContext'
 
-const API_URL = 'http://localhost:8080' // TODO
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const AdminApp = ({user, logout}) => {
   const [dataProvider, setDataProvider] = useState(null)

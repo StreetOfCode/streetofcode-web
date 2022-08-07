@@ -1,6 +1,6 @@
 import * as Auth from './auth'
 
-const API_URL = 'http://localhost:8080' // TODO
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const COURSES_OVERVIEW_URL = `${API_URL}/course/overview`
 export const coursesOverviewUrl = () => COURSES_OVERVIEW_URL
@@ -81,6 +81,7 @@ export const authFetch = async (url: string) => {
 }
 
 export const noAuthFetch = async (url: string) => {
+  console.log('url', url)
   const params = await noAuthCreateParams('GET')
   return fetch(url, params)
 }
