@@ -73,6 +73,7 @@ export const useGetCourseReviews = (courseId: number) => {
     () => fetchCourseReviews(courseId), {
       cacheTime: 60000,
       staleTime: 60000,
+      refetchOnWindowFocus: false,
     })
 }
 

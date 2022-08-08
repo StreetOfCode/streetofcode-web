@@ -24,7 +24,8 @@ const fetchNextCourseOptions = async () => {
 
 export const useGetNextCourseOptions = () => {
   return useQuery(queryKeys.getNextCourseOptions, () => fetchNextCourseOptions(), {
-    cacheTime: 60000,
-    staleTime: 60000,
+    cacheTime: 600000,
+    staleTime: 600000,
+    refetchOnWindowFocus: false,
   })
 }

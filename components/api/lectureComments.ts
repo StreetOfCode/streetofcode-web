@@ -73,6 +73,7 @@ export const useGetLectureComments = (lectureId: number) => {
     () => fetchLectureComments(lectureId), {
       cacheTime: 60000,
       staleTime: 60000,
+      refetchOnWindowFocus: false,
     })
 }
 

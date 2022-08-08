@@ -1,5 +1,4 @@
 User-agent: *
 Disallow: /admin
 Disallow: /profil
-Disallow: /admin
 Disallow: /onboarding

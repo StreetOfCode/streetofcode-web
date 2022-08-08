@@ -19,7 +19,6 @@ const Header = ({course}: {course: CourseOverview}) => {
     <Head>
       <title>{course.name}</title>
       <meta name="description">{course.shortDescription}</meta>
-      {/* TODO discuss this */}
       <meta name="robots" content="noindex" />
     </Head>
   )

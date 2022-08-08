@@ -54,6 +54,7 @@ export const useGetCourseProgressOverview = (courseId: number) => {
     () => fetchCourseProgressOverview(courseId), {
       cacheTime: 60000,
       staleTime: 60000,
+      refetchOnWindowFocus: false,
     })
 }
 

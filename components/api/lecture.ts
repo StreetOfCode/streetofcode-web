@@ -20,7 +20,8 @@ const fetchLecture = async (lectureId: number) => {
 
 export const useGetLecture = (lectureId: number) => {
   return useQuery(queryKeys.get(lectureId), () => fetchLecture(lectureId), {
-    cacheTime: 60000,
-    staleTime: 60000,
+    cacheTime: 600000,
+    staleTime: 600000,
+    refetchOnWindowFocus: false,
   })
 }

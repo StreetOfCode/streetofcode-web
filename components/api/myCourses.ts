@@ -22,5 +22,6 @@ export const useGetMyCourses = () => {
   return useQuery(queryKeys.getMyCourses, () => fetchMyCourses(), {
     cacheTime: 60000,
     staleTime: 60000,
+    refetchOnWindowFocus: false,
   })
 }

@@ -23,5 +23,6 @@ export const useGetCourseOverview = (slug: string, enabled: boolean | undefined)
     cacheTime: 60000,
     staleTime: 60000,
     enabled,
+    refetchOnWindowFocus: false,
   })
 }
