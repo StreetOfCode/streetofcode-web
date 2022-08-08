@@ -62,7 +62,7 @@ type NewsletterProps = {
   currentStep: number,
   email: string
   receiveNewsletter: boolean
-  onStepForward: (email: string, newsletter: boolean) => void
+  onStepForward: (newsletter: boolean) => void
   onStepBack: () => void
 }
 
@@ -70,7 +70,7 @@ const Newsletter = ({currentStep, email, receiveNewsletter, onStepForward, onSte
   const [newsletter, setNewsletter] = useState(receiveNewsletter)
 
   const onSubmit = () => {
-    onStepForward(email, newsletter)
+    onStepForward(newsletter)
   }
 
   return (
@@ -98,7 +98,6 @@ const Newsletter = ({currentStep, email, receiveNewsletter, onStepForward, onSte
 type DiscordProps = {
   currentStep: number,
   email: string,
-  sendDiscordInvitation: boolean
   onStepForward: (invitation: boolean) => void
   onStepBack: () => void
   disableButtons?: boolean
@@ -107,12 +106,11 @@ type DiscordProps = {
 const DiscordServer = ({
   currentStep,
   email,
-  sendDiscordInvitation,
   onStepBack,
   onStepForward,
   disableButtons,
 }: DiscordProps) => {
-  const [sendDiscord, setSendDiscord] = useState(sendDiscordInvitation)
+  const [sendDiscord, setSendDiscord] = useState(true)
 
   const onSubmit = () => {
     if (!disableButtons) {
@@ -154,7 +152,6 @@ const OnboardingPage: NextPage = () => {
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState<number>(0)
   const [name, setName] = useState(user?.displayName || '')
-  const [sendDiscordInvitation, setSendDiscordInvitation] = useState(true)
   const [receiveNewsletter, setReceiveNewsletter] = useState(true)
   const [loading, setLoading] = useState(false)
   const email = user?.email || ''
@@ -168,7 +165,7 @@ const OnboardingPage: NextPage = () => {
     router.push('/')
   }
 
-  const handleFinishOnboarding = async () => {
+  const handleFinishOnboarding = async (discordInvitation: boolean) => {
     setLoading(true)
     try {
       await useAddSocUser.mutateAsync({
@@ -177,7 +174,7 @@ const OnboardingPage: NextPage = () => {
         email,
         imageUrl: user.photoURL,
         receiveNewsletter,
-        sendDiscordInvitation,
+        sendDiscordInvitation: discordInvitation,
       })
     } catch (err) {
       setLoading(false)
@@ -221,7 +218,7 @@ const OnboardingPage: NextPage = () => {
           email={email}
           receiveNewsletter={receiveNewsletter}
           onStepBack={() => setCurrentStep(currentStep - 1)}
-          onStepForward={(email, receiveNewsletter) => {
+          onStepForward={(receiveNewsletter) => {
             setReceiveNewsletter(receiveNewsletter)
             setCurrentStep(currentStep + 1)
           }}
@@ -230,11 +227,9 @@ const OnboardingPage: NextPage = () => {
         {currentStep === 2 && <DiscordServer
           currentStep={currentStep}
           email={email}
-          sendDiscordInvitation={sendDiscordInvitation}
           onStepBack={() => setCurrentStep(currentStep - 1)}
           onStepForward={async (sendInvitation) => {
-            setSendDiscordInvitation(sendInvitation)
-            await handleFinishOnboarding()
+            await handleFinishOnboarding(sendInvitation)
           }}
           disableButtons={loading}
         />}
