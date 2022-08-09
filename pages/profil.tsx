@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useState} from 'react'
 import {QueryGuard} from '../QueryGuard'
 import {SocUser} from '../types'
-import EditIcon from '@material-ui/icons/Edit'
+import {AiOutlineEdit} from 'react-icons/ai'
 import Text from '../components/core/Text'
 import Flex from '../components/core/Flex'
 import Heading from '../components/core/Heading'
@@ -179,7 +179,9 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
   )
 }
 
-const StyledEditIcon = styled(EditIcon)`
+const StyledEditIcon = styled(AiOutlineEdit)`
+  width: 26px;
+  height: 26px;
   color: ${(props) => props.theme.accentColor};
   &:hover {
     cursor: pointer;

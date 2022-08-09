@@ -13,7 +13,7 @@ type Props = {
   iconBefore?: React.ReactNode
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
-type Variant = 'accent' | 'default' | 'outline'
+type Variant = 'accent' | 'default' | 'outline' | 'danger'
 type Size = 'small' | 'default' | 'large' | 'very-large'
 
 const variantStyleValues = {
@@ -31,6 +31,11 @@ const variantStyleValues = {
     color: theme.secondaryColor,
     backgroundColor: theme.primaryColor,
     border: `2px solid ${theme.accentColor}`,
+  },
+  danger: {
+    color: theme.primaryColor,
+    backgroundColor: theme.dangerColor,
+    border: `2px solid ${theme.dangerColor}`,
   },
 }
 

@@ -1,4 +1,4 @@
-import {Button, Dialog} from '@material-ui/core'
+import {Dialog} from '@material-ui/core'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
@@ -7,6 +7,8 @@ import Slide from '@material-ui/core/Slide'
 import {TransitionProps} from '@mui/material/transitions'
 import React from 'react'
 import styled from 'styled-components'
+import Button from './core/Button'
+import Heading from './core/Heading'
 
 const ConfirmActionDialog = ({
   title,
@@ -36,7 +38,7 @@ const ConfirmActionDialog = ({
   })
 
   return (
-    <Dialog
+    <StyledDialog
       open={isOpen}
       onClose={onClose}
       aria-labelledby="alert-dialog-title"
@@ -44,7 +46,9 @@ const ConfirmActionDialog = ({
       TransitionComponent={Transition}
     >
       <DialogContentWrapper>
-        <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          <Heading variant="h4">{title}</Heading>
+        </DialogTitle>
         {description && (
           <DialogContent>
             <DialogContentText id="alert-dialog-description">{description}</DialogContentText>
@@ -52,16 +56,27 @@ const ConfirmActionDialog = ({
         )}
       </DialogContentWrapper>
       <DialogActions>
-        <Button onClick={onSecondaryButtonClick} variant="contained" color="primary">
+        <Button onClick={onSecondaryButtonClick}>
           {secondaryButtonText}
         </Button>
-        <Button onClick={onPrimaryButtonClick} variant="contained" color="primary" autoFocus>
+        <Button onClick={onPrimaryButtonClick} variant="danger">
           {primaryButtonText}
         </Button>
       </DialogActions>
-    </Dialog>
+    </StyledDialog>
   )
 }
+
+const StyledDialog = styled(Dialog)`
+  .MuiPaper-rounded {
+    border-radius: 12px;
+  }
+
+  .MuiDialogActions-root {
+    padding: 12px;
+    padding-top: 0;
+  }
+`
 
 const DialogContentWrapper = styled.div`
   min-width: 300px;
