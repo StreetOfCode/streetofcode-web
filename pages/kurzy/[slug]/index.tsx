@@ -99,7 +99,9 @@ const CourseDetailContent = ({courseOverview}: {courseOverview: CourseOverview})
 
     if (courseOverview.userProgressMetadata) {
       const progressData = courseOverview.userProgressMetadata
-      progressValuePercent = (progressData.lecturesViewed / progressData.courseLecturesCount) * 100
+      progressValuePercent = Utils.getCourseProgressPercent(
+        progressData.lecturesViewed, progressData.courseLecturesCount,
+      )
     }
   }
 

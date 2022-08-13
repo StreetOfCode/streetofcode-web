@@ -1,7 +1,7 @@
 import React from 'react'
 import {AiOutlinePlayCircle, AiOutlineQuestionCircle} from 'react-icons/ai'
 import {CgNotes} from 'react-icons/cg'
-import {ChapterOverview, CourseOverview, LectureOverview, LectureType, UserProgressMetadata} from './types'
+import {ChapterOverview, CourseOverview, LectureOverview, LectureType} from './types'
 
 /***
  * i.e from 287 => 4h 47minút
@@ -27,10 +27,8 @@ export const formatDate = (date: Date) => {
   return new Date(date).toLocaleString('en-GB')
 }
 
-export const getCourseProgressPercent = (
-  {lecturesViewed, courseLecturesCount}: UserProgressMetadata,
-) => {
-  return (lecturesViewed / courseLecturesCount) * 100
+export const getCourseProgressPercent = (lecturesViewed: number, courseLecturesCount: number) => {
+  return Math.round((lecturesViewed / courseLecturesCount) * 100)
 }
 
 export const getTakeCourseUrl = (course: CourseOverview) => {

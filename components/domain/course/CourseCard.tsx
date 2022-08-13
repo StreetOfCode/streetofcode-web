@@ -10,7 +10,7 @@ import Avatar from '../../core/Avatar'
 import CircullarProgressWithLabel from '../../CircullarProgressWithLabel'
 import DifficultyIcon from '../../../theme/icons/DifficultyIcon'
 import {CourseOverview} from '../../../types'
-import {formatDurationFromMinutes, numOfLecturesText, numOfQuizzesText} from '../../../utils'
+import {formatDurationFromMinutes, getCourseProgressPercent, numOfLecturesText, numOfQuizzesText} from '../../../utils'
 
 const CourseCard = ({course}: { course: CourseOverview }) => {
   let lecturesCount = 0
@@ -24,7 +24,7 @@ const CourseCard = ({course}: { course: CourseOverview }) => {
 
     if (course.userProgressMetadata) {
       const progressData = course.userProgressMetadata
-      progressValuePercent = (progressData.lecturesViewed / progressData.courseLecturesCount) * 100
+      progressValuePercent = getCourseProgressPercent(progressData.lecturesViewed, progressData.courseLecturesCount)
     }
   }
 

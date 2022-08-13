@@ -2,7 +2,7 @@ import React, {HTMLAttributes, useEffect} from 'react'
 import styled, {keyframes} from 'styled-components'
 import {ChapterProgressOverview, CourseProgressOverview} from '../../../types'
 import Flex from '../../core/Flex'
-import {ChevronDownIcon} from '@radix-ui/react-icons'
+import {BiChevronDown} from 'react-icons/bi'
 import {GrNotes} from 'react-icons/gr'
 import * as Accordion from '@radix-ui/react-accordion'
 import Heading from '../../core/Heading'
@@ -80,8 +80,10 @@ const CourseSidebar = ({
     }
   }
 
-  const progressValuePercent =
-    (courseProgressOverview.lecturesViewed / courseProgressOverview.courseLecturesCount) * 100
+  const progressValuePercent = Utils.getCourseProgressPercent(
+    courseProgressOverview.lecturesViewed,
+    courseProgressOverview.courseLecturesCount,
+  )
 
   return (
     <>
@@ -238,7 +240,7 @@ const ItemContent = styled(Accordion.Content)<{selected?: boolean}>`
   }
 `
 
-const AccordionChevron = styled(ChevronDownIcon)`
+const AccordionChevron = styled(BiChevronDown)`
   transition: transform 300ms;
   [data-state=open] & {
     transform: rotate(180deg);

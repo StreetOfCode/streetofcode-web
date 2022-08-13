@@ -1,5 +1,5 @@
 import React from 'react'
-import {Rating as MuiRating, RatingProps} from '@mui/material'
+import MuiRating, {RatingProps} from '@mui/material/Rating'
 import StarIcon from '@mui/icons-material/Star'
 import styled from 'styled-components'
 

@@ -1,4 +1,4 @@
-import {CircularProgress} from '@mui/material'
+import CircularProgress from '@mui/material/CircularProgress'
 import {useRouter} from 'next/router'
 import simpleRestProvider from 'ra-data-simple-rest'
 import React, {useEffect, useState} from 'react'

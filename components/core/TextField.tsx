@@ -1,5 +1,5 @@
 import React, {ChangeEvent, HTMLAttributes} from 'react'
-import {TextField as MuiTextField} from '@material-ui/core'
+import MuiTextField from '@material-ui/core/TextField'
 
 import styled from 'styled-components'
 

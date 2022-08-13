@@ -7,7 +7,7 @@ import Text from '../../core/Text'
 import Flex from '../../core/Flex'
 import * as Utils from '../../../utils'
 import {useRouter} from 'next/router'
-import {ChevronDownIcon} from '@radix-ui/react-icons'
+import {BiChevronDown} from 'react-icons/bi'
 import {device} from '../../../theme/device'
 
 type Props = {
@@ -145,7 +145,7 @@ const ItemContent = styled(Accordion.Content)`
   };
 `
 
-const AccordionChevron = styled(ChevronDownIcon)`
+const AccordionChevron = styled(BiChevronDown)`
   transition: transform 300ms;
   [data-state=open] & {
     transform: rotate(180deg);

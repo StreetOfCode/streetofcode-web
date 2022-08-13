@@ -52,6 +52,7 @@ const TakeCoursePage: NextPage<Props> = ({courseSlug, chapterId, lectureId}: Pro
   )
 }
 
+// eslint-disable-next-line require-await
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const courseSlug = context?.params?.slug as string
   const chapterId = context?.params?.chapterId as string
