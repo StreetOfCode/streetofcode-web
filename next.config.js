@@ -8,10 +8,13 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
     emotion: true,
-    removeConsole: true,
   },
   images: {
-    domains: ['streetofcode.sk', 'lh3.googleusercontent.com'],
+    domains: [
+      'streetofcode.sk',
+      'lh3.googleusercontent.com',
+      'process.env.WORDPRESS_API_URL.match(/(http(?:s)?:\\/\\/)(.*)/)[2]',
+    ],
   },
   future: {
     webpack5: true, // by default, if you customize webpack config, they switch back to version 4.
