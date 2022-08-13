@@ -4,26 +4,28 @@ import {Lecture} from '../../../types'
 import {useGetQuizzesByLecture} from '../../api/quiz'
 import Quiz from './quiz/Quiz'
 
-const LectureQuiz = (props: { lecture: Lecture }) => {
-  const quizzesByLecture = useGetQuizzesByLecture(props.lecture.id)
+type Props = {
+  lecture: Lecture
+}
+
+const LectureQuiz = ({lecture}: Props) => {
+  const quizzesByLecture = useGetQuizzesByLecture(lecture.id)
 
   return (
-    <>
-      <QueryGuard {...quizzesByLecture}>
-        {(quizes) => {
-          return (
-            <>
-              {
-                quizes.map((q, i) => {
-                  return (<Quiz key={i} quiz={q} lecture={props.lecture} />)
-                })
+    <QueryGuard {...quizzesByLecture}>
+      {(quizes) => {
+        return (
+          <>
+            {
+              quizes.map((q, i) => {
+                return (<Quiz key={i} quiz={q} lecture={lecture} />)
+              })
 
-              }
-            </>
-          )
-        }}
-      </QueryGuard>
-    </>
+            }
+          </>
+        )
+      }}
+    </QueryGuard>
   )
 }
 

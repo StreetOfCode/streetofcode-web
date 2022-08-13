@@ -24,6 +24,7 @@
     "@sentry/nextjs": "^7.8.1",
     "@sentry/node": "^7.8.1",
     "@sentry/react": "^7.8.1",
+    "@u-wave/react-vimeo": "^0.9.8",
     "@uiw/react-md-editor": "3.6.0",
     "clsx": "^1.2.1",
     "firebase": "^9.9.0",

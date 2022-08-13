@@ -84,6 +84,7 @@ const Newsletter = ({currentStep, email, receiveNewsletter, onStepForward, onSte
           checked={newsletter}
           onToggle={(newValue) => setNewsletter(newValue)}
           label={`Poslať potvrdzujúci email (${email})`}
+          size={'22px'}
         />
         <Button variant="accent" onClick={onSubmit}>Pokračovať</Button>
         <Flex justifyContent="space-between" alignSelf="stretch">
@@ -135,6 +136,7 @@ const DiscordServer = ({
           checked={sendDiscord}
           onToggle={(newValue) => setSendDiscord(newValue)}
           label={`Chcem dostať pozvánku (${email})`}
+          size={'22px'}
         />
         <Button disabled={disableButtons} variant="accent" onClick={onSubmit}>Dokončiť</Button>
         <Flex justifyContent="space-between" alignSelf="stretch">

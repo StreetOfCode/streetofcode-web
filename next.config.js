@@ -3,11 +3,12 @@ const {withSentryConfig} = require('@sentry/nextjs')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false, // strict mode creates error in VimeoPlayer - https://github.com/u-wave/react-vimeo/pull/175
   swcMinify: true,
   compiler: {
     styledComponents: true,
     emotion: true,
+    removeConsole: true,
   },
   images: {
     domains: ['streetofcode.sk', 'lh3.googleusercontent.com'],

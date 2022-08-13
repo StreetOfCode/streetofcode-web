@@ -28,6 +28,7 @@ import CourseReviews from '../../../components/domain/course-review/CourseReview
 import NextLink from '../../../components/core/NextLink'
 import Loading from '../../../components/Loading'
 import {device} from '../../../theme/device'
+import VideoWrapper from '../../../components/domain/video/VideoWrapper'
 
 
 type Props = {
@@ -108,16 +109,7 @@ const CourseDetailContent = ({courseOverview}: {courseOverview: CourseOverview})
 
   const renderThubmnailOrTrailer = (): React.ReactNode => {
     if (courseOverview.trailerUrl) {
-      return (<VideoWrapper>
-        <iframe
-          title={courseOverview.name}
-          src={`${courseOverview.trailerUrl}?rel=0&modestbranding=1`}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          sandbox="allow-forms allow-scripts allow-pointer-lock allow-same-origin allow-top-navigation"
-          allowFullScreen
-        />
-      </VideoWrapper>)
+      return <VideoWrapper vimeoVideoId={courseOverview.trailerUrl} />
     } else {
       if (!courseOverview.thumbnailUrl) return null
 
@@ -247,24 +239,6 @@ const CardImageWrapper = styled.div`
   width: 100%;
   max-width: 100%;
   aspect-ratio: 16 / 9;
-`
-
-// TODO make VideoWrapper component (use here and in LectureDetail)
-const VideoWrapper = styled.div`
-  width: 100%;
-  max-width: 100%;
-  height: 0;
-  padding-bottom: 56.25%;
-  position: relative;
-
-  iframe {
-    width: 100%;
-    max-width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
 `
 
 export const getStaticProps: GetStaticProps = async (context) => {
