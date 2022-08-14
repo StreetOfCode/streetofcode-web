@@ -91,6 +91,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
         excerpt
         slug
         date
+        content
         featuredImage {
           node {
             sourceUrl

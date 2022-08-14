@@ -1,15 +1,15 @@
 import React from 'react'
 import Head from 'next/head'
 import {GetStaticProps, NextPage} from 'next'
-import Text from '../../../components/core/Text'
 import PageContentWrapper from '../../../components/PageContentWrapper'
 import {getAllPosts} from '../../../wp/api'
 import {Post} from '../../../wp/types'
 import NavBar from '../../../components/NavBar'
 import {PAGINATION_BY} from '../constants'
-import NextLink from '../../../components/core/NextLink'
 import {useRouter} from 'next/router'
 import PaginationWrapper from '../../../components/domain/pagination/PaginationWrapper'
+import PostPreview from '../../../components/domain/post/PostPreview'
+import Flex from '../../../components/core/Flex'
 
 interface Props {
   posts: Post[]
@@ -42,12 +42,11 @@ const PaginatedPostsPage: NextPage<Props> = ({posts, currentPage, totalPages}) =
       <Header />
       <NavBar />
       <PageContentWrapper>
-        {posts && posts.map((post, i) => (
-          <NextLink key={i} href={`/clanky/${post.slug}`}>
-            <Text>{post.title}</Text>
-          </NextLink>
-        ))}
-
+        <Flex direction="column" gap="72px" alignItems="flex-start">
+          {posts && posts.map((post, i) => (
+            <PostPreview key={i} post={post} />
+          ))}
+        </Flex>
         <PaginationWrapper forcePage={currentPage - 1} handlePageClick={handlePageClick} totalPages={totalPages} />
       </PageContentWrapper>
     </>

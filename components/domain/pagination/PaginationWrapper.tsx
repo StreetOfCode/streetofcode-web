@@ -31,12 +31,15 @@ const StyledReactPaginage = styled(ReactPaginate).attrs({
   previousClassName: 'previousLabel',
   nextClassName: 'nextLabel',
 })`
+  margin: 72px auto;
+  margin-bottom: 0;
   max-width: 500px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   list-style-type: none;
   gap: 16px;
+  padding: 0;
 
   li a {
     border-radius: 18px;
@@ -57,7 +60,7 @@ const StyledReactPaginage = styled(ReactPaginate).attrs({
     min-width: 32px;
   }
   li.disabled a {
-    opacity: 0.6;
+    opacity: 0.4;
   }
   li.disable,
   li.disabled a {

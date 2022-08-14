@@ -1,15 +1,15 @@
 import React from 'react'
 import Head from 'next/head'
 import {NextPage} from 'next'
-import Text from '../../components/core/Text'
 import PageContentWrapper from '../../components/PageContentWrapper'
 import {getAllPosts} from '../../wp/api'
 import {Post} from '../../wp/types'
 import NavBar from '../../components/NavBar'
-import NextLink from '../../components/core/NextLink'
 import {PAGINATION_BY} from './constants'
 import {useRouter} from 'next/router'
 import PaginationWrapper from '../../components/domain/pagination/PaginationWrapper'
+import Flex from '../../components/core/Flex'
+import PostPreview from '../../components/domain/post/PostPreview'
 
 interface Props {
   posts: Post[]
@@ -39,11 +39,11 @@ const PostsPage: NextPage<Props> = ({posts}) => {
       <Header />
       <NavBar />
       <PageContentWrapper>
-        {firstPagePosts && firstPagePosts.map((post, i) => (
-          <NextLink key={i} href={`/clanky/${post.slug}`}>
-            <Text>{post.title}</Text>
-          </NextLink>
-        ))}
+        <Flex direction="column" gap="72px" alignItems="flex-start">
+          {firstPagePosts && firstPagePosts.map((post, i) => (
+            <PostPreview key={i} post={post} />
+          ))}
+        </Flex>
         <PaginationWrapper handlePageClick={handlePageClick} totalPages={numberOfPossiblePages} forcePage={0} />
       </PageContentWrapper>
     </>

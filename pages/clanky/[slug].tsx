@@ -1,12 +1,12 @@
 import React from 'react'
 import Head from 'next/head'
 import {GetStaticProps, NextPage} from 'next'
-import Heading from '../../components/core/Heading'
 import PageContentWrapper from '../../components/PageContentWrapper'
 import {getAllPostsWithSlug, getPostBySlug} from '../../wp/api'
 import {Post} from '../../wp/types'
 import NavBar from '../../components/NavBar'
 import BackLink from '../../components/core/BackLink'
+import PostView from '../../components/domain/post/PostView'
 
 interface Props {
   post: Post
@@ -22,14 +22,13 @@ const Header = () => {
 }
 
 const SinglePostPage: NextPage<Props> = ({post}) => {
-  console.log('post', post)
   return (
     <>
       <Header />
       <NavBar />
       <PageContentWrapper>
         <BackLink to={'/clanky'} text={'Späť na články'} />
-        <Heading variant="h2">{post.title}</Heading>
+        <PostView post={post} />
       </PageContentWrapper>
     </>
   )

@@ -81,7 +81,6 @@ export const authFetch = async (url: string) => {
 }
 
 export const noAuthFetch = async (url: string) => {
-  console.log('url', url)
   const params = await noAuthCreateParams('GET')
   return fetch(url, params)
 }
