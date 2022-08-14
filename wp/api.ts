@@ -27,7 +27,7 @@ export async function getAllPosts(): Promise<Post[]> {
     `
     query AllPosts {
       posts(
-        first: 20,
+        first: 1000,
         where: {
           orderby: { field: DATE, order: DESC },
           categoryName: "Blog"
@@ -72,7 +72,7 @@ export async function getAllPosts(): Promise<Post[]> {
 export async function getAllPostsWithSlug(): Promise<Post[]> {
   const data = await fetchAPI(`
     {
-      posts(first: 10000, where: {categoryName: "Blog"}) {
+      posts(first: 1000, where: {categoryName: "Blog"}) {
         nodes {
           slug
         }

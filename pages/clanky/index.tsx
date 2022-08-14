@@ -7,6 +7,9 @@ import {getAllPosts} from '../../wp/api'
 import {Post} from '../../wp/types'
 import NavBar from '../../components/NavBar'
 import NextLink from '../../components/core/NextLink'
+import {PAGINATION_BY} from './constants'
+import {useRouter} from 'next/router'
+import PaginationWrapper from '../../components/domain/pagination/PaginationWrapper'
 
 interface Props {
   posts: Post[]
@@ -22,16 +25,29 @@ const Header = () => {
 }
 
 const PostsPage: NextPage<Props> = ({posts}) => {
-  console.log('posts', posts)
-  return (<PageContentWrapper>
-    <Header />
-    <NavBar />
-    {posts && posts.map((post, i) => (
-      <NextLink key={i} href={`/clanky/${post.slug}`}>
-        <Text>{post.title}</Text>
-      </NextLink>
-    ))}
-  </PageContentWrapper>)
+  const router = useRouter()
+  const firstPagePosts = posts.slice(0, PAGINATION_BY)
+
+  const handlePageClick = (pageNumber: number) => {
+    router.push(`/clanky/stranka/${pageNumber + 1}`)
+  }
+
+  const numberOfPossiblePages = Math.ceil(posts.length / PAGINATION_BY)
+
+  return (
+    <>
+      <Header />
+      <NavBar />
+      <PageContentWrapper>
+        {firstPagePosts && firstPagePosts.map((post, i) => (
+          <NextLink key={i} href={`/clanky/${post.slug}`}>
+            <Text>{post.title}</Text>
+          </NextLink>
+        ))}
+        <PaginationWrapper handlePageClick={handlePageClick} totalPages={numberOfPossiblePages} forcePage={0} />
+      </PageContentWrapper>
+    </>
+  )
 }
 
 export const getStaticProps = async () => {
@@ -39,7 +55,7 @@ export const getStaticProps = async () => {
 
   return {
     props: {posts},
-    revalidate: 10,
+    revalidate: 600,
   }
 }
 

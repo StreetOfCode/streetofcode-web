@@ -6,6 +6,7 @@ import PageContentWrapper from '../../components/PageContentWrapper'
 import {getAllPostsWithSlug, getPostBySlug} from '../../wp/api'
 import {Post} from '../../wp/types'
 import NavBar from '../../components/NavBar'
+import BackLink from '../../components/core/BackLink'
 
 interface Props {
   post: Post
@@ -22,11 +23,16 @@ const Header = () => {
 
 const SinglePostPage: NextPage<Props> = ({post}) => {
   console.log('post', post)
-  return (<PageContentWrapper>
-    <Header />
-    <NavBar />
-    <Heading variant="h2">{post.title}</Heading>
-  </PageContentWrapper>)
+  return (
+    <>
+      <Header />
+      <NavBar />
+      <PageContentWrapper>
+        <BackLink to={'/clanky'} text={'Späť na články'} />
+        <Heading variant="h2">{post.title}</Heading>
+      </PageContentWrapper>
+    </>
+  )
 }
 
 
@@ -44,9 +50,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 }
 
 export const getStaticPaths = async () => {
-  const allPosts = await getAllPostsWithSlug()
+  const allPostsWithSlug = await getAllPostsWithSlug()
 
-  const paths = allPosts.map((post) => ({params: {slug: post.slug}}))
+  const paths = allPostsWithSlug.map((post) => ({params: {slug: post.slug}}))
 
   return {
     paths,
