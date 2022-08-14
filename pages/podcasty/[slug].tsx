@@ -13,11 +13,11 @@ interface Props {
   post: Post
 }
 
-const Header = () => {
+const Header = ({post}: {post: Post}) => {
   return (
     <Head>
-      <title>Street of Code | Podcasty</title>
-      <meta name="description">Naučíme ťa programovať</meta>
+      <title>{post.title}</title>
+      <meta name="description">{post.excerpt}</meta>
     </Head>
   )
 }
@@ -25,7 +25,7 @@ const Header = () => {
 const SinglePostPage: NextPage<Props> = ({post}) => {
   return (
     <>
-      <Header />
+      <Header post={post} />
       <NavBar />
       <PageContentWrapper>
         <BackLink to={'/podcasty'} text={'Späť na podcasty'} />
