@@ -57,7 +57,6 @@ const WrapperFlex = styled(Flex)<{mobileNavbarOpen: boolean}>`
   @media ${device.tablet} {
     background-color: ${(props) => props.mobileNavbarOpen && props.theme.primaryColor};
     width: ${(props) => props.mobileNavbarOpen && '100vw'};
-    position: ${(props) => props.mobileNavbarOpen && 'absolute'};
   }
 `
 

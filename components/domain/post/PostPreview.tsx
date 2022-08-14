@@ -7,6 +7,7 @@ import Text from '../../core/Text'
 import NextLink from '../../core/NextLink'
 import Heading from '../../core/Heading'
 import {formatDate} from '../../../utils'
+import {device} from '../../../theme/device'
 
 type Props = {
   className?: string
@@ -62,6 +63,11 @@ const ImageWrapper = styled.div`
 
   img {
     object-position: left;
+  }
+
+  @media ${device.mobile} {
+    width: 300px;
+    height: 300px;
   }
 `
 
