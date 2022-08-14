@@ -54,7 +54,7 @@ const WrapperFlex = styled(Flex)<{mobileNavbarOpen: boolean}>`
   width: clamp(360px, 100%, 1200px);
   position: relative;
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     background-color: ${(props) => props.mobileNavbarOpen && props.theme.primaryColor};
     width: ${(props) => props.mobileNavbarOpen && '100vw'};
     position: ${(props) => props.mobileNavbarOpen && 'absolute'};
@@ -80,7 +80,7 @@ const menuIconStyle = css`
     cursor: pointer
   }
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     display: block;
   }
 `
@@ -94,7 +94,7 @@ const CloseMenuIcon = styled(AiOutlineClose)`
 `
 
 const MenuFlex = styled(Flex)`
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     display: none;
   }
 `
@@ -102,7 +102,7 @@ const MenuFlex = styled(Flex)`
 const MobileMenuFlex = styled(Flex)<{open: boolean}>`
   display: none;
 
-  @media ${device.mobile} {
+  @media ${device.tablet} {
     display: ${(props) => props.open ? 'flex' : 'none'};
     align-items: flex-start;
     position: absolute;
