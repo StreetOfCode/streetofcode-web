@@ -79,16 +79,13 @@ const Footer = () => {
             <NextLink href="/kurzy">
               <Text color="primary" uppercase>kurzy</Text>
             </NextLink>
-            <NextLink href="#">
+            <NextLink href="/clanky">
               <Text color="primary" uppercase>články</Text>
             </NextLink>
             <NextLink href="/o-projekte">
               <Text color="primary" uppercase>O projekte</Text>
             </NextLink>
-            <NextLink href="#">
-              <Text color="primary" uppercase>videá</Text>
-            </NextLink>
-            <NextLink href="#">
+            <NextLink href="/podcasty">
               <Text color="primary" uppercase>podcasty</Text>
             </NextLink>
             <NextLink href="/feedback">

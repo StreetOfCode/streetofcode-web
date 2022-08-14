@@ -26,6 +26,8 @@ const NavBar = () => {
       <MenuFlex>
         <MenuItems justifyContent="center" gap={'48px'}>
           <NextLink styleIfActive href="/kurzy"><Text uppercase>kurzy</Text></NextLink>
+          <NextLink styleIfActive href="/podcasty"><Text uppercase>podcasty</Text></NextLink>
+          <NextLink styleIfActive href="/clanky"><Text uppercase>články</Text></NextLink>
           <NextLink styleIfActive href="/o-projekte"><Text uppercase>o projekte</Text></NextLink>
           <NextLink styleIfActive href="/feedback"><Text uppercase>feedback</Text></NextLink>
         </MenuItems>
@@ -35,6 +37,8 @@ const NavBar = () => {
         <MenuItems direction="column" alignItems="flex-start" gap={'32px'}>
           {!user && <NextLink href={`/login/${encodeURIComponent(router.asPath)}`}><Text>Prihlásiť</Text></NextLink>}
           {user && <NextLink styleIfActive href="/profil"><Text>Moje kurzy a nastavenia</Text></NextLink>}
+          <NextLink styleIfActive href="/podcasty"><Text>Podcasty</Text></NextLink>
+          <NextLink styleIfActive href="/clanky"><Text>Články</Text></NextLink>
           <NextLink styleIfActive href="/o-projekte"><Text>O projekte</Text></NextLink>
           <NextLink styleIfActive href="/feedback"><Text>Feedback</Text></NextLink>
           {user && <LogoutText onClick={logout}>Odhlásiť</LogoutText>}

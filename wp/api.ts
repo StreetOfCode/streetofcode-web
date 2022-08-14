@@ -22,7 +22,7 @@ async function fetchAPI(query: string, variables?: object) {
 }
 
 
-export async function getAllPosts(): Promise<Post[]> {
+export async function getAllPosts(categoryName: string): Promise<Post[]> {
   const data = await fetchAPI(
     `
     query AllPosts {
@@ -30,7 +30,7 @@ export async function getAllPosts(): Promise<Post[]> {
         first: 1000,
         where: {
           orderby: { field: DATE, order: DESC },
-          categoryName: "Blog"
+          categoryName: "${categoryName}"
         }
       ) {
         nodes {
@@ -69,10 +69,10 @@ export async function getAllPosts(): Promise<Post[]> {
 }
 
 
-export async function getAllPostsWithSlug(): Promise<Post[]> {
+export async function getAllPostsWithSlug(categoryName: string): Promise<Post[]> {
   const data = await fetchAPI(`
     {
-      posts(first: 1000, where: {categoryName: "Blog"}) {
+      posts(first: 1000, where: {categoryName: "${categoryName}"}) {
         nodes {
           slug
         }

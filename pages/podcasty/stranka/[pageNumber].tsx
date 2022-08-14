@@ -20,7 +20,7 @@ interface Props {
 const Header = () => {
   return (
     <Head>
-      <title>Street of Code | Články</title>
+      <title>Street of Code | Podcasty</title>
       <meta name="description">Naučíme ťa programovať</meta>
     </Head>
   )
@@ -31,9 +31,9 @@ const PaginatedPostsPage: NextPage<Props> = ({posts, currentPage, totalPages}) =
 
   const handlePageClick = (pageNumber: number) => {
     if (pageNumber === 0) {
-      router.push('/clanky')
+      router.push('/podcasty')
     } else {
-      router.push(`/clanky/stranka/${pageNumber + 1}`)
+      router.push(`/podcasty/stranka/${pageNumber + 1}`)
     }
   }
 
@@ -44,7 +44,7 @@ const PaginatedPostsPage: NextPage<Props> = ({posts, currentPage, totalPages}) =
       <PageContentWrapper>
         <Flex direction="column" gap="72px" alignItems="flex-start">
           {posts && posts.map((post, i) => (
-            <PostPreview key={i} post={post} />
+            <PostPreview key={i} post={post} isPodcast />
           ))}
         </Flex>
         <PaginationWrapper forcePage={currentPage - 1} handlePageClick={handlePageClick} totalPages={totalPages} />

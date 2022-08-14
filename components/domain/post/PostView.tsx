@@ -3,16 +3,19 @@ import styled from 'styled-components'
 import {Post} from '../../../wp/types'
 import Flex from '../../core/Flex'
 import Text from '../../core/Text'
-import NextLink from '../../core/NextLink'
 import Heading from '../../core/Heading'
 import {formatDate} from '../../../utils'
 
 type Props = {
   className?: string
+  isPodcast?: boolean
   post: Post
 }
 
-const PostView = ({className, post}: Props) => {
+/***
+ * Works with blog posts and podcasts.
+ */
+const PostView = ({className, isPodcast, post}: Props) => {
   const authorName = post.author
     ? post.author.node?.firstName && post.author.node.lastName
       ? `${post.author.node.firstName} ${post.author.node.lastName}`
@@ -22,11 +25,9 @@ const PostView = ({className, post}: Props) => {
   return (
     <WrapperFlex className={className} direction="column" gap="12px" alignItems="flex-start">
       {post.date && <Text size="small">{formatDate(new Date(post.date))}</Text>}
-      <NextLink href={`/clanky/${post.slug}`}>
-        <Heading variant="h2">{post.title}</Heading>
-      </NextLink>
+      <Heading variant="h2">{post.title}</Heading>
       {post.content && <Text size="large" dangerouslySetInnerHTML={{__html: post.content}} />}
-      {authorName && <Text weight="bold">{authorName}</Text>}
+      {!isPodcast && authorName && <Text weight="bold">{authorName}</Text>}
     </WrapperFlex>
   )
 }
@@ -43,6 +44,7 @@ const WrapperFlex = styled(Flex)`
     }
   }
 
+  // youtube video
   @media (max-width: 610px) {
     iframe {
       width: 400px;
@@ -50,7 +52,7 @@ const WrapperFlex = styled(Flex)`
     }
   }
 
-
+  // youtube video
   @media (max-width: 450px) {
     iframe {
       width: 320px;

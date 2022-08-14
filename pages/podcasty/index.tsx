@@ -18,18 +18,18 @@ interface Props {
 const Header = () => {
   return (
     <Head>
-      <title>Street of Code | Články</title>
+      <title>Street of Code | Podcasty</title>
       <meta name="description">Naučíme ťa programovať</meta>
     </Head>
   )
 }
 
-const PostsPage: NextPage<Props> = ({posts}) => {
+const PodcastsPage: NextPage<Props> = ({posts}) => {
   const router = useRouter()
   const firstPagePosts = posts.slice(0, PAGINATION_BY)
 
   const handlePageClick = (pageNumber: number) => {
-    router.push(`/clanky/stranka/${pageNumber + 1}`)
+    router.push(`/podcasty/stranka/${pageNumber + 1}`)
   }
 
   const numberOfPossiblePages = Math.ceil(posts.length / PAGINATION_BY)
@@ -41,7 +41,7 @@ const PostsPage: NextPage<Props> = ({posts}) => {
       <PageContentWrapper>
         <Flex direction="column" gap="72px" alignItems="flex-start">
           {firstPagePosts && firstPagePosts.map((post, i) => (
-            <PostPreview key={i} post={post} />
+            <PostPreview key={i} post={post} isPodcast />
           ))}
         </Flex>
         <PaginationWrapper handlePageClick={handlePageClick} totalPages={numberOfPossiblePages} forcePage={0} />
@@ -59,4 +59,4 @@ export const getStaticProps = async () => {
   }
 }
 
-export default PostsPage
+export default PodcastsPage

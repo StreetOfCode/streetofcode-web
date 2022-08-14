@@ -10,13 +10,15 @@ import {formatDate} from '../../../utils'
 
 type Props = {
   className?: string
+  isPodcast?: boolean
   post: Post
 }
 
 /***
- * Image should work with 16/9 as well as 1:1 aspect-ratio.
+ * Works with blog posts and podcasts.
+ * Featured image should work with any aspect-ratio.
  */
-const PostPreview = ({className, post}: Props) => {
+const PostPreview = ({className, isPodcast, post}: Props) => {
   const featuredImage = post.featuredImage?.node
   const authorName = post.author
     ? post.author.node?.firstName && post.author.node.lastName
@@ -27,18 +29,18 @@ const PostPreview = ({className, post}: Props) => {
   return (
     <WrapperFlex className={className} direction="column" gap="12px" alignItems="flex-start">
       {featuredImage && featuredImage.sourceUrl &&
-        <NextLink href={`/clanky/${post.slug}`}>
+        <NextLink href={`/${isPodcast ? 'podcasty' : 'clanky'}/${post.slug}`}>
           <ImageWrapper>
             <Image layout="fill" src={featuredImage.sourceUrl} alt={post.title || ''} objectFit="contain" />
           </ImageWrapper>
         </NextLink>
       }
-      <NextLink href={`/clanky/${post.slug}`}>
+      <NextLink href={`/${isPodcast ? 'podcasty' : 'clanky'}/${post.slug}`}>
         <Heading variant="h3">{post.title}</Heading>
       </NextLink>
       {post.date && <Text size="small">{formatDate(new Date(post.date))}</Text>}
       {post.excerpt && <Text size="large" dangerouslySetInnerHTML={{__html: post.excerpt}} />}
-      {authorName && <Text weight="bold">{authorName}</Text>}
+      {!isPodcast && authorName && <Text weight="bold">{authorName}</Text>}
     </WrapperFlex>
   )
 }
@@ -54,6 +56,7 @@ const WrapperFlex = styled(Flex)`
 
 const ImageWrapper = styled.div`
   position: relative;
+  // images will adapt to this size while preserving their aspect-ratio
   width: 450px;
   height: 300px;
 

@@ -16,7 +16,7 @@ interface Props {
 const Header = () => {
   return (
     <Head>
-      <title>Street of Code | Články</title>
+      <title>Street of Code | Podcasty</title>
       <meta name="description">Naučíme ťa programovať</meta>
     </Head>
   )
@@ -28,8 +28,8 @@ const SinglePostPage: NextPage<Props> = ({post}) => {
       <Header />
       <NavBar />
       <PageContentWrapper>
-        <BackLink to={'/clanky'} text={'Späť na články'} />
-        <PostView post={post} />
+        <BackLink to={'/podcasty'} text={'Späť na podcasty'} />
+        <PostView post={post} isPodcast />
       </PageContentWrapper>
     </>
   )
