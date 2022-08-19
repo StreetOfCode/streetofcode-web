@@ -10,9 +10,9 @@ import {
   DeleteWithConfirmButton,
 } from 'react-admin'
 
-const CourseList = (props) => {
+const CourseList = () => {
   return (
-    <List {...props}>
+    <List>
       <Datagrid>
         <ReferenceField label="Course" source="id" reference="course" link="show">
           <TextField source="name" />
@@ -27,9 +27,9 @@ const CourseList = (props) => {
           <TextField source="name" />
         </ReferenceField>
         <DateField source="updatedAt" />
-        <DeleteWithConfirmButton basePath="course" />
-        <EditButton basePath="course" />
-        <ShowButton basePath="course" />
+        <DeleteWithConfirmButton />
+        <EditButton />
+        <ShowButton />
       </Datagrid>
     </List>
   )

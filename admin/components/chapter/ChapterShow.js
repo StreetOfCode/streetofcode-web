@@ -31,9 +31,9 @@ const CreateLecture = () => {
   )
 }
 
-const ChapterShow = (props) => {
+const ChapterShow = () => {
   return (
-    <Show {...props}>
+    <Show>
       <SimpleShowLayout>
         <NumberField source="id" />
         <ReferenceField label="Course" source="course.id" reference="course" link="show">

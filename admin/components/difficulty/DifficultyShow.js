@@ -1,9 +1,9 @@
 import React from 'react'
 import {NumberField, Show, SimpleShowLayout, TextField} from 'react-admin'
 
-const DifficultyShow = (props) => {
+const DifficultyShow = () => {
   return (
-    <Show {...props}>
+    <Show>
       <SimpleShowLayout>
         <NumberField source="id" />
         <TextField source="name" />

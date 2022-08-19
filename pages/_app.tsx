@@ -50,6 +50,14 @@ const routesThatDontNeedOnBoardingProtection = ['/login', '/onboarding']
 function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter()
 
+  if (router.pathname === '/admin') {
+    return (<AuthContextProvider>
+      <RootWrapper>
+        <Component {...pageProps} />
+      </RootWrapper>
+    </AuthContextProvider>)
+  }
+
   return (
     <Sentry.ErrorBoundary fallback={<ErrorBoundaryFallBack />}>
       <GoogleReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY || ''}>

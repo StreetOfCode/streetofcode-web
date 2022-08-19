@@ -2,10 +2,10 @@ import React from 'react'
 import {Create, SimpleForm, TextInput, SelectInput, ReferenceInput} from 'react-admin'
 import {MarkdownInput} from '../../custom/MarkdownInput'
 
-const CourseCreate = (props) => {
+const CourseCreate = () => {
   return (
-    <Create title="Create a course" {...props}>
-      <SimpleForm redirect="list">
+    <Create title="Create a course">
+      <SimpleForm>
         <ReferenceInput required label="Author" source="authorId" reference="author">
           <SelectInput optionText="name" />
         </ReferenceInput>

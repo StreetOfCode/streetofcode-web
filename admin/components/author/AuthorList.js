@@ -1,9 +1,9 @@
 import React from 'react'
 import {Datagrid, DeleteWithConfirmButton, EditButton, List, ShowButton, TextField} from 'react-admin'
 
-const AuthorList = (props) => {
+const AuthorList = () => {
   return (
-    <List {...props}>
+    <List>
       <Datagrid>
         <TextField source="name" />
         <TextField source="slug" />
@@ -11,9 +11,9 @@ const AuthorList = (props) => {
         <TextField source="imageUrl" />
         <TextField source="coursesTitle" />
         <TextField source="email" />
-        <EditButton basePath="author" />
-        <DeleteWithConfirmButton basePath="author" />
-        <ShowButton basePath="author" />
+        <EditButton />
+        <DeleteWithConfirmButton />
+        <ShowButton />
       </Datagrid>
     </List>
   )

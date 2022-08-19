@@ -27,10 +27,10 @@ const transform = (data) => ({
   status: data.status,
 })
 
-const CourseEdit = (props) => {
+const CourseEdit = () => {
   return (
-    <Edit undoable={false} title="Edit a course" {...props} transform={transform}>
-      <SimpleForm redirect="list">
+    <Edit title="Edit a course" transform={transform}>
+      <SimpleForm>
         <NumberInput disabled source="id" />
         <ReferenceInput required label="Author" source="author.id" reference="author">
           <SelectInput optionText="name" />

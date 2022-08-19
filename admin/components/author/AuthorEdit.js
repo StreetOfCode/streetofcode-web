@@ -1,9 +1,9 @@
 import React from 'react'
 import {Edit, NumberInput, SimpleForm, TextInput} from 'react-admin'
 
-const AuthorEdit = (props) => {
+const AuthorEdit = () => {
   return (
-    <Edit undoable={false} title="Edit a author" {...props}>
+    <Edit title="Edit a author">
       <SimpleForm>
         <NumberInput disabled source="id" />
         <TextInput source="name" />

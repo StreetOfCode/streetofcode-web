@@ -1,15 +1,15 @@
 import React from 'react'
 import {Datagrid, DeleteWithConfirmButton, EditButton, List, ShowButton, TextField, NumberField} from 'react-admin'
 
-const DifficultyList = (props) => {
+const DifficultyList = () => {
   return (
-    <List {...props}>
+    <List>
       <Datagrid>
         <TextField source="name" />
         <NumberField source="skillLevel" />
-        <EditButton basePath="difficulty" />
-        <DeleteWithConfirmButton basePath="difficulty" />
-        <ShowButton basePath="difficulty" />
+        <EditButton />
+        <DeleteWithConfirmButton />
+        <ShowButton />
       </Datagrid>
     </List>
   )

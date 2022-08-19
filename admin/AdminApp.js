@@ -24,6 +24,9 @@ import LectureShow from './components/lecture/LectureShow'
 import Button from '../components/core/Button'
 import LoginPage from '../pages/login/[redirectUri]'
 import {useAuth} from '../AuthUserContext'
+import QuizCreate from './components/quiz/QuizCreate'
+import QuizEdit from './components/quiz/QuizEdit'
+import QuizShow from './components/quiz/QuizShow'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -57,7 +60,6 @@ const AdminApp = ({user, logout}) => {
       {dataProvider && (
         <Admin
           dataProvider={dataProvider}
-          // authProvider={firebaseAuthProvider}
           logoutButton={LogoutButton}
           loginPage={LoginPage}
         >
@@ -84,6 +86,7 @@ const AdminApp = ({user, logout}) => {
           />
           <Resource name="chapter" create={ChapterCreate} edit={ChapterEdit} show={ChapterShow} />
           <Resource name="lecture" create={LectureCreate} edit={LectureEdit} show={LectureShow} />
+          <Resource name="quiz" create={QuizCreate} edit={QuizEdit} show={QuizShow} />
         </Admin>
       )}
     </>

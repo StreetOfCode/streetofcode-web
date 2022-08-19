@@ -1,11 +1,15 @@
 import React from 'react'
-import {Create, NumberInput, SimpleForm, TextInput} from 'react-admin'
+import {Create, NumberInput, SimpleForm, TextInput, useRedirect} from 'react-admin'
 
-const redirect = (basePath, id, data) => `/course/${data.courseId}/show`
+const ChapterCreate = () => {
+  const redirect = useRedirect()
 
-const ChapterCreate = (props) => {
+  const onSuccessHandler = (data) => {
+    redirect('show', 'course', data.course.id)
+  }
+
   return (
-    <Create title="Create a chapter" {...props}>
+    <Create title="Create a chapter" mutationOptions={{onSuccess: onSuccessHandler}} >
       <SimpleForm redirect={redirect}>
         <NumberInput disabled source="courseId" />
         <TextInput source="name" />

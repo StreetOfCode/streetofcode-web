@@ -1,13 +1,18 @@
 import React from 'react'
-import {Create, NumberInput, SimpleForm, TextInput} from 'react-admin'
+import {Create, NumberInput, SimpleForm, TextInput, useRedirect} from 'react-admin'
 import {MarkdownInput} from '../../custom/MarkdownInput'
 
-const redirect = (basePath, id, data) => `/chapter/${data.chapterId}/show`
 
-const LectureCreate = (props) => {
+const LectureCreate = () => {
+  const redirect = useRedirect()
+
+  const onSuccessHandler = (data) => {
+    redirect('show', 'chapter', data.chapter.id)
+  }
+
   return (
-    <Create title="Create a lecture" {...props}>
-      <SimpleForm redirect={redirect}>
+    <Create mutationOptions={{onSuccess: onSuccessHandler}} title="Create a lecture">
+      <SimpleForm>
         <NumberInput disabled source="chapterId" />
         <TextInput source="name" />
         <NumberInput source="lectureOrder" />
