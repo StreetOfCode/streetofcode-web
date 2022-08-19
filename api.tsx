@@ -54,6 +54,9 @@ export const authorSlugssUrl = () => AUTHOR_SLUGS_URL
 const SEND_FEEDBACK_URL = `${API_URL}/email-feedback`
 export const sendFeedbackUrl = () => `${SEND_FEEDBACK_URL}`
 
+const NEWSLETTER_URL = `${API_URL}/newsletter`
+export const addToNewsletter = () => `${NEWSLETTER_URL}`
+
 const GET_QUIZES_BY_LECTURE_ID_URL = `${API_URL}/quiz/lecture/`
 export const quizByLectureUrl = (lectureId: number) => `${GET_QUIZES_BY_LECTURE_ID_URL}${lectureId}`
 

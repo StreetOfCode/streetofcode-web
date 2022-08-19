@@ -12,7 +12,11 @@ type Props = {
   itemBefore?: React.ReactNode
   errorText?: string
   disabled?: boolean
+  borderColor?: Color
+  inputBackgroundColor?: Color
 } & HTMLAttributes<HTMLElement>
+
+type Color = 'primary' | 'secondary' | 'accent'
 
 const TextField = ({
   className,
@@ -23,10 +27,18 @@ const TextField = ({
   itemBefore,
   errorText,
   disabled,
+  borderColor,
+  inputBackgroundColor,
   ...props}: Props,
 ) => {
   return (
-    <InputBox className={className} itemBefore={itemBefore} {...props}>
+    <InputBox
+      className={className}
+      itemBefore={itemBefore}
+      borderColor={borderColor || 'accent'}
+      inputBackgroundColor={inputBackgroundColor}
+      {...props}
+    >
       {itemBefore}
       <StyledTextField
         placeholder={label}
@@ -48,13 +60,37 @@ const TextField = ({
   )
 }
 
-const InputBox = styled.div<{itemBefore?: React.ReactNode}>`
+const InputBox = styled.div<{itemBefore?: React.ReactNode, borderColor: Color, inputBackgroundColor?: Color}>`
   width: 100%;
   padding: 12px;
   padding-top: ${(props) => props.itemBefore ? '12px' : '4px'};
   padding-bottom: 4px;
   border-radius: 12px;
-  border: 1px solid ${(props) => props.theme.accentColor};
+
+  border: ${(props) => {
+    if (props.borderColor === 'primary') {
+      return `1px solid ${props.theme.primaryColor}`
+    } else if (props.borderColor === 'secondary') {
+      return `1px solid ${props.theme.secondaryColor}`
+    } else {
+      return `1px solid ${props.theme.accentColor}`
+    }
+  }};
+
+  background-color: ${(props) => {
+    if (!props.inputBackgroundColor) {
+      return 'unset'
+    }
+
+    if (props.inputBackgroundColor === 'primary') {
+      return props.theme.primaryColor
+    } else if (props.inputBackgroundColor === 'secondary') {
+      return props.theme.secondaryColor
+    } else {
+      return props.theme.accentColor
+    }
+  }};
+
 `
 
 const ErrorMessage = styled.span`

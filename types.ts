@@ -185,6 +185,11 @@ export interface SendFeedbackRequest {
   recaptchaToken?: string
 }
 
+export interface AddToNewsletterRequest {
+  email: string;
+  recaptchaToken?: string
+}
+
 export type QuizId = string & { _type: 'QuizId' }
 
 export interface Quiz {

@@ -104,6 +104,11 @@ const StyledButton = styled.button<{
   &:hover {
     cursor: ${(props) => !props.disabled && 'pointer'};
   }
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
 `
 
 export default Button
