@@ -10,7 +10,7 @@ const LectureEdit = () => {
   }
 
   return (
-    <Edit title="Edit a lecture" mutationOptions={{onSuccess: onSuccessHandler}} >
+    <Edit title="Edit a lecture" mutationMode="pessimistic" mutationOptions={{onSuccess: onSuccessHandler}} >
       <SimpleForm>
         <NumberInput disabled source="id" />
         <TextInput source="name" />

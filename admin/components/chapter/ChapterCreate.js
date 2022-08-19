@@ -10,7 +10,7 @@ const ChapterCreate = () => {
 
   return (
     <Create title="Create a chapter" mutationOptions={{onSuccess: onSuccessHandler}} >
-      <SimpleForm redirect={redirect}>
+      <SimpleForm>
         <NumberInput disabled source="courseId" />
         <TextInput source="name" />
         <NumberInput source="chapterOrder" />

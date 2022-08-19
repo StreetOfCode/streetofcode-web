@@ -27,6 +27,12 @@ import {useAuth} from '../AuthUserContext'
 import QuizCreate from './components/quiz/QuizCreate'
 import QuizEdit from './components/quiz/QuizEdit'
 import QuizShow from './components/quiz/QuizShow'
+import QuizQuestionCreate from './components/quiz-question/QuizQuestionCreate'
+import QuizQuestionEdit from './components/quiz-question/QuizQuestionEdit'
+import QuizQuestionShow from './components/quiz-question/QuizQuestionShow'
+import QuizQuestionAnswerCreate from './components/quiz-question-answer/QuizQuestionAnswerCreate'
+import QuizQuestionAnswerEdit from './components/quiz-question-answer/QuizQuestionAnswerEdit'
+import QuizQuestionAnswerShow from './components/quiz-question-answer/QuizQuestionAnswerShow'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -87,6 +93,13 @@ const AdminApp = ({user, logout}) => {
           <Resource name="chapter" create={ChapterCreate} edit={ChapterEdit} show={ChapterShow} />
           <Resource name="lecture" create={LectureCreate} edit={LectureEdit} show={LectureShow} />
           <Resource name="quiz" create={QuizCreate} edit={QuizEdit} show={QuizShow} />
+          <Resource name="quiz/question" create={QuizQuestionCreate} edit={QuizQuestionEdit} show={QuizQuestionShow} />
+          <Resource
+            name="quiz/question/answer"
+            create={QuizQuestionAnswerCreate}
+            edit={QuizQuestionAnswerEdit}
+            show={QuizQuestionAnswerShow}
+          />
         </Admin>
       )}
     </>

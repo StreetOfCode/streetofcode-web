@@ -9,8 +9,8 @@ const QuizCreate = () => {
   }
 
   return (
-    <Create title="Create a quiz"  mutationOptions={{onSuccess: onSuccessHandler}} >
-      <SimpleForm redirect={redirect}>
+    <Create title="Create a quiz" mutationOptions={{onSuccess: onSuccessHandler}} >
+      <SimpleForm>
         <NumberInput disabled source="lectureId" />
         <TextInput required source="title" />
         <TextInput source="subtitle" />

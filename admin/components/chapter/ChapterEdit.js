@@ -9,7 +9,7 @@ const ChapterEdit = () => {
   }
 
   return (
-    <Edit title="Edit a chapter" mutationOptions={{onSuccess: onSuccessHandler}}>
+    <Edit title="Edit a chapter" mutationMode="pessimistic" mutationOptions={{onSuccess: onSuccessHandler}}>
       <SimpleForm>
         <NumberInput disabled source="courseId" />
         <TextInput source="name" />
