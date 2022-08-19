@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {Post} from '../../../wp/types'
+import {Maybe, Post} from '../../../wp/types'
 import Flex from '../../core/Flex'
 import Text from '../../core/Text'
 import Heading from '../../core/Heading'
@@ -22,6 +22,8 @@ const PostView = ({className, isPodcast, post}: Props) => {
       : post.author.node?.name
     : null
 
+  post.content = redirectLinks(post.content)
+
   return (
     <WrapperFlex className={className} direction="column" gap="12px" alignItems="flex-start">
       {post.date && <Text size="small">{formatDate(new Date(post.date))}</Text>}
@@ -30,6 +32,50 @@ const PostView = ({className, isPodcast, post}: Props) => {
       {!isPodcast && authorName && <Text weight="bold">{authorName}</Text>}
     </WrapperFlex>
   )
+}
+
+
+/***
+ * Redirect links to our podcasts and blogs.
+ * Some links have https, some http.
+ * TODO: We could possibly do this via .htaccess
+ */
+const redirectLinks = (content: Maybe<string> | undefined) => {
+  if (!content) {
+    return content
+  }
+
+  for (const splitted of content.split('a href="')) {
+    if (splitted.startsWith('https://streetofcode.sk/podcast/')) {
+      const link = splitted.substring(0, splitted.indexOf('/"'))
+      const updatedLink = link.replace('podcast', 'podcasty').replace('https://streetofcode.sk', '')
+      content = content.replace(link, updatedLink)
+      continue
+    }
+
+    if (splitted.startsWith('http://streetofcode.sk/podcast/')) {
+      const link = splitted.substring(0, splitted.indexOf('/"'))
+      const updatedLink = link.replace('podcast', 'podcasty').replace('http://streetofcode.sk', '')
+      content = content.replace(link, updatedLink)
+      continue
+    }
+
+    if (splitted.startsWith('https://streetofcode.sk/blog/')) {
+      const link = splitted.substring(0, splitted.indexOf('/"'))
+      const updatedLink = link.replace('blog', 'clanky').replace('https://streetofcode.sk', '')
+      content = content.replace(link, updatedLink)
+      continue
+    }
+
+    if (splitted.startsWith('http://streetofcode.sk/blog/')) {
+      const link = splitted.substring(0, splitted.indexOf('/"'))
+      const updatedLink = link.replace('blog', 'clanky').replace('http://streetofcode.sk', '')
+      content = content.replace(link, updatedLink)
+      continue
+    }
+  }
+
+  return content
 }
 
 const WrapperFlex = styled(Flex)`
