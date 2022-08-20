@@ -41,7 +41,7 @@ const LoginPage: NextPage = () => {
     <PageContentWrapper>
       <FlexWrapper direction="column" alignItems="center" gap="16px" justifyContent="center">
         <LogoWrapper>
-          <Image layout="fill" alt="Logo" src="/soc_logo.png" />
+          <LogoImage layout="fill" alt="Logo" src="/soc_logo.png" />
         </LogoWrapper>
         {differentCredentialsError && <Text align="center" weight="bold">
           Pokúsil/a si sa prihlásiť s emailom, s ktorým si sa už v minulosti prihlásil/a cez inú službu.
@@ -90,7 +90,7 @@ const iconStyle = css`
 
 const GoogleButton = styled(Button)`
   background-color: #DD4B39;
-  color: white;
+  color: ${(props) => props.theme.primaryColor};
   border: 1px solid black;
 
   svg {
@@ -100,7 +100,7 @@ const GoogleButton = styled(Button)`
 
 const GithubButton = styled(Button)`
   background-color: #444444;
-  color: white;
+  color: ${(props) => props.theme.primaryColor};
   border: 1px solid black;
 
   svg {
@@ -122,6 +122,9 @@ const LogoWrapper = styled.div`
   position: relative;
   aspect-ratio: 3 / 1;
   width: 200px;
+`
+const LogoImage = styled(Image)`
+  filter: ${(props) => props.theme.type === 'LIGHT' ? 'unset' : 'invert(100%)'};
 `
 
 export default LoginPage

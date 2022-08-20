@@ -3,7 +3,7 @@ import styled, {keyframes} from 'styled-components'
 import {ChapterProgressOverview, CourseProgressOverview} from '../../../types'
 import Flex from '../../core/Flex'
 import {BiChevronDown} from 'react-icons/bi'
-import {GrNotes} from 'react-icons/gr'
+import {CgNotes} from 'react-icons/cg'
 import * as Accordion from '@radix-ui/react-accordion'
 import Heading from '../../core/Heading'
 import Text from '../../core/Text'
@@ -103,7 +103,7 @@ const CourseSidebar = ({
             >
               <ResourcesWrapper gap="8px">
                 <Text withAccentUnderline>Materiály</Text>
-                <GrNotes />
+                <ResourcesIcon />
               </ResourcesWrapper>
             </NextLink>
           }
@@ -257,6 +257,9 @@ const ResourcesWrapper = styled(Flex)`
   &:hover {
     cursor: pointer;
   }
+`
+const ResourcesIcon = styled(CgNotes)`
+  color: ${(props) => props.theme.secondaryColor};
 `
 
 

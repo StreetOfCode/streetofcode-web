@@ -15,6 +15,7 @@ import {useGetCourseProgressOverview} from '../../api/courseProgress'
 import {CourseOverview} from '../../../types'
 import {QueryGuard} from '../../../QueryGuard'
 import {device} from '../../../theme/device'
+import ThemeSwitcher from '../../../theme/ThemeSwitcher'
 
 type Props = {
   resourcesMode: boolean
@@ -94,7 +95,10 @@ const TakeCourse = ({resourcesMode, courseOverview, chapterId, lectureId}: Props
     <>
       <WrapperFlex alignSelf="stretch" flex="1">
         <Sidebar mobileOpen={mobileSidebarOpen}>
-          <StyledBackLink to={`/kurzy/${courseOverview.slug}`} text={'Späť na kurz'} />
+          <Flex justifyContent="space-between" alignItems="flex-start">
+            <StyledBackLink to={`/kurzy/${courseOverview.slug}`} text={'Späť na kurz'} />
+            <ThemeSwitcher />
+          </Flex>
           <MobileSidebarHeaderFlex justifyContent="space-between">
             <NextLink href={'/kurzy'}>
               <Text size="very-small">Zobraziť všetky kurzy</Text>

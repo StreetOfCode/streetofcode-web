@@ -60,7 +60,7 @@ const Quiz = ({quiz, lecture}: {quiz: IQuiz, lecture: Lecture}) => {
 
                 {
                   questionsFinished.length === quiz.questionIds.length &&
-                  <h1>{quiz.finishedMessage}</h1>
+                  <Heading variant="h3">{quiz.finishedMessage}</Heading>
                 }
 
               </Flex>

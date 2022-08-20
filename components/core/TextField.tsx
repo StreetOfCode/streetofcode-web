@@ -100,8 +100,14 @@ const ErrorMessage = styled.span`
 
 const StyledTextField = styled(MuiTextField)<{disabled?: boolean}>`
 
+  .MuiInputBase-input {
+    font-family: soleil, sans-serif;
+    color: ${(props) => props.theme.greyColor};
+  }
+
   .MuiFormHelperText-root {
-    color: #545454;
+    font-family: soleil, sans-serif;
+    color: ${(props) => props.theme.greyColor};
     text-align: right;
   }
 

@@ -1,6 +1,7 @@
-import React, {ButtonHTMLAttributes} from 'react'
+import React, {ButtonHTMLAttributes, useContext} from 'react'
 import styled from 'styled-components'
-import {theme} from '../../theme/theme'
+import {ThemeType} from '../../theme/theme'
+import ThemeSwitchingContext from '../../theme/ThemeSwitchingContext'
 import Flex from './Flex'
 
 type Props = {
@@ -16,9 +17,9 @@ type Props = {
 type Variant = 'accent' | 'default' | 'outline' | 'danger'
 type Size = 'small' | 'default' | 'large' | 'very-large'
 
-const variantStyleValues = {
+const variantStyleValues = (theme: ThemeType) => ({
   accent: {
-    color: theme.primaryColor,
+    color: 'white', // this is by design so it doesn't change when themes switch
     backgroundColor: theme.accentColor,
     border: `2px solid ${theme.accentColor}`,
   },
@@ -37,7 +38,7 @@ const variantStyleValues = {
     backgroundColor: theme.dangerColor,
     border: `2px solid ${theme.dangerColor}`,
   },
-}
+})
 
 const sizeStyleValues = {
   'small': {
@@ -65,9 +66,12 @@ const Button = ({
   iconBefore,
   ...props}
 : Props) => {
+  const {theme} = useContext(ThemeSwitchingContext)
+
   return (
     <StyledButton
       className={className}
+      theme={theme}
       variant={variant || 'default'}
       uppercase={uppercase}
       bold={bold}
@@ -84,15 +88,16 @@ const Button = ({
 }
 
 const StyledButton = styled.button<{
+  theme: ThemeType,
   variant: Variant,
   uppercase?: boolean,
   bold?: boolean,
   disabled?: boolean,
   size: Size
 }>`
-  background-color: ${(props) => variantStyleValues[props.variant].backgroundColor};
-  color: ${(props) => variantStyleValues[props.variant].color};
-  border: ${(props) => variantStyleValues[props.variant].border};
+  background-color: ${(props) => variantStyleValues(props.theme)[props.variant].backgroundColor};
+  color: ${(props) => variantStyleValues(props.theme)[props.variant].color};
+  border: ${(props) => variantStyleValues(props.theme)[props.variant].border};
   padding: .5em 1.25em;
   border-radius: 10px;
   font-size: ${(props) => sizeStyleValues[props.size].fontSize};

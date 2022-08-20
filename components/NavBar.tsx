@@ -9,22 +9,32 @@ import LogInOrOutButton from './domain/buttons/LogInOrOutButton'
 import NextLink from './core/NextLink'
 import {device} from '../theme/device'
 import {useAuth} from '../AuthUserContext'
+import ThemeSwitcher from '../theme/ThemeSwitcher'
 
 const NavBar = () => {
   const [mobileNavbarOpen, setMobileNavbarOpen] = useState(false)
   const router = useRouter()
   const {user, logout} = useAuth()
 
+  const MobileNavbarOptions = () => {
+    return (
+      <MobileNavbarOptionsFlex gap="24px">
+        <ThemeSwitcher />
+        {!mobileNavbarOpen && <OpenMenuIcon onClick={() => setMobileNavbarOpen(!mobileNavbarOpen)} />}
+        {mobileNavbarOpen && <CloseMenuIcon onClick={() => setMobileNavbarOpen(!mobileNavbarOpen)} />}
+      </MobileNavbarOptionsFlex>
+    )
+  }
 
   return (
     <WrapperFlex alignSelf="center" justifyContent="space-between" mobileNavbarOpen={mobileNavbarOpen}>
       <LogoWrapper>
-        <Image layout="fill" alt="Logo" src="/soc_logo.png" onClick={() => router.push('/')} />
+        <LogoImage layout="fill" alt="Logo" src="/soc_logo.png" onClick={() => router.push('/')} />
       </LogoWrapper>
-      {!mobileNavbarOpen && <OpenMenuIcon onClick={() => setMobileNavbarOpen(!mobileNavbarOpen)} />}
-      {mobileNavbarOpen && <CloseMenuIcon onClick={() => setMobileNavbarOpen(!mobileNavbarOpen)} />}
+      <MobileNavbarOptions />
       <MenuFlex>
         <MenuItems justifyContent="center" gap={'48px'}>
+          <ThemeSwitcher />
           <NextLink styleIfActive href="/kurzy"><Text uppercase>kurzy</Text></NextLink>
           <NextLink styleIfActive href="/podcasty"><Text uppercase>podcasty</Text></NextLink>
           <NextLink styleIfActive href="/clanky"><Text uppercase>články</Text></NextLink>
@@ -92,6 +102,14 @@ const CloseMenuIcon = styled(AiOutlineClose)`
   ${menuIconStyle}
 `
 
+const MobileNavbarOptionsFlex = styled(Flex)`
+  display: none;
+
+  @media ${device.tablet} {
+    display: flex;
+  }
+`
+
 const MenuFlex = styled(Flex)`
   @media ${device.tablet} {
     display: none;
@@ -129,6 +147,10 @@ const LogoutText = styled(Text)`
   &:hover {
     cursor: pointer;
   }
+`
+
+const LogoImage = styled(Image)`
+  filter: ${(props) => props.theme.type === 'LIGHT' ? 'unset' : 'invert(100%)'};
 `
 
 export default NavBar

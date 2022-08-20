@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React, {useContext, useRef} from 'react'
 import {NextPage} from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -9,7 +9,7 @@ import Heading from '../components/core/Heading'
 import Button from '../components/core/Button'
 import NavBar from '../components/NavBar'
 import {spotifyImageUrl, spotifyUrl} from '../components/landing-page/podcasts'
-import {youtubeImageUrl, youtubeUrl} from '../components/landing-page/videos'
+import {youtubeLightImageUrl, youtubeDarkImageUrl, youtubeUrl} from '../components/landing-page/videos'
 import VideosSlider from '../components/landing-page/VideosSlider'
 import {discordImageUrl, discordInviteUrl} from '../components/landing-page/discord'
 import TypingAnimation from '../theme/animations/TypingAnimation'
@@ -19,6 +19,7 @@ import {CourseOverview} from '../types'
 import PodcastsSlider from '../components/landing-page/PodcastsSlider'
 import NextLink from '../components/core/NextLink'
 import {device} from '../theme/device'
+import ThemeSwitchingContext from '../theme/ThemeSwitchingContext'
 
 interface Props {
   courses: CourseOverview[]
@@ -34,7 +35,10 @@ const Header = () => {
 }
 
 const Home: NextPage<Props> = ({courses}) => {
+  const {theme} = useContext(ThemeSwitchingContext)
   const coursesRef = useRef<null | HTMLDivElement>(null)
+
+  const youtubeImageUrl = theme.type === 'LIGHT' ? youtubeDarkImageUrl : youtubeLightImageUrl
 
   const handleVerticalSliderClick = () => {
     if (coursesRef.current) {
@@ -182,7 +186,7 @@ const Wrapper = styled.div`
 `
 
 const GradientWrapper = styled.div`
-  background: ${(props) => `linear-gradient(150deg, ${props.theme.accentColor}, white 35%)`};
+  background: ${(props) => `linear-gradient(150deg, ${props.theme.accentColor}, ${props.theme.primaryColor} 35%)`};
   margin-bottom: 2em;
 `
 

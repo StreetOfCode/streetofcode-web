@@ -7,6 +7,7 @@ import Text from './Text'
 type Props = {
   className?: string
   label?: string
+  labelColor?: string
   checked: boolean
   disabled?: boolean
   onToggle: (newValue: boolean) => void
@@ -22,6 +23,7 @@ const CheckBox = ({
   size,
   checked,
   label,
+  labelColor,
   onToggle,
   alignSelf,
   ...props
@@ -49,7 +51,7 @@ const CheckBox = ({
     >
       {checked && <CheckedIcon disabled={disabled} size={size} color={checkedColor} />}
       {!checked && <UncheckedIcon disabled={disabled} size={size} />}
-      {label && <Label>{label}</Label>}
+      {label && <Label labelColor={labelColor}>{label}</Label>}
     </WrapperFlex>
   )
 }
@@ -80,9 +82,9 @@ const UncheckedIcon = styled(MdCheckBoxOutlineBlank)<{disabled?: boolean, size?:
   ${(props) => iconStyle(props)}
 `
 
-const Label = styled(Text)`
+const Label = styled(Text)<{labelColor?: string}>`
   display: inline;
-  color: inherit;
+  color: ${(props) => props.labelColor ? props.labelColor : props.theme.secondaryColor};
 `
 
 export default CheckBox

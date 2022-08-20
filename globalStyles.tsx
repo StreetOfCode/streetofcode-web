@@ -11,6 +11,8 @@ const GlobalStyles = createGlobalStyle`
 
     margin: 0;
     padding: 0;
+
+    background-color: ${(props) => props.theme.primaryColor};
   }
 
 
@@ -21,6 +23,14 @@ const GlobalStyles = createGlobalStyle`
   img {
       display: block;
       max-width: 100%;
+  }
+
+  li {
+    color: ${(props) => props.theme.secondaryColor};
+  }
+
+  a {
+    color: ${(props) => props.theme.accentColor};
   }
 `
 

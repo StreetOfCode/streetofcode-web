@@ -193,7 +193,7 @@ const OnboardingPage: NextPage = () => {
     <Wrapper>
       <NavBarWrapper justifyContent="space-between">
         <LogoWrapper>
-          <Image layout="fill" alt="Logo" src="/soc_logo.png" />
+          <LogoImage layout="fill" alt="Logo" src="/soc_logo.png" />
         </LogoWrapper>
         <Heading variant="h3" normalWeight withAccentUnderline>Onboarding</Heading>
         <LogoWrapper style={{visibility: 'hidden'}} />
@@ -280,4 +280,8 @@ const BackButton = styled(Text)`
   &:hover {
     cursor: pointer;
   }
+`
+
+const LogoImage = styled(Image)`
+  filter: ${(props) => props.theme.type === 'LIGHT' ? 'unset' : 'invert(100%)'};
 `

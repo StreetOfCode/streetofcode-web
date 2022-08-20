@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import * as Api from '../../../../api'
 import Button from '../../../core/Button'
@@ -11,8 +11,8 @@ import {
   QuizQuestionUserAnswer,
   QuizQuestionUserAnswerRequest,
   QuestionCorrectness} from '../../../../types'
-import {theme} from '../../../../theme/theme'
 import RadioGroup from '../../../core/RadioGroup'
+import ThemeSwitchingContext from '../../../../theme/ThemeSwitchingContext'
 
 const QuizAnswer = (
   {quizAnswer}: {
@@ -36,6 +36,7 @@ export const QuizQuestion = ({
 }) => {
   const [selectedAnswerIds, setSelectedAnswerIds] = useState<number[]>([])
   const [wasAnsweredCorrectly, setAnsweredCorrectly] = useState<boolean | null>(null)
+  const {theme} = useContext(ThemeSwitchingContext)
 
   useEffect(() => {
     const fetchSelectedAnswers = async () => {
@@ -156,9 +157,9 @@ export const QuizQuestion = ({
                 <WrappedFlex
                   alignSelf="stretch"
                   key={a.id}
-                  backgroundColor={isToggled ? checkedColor : 'white'}
+                  backgroundColor={isToggled ? checkedColor : theme.primaryColor}
                   direction="column"
-                  color={isToggled ? 'white' : 'black'}
+                  color={isToggled ? theme.primaryColor : theme.secondaryColor}
                   borderColor={wasAnsweredCorrectly !== null && isToggled ? checkedColor : theme.accentColor}
                   onClick={() => {
                     if (!wasAnsweredCorrectly) onAnswerSelected(a)
@@ -166,8 +167,9 @@ export const QuizQuestion = ({
                 >
                   <CheckBox
                     label={a.text}
+                    labelColor={isToggled ? theme.primaryColor : theme.secondaryColor}
                     disabled={wasAnsweredCorrectly !== null}
-                    checkedColor="white"
+                    checkedColor={theme.primaryColor}
                     onToggle={() => onAnswerSelected(a)}
                     checked={selectedAnswerIds.includes(a.id)}
                     size="20px"

@@ -143,6 +143,10 @@ const ItemContent = styled(Accordion.Content)`
     animation: ${closeContentAnimation} 300ms ease-out forwards;
     overflow: hidden;
   };
+
+  svg {
+    color: ${(props) => props.theme.secondaryColor};
+  }
 `
 
 const AccordionChevron = styled(BiChevronDown)`

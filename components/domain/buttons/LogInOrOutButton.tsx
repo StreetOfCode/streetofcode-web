@@ -67,17 +67,18 @@ const Trigger = styled(DropdownMenu.Trigger)`
 `
 
 const StyledContent = styled(DropdownMenu.Content)`
-  background-color: white;
+  background-color: ${(props) => props.theme.primaryColor};
   width: 200px;
   border-radius: 12px;
   padding: 6px 10px;
-  border: 1px solid black;
+  border: 1px solid ${(props) => props.theme.secondaryColor};
 `
 
 const DropDownItem = styled(DropdownMenu.Item)`
   display: block !important;
   all: unset;
   white-space: nowrap;
+  color: ${(props) => props.theme.secondaryColor};
 
   &:focus, &:hover {
     color: ${(props) => props.theme.accentColor};
@@ -86,7 +87,7 @@ const DropDownItem = styled(DropdownMenu.Item)`
 `
 
 const DropwDownMenuArrow = styled(DropdownMenu.Arrow)`
-  fill: black;
+  fill: ${(props) => props.theme.secondaryColor};
 `
 
 export default LogInOrOutButton

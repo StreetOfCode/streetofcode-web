@@ -63,6 +63,7 @@ const Footer = () => {
                 <>
                   {socUser && !socUser.receiveNewsletter && <NewsletterForm user={socUser} />}
                   {socUser && socUser.receiveNewsletter && <EmptyBox />}
+                  {user && !socUser && <EmptyBox />}
                 </>
               )
             }}
@@ -174,7 +175,7 @@ const SocialIconLink = styled.a`
   color: ${(props) => props.theme.primaryColor};
 
   &:hover {
-    color: ${(props) => props.theme.greyBackgroundColor};
+    opacity: 80%;
   }
 `
 
@@ -186,7 +187,7 @@ const LogoWrapper = styled.div`
 `
 
 const LogoImage = styled(Image)`
-  filter: invert(100%);
+  filter: ${(props) => props.theme.type === 'LIGHT' ? 'invert(100%)' : 'unset'};
 `
 
 export default Footer

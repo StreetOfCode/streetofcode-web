@@ -9,6 +9,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Button from './core/Button'
 import Heading from './core/Heading'
+import Text from './core/Text'
 
 const ConfirmActionDialog = ({
   title,
@@ -51,18 +52,20 @@ const ConfirmActionDialog = ({
         </DialogTitle>
         {description && (
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">{description}</DialogContentText>
+            <DialogContentText id="alert-dialog-description">
+              <Text>{description}</Text>
+            </DialogContentText>
           </DialogContent>
         )}
       </DialogContentWrapper>
-      <DialogActions>
+      <DialogActionsWrapper>
         <Button onClick={onSecondaryButtonClick}>
           {secondaryButtonText}
         </Button>
         <Button onClick={onPrimaryButtonClick} variant="danger">
           {primaryButtonText}
         </Button>
-      </DialogActions>
+      </DialogActionsWrapper>
     </StyledDialog>
   )
 }
@@ -79,8 +82,13 @@ const StyledDialog = styled(Dialog)`
 `
 
 const DialogContentWrapper = styled.div`
+  background-color: ${(props) => props.theme.primaryColor};
   min-width: 300px;
   min-height: 100px;
+`
+
+const DialogActionsWrapper = styled(DialogActions)`
+  background-color: ${(props) => props.theme.primaryColor};
 `
 
 export default ConfirmActionDialog

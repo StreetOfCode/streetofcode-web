@@ -4,7 +4,8 @@ type Video = {
   youtubeUrl: string
 }
 
-export const youtubeImageUrl = 'http://streetofcode.sk/wp-content/uploads/2022/06/youtube.png'
+export const youtubeDarkImageUrl = 'http://streetofcode.sk/wp-content/uploads/2022/06/youtube.png'
+export const youtubeLightImageUrl = 'http://streetofcode.sk/wp-content/uploads/2022/08/youtube-white.png'
 export const youtubeUrl = 'https://www.youtube.com/channel/UCzt3kHgfLwGGPcTk6jP1_Cg'
 
 export const videos: Video[] = [
