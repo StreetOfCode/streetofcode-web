@@ -91,7 +91,7 @@ const iconStyle = css`
 const GoogleButton = styled(Button)`
   background-color: #DD4B39;
   color: ${(props) => props.theme.primaryColor};
-  border: 1px solid black;
+  border: 1px solid ${(props) => props.theme.secondaryColor};
 
   svg {
     ${iconStyle}
@@ -101,7 +101,7 @@ const GoogleButton = styled(Button)`
 const GithubButton = styled(Button)`
   background-color: #444444;
   color: ${(props) => props.theme.primaryColor};
-  border: 1px solid black;
+  border: 1px solid ${(props) => props.theme.secondaryColor};
 
   svg {
     ${iconStyle}

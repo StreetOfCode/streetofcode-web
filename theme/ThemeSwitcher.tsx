@@ -14,7 +14,7 @@ const ThemeSwitcher = ({className, ...props}: Props) => {
   const {theme, setTheme} = useContext(ThemeSwitchingContext)
 
   const switchTheme = () => {
-    if (lightTheme === theme) {
+    if (theme.type === 'LIGHT') {
       setTheme(darkTheme)
     } else {
       setTheme(lightTheme)
@@ -23,7 +23,7 @@ const ThemeSwitcher = ({className, ...props}: Props) => {
 
   return (<StyledWrapper className={className} {...props}>
     <StyledButton
-      iconBefore={theme === lightTheme ? <MdOutlineLightMode /> : <MdOutlineDarkMode />}
+      iconBefore={theme === lightTheme ? <MdOutlineDarkMode /> : <MdOutlineLightMode />}
       onClick={switchTheme}
     />
   </StyledWrapper>)

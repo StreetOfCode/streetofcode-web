@@ -32,7 +32,7 @@ const InitialsAvatar = styled(Flex)<{sizePx: number}>`
   width: ${(props) => `${props.sizePx}px`};
   height:${(props) => `${props.sizePx}px`};
   border-radius: 50%;
-  border: 2px solid black; // TODO this is probably not working
+  border: 2px solid ${(props) => props.theme.secondaryColor}; // TODO this is probably not working
   margin: 0 auto;
 `
 
