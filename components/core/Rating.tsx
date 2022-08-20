@@ -24,11 +24,11 @@ const Rating = ({className, name, value, readOnly, customSize, precision, ...pro
 }
 
 const FilledStar = styled(StarIcon)`
-  color: ${(props) => props.theme.accentColor};
+  color: ${(props) => props.theme.accentColor} !important;
 `
 
 const EmptyStar = styled(StarIcon)`
-  color: #DBCDF8;
+  color: #DBCDF8 !important;
 `
 
 const StyledRating = styled(MuiRating)``
