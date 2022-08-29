@@ -1,4 +1,5 @@
 import {createGlobalStyle} from 'styled-components'
+import {ThemeType} from './theme/theme'
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -12,7 +13,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
 
-    background-color: ${(props) => props.theme.primaryColor};
+    background-color: ${({theme}: {theme: ThemeType}) => theme.primaryColor};
   }
 
 

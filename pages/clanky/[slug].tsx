@@ -7,7 +7,7 @@ import {Post} from '../../wp/types'
 import NavBar from '../../components/NavBar'
 import BackLink from '../../components/core/BackLink'
 import PostView from '../../components/domain/post/PostView'
-import {CATEGORY_NAME} from './constants'
+import {CATEGORY_NAME} from '../../components/domain/post/clanky-constants'
 
 interface Props {
   post: Post
