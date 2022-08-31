@@ -54,12 +54,7 @@ const AdminApp = ({user, logout}) => {
     }
   }, [])
 
-
-  const LogoutButton = () => (
-    <Button onClick={logout}>
-      Odhlásiť
-    </Button>
-  )
+  const LogoutButton = () => <Button onClick={logout}>Odhlásiť</Button>
 
   return (
     <>
@@ -90,10 +85,30 @@ const AdminApp = ({user, logout}) => {
             edit={AuthorEdit}
             show={AuthorShow}
           />
-          <Resource name="chapter" create={ChapterCreate} edit={ChapterEdit} show={ChapterShow} />
-          <Resource name="lecture" create={LectureCreate} edit={LectureEdit} show={LectureShow} />
-          <Resource name="quiz" create={QuizCreate} edit={QuizEdit} show={QuizShow} />
-          <Resource name="quiz/question" create={QuizQuestionCreate} edit={QuizQuestionEdit} show={QuizQuestionShow} />
+          <Resource
+            name="chapter"
+            create={ChapterCreate}
+            edit={ChapterEdit}
+            show={ChapterShow}
+          />
+          <Resource
+            name="lecture"
+            create={LectureCreate}
+            edit={LectureEdit}
+            show={LectureShow}
+          />
+          <Resource
+            name="quiz"
+            create={QuizCreate}
+            edit={QuizEdit}
+            show={QuizShow}
+          />
+          <Resource
+            name="quiz/question"
+            create={QuizQuestionCreate}
+            edit={QuizQuestionEdit}
+            show={QuizQuestionShow}
+          />
           <Resource
             name="quiz/question/answer"
             create={QuizQuestionAnswerCreate}

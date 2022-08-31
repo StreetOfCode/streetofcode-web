@@ -4,11 +4,7 @@ import '@uiw/react-md-editor/markdown-editor.css'
 import dynamic from 'next/dynamic'
 import {useController} from 'react-hook-form'
 
-const MDEditor = dynamic(
-  () => import('@uiw/react-md-editor'),
-  {ssr: false},
-)
-
+const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {ssr: false})
 
 export const MarkdownInput = ({source}) => {
   const {
@@ -17,10 +13,12 @@ export const MarkdownInput = ({source}) => {
     name: source,
   })
 
-  return (<div>
-    <span>{source}</span>
-    <StyledMDEditor height={500} value={value} onChange={onChange} />
-  </div>)
+  return (
+    <div>
+      <span>{source}</span>
+      <StyledMDEditor height={500} value={value} onChange={onChange} />
+    </div>
+  )
 }
 
 const StyledMDEditor = styled(MDEditor)`

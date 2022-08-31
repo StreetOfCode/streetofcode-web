@@ -4,6 +4,7 @@ module.exports = {
     'plugin:import/typescript',
     'vacuumlabs',
     'plugin:@next/next/recommended',
+    'prettier',
   ],
   env: {
     node: true,
@@ -13,9 +14,9 @@ module.exports = {
     JSX: true,
   },
   rules: {
-    'indent': ['error', 2],
     '@typescript-eslint/no-explicit-any': [
-      'error', {
+      'error',
+      {
         ignoreRestArgs: true,
       },
     ],
@@ -28,9 +29,9 @@ module.exports = {
     'import/no-cycle': 'error',
     'import/no-extraneous-dependencies': ['error'],
     'react-hooks/rules-of-hooks': 'error',
-    'max-len': ['error', { 'code': 120 }],
-    "react/display-name": "off",
-    "linebreak-style": ["error", "unix"],
+    'max-len': ['error', {code: 120}],
+    'react/display-name': 'off',
+    'linebreak-style': ['error', 'unix'],
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {

@@ -41,16 +41,16 @@ const variantStyleValues = (theme: ThemeType) => ({
 })
 
 const sizeStyleValues = {
-  'small': {
+  small: {
     fontSize: '12px',
   },
-  'default': {
+  default: {
     fontSize: '16px',
   },
-  'large': {
+  large: {
     fontSize: '20px',
   },
-  'very-large' : {
+  'very-large': {
     fontSize: '24px',
   },
 }
@@ -64,8 +64,8 @@ const Button = ({
   disabled,
   size,
   iconBefore,
-  ...props}
-: Props) => {
+  ...props
+}: Props) => {
   const {theme} = useContext(ThemeSwitchingContext)
 
   return (
@@ -88,23 +88,24 @@ const Button = ({
 }
 
 const StyledButton = styled.button<{
-  theme: ThemeType,
-  variant: Variant,
-  uppercase?: boolean,
-  bold?: boolean,
-  disabled?: boolean,
+  theme: ThemeType
+  variant: Variant
+  uppercase?: boolean
+  bold?: boolean
+  disabled?: boolean
   size: Size
 }>`
-  background-color: ${(props) => variantStyleValues(props.theme)[props.variant].backgroundColor};
+  background-color: ${(props) =>
+    variantStyleValues(props.theme)[props.variant].backgroundColor};
   color: ${(props) => variantStyleValues(props.theme)[props.variant].color};
   border: ${(props) => variantStyleValues(props.theme)[props.variant].border};
-  padding: .5em 1.25em;
+  padding: 0.5em 1.25em;
   border-radius: 10px;
   font-size: ${(props) => sizeStyleValues[props.size].fontSize};
-  font-weight: ${(props) => props.bold ? 'bold' : 'normal'};
+  font-weight: ${(props) => (props.bold ? 'bold' : 'normal')};
   opacity: ${(props) => props.disabled && 0.7};
 
-  text-transform: ${(props) => props.uppercase ? 'uppercase' : 'unset'};
+  text-transform: ${(props) => (props.uppercase ? 'uppercase' : 'unset')};
 
   &:hover {
     cursor: ${(props) => !props.disabled && 'pointer'};

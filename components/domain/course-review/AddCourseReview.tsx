@@ -18,10 +18,7 @@ const AddCourseReview = ({courseId, courseSlug}: AddCourseReviewProps) => {
     })
   }
 
-  return (
-    <EditableCourseReview onSubmit={addCourseReview} />
-  )
+  return <EditableCourseReview onSubmit={addCourseReview} />
 }
-
 
 export default AddCourseReview

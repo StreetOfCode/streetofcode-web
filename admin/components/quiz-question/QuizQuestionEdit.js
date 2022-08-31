@@ -1,5 +1,12 @@
 import React from 'react'
-import {Edit, NumberInput, SimpleForm, TextInput, useRedirect, SelectInput} from 'react-admin'
+import {
+  Edit,
+  NumberInput,
+  SimpleForm,
+  TextInput,
+  useRedirect,
+  SelectInput,
+} from 'react-admin'
 
 const QuizQuestionEdit = () => {
   const redirect = useRedirect()
@@ -28,10 +35,14 @@ const QuizQuestionEdit = () => {
         <NumberInput disabled source="quiz.id" />
         <NumberInput required source="questionOrder" />
         <TextInput required source="text" />
-        <SelectInput required source="type" label="Type" choices={[
-          {id: 'SINGLE_CHOICE', name: 'Single choice'},
-          {id: 'MULTIPLE_CHOICE', name: 'Multiple choice'},
-        ]}
+        <SelectInput
+          required
+          source="type"
+          label="Type"
+          choices={[
+            {id: 'SINGLE_CHOICE', name: 'Single choice'},
+            {id: 'MULTIPLE_CHOICE', name: 'Multiple choice'},
+          ]}
         />
       </SimpleForm>
     </Edit>

@@ -9,7 +9,12 @@ import Heading from '../../core/Heading'
 import Text from '../../core/Text'
 import CourseSidebar from './CourseSidebar'
 import LectureDetail from '../lecture/LectureDetail'
-import {AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineMenu, AiOutlineClose} from 'react-icons/ai'
+import {
+  AiOutlineArrowLeft,
+  AiOutlineArrowRight,
+  AiOutlineMenu,
+  AiOutlineClose,
+} from 'react-icons/ai'
 import {getPrevAndNextUrl, GetPrevAndNextUrlResponse} from '../../../utils'
 import {useGetCourseProgressOverview} from '../../api/courseProgress'
 import {CourseOverview} from '../../../types'
@@ -24,71 +29,87 @@ type Props = {
   lectureId: string
 }
 
-const TakeCourse = ({resourcesMode, courseOverview, chapterId, lectureId}: Props) => {
+const TakeCourse = ({
+  resourcesMode,
+  courseOverview,
+  chapterId,
+  lectureId,
+}: Props) => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
-  const getCourseProgressOverview = useGetCourseProgressOverview(Number(courseOverview.id))
+  const getCourseProgressOverview = useGetCourseProgressOverview(
+    Number(courseOverview.id),
+  )
 
   const Lecture = () => {
-    const {
-      currentLecture,
-      previousLectureUrl,
-      nextLectureUrl,
-    } = getPrevAndNextUrl(courseOverview, lectureId, chapterId) || ({} as GetPrevAndNextUrlResponse)
+    const {currentLecture, previousLectureUrl, nextLectureUrl} =
+      getPrevAndNextUrl(courseOverview, lectureId, chapterId) ||
+      ({} as GetPrevAndNextUrlResponse)
 
-    return (<>
-      <MobileSidebarOpenIcon onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)} />
-      <ContentNavbarFlex justifyContent="space-between" gap="8px">
-        {previousLectureUrl
-          ? <Box justifyContent="flex-start">
-            <NextLink href={previousLectureUrl}>
-              <ButtonPreviousLecture variant="outline">
-                Predošlá lekcia
-              </ButtonPreviousLecture>
-              <MobileArrowLeft />
-            </NextLink>
-          </Box>
-          : <EmptyBox />
-        }
+    return (
+      <>
+        <MobileSidebarOpenIcon
+          onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+        />
+        <ContentNavbarFlex justifyContent="space-between" gap="8px">
+          {previousLectureUrl ? (
+            <Box justifyContent="flex-start">
+              <NextLink href={previousLectureUrl}>
+                <ButtonPreviousLecture variant="outline">
+                  Predošlá lekcia
+                </ButtonPreviousLecture>
+                <MobileArrowLeft />
+              </NextLink>
+            </Box>
+          ) : (
+            <EmptyBox />
+          )}
 
-        <Heading variant="h2" normalWeight withAccentUnderline>{currentLecture?.name}</Heading>
+          <Heading variant="h2" normalWeight withAccentUnderline>
+            {currentLecture?.name}
+          </Heading>
 
-        {nextLectureUrl
-          ? <Box justifyContent="flex-end">
-            <NextLink href={nextLectureUrl}>
-              <ButtonNextLecture variant="outline">
-                Ďalšia lekcia
-              </ButtonNextLecture>
-              <MobileArrowRight />
-            </NextLink>
-          </Box>
-          : <EmptyBox />
-        }
-      </ContentNavbarFlex>
-      <LectureDetail lectureId={Number(lectureId)} />
-    </>)
+          {nextLectureUrl ? (
+            <Box justifyContent="flex-end">
+              <NextLink href={nextLectureUrl}>
+                <ButtonNextLecture variant="outline">
+                  Ďalšia lekcia
+                </ButtonNextLecture>
+                <MobileArrowRight />
+              </NextLink>
+            </Box>
+          ) : (
+            <EmptyBox />
+          )}
+        </ContentNavbarFlex>
+        <LectureDetail lectureId={Number(lectureId)} />
+      </>
+    )
   }
-
 
   const Resources = () => {
     if (!courseOverview.resources) return null
 
     const lectureUrl = `/kurzy/${courseOverview.slug}/kapitola/${chapterId}/lekcia/${lectureId}`
 
-    return (<>
-      <ContentNavbarFlex justifyContent="space-between">
-        <Box justifyContent="flex-start">
-          <NextLink href={lectureUrl}>
-            <ButtonPreviousLecture variant="outline">
-              Späť
-            </ButtonPreviousLecture>
-            <MobileArrowLeft />
-          </NextLink>
-        </Box>
-        <Heading variant="h2" normalWeight withAccentUnderline>Materiály</Heading>
-        <EmptyBox />
-      </ContentNavbarFlex>
-      <MarkdownView children={courseOverview.resources} />
-    </>)
+    return (
+      <>
+        <ContentNavbarFlex justifyContent="space-between">
+          <Box justifyContent="flex-start">
+            <NextLink href={lectureUrl}>
+              <ButtonPreviousLecture variant="outline">
+                Späť
+              </ButtonPreviousLecture>
+              <MobileArrowLeft />
+            </NextLink>
+          </Box>
+          <Heading variant="h2" normalWeight withAccentUnderline>
+            Materiály
+          </Heading>
+          <EmptyBox />
+        </ContentNavbarFlex>
+        <MarkdownView children={courseOverview.resources} />
+      </>
+    )
   }
 
   return (
@@ -96,14 +117,19 @@ const TakeCourse = ({resourcesMode, courseOverview, chapterId, lectureId}: Props
       <WrapperFlex alignSelf="stretch" flex="1">
         <Sidebar mobileOpen={mobileSidebarOpen}>
           <Flex justifyContent="space-between" alignItems="flex-start">
-            <StyledBackLink to={`/kurzy/${courseOverview.slug}`} text={'Späť na kurz'} />
+            <StyledBackLink
+              to={`/kurzy/${courseOverview.slug}`}
+              text={'Späť na kurz'}
+            />
             <ThemeSwitcher />
           </Flex>
           <MobileSidebarHeaderFlex justifyContent="space-between">
             <NextLink href={'/kurzy'}>
               <Text size="very-small">Zobraziť všetky kurzy</Text>
             </NextLink>
-            <MobileSidebarCloseIcon onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)} />
+            <MobileSidebarCloseIcon
+              onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+            />
           </MobileSidebarHeaderFlex>
           <QueryGuard {...getCourseProgressOverview}>
             {(courseProgressOverview) => (
@@ -145,7 +171,7 @@ const Sidebar = styled.div<{mobileOpen: boolean}>`
   }
 
   @media ${device.mobile} {
-    display: ${(props) => props.mobileOpen ? 'block' : 'none'};
+    display: ${(props) => (props.mobileOpen ? 'block' : 'none')};
     position: absolute;
     z-index: 1;
     width: 300px;

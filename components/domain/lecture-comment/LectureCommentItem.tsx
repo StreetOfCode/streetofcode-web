@@ -19,7 +19,10 @@ type LectureCommentItemProps = {
 const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
   const {userId, isLoading} = useAuth()
 
-  const deleteLectureCommentMutation = useDeleteLectureComment(comment.id, lectureId)
+  const deleteLectureCommentMutation = useDeleteLectureComment(
+    comment.id,
+    lectureId,
+  )
 
   const onDelete = async () => {
     await deleteLectureCommentMutation.mutateAsync()
@@ -27,19 +30,29 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
 
   const isUpdatingAllowed = comment.userId === userId
 
-  const [isEditing, onEdited, onEditCancelled, EditItemActions] = useEditItemActions({
-    deleteAction: onDelete,
-    dialogTitle: 'Zmazať komentár?',
-    disabled: !isUpdatingAllowed,
-  })
+  const [isEditing, onEdited, onEditCancelled, EditItemActions] =
+    useEditItemActions({
+      deleteAction: onDelete,
+      dialogTitle: 'Zmazať komentár?',
+      disabled: !isUpdatingAllowed,
+    })
 
   if (isLoading) return <Loading />
 
   return (
     <CommentItem>
       <Flex gap="12px" alignSelf="stretch">
-        <LeftColumn direction="column" alignSelf="flex-start" gap="8px" justifyContent="center">
-          <UserAvatar imageUrl={comment.imageUrl} name={comment.userName} sizePx={42} />
+        <LeftColumn
+          direction="column"
+          alignSelf="flex-start"
+          gap="8px"
+          justifyContent="center"
+        >
+          <UserAvatar
+            imageUrl={comment.imageUrl}
+            name={comment.userName}
+            sizePx={42}
+          />
           <EditItemActions />
         </LeftColumn>
         {!isEditing && (

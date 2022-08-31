@@ -7,7 +7,6 @@ type Props = {
 }
 
 const TypingAnimation = ({className}: Props) => {
-
   const classNames = clsx('animated', className)
 
   return (
@@ -2127,17 +2126,8 @@ const TypingAnimation = ({className}: Props) => {
             radius="2"
             result="DILATED"
           />
-          <feFlood
-            floodColor="#32DFEC"
-            floodOpacity="1"
-            result="PINK"
-          />
-          <feComposite
-            in="PINK"
-            in2="DILATED"
-            operator="in"
-            result="OUTLINE"
-          />
+          <feFlood floodColor="#32DFEC" floodOpacity="1" result="PINK" />
+          <feComposite in="PINK" in2="DILATED" operator="in" result="OUTLINE" />
           <feMerge>
             <feMergeNode in="OUTLINE" />
             <feMergeNode in="SourceGraphic" />
@@ -2151,12 +2141,7 @@ const TypingAnimation = ({className}: Props) => {
             result="DILATED"
           />
           <feFlood floodColor="red" floodOpacity="0.5" result="PINK" />
-          <feComposite
-            in="PINK"
-            in2="DILATED"
-            operator="in"
-            result="OUTLINE"
-          />
+          <feComposite in="PINK" in2="DILATED" operator="in" result="OUTLINE" />
           <feMerge>
             <feMergeNode in="OUTLINE" />
             <feMergeNode in="SourceGraphic" />

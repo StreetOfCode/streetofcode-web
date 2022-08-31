@@ -64,36 +64,51 @@ const CoursesPageContent = ({courses}: Props) => {
   }
 
   return (
-    <PageContentWrapper><>
-      {shouldIncludeMyCourses(courses) && <>
-        <Flex direction="column" gap="36px" alignItems="flex-start">
-          <Heading variant="h3" withAccentUnderline normalWeight>
-            Moje kurzy
-          </Heading>
-          <Courses courses={courses.filter((c) => c.userProgressMetadata)} />
-          {courses.filter((c) => !c.userProgressMetadata).length > 0 &&
+    <PageContentWrapper>
+      <>
+        {shouldIncludeMyCourses(courses) && (
           <>
-            <Heading variant="h3" withAccentUnderline normalWeight>
-              Ďalšie kurzy
-            </Heading>
-            <Courses courses={courses.filter((c) => !c.userProgressMetadata)} />
+            <Flex direction="column" gap="36px" alignItems="flex-start">
+              <Heading variant="h3" withAccentUnderline normalWeight>
+                Moje kurzy
+              </Heading>
+              <Courses
+                courses={courses.filter((c) => c.userProgressMetadata)}
+              />
+              {courses.filter((c) => !c.userProgressMetadata).length > 0 && (
+                <>
+                  <Heading variant="h3" withAccentUnderline normalWeight>
+                    Ďalšie kurzy
+                  </Heading>
+                  <Courses
+                    courses={courses.filter((c) => !c.userProgressMetadata)}
+                  />
+                </>
+              )}
+              <VoteNextCourse />
+            </Flex>
           </>
-          }
-          <VoteNextCourse />
-        </Flex>
-      </>}
-      {!shouldIncludeMyCourses(courses) && <>
-        <Flex direction="column" gap="36px">
-          <div>
-            <Heading align="center" variant="h1">Nauč sa s nami</Heading>
-            <Heading align="center" variant="h1" color="accent">programovať</Heading>
-          </div>
-          <Text align="center" size="large">Vyber si z našich kurzov</Text>
-          <Courses courses={courses} />
-          <VoteNextCourse />
-        </Flex>
-      </>}
-    </>
+        )}
+        {!shouldIncludeMyCourses(courses) && (
+          <>
+            <Flex direction="column" gap="36px">
+              <div>
+                <Heading align="center" variant="h1">
+                  Nauč sa s nami
+                </Heading>
+                <Heading align="center" variant="h1" color="accent">
+                  programovať
+                </Heading>
+              </div>
+              <Text align="center" size="large">
+                Vyber si z našich kurzov
+              </Text>
+              <Courses courses={courses} />
+              <VoteNextCourse />
+            </Flex>
+          </>
+        )}
+      </>
     </PageContentWrapper>
   )
 }
@@ -101,7 +116,7 @@ const CoursesPageContent = ({courses}: Props) => {
 export const getStaticProps = async () => {
   const response = await Api.noAuthFetch(Api.coursesOverviewUrl())
 
-  const courses = await response.json() as CourseOverview[]
+  const courses = (await response.json()) as CourseOverview[]
 
   return {
     props: {courses}, // will be passed to the page component as props

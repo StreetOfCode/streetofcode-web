@@ -83,7 +83,10 @@ export const StyledText = styled.span<{
     return props.align
   }};
 
-  border-bottom: ${(props) => props.withAccentUnderline ? `2px solid ${props.theme.accentColor}` : 'unset'};
+  border-bottom: ${(props) =>
+    props.withAccentUnderline
+      ? `2px solid ${props.theme.accentColor}`
+      : 'unset'};
 `
 
 export default Text

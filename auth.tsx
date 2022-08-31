@@ -1,9 +1,11 @@
-import {getAuth,
+import {
+  getAuth,
   getRedirectResult,
   GithubAuthProvider,
   GoogleAuthProvider,
   browserLocalPersistence,
-  signInWithRedirect} from 'firebase/auth'
+  signInWithRedirect,
+} from 'firebase/auth'
 import {firebase} from './firebase'
 
 export const auth = getAuth(firebase)

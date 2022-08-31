@@ -1,5 +1,11 @@
 import React from 'react'
-import {Create, NumberInput, SimpleForm, TextInput, useRedirect} from 'react-admin'
+import {
+  Create,
+  NumberInput,
+  SimpleForm,
+  TextInput,
+  useRedirect,
+} from 'react-admin'
 
 const ChapterCreate = () => {
   const redirect = useRedirect()
@@ -9,7 +15,10 @@ const ChapterCreate = () => {
   }
 
   return (
-    <Create title="Create a chapter" mutationOptions={{onSuccess: onSuccessHandler}} >
+    <Create
+      title="Create a chapter"
+      mutationOptions={{onSuccess: onSuccessHandler}}
+    >
       <SimpleForm>
         <NumberInput disabled source="courseId" />
         <TextInput source="name" />

@@ -16,18 +16,14 @@ const LectureQuiz = ({lecture}: Props) => {
       {(quizes) => {
         return (
           <>
-            {
-              quizes.map((q, i) => {
-                return (<Quiz key={i} quiz={q} lecture={lecture} />)
-              })
-
-            }
+            {quizes.map((q, i) => {
+              return <Quiz key={i} quiz={q} lecture={lecture} />
+            })}
           </>
         )
       }}
     </QueryGuard>
   )
 }
-
 
 export default LectureQuiz

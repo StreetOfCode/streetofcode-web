@@ -1,7 +1,11 @@
 import {useMutation, useQuery} from 'react-query'
 import * as Api from '../../api'
 import queryClient from '../../queryClient'
-import {CourseReview, CourseReviewAddRequest, CourseReviewEditRequest} from '../../types'
+import {
+  CourseReview,
+  CourseReviewAddRequest,
+  CourseReviewEditRequest,
+} from '../../types'
 import {queryKeys as courseReviewOverviewsQueryKeys} from './courseReviewOverviews'
 import {queryKeys as courseQueryKeys} from './courses'
 import {queryKeys as courseOverviewKeys} from './courseOverview'
@@ -29,7 +33,10 @@ const fetchCourseReviews = async (courseId: number) => {
 }
 
 const addCourseReview = async (addRequest: CourseReviewAddRequest) => {
-  const result = await Api.authPost<CourseReviewAddRequest>(Api.addCourseReviewUrl(), addRequest)
+  const result = await Api.authPost<CourseReviewAddRequest>(
+    Api.addCourseReviewUrl(),
+    addRequest,
+  )
 
   if (!result.ok) {
     throw Error('Nepodarilo sa pridať hodnotenie kurzu')
@@ -43,7 +50,8 @@ const editCourseReview = async (
   courseReviewEditRequest: CourseReviewEditRequest,
 ) => {
   const result = await Api.authPut<CourseReviewEditRequest>(
-    Api.courseReviewUrl(reviewId), courseReviewEditRequest,
+    Api.courseReviewUrl(reviewId),
+    courseReviewEditRequest,
   )
 
   if (!result.ok) {
@@ -53,12 +61,8 @@ const editCourseReview = async (
   return (await result.json()) as CourseReview
 }
 
-const deleteCourseReview = async (
-  reviewId: number,
-) => {
-  const result = await Api.authDelete(
-    Api.courseReviewUrl(reviewId),
-  )
+const deleteCourseReview = async (reviewId: number) => {
+  const result = await Api.authDelete(Api.courseReviewUrl(reviewId))
 
   if (!result.ok) {
     throw Error('Nepodarilo sa vymazať hodnotenie kurzu')
@@ -68,13 +72,11 @@ const deleteCourseReview = async (
 }
 
 export const useGetCourseReviews = (courseId: number) => {
-  return useQuery(
-    queryKeys.get(courseId),
-    () => fetchCourseReviews(courseId), {
-      cacheTime: 60000,
-      staleTime: 60000,
-      refetchOnWindowFocus: false,
-    })
+  return useQuery(queryKeys.get(courseId), () => fetchCourseReviews(courseId), {
+    cacheTime: 60000,
+    staleTime: 60000,
+    refetchOnWindowFocus: false,
+  })
 }
 
 export const useAddCourseReview = (courseId: number, courseSlug: string) => {
@@ -89,14 +91,17 @@ export const useAddCourseReview = (courseId: number, courseSlug: string) => {
             courseQueryKeys.getCourses,
             courseReviewOverviewsQueryKeys.get(courseId),
             courseOverviewKeys.get(courseSlug),
-          ].map(
-            (key) => queryClient.invalidateQueries(key),
-          ),
+          ].map((key) => queryClient.invalidateQueries(key)),
         ),
-    })
+    },
+  )
 }
 
-export const useEditCourseReview = (reviewId: number, courseId: number, courseSlug: string) => {
+export const useEditCourseReview = (
+  reviewId: number,
+  courseId: number,
+  courseSlug: string,
+) => {
   return useMutation(
     mutationKeys.edit(reviewId),
     ({
@@ -114,15 +119,18 @@ export const useEditCourseReview = (reviewId: number, courseId: number, courseSl
             courseQueryKeys.getCourses,
             courseReviewOverviewsQueryKeys.get(courseId),
             courseOverviewKeys.get(courseSlug),
-          ].map(
-            (key) => queryClient.invalidateQueries(key),
-          ),
-        )},
+          ].map((key) => queryClient.invalidateQueries(key)),
+        )
+      },
     },
   )
 }
 
-export const useDeleteCourseReview = (reviewId: number, courseId: number, courseSlug: string) => {
+export const useDeleteCourseReview = (
+  reviewId: number,
+  courseId: number,
+  courseSlug: string,
+) => {
   return useMutation(
     mutationKeys.delete(reviewId),
     () => {
@@ -136,10 +144,9 @@ export const useDeleteCourseReview = (reviewId: number, courseId: number, course
             courseQueryKeys.getCourses,
             courseReviewOverviewsQueryKeys.get(courseId),
             courseOverviewKeys.get(courseSlug),
-          ].map(
-            (key) => queryClient.invalidateQueries(key),
-          ),
-        )},
+          ].map((key) => queryClient.invalidateQueries(key)),
+        )
+      },
     },
   )
 }

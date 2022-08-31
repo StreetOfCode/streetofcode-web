@@ -1,38 +1,39 @@
 .animated {
-    animation: 1s 1 forwards cubic-bezier(.36,-0.01,.5,1.38) slideUp,1.5s heartbeat;
-    animation-delay: 0s,1.5s;
+  animation: 1s 1 forwards cubic-bezier(0.36, -0.01, 0.5, 1.38) slideUp,
+    1.5s heartbeat;
+  animation-delay: 0s, 1.5s;
 }
 
- @keyframes slideUp {
-     0% {
-         opacity: 0;
-         transform: translateY(30px);
-    }
-     100% {
-         opacity: 1;
-         transform: inherit;
-    }
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: inherit;
+  }
 }
- @keyframes heartbeat {
-     0% {
-         transform: scale(1);
-    }
-     10% {
-         transform: scale(1.1);
-    }
-     30% {
-         transform: scale(1);
-    }
-     40% {
-         transform: scale(1);
-    }
-     50% {
-         transform: scale(1.1);
-    }
-     60% {
-         transform: scale(1);
-    }
-     100% {
-         transform: scale(1);
-    }
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.1);
+  }
+  30% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  60% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

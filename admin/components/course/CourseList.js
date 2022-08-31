@@ -14,7 +14,12 @@ const CourseList = () => {
   return (
     <List>
       <Datagrid>
-        <ReferenceField label="Course" source="id" reference="course" link="show">
+        <ReferenceField
+          label="Course"
+          source="id"
+          reference="course"
+          link="show"
+        >
           <TextField source="name" />
         </ReferenceField>
         <TextField source="slug" />
@@ -23,7 +28,11 @@ const CourseList = () => {
         <ReferenceField label="Author" source="author.id" reference="author">
           <TextField source="name" />
         </ReferenceField>
-        <ReferenceField label="Difficulty" source="difficulty.id" reference="difficulty">
+        <ReferenceField
+          label="Difficulty"
+          source="difficulty.id"
+          reference="difficulty"
+        >
           <TextField source="name" />
         </ReferenceField>
         <DateField source="updatedAt" />

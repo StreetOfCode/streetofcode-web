@@ -1,5 +1,11 @@
 import React from 'react'
-import {Create, SimpleForm, NumberInput, TextInput, useRedirect} from 'react-admin'
+import {
+  Create,
+  SimpleForm,
+  NumberInput,
+  TextInput,
+  useRedirect,
+} from 'react-admin'
 
 const QuizCreate = () => {
   const redirect = useRedirect()
@@ -9,7 +15,10 @@ const QuizCreate = () => {
   }
 
   return (
-    <Create title="Create a quiz" mutationOptions={{onSuccess: onSuccessHandler}} >
+    <Create
+      title="Create a quiz"
+      mutationOptions={{onSuccess: onSuccessHandler}}
+    >
       <SimpleForm>
         <NumberInput disabled source="lectureId" />
         <TextInput required source="title" />

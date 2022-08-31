@@ -5,7 +5,8 @@ type Podcast = {
   podcastUrl: string
 }
 
-export const spotifyImageUrl = 'http://streetofcode.sk/wp-content/uploads/2022/06/listenOnSpotify.png'
+export const spotifyImageUrl =
+  'http://streetofcode.sk/wp-content/uploads/2022/06/listenOnSpotify.png'
 export const spotifyUrl = 'https://open.spotify.com/show/1nBhViArymuLrxuU4XkwRP'
 
 export const podcasts: Podcast[] = [
@@ -37,18 +38,21 @@ export const podcasts: Podcast[] = [
     title: 'Ep 81',
     name: 'Testovanie softvéru s Matejom Kukučkom zo SANAE',
     imageUrl: 'http://streetofcode.sk/wp-content/uploads/2022/03/Ep-81.png',
-    podcastUrl: 'https://streetofcode.sk/podcast/ep-81-testovanie-softveru-rozhovor/',
+    podcastUrl:
+      'https://streetofcode.sk/podcast/ep-81-testovanie-softveru-rozhovor/',
   },
   {
     title: 'Ep 80',
     name: 'O živote ako takom – ako sa máme, čo robíme a prečo to robíme',
-    imageUrl: 'http://streetofcode.sk/wp-content/uploads/2022/03/Artboard-1-copy-2.png',
+    imageUrl:
+      'http://streetofcode.sk/wp-content/uploads/2022/03/Artboard-1-copy-2.png',
     podcastUrl: 'https://streetofcode.sk/podcast/o-zivote-ako-takom/',
   },
   {
     title: 'Ep 79',
     name: 'Prečo sú algoritmy dôležité?',
     imageUrl: 'http://streetofcode.sk/wp-content/uploads/2022/02/Ep.79.png',
-    podcastUrl: 'https://streetofcode.sk/podcast/ep-79-preco-su-algoritmy-dolezite/',
+    podcastUrl:
+      'https://streetofcode.sk/podcast/ep-79-preco-su-algoritmy-dolezite/',
   },
 ]

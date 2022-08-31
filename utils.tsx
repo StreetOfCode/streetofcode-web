@@ -1,13 +1,20 @@
 import React from 'react'
 import {AiOutlinePlayCircle, AiOutlineQuestionCircle} from 'react-icons/ai'
 import {CgNotes} from 'react-icons/cg'
-import {ChapterOverview, CourseOverview, LectureOverview, LectureType} from './types'
+import {
+  ChapterOverview,
+  CourseOverview,
+  LectureOverview,
+  LectureType,
+} from './types'
 
 /***
  * i.e from 287 => 4h 47minút
  */
 export const formatDurationFromMinutes = (minutes: number) => {
-  return `${Math.floor(minutes / 60)}h ${minutes % 60} ${numOfMinutesText(minutes)}`
+  return `${Math.floor(minutes / 60)}h ${minutes % 60} ${numOfMinutesText(
+    minutes,
+  )}`
 }
 
 /***
@@ -27,13 +34,19 @@ export const formatDate = (date: Date) => {
   return new Date(date).toLocaleString('en-GB')
 }
 
-export const getCourseProgressPercent = (lecturesViewed: number, courseLecturesCount: number) => {
+export const getCourseProgressPercent = (
+  lecturesViewed: number,
+  courseLecturesCount: number,
+) => {
   return Math.round((lecturesViewed / courseLecturesCount) * 100)
 }
 
 export const getTakeCourseUrl = (course: CourseOverview) => {
-  const chapterId = course.userProgressMetadata?.nextChapterId ?? course.chapters[0].id
-  const lectureId = course.userProgressMetadata?.nextLectureId ?? course.chapters[0].lectures[0].id
+  const chapterId =
+    course.userProgressMetadata?.nextChapterId ?? course.chapters[0].id
+  const lectureId =
+    course.userProgressMetadata?.nextLectureId ??
+    course.chapters[0].lectures[0].id
   return `/kurzy/${course.slug}/kapitola/${chapterId}/lekcia/${lectureId}`
 }
 
@@ -64,20 +77,23 @@ export const getPrevAndNextUrl = (
   const chapters = courseOverview?.chapters ?? null
   if (chapters == null) return undefined
 
-  let current: { chapter: null | ChapterOverview; lecture: null | LectureOverview } = {
+  let current: {
+    chapter: null | ChapterOverview
+    lecture: null | LectureOverview
+  } = {
     chapter: null,
     lecture: null,
   }
 
   let previous: {
-      chapter: null | ChapterOverview
-      lecture: null | LectureOverview
-    } = {chapter: null, lecture: null}
+    chapter: null | ChapterOverview
+    lecture: null | LectureOverview
+  } = {chapter: null, lecture: null}
 
   let next: {
-      chapter: null | ChapterOverview
-      lecture: null | LectureOverview
-    } = {chapter: null, lecture: null}
+    chapter: null | ChapterOverview
+    lecture: null | LectureOverview
+  } = {chapter: null, lecture: null}
 
   let found = false
   for (const chapter of chapters) {
@@ -100,8 +116,7 @@ export const getPrevAndNextUrl = (
 
   let previousLectureUrl
   if (previous.chapter != null && previous.lecture != null) {
-    previousLectureUrl =
-      `/kurzy/${courseOverview.slug}/kapitola/${previous.chapter?.id}/lekcia/${previous.lecture?.id}`
+    previousLectureUrl = `/kurzy/${courseOverview.slug}/kapitola/${previous.chapter?.id}/lekcia/${previous.lecture?.id}`
   }
 
   let nextLectureUrl
@@ -116,8 +131,8 @@ export const getPrevAndNextUrl = (
   }
 }
 
-
-export const emailRegex =  /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/
+export const emailRegex =
+  /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/
 
 // Creates upper case initialis (max 2 chars)
 // i.e from 'Jakub Jahic' makes 'JJ', from 'Maria Anna Kovacova' makes 'MA'
@@ -129,17 +144,17 @@ export const createAvatarName = (name: string) => {
 export const numOfQuizzesText = (quizCount: number) => {
   let quizCountText = ''
   switch (quizCount) {
-  case 1:
-    quizCountText = 'kvíz'
-    break
-  case 2:
-  case 3:
-  case 4:
-    quizCountText = 'kvízy'
-    break
-  default:
-    quizCountText = 'kvízov'
-    break
+    case 1:
+      quizCountText = 'kvíz'
+      break
+    case 2:
+    case 3:
+    case 4:
+      quizCountText = 'kvízy'
+      break
+    default:
+      quizCountText = 'kvízov'
+      break
   }
   return quizCountText
 }
@@ -147,17 +162,17 @@ export const numOfQuizzesText = (quizCount: number) => {
 export const numOfLecturesText = (lecturesCount: number) => {
   let lecturesCountText = ''
   switch (lecturesCount) {
-  case 1:
-    lecturesCountText = 'lekcia'
-    break
-  case 2:
-  case 3:
-  case 4:
-    lecturesCountText = 'lekcie'
-    break
-  default:
-    lecturesCountText = 'lekcií'
-    break
+    case 1:
+      lecturesCountText = 'lekcia'
+      break
+    case 2:
+    case 3:
+    case 4:
+      lecturesCountText = 'lekcie'
+      break
+    default:
+      lecturesCountText = 'lekcií'
+      break
   }
   return lecturesCountText
 }
@@ -165,17 +180,17 @@ export const numOfLecturesText = (lecturesCount: number) => {
 export const numOfMinutesText = (minutesCount: number) => {
   let minutesCountText = ''
   switch (minutesCount) {
-  case 1:
-    minutesCountText = 'minúta'
-    break
-  case 2:
-  case 3:
-  case 4:
-    minutesCountText = 'minúty'
-    break
-  default:
-    minutesCountText = 'minút'
-    break
+    case 1:
+      minutesCountText = 'minúta'
+      break
+    case 2:
+    case 3:
+    case 4:
+      minutesCountText = 'minúty'
+      break
+    default:
+      minutesCountText = 'minút'
+      break
   }
   return minutesCountText
 }

@@ -1,5 +1,13 @@
 import React from 'react'
-import {Datagrid, DeleteWithConfirmButton, EditButton, List, ShowButton, TextField, NumberField} from 'react-admin'
+import {
+  Datagrid,
+  DeleteWithConfirmButton,
+  EditButton,
+  List,
+  ShowButton,
+  TextField,
+  NumberField,
+} from 'react-admin'
 
 const DifficultyList = () => {
   return (

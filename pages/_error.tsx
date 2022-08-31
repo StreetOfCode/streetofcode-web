@@ -30,12 +30,11 @@ ErrorPage.getInitialProps = async (
 ): Promise<ErrorProps> => {
   const {res, err, asPath} = props
 
-  const errorInitialProps: ErrorProps = (await NextErrorComponent.getInitialProps(
-    {
+  const errorInitialProps: ErrorProps =
+    (await NextErrorComponent.getInitialProps({
       res,
       err,
-    } as NextPageContext,
-  )) as ErrorProps
+    } as NextPageContext)) as ErrorProps
 
   errorInitialProps.isReadyToRender = true
 

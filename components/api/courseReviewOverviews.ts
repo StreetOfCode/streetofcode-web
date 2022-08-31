@@ -19,9 +19,13 @@ const fetchCourseReviewsOverview = async (courseId: number) => {
 }
 
 export const useGetCourseReviewsOverview = (courseId: number) => {
-  return useQuery(queryKeys.get(courseId), () => fetchCourseReviewsOverview(courseId), {
-    cacheTime: 60000,
-    staleTime: 60000,
-    refetchOnWindowFocus: false,
-  })
+  return useQuery(
+    queryKeys.get(courseId),
+    () => fetchCourseReviewsOverview(courseId),
+    {
+      cacheTime: 60000,
+      staleTime: 60000,
+      refetchOnWindowFocus: false,
+    },
+  )
 }

@@ -15,10 +15,7 @@ const AddLectureComment = ({lectureId}: AddLectureCommentProps) => {
     })
   }
 
-  return (
-    <EditableLectureComment onSubmit={addLectureComment} />
-  )
+  return <EditableLectureComment onSubmit={addLectureComment} />
 }
-
 
 export default AddLectureComment

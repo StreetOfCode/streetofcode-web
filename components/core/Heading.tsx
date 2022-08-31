@@ -14,7 +14,6 @@ type Props = {
   maxWidth?: string
 } & HTMLAttributes<HTMLElement>
 
-
 type Variant = 'title' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
 type Color = 'primary' | 'secondary' | 'accent'
 type Align = 'left' | 'center' | 'right'
@@ -44,7 +43,8 @@ const Heading = ({
       noWrap={noWrap}
       maxWidth={maxWidth}
       {...props}
-    >{children}
+    >
+      {children}
     </StyledHeading>
   )
 }
@@ -77,16 +77,16 @@ const styleValues = {
 }
 
 const StyledHeading = styled.span<{
-  variant: Variant,
-  color: Color,
-  align: Align,
+  variant: Variant
+  color: Color
+  align: Align
   inline: boolean
   normalWeight?: boolean
   withAccentUnderline?: boolean
   noWrap?: boolean
   maxWidth?: string
 }>`
-  display: ${(props) => props.inline ? 'inline' : 'block'};
+  display: ${(props) => (props.inline ? 'inline' : 'block')};
 
   color: ${(props) => {
     if (props.color === 'primary') {
@@ -98,37 +98,40 @@ const StyledHeading = styled.span<{
     }
   }};
 
-  font-weight: ${(props) => props.normalWeight ? 'normal' : 'bold'};
+  font-weight: ${(props) => (props.normalWeight ? 'normal' : 'bold')};
   text-align: ${(props) => props.align};
-  border-bottom: ${(props) => props.withAccentUnderline ? `4px solid ${props.theme.accentColor}` : 'unset'};
-  white-space: ${(props) => props.noWrap ? 'nowrap' : 'unset'};
+  border-bottom: ${(props) =>
+    props.withAccentUnderline
+      ? `4px solid ${props.theme.accentColor}`
+      : 'unset'};
+  white-space: ${(props) => (props.noWrap ? 'nowrap' : 'unset')};
 
   font-size: ${(props) => styleValues['default'][props.variant].fontSize};
-  line-height: ${(props) => styleValues['default'][props.variant].lineHeight} ;
+  line-height: ${(props) => styleValues['default'][props.variant].lineHeight};
 
   @media ${device.tablet} {
     font-size: ${(props) => styleValues['tablet'][props.variant].fontSize};
-    line-height: ${(props) => styleValues['tablet'][props.variant].lineHeight} ;
+    line-height: ${(props) => styleValues['tablet'][props.variant].lineHeight};
   }
 
   @media ${device.mobile} {
     font-size: ${(props) => styleValues['mobile'][props.variant].fontSize};
-    line-height: ${(props) => styleValues['mobile'][props.variant].lineHeight} ;
+    line-height: ${(props) => styleValues['mobile'][props.variant].lineHeight};
   }
 
   @media ${device.default} {
     ${(props) => {
-    if (props.maxWidth) {
-      return `
+      if (props.maxWidth) {
+        return `
         max-width: ${props.maxWidth};
         display: block;
         text-overflow: ellipsis;
         white-space: nowrap;
         word-wrap: break-word;
         overflow: hidden;`
-    }
-    return ''
-  }}
+      }
+      return ''
+    }}
   }
 `
 

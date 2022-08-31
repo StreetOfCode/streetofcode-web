@@ -12,41 +12,50 @@ const MY_COURSES_URL = `${API_URL}/course/my-courses`
 export const myCoursesUrl = () => MY_COURSES_URL
 
 const COURSE_OVERVIEW_URL = `${API_URL}/course/overview/`
-export const courseOverviewUrl = (slug: string) => `${COURSE_OVERVIEW_URL}${slug}`
+export const courseOverviewUrl = (slug: string) =>
+  `${COURSE_OVERVIEW_URL}${slug}`
 
 const COURSE_PROGRESS_OVERVIEW_URL = `${API_URL}/progress/overview/`
-export const courseProgressOverviewUrl = (courseId: number) => `${COURSE_PROGRESS_OVERVIEW_URL}${courseId}`
+export const courseProgressOverviewUrl = (courseId: number) =>
+  `${COURSE_PROGRESS_OVERVIEW_URL}${courseId}`
 
 const COURSE_REVIEWS_URL = `${API_URL}/course-review/course/`
-export const courseReviewsUrl = (courseId: number) => `${COURSE_REVIEWS_URL}${courseId}`
+export const courseReviewsUrl = (courseId: number) =>
+  `${COURSE_REVIEWS_URL}${courseId}`
 
 const COURSE_REVIEWS_OVERVIEW_URL = `${API_URL}/course-review/course/`
-export const courseReviewsOverviewUrl = (courseId: number) => `${COURSE_REVIEWS_OVERVIEW_URL}${courseId}/overview`
+export const courseReviewsOverviewUrl = (courseId: number) =>
+  `${COURSE_REVIEWS_OVERVIEW_URL}${courseId}/overview`
 
 const ADD_COURSE_REVIEW_URL = `${API_URL}/course-review`
 export const addCourseReviewUrl = () => `${ADD_COURSE_REVIEW_URL}`
 
 const COURSE_REVIEW_URL = `${API_URL}/course-review`
-export const courseReviewUrl = (reviewId: number) => `${COURSE_REVIEW_URL}/${reviewId}`
+export const courseReviewUrl = (reviewId: number) =>
+  `${COURSE_REVIEW_URL}/${reviewId}`
 
 const GET_LECTURE_URL = `${API_URL}/lecture/`
-export const lectureUrl = (lectureId: number) => `${GET_LECTURE_URL}${lectureId}`
+export const lectureUrl = (lectureId: number) =>
+  `${GET_LECTURE_URL}${lectureId}`
 
 const LECTURE_COMMENTS_URL = `${API_URL}/lecture/`
-export const lectureCommentsUrl = (lectureId: number) => `${LECTURE_COMMENTS_URL}${lectureId}/comment`
+export const lectureCommentsUrl = (lectureId: number) =>
+  `${LECTURE_COMMENTS_URL}${lectureId}/comment`
 
 const LECTURE_COMMENT_URL = `${API_URL}/lecture/`
 export const lectureCommentUrl = (lectureId: number, commentId: number) =>
   `${LECTURE_COMMENT_URL}${lectureId}/comment/${commentId}`
 
 const UPDATE_PROGRESS_LECTURE_URL = `${API_URL}/progress/update/`
-export const updateProgressLectureUrl = (lectureId: number) => `${UPDATE_PROGRESS_LECTURE_URL}${lectureId}`
+export const updateProgressLectureUrl = (lectureId: number) =>
+  `${UPDATE_PROGRESS_LECTURE_URL}${lectureId}`
 
 const RESET_PROGRESS_URL = `${API_URL}/progress/reset`
 export const resetProgressUrl = () => `${RESET_PROGRESS_URL}`
 
 const AUTHOR_OVERVIEW_URL = `${API_URL}/author/`
-export const authorOverviewUrl = (slug: string) => `${AUTHOR_OVERVIEW_URL}${slug}/overview`
+export const authorOverviewUrl = (slug: string) =>
+  `${AUTHOR_OVERVIEW_URL}${slug}/overview`
 
 const AUTHOR_SLUGS_URL = `${API_URL}/author/slug`
 export const authorSlugssUrl = () => AUTHOR_SLUGS_URL
@@ -58,25 +67,25 @@ const NEWSLETTER_URL = `${API_URL}/newsletter`
 export const addToNewsletter = () => `${NEWSLETTER_URL}`
 
 const GET_QUIZES_BY_LECTURE_ID_URL = `${API_URL}/quiz/lecture/`
-export const quizByLectureUrl = (lectureId: number) => `${GET_QUIZES_BY_LECTURE_ID_URL}${lectureId}`
+export const quizByLectureUrl = (lectureId: number) =>
+  `${GET_QUIZES_BY_LECTURE_ID_URL}${lectureId}`
 
 const GET_QUESTIONS_BY_QUIZ_URL = `${API_URL}/quiz/`
-export const questionsByQuizUrl = (quizId: number) => `${GET_QUESTIONS_BY_QUIZ_URL}${quizId}/question`
+export const questionsByQuizUrl = (quizId: number) =>
+  `${GET_QUESTIONS_BY_QUIZ_URL}${quizId}/question`
 
 const ANSWER_QUESTION_URL = `${API_URL}/quiz/question/user-answer/`
 export const answerQuestionUrl = () => `${ANSWER_QUESTION_URL}`
 
 const GET_PREVIOUS_QUESTION_ANSWER_URL = `${API_URL}/quiz/`
-export const previousAnswersByQuizIdUrl = (
-  quizId: number,
-) => `${GET_PREVIOUS_QUESTION_ANSWER_URL}${quizId}/question/user-answer`
+export const previousAnswersByQuizIdUrl = (quizId: number) =>
+  `${GET_PREVIOUS_QUESTION_ANSWER_URL}${quizId}/question/user-answer`
 
 const VOTE_NEXT_COURSE_URL = `${API_URL}/next-course-vote`
 export const voteNextUrl = () => `${VOTE_NEXT_COURSE_URL}`
 
 const USER_URL = `${API_URL}/user`
 export const userUrl = () => `${USER_URL}`
-
 
 export const authFetch = async (url: string) => {
   const params = await createParams('GET')

@@ -1,5 +1,12 @@
 import React from 'react'
-import {Edit, SimpleForm, TextInput, NumberInput, SelectInput, ReferenceInput} from 'react-admin'
+import {
+  Edit,
+  SimpleForm,
+  TextInput,
+  NumberInput,
+  SelectInput,
+  ReferenceInput,
+} from 'react-admin'
 import {MarkdownInput} from '../../custom/MarkdownInput'
 import {CourseStatus} from '../../../types'
 
@@ -32,10 +39,20 @@ const CourseEdit = () => {
     <Edit title="Edit a course" transform={transform}>
       <SimpleForm>
         <NumberInput disabled source="id" />
-        <ReferenceInput required label="Author" source="author.id" reference="author">
+        <ReferenceInput
+          required
+          label="Author"
+          source="author.id"
+          reference="author"
+        >
           <SelectInput optionText="name" />
         </ReferenceInput>
-        <ReferenceInput required label="Difficulty" source="difficulty.id" reference="difficulty">
+        <ReferenceInput
+          required
+          label="Difficulty"
+          source="difficulty.id"
+          reference="difficulty"
+        >
           <SelectInput optionText="name" />
         </ReferenceInput>
         <TextInput required source="name" />

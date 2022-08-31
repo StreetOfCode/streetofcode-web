@@ -14,16 +14,24 @@ type Props = {
 
 const PodcastsSlider = ({className, showPodcastsCount}: Props) => {
   return (
-    <Slider className={className} items={podcasts} showItemsCount={showPodcastsCount} itemLayout={(podcast, i) => {
-      return (
-        <Flex key={i} direction="column" gap="16px">
-          <Heading variant="h3">{podcast.title}</Heading>
-          <ImageWrapper href={podcast.podcastUrl} target="blank">
-            <StyledImage src={podcast.imageUrl} alt={podcast.name} layout="fill" />
-          </ImageWrapper>
-        </Flex>
-      )
-    }}
+    <Slider
+      className={className}
+      items={podcasts}
+      showItemsCount={showPodcastsCount}
+      itemLayout={(podcast, i) => {
+        return (
+          <Flex key={i} direction="column" gap="16px">
+            <Heading variant="h3">{podcast.title}</Heading>
+            <ImageWrapper href={podcast.podcastUrl} target="blank">
+              <StyledImage
+                src={podcast.imageUrl}
+                alt={podcast.name}
+                layout="fill"
+              />
+            </ImageWrapper>
+          </Flex>
+        )
+      }}
     />
   )
 }
@@ -39,7 +47,7 @@ const ImageWrapper = styled.a`
   &:hover {
     transform: scale(1.1);
     transition: 250ms ease-in-out;
-    box-shadow: 1px 8px 20px #D6D6D6;
+    box-shadow: 1px 8px 20px #d6d6d6;
   }
 
   // special one-time only case
@@ -60,6 +68,5 @@ const StyledImage = styled(Image)`
   border-radius: 22px;
   border: ${(props) => `2px solid ${props.theme.accentColor} !important`};
 `
-
 
 export default PodcastsSlider

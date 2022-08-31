@@ -50,15 +50,15 @@ const LectureCommentsContent = ({
   canAddComment: boolean
 }) => {
   return (
-    <WrapperFlex direction="column"  gap="32px">
+    <WrapperFlex direction="column" gap="32px">
       <Flex gap="16px" alignSelf="flex-start">
-        <Heading variant="h3" normalWeight>Komentáre</Heading>
+        <Heading variant="h3" normalWeight>
+          Komentáre
+        </Heading>
         <Text>({lectureComments.length})</Text>
       </Flex>
 
-      {canAddComment &&
-        <AddLectureComment lectureId={lectureId} />
-      }
+      {canAddComment && <AddLectureComment lectureId={lectureId} />}
 
       <Flex direction="column" gap="16px" alignSelf="stretch">
         {lectureComments.map((lectureComment) => (
@@ -84,6 +84,5 @@ const WrapperFlex = styled(Flex)`
     width: 100%;
   }
 `
-
 
 export default LectureComments

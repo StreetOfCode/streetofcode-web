@@ -1,5 +1,12 @@
 import React from 'react'
-import {Edit, NumberInput, SimpleForm, TextInput, useRedirect, BooleanInput} from 'react-admin'
+import {
+  Edit,
+  NumberInput,
+  SimpleForm,
+  TextInput,
+  useRedirect,
+  BooleanInput,
+} from 'react-admin'
 
 const QuizQuestionAnswerEdit = () => {
   const redirect = useRedirect()
@@ -8,13 +15,12 @@ const QuizQuestionAnswerEdit = () => {
     redirect('show', 'quiz/question', data.questionId)
   }
 
-  const transform = (data) => (
-    {
-      id: data.id,
-      questionId: data.questionId,
-      text: data.text,
-      isCorrect: data.isCorrect,
-    })
+  const transform = (data) => ({
+    id: data.id,
+    questionId: data.questionId,
+    text: data.text,
+    isCorrect: data.isCorrect,
+  })
 
   return (
     <Edit

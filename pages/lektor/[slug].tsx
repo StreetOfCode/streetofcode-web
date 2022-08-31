@@ -32,18 +32,25 @@ const Header = ({author}: {author: AuthorOverview}) => {
 
 const AuthorPage: NextPage<Props> = ({authorOverview}: Props) => {
   const {user} = useAuth()
-  const getAuthorOverviewQuery = useGetAuthorOverview(authorOverview.slug, !!user)
+  const getAuthorOverviewQuery = useGetAuthorOverview(
+    authorOverview.slug,
+    !!user,
+  )
 
   if (user) {
-    return (<QueryGuard {...getAuthorOverviewQuery}>
-      {(authorOverview) => {
-        return (<>
-          <Header author={authorOverview} />
-          <NavBar />
-          <AuthorPageContent authorOverview={authorOverview} />
-        </>)
-      }}
-    </QueryGuard>)
+    return (
+      <QueryGuard {...getAuthorOverviewQuery}>
+        {(authorOverview) => {
+          return (
+            <>
+              <Header author={authorOverview} />
+              <NavBar />
+              <AuthorPageContent authorOverview={authorOverview} />
+            </>
+          )
+        }}
+      </QueryGuard>
+    )
   } else {
     return (
       <>
@@ -55,8 +62,11 @@ const AuthorPage: NextPage<Props> = ({authorOverview}: Props) => {
   }
 }
 
-const AuthorPageContent = ({authorOverview}: {authorOverview: AuthorOverview}) => {
-
+const AuthorPageContent = ({
+  authorOverview,
+}: {
+  authorOverview: AuthorOverview
+}) => {
   const router = useRouter()
 
   const handleGoBack = () => {
@@ -65,19 +75,41 @@ const AuthorPageContent = ({authorOverview}: {authorOverview: AuthorOverview}) =
 
   return (
     <PageContentWrapper>
-      <GoBackText size="small" onClick={handleGoBack}>&larr; Späť</GoBackText>
+      <GoBackText size="small" onClick={handleGoBack}>
+        &larr; Späť
+      </GoBackText>
       <Flex direction="column" gap="32px">
         <AboutAuthorFlex alignSelf="flex-start" gap="32px">
-          <Avatar altName={authorOverview.name} src={authorOverview.imageUrl} sizePx={250} />
-          <Flex direction="column" gap="16px" alignSelf="flex-start" alignItems="flex-start">
-            <Heading variant="h2" withAccentUnderline normalWeight>{authorOverview.name}</Heading>
+          <Avatar
+            altName={authorOverview.name}
+            src={authorOverview.imageUrl}
+            sizePx={250}
+          />
+          <Flex
+            direction="column"
+            gap="16px"
+            alignSelf="flex-start"
+            alignItems="flex-start"
+          >
+            <Heading variant="h2" withAccentUnderline normalWeight>
+              {authorOverview.name}
+            </Heading>
             <StyledDescription>{authorOverview.description}</StyledDescription>
-            <Text size="small">Kontaktovať ma môžeš na {authorOverview.email}</Text>
+            <Text size="small">
+              Kontaktovať ma môžeš na {authorOverview.email}
+            </Text>
           </Flex>
         </AboutAuthorFlex>
 
-        <Flex direction="column" gap="32px" alignSelf="flex-start" alignItems="flex-start">
-          <Heading variant="h3" withAccentUnderline normalWeight>{authorOverview.coursesTitle}</Heading>
+        <Flex
+          direction="column"
+          gap="32px"
+          alignSelf="flex-start"
+          alignItems="flex-start"
+        >
+          <Heading variant="h3" withAccentUnderline normalWeight>
+            {authorOverview.coursesTitle}
+          </Heading>
           <Courses courses={authorOverview.courses} />
         </Flex>
       </Flex>
@@ -99,11 +131,13 @@ const AboutAuthorFlex = styled(Flex)`
   }
 `
 
-export const getStaticProps: GetStaticProps = async (context: GetStaticPropsContext) => {
+export const getStaticProps: GetStaticProps = async (
+  context: GetStaticPropsContext,
+) => {
   const slug = context?.params?.slug as string
   const response = await Api.noAuthFetch(Api.authorOverviewUrl(slug))
 
-  const authorOverview = await response.json() as AuthorOverview
+  const authorOverview = (await response.json()) as AuthorOverview
 
   return {
     props: {authorOverview}, // will be passed to the page component as props
@@ -113,7 +147,7 @@ export const getStaticProps: GetStaticProps = async (context: GetStaticPropsCont
 export const getStaticPaths = async () => {
   const response = await Api.noAuthFetch(Api.authorSlugssUrl())
 
-  const ids = await response.json() as string[]
+  const ids = (await response.json()) as string[]
 
   const paths = ids.map((slug) => ({params: {slug}}))
 

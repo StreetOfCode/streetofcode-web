@@ -17,8 +17,8 @@ import {SendFeedbackRequest} from '../types'
 import {emailRegex} from '../utils'
 import {useAuth} from '../AuthUserContext'
 
-
-const SUCCESSFULLY_SENT_EMAIL_TEXT = 'Email bol úspešne poslaný, ďakujeme pekne.'
+const SUCCESSFULLY_SENT_EMAIL_TEXT =
+  'Email bol úspešne poslaný, ďakujeme pekne.'
 const FAILED_SENT_EMAIL_TEXT = 'Email sa nepodarilo odoslať'
 
 const Header = () => {
@@ -29,7 +29,6 @@ const Header = () => {
     </Head>
   )
 }
-
 
 const FeedbackPage: NextPage = () => {
   const {user} = useAuth()
@@ -42,7 +41,6 @@ const FeedbackPage: NextPage = () => {
   const [subject, setSubject] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const {executeRecaptcha} = useGoogleReCaptcha()
-
 
   const onEmailChanged = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
@@ -79,18 +77,24 @@ const FeedbackPage: NextPage = () => {
 
       if (!user && executeRecaptcha) {
         const token = await executeRecaptcha('vote')
-        result = await Api.authPost<SendFeedbackRequest>(Api.sendFeedbackUrl(), {
-          email,
-          subject,
-          emailText: message,
-          recaptchaToken: token,
-        })
+        result = await Api.authPost<SendFeedbackRequest>(
+          Api.sendFeedbackUrl(),
+          {
+            email,
+            subject,
+            emailText: message,
+            recaptchaToken: token,
+          },
+        )
       } else {
-        result = await Api.authPost<SendFeedbackRequest>(Api.sendFeedbackUrl(), {
-          email,
-          subject,
-          emailText: message,
-        })
+        result = await Api.authPost<SendFeedbackRequest>(
+          Api.sendFeedbackUrl(),
+          {
+            email,
+            subject,
+            emailText: message,
+          },
+        )
       }
 
       if (!result.ok) {
@@ -106,7 +110,11 @@ const FeedbackPage: NextPage = () => {
   }
 
   const renderDiscordLink = (text: string) => {
-    return <a href={discordInviteUrl} target="blank">{text}</a>
+    return (
+      <a href={discordInviteUrl} target="blank">
+        {text}
+      </a>
+    )
   }
 
   return (
@@ -114,54 +122,63 @@ const FeedbackPage: NextPage = () => {
       <Header />
       <NavBar />
       <PageContentWrapper>
-        <WrapperFlex justifyContent="space-between" alignItems="flex-start" gap="32px">
+        <WrapperFlex
+          justifyContent="space-between"
+          alignItems="flex-start"
+          gap="32px"
+        >
           <FAQItemsFlex direction="column" gap="32px" alignItems="flex-start">
             <Flex direction="column" gap="8px" alignItems="flex-start">
-              <Heading variant="h3">
-                Kde vám môžem napísať?
-              </Heading>
+              <Heading variant="h3">Kde vám môžem napísať?</Heading>
               <Text>
-                Najviac by sme preferovali, kebyže nám napíšeš na {renderDiscordLink('Discorde')}.
-                Avšak môžeš nám napísať priamo mail na <strong>info@streetofcode.sk</strong>,
-                na Instagrame či FB alebo použi formulár na tejto stránke.
+                Najviac by sme preferovali, kebyže nám napíšeš na{' '}
+                {renderDiscordLink('Discorde')}. Avšak môžeš nám napísať priamo
+                mail na <strong>info@streetofcode.sk</strong>, na Instagrame či
+                FB alebo použi formulár na tejto stránke.
               </Text>
             </Flex>
             <Flex direction="column" gap="8px" alignItems="flex-start">
-              <Heading variant="h3">
-                Ako môžem nahlásiť problém?
-              </Heading>
+              <Heading variant="h3">Ako môžem nahlásiť problém?</Heading>
               <Text>
-                Ak si našiel alebo našla nejakú chybu, či už vizuálneho alebo funkčného charakteru,
-                najlepšie bude, ak nám napíšes podrobnosti do mailu alebo na {renderDiscordLink('Discorde')}.
+                Ak si našiel alebo našla nejakú chybu, či už vizuálneho alebo
+                funkčného charakteru, najlepšie bude, ak nám napíšes podrobnosti
+                do mailu alebo na {renderDiscordLink('Discorde')}.
               </Text>
               <Text>Do správy prosím napíš:</Text>
               <StyledUL>
-                <li>Zariadenie, na ktorom sa chyba prejavila (mobil, tablet, počítač)</li>
+                <li>
+                  Zariadenie, na ktorom sa chyba prejavila (mobil, tablet,
+                  počítač)
+                </li>
                 <li>Popis chyby</li>
                 <li>Pribal prosím ťa aj screenshoty, ak máš</li>
               </StyledUL>
             </Flex>
             <Flex direction="column" gap="8px" alignItems="flex-start">
-              <Heading variant="h3">
-                Chýba vám kurz, ktorý potrebujem
-              </Heading>
+              <Heading variant="h3">Chýba vám kurz, ktorý potrebujem</Heading>
               <Text>
-                Ak si myslíš, že by tu určite nemal chýbať nejaký kurz, tak nám daj vedieť aký
-                a možno ho pripravíme.
+                Ak si myslíš, že by tu určite nemal chýbať nejaký kurz, tak nám
+                daj vedieť aký a možno ho pripravíme.
               </Text>
             </Flex>
             <Flex direction="column" gap="8px" alignItems="flex-start">
-              <Heading variant="h3">
-                Chcem s vami spolupracovať
-              </Heading>
+              <Heading variant="h3">Chcem s vami spolupracovať</Heading>
               <Text>
-                Radi si tvoj nápad na spoluprácu vypočujeme. Napíš nám o čo ide a určite sa ti ozveme.
+                Radi si tvoj nápad na spoluprácu vypočujeme. Napíš nám o čo ide
+                a určite sa ti ozveme.
               </Text>
             </Flex>
           </FAQItemsFlex>
           <FormWrapper>
             <Flex direction="column" alignItems="flex-start" gap="20px">
-              <Heading normalWeight variant="h4" align="left" withAccentUnderline>Tvoj email</Heading>
+              <Heading
+                normalWeight
+                variant="h4"
+                align="left"
+                withAccentUnderline
+              >
+                Tvoj email
+              </Heading>
               <TextField
                 text={email}
                 onTextChanged={onEmailChanged}
@@ -169,7 +186,14 @@ const FeedbackPage: NextPage = () => {
                 errorText={emailError}
                 disabled={isLoading || emailSentSuccess || emailSentError}
               />
-              <Heading normalWeight variant="h4" align="left" withAccentUnderline>Predmet správy</Heading>
+              <Heading
+                normalWeight
+                variant="h4"
+                align="left"
+                withAccentUnderline
+              >
+                Predmet správy
+              </Heading>
               <TextField
                 text={subject}
                 onTextChanged={onSubjectChanged}
@@ -177,7 +201,14 @@ const FeedbackPage: NextPage = () => {
                 maxLength={128}
                 disabled={isLoading || emailSentSuccess || emailSentError}
               />
-              <Heading normalWeight variant="h4" align="left" withAccentUnderline>Správa</Heading>
+              <Heading
+                normalWeight
+                variant="h4"
+                align="left"
+                withAccentUnderline
+              >
+                Správa
+              </Heading>
               <TextField
                 text={message}
                 onTextChanged={onMessageChanged}
@@ -189,7 +220,8 @@ const FeedbackPage: NextPage = () => {
                 variant="accent"
                 disabled={isLoading || emailSentSuccess || emailSentError}
                 onClick={onSubmit}
-              >Odoslať správu
+              >
+                Odoslať správu
               </Button>
               {emailSentSuccess && <Text>{SUCCESSFULLY_SENT_EMAIL_TEXT}</Text>}
               {emailSentError && <Text>{FAILED_SENT_EMAIL_TEXT}</Text>}
@@ -242,6 +274,5 @@ const FormWrapper = styled.div`
     width: 100%;
   }
 `
-
 
 export default FeedbackPage

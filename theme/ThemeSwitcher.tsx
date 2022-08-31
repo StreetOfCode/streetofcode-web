@@ -5,7 +5,6 @@ import {MdOutlineLightMode, MdOutlineDarkMode} from 'react-icons/md'
 import {darkTheme, lightTheme} from './theme'
 import ThemeSwitchingContext from './ThemeSwitchingContext'
 
-
 type Props = {
   className?: string
 } & HTMLAttributes<HTMLElement>
@@ -21,12 +20,16 @@ const ThemeSwitcher = ({className, ...props}: Props) => {
     }
   }
 
-  return (<StyledWrapper className={className} {...props}>
-    <StyledButton
-      iconBefore={theme === lightTheme ? <MdOutlineDarkMode /> : <MdOutlineLightMode />}
-      onClick={switchTheme}
-    />
-  </StyledWrapper>)
+  return (
+    <StyledWrapper className={className} {...props}>
+      <StyledButton
+        iconBefore={
+          theme === lightTheme ? <MdOutlineDarkMode /> : <MdOutlineLightMode />
+        }
+        onClick={switchTheme}
+      />
+    </StyledWrapper>
+  )
 }
 
 const StyledWrapper = styled.div``

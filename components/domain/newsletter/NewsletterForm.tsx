@@ -16,10 +16,14 @@ type Props = {
 
 const NewsletterForm = ({className, user, ...props}: Props) => {
   const {executeRecaptcha} = useGoogleReCaptcha()
-  const [newsletterEmail, setNewsletterEmail] = useState<string>(user?.email || '')
+  const [newsletterEmail, setNewsletterEmail] = useState<string>(
+    user?.email || '',
+  )
   const [nesletterError, setNewsletterError] = useState('')
-  const [newsletterUpdatedSuccess, setNewsletterUpdatedSuccess] = useState<boolean>(false)
-  const [newsletterUpdatedFailure, setNewsletterUpdatedFailure] = useState<boolean>(false)
+  const [newsletterUpdatedSuccess, setNewsletterUpdatedSuccess] =
+    useState<boolean>(false)
+  const [newsletterUpdatedFailure, setNewsletterUpdatedFailure] =
+    useState<boolean>(false)
   const [newsletterLoading, setNewsletterLoading] = useState<boolean>(false)
 
   const onNewsletterChanged = (e: ChangeEvent<HTMLInputElement>) => {
@@ -66,27 +70,36 @@ const NewsletterForm = ({className, user, ...props}: Props) => {
     }
   }
 
-
   return (
     <div className={className} {...props}>
-      {!newsletterUpdatedSuccess && !newsletterUpdatedFailure &&
-      <Flex direction="column" gap="12px">
-        <Text color="primary">Chcem odoberať novinky</Text>
-        <Flex gap="12px">
-          <TextField
-            text={newsletterEmail}
-            onTextChanged={onNewsletterChanged}
-            label="Email"
-            errorText={nesletterError}
-            disabled={newsletterLoading}
-            borderColor="primary"
-            inputBackgroundColor="primary"
-          />
-          <Button iconBefore={<AiOutlineSend />} variant="accent" disabled={newsletterLoading} onClick={onSubmit} />
+      {!newsletterUpdatedSuccess && !newsletterUpdatedFailure && (
+        <Flex direction="column" gap="12px">
+          <Text color="primary">Chcem odoberať novinky</Text>
+          <Flex gap="12px">
+            <TextField
+              text={newsletterEmail}
+              onTextChanged={onNewsletterChanged}
+              label="Email"
+              errorText={nesletterError}
+              disabled={newsletterLoading}
+              borderColor="primary"
+              inputBackgroundColor="primary"
+            />
+            <Button
+              iconBefore={<AiOutlineSend />}
+              variant="accent"
+              disabled={newsletterLoading}
+              onClick={onSubmit}
+            />
+          </Flex>
         </Flex>
-      </Flex>}
-      {newsletterUpdatedSuccess && <Text color="primary">Poslali sme ti potvrdzovací email</Text>}
-      {newsletterUpdatedFailure && <Text color="primary">Niečo sa nepodarilo, skús to prosím neskôr</Text>}
+      )}
+      {newsletterUpdatedSuccess && (
+        <Text color="primary">Poslali sme ti potvrdzovací email</Text>
+      )}
+      {newsletterUpdatedFailure && (
+        <Text color="primary">Niečo sa nepodarilo, skús to prosím neskôr</Text>
+      )}
     </div>
   )
 }

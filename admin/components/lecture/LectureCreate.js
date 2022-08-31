@@ -1,7 +1,12 @@
 import React from 'react'
-import {Create, NumberInput, SimpleForm, TextInput, useRedirect} from 'react-admin'
+import {
+  Create,
+  NumberInput,
+  SimpleForm,
+  TextInput,
+  useRedirect,
+} from 'react-admin'
 import {MarkdownInput} from '../../custom/MarkdownInput'
-
 
 const LectureCreate = () => {
   const redirect = useRedirect()
@@ -11,7 +16,10 @@ const LectureCreate = () => {
   }
 
   return (
-    <Create mutationOptions={{onSuccess: onSuccessHandler}} title="Create a lecture">
+    <Create
+      mutationOptions={{onSuccess: onSuccessHandler}}
+      title="Create a lecture"
+    >
       <SimpleForm>
         <NumberInput disabled source="chapterId" />
         <TextInput source="name" />

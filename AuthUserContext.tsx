@@ -16,22 +16,28 @@ const AuthContext = createContext<UseAuthResult>({
 })
 
 interface UseAuthResult {
-  user: User | null;
-  userId: string | null;
-  isLoading: boolean;
-  logout: () => void;
+  user: User | null
+  userId: string | null
+  isLoading: boolean
+  logout: () => void
 }
 
-export const AuthContextProvider = ({children}: {children: React.ReactNode}) => {
+export const AuthContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode
+}) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [user, setUser] = useState<User | null>(Auth.getUser())
   const router = useRouter()
 
   useEffect(() => {
-    const unsubscribeAuthStateListener = Auth.auth.onAuthStateChanged((user) => {
-      setUser(user)
-      setIsLoading(false)
-    })
+    const unsubscribeAuthStateListener = Auth.auth.onAuthStateChanged(
+      (user) => {
+        setUser(user)
+        setIsLoading(false)
+      },
+    )
 
     return () => {
       unsubscribeAuthStateListener()
@@ -39,15 +45,16 @@ export const AuthContextProvider = ({children}: {children: React.ReactNode}) => 
   }, [])
 
   const logout = async () => {
-    await Auth.signOut()
-      .then(() => router.replace('/'))
+    await Auth.signOut().then(() => router.replace('/'))
   }
 
   const useAuthResult = {user, userId: user?.uid || null, isLoading, logout}
 
-  return (<AuthContext.Provider value={useAuthResult}>
-    {children}
-  </AuthContext.Provider>)
+  return (
+    <AuthContext.Provider value={useAuthResult}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export const useAuth = () => useContext(AuthContext)

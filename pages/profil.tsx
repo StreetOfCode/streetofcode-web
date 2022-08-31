@@ -19,7 +19,6 @@ import PageContentWrapper from '../components/PageContentWrapper'
 import NavBar from '../components/NavBar'
 import {device} from '../theme/device'
 
-
 const ProfilePage: NextPage = () => {
   const getSocUser = useGetUser(true)
   const {user} = useAuth()
@@ -27,7 +26,9 @@ const ProfilePage: NextPage = () => {
 
   if (!user) {
     // this page can be seen only by logged in users
-    router.replace({pathname: `/login/${encodeURIComponent(location.pathname)}`})
+    router.replace({
+      pathname: `/login/${encodeURIComponent(location.pathname)}`,
+    })
   }
 
   return (
@@ -92,7 +93,6 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
     setNameEditing(false)
   }
 
-
   const submitChangedNewsletter = async () => {
     setChangeLoading(true)
     try {
@@ -110,14 +110,22 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
 
   const renderNewsletterSignUp = () => {
     return (
-      <NewsletterFlexWrapper direction="column" gap="16px" alignItems="flex-start">
-        <Heading variant="h3" withAccentUnderline normalWeight>Odber noviniek</Heading>
+      <NewsletterFlexWrapper
+        direction="column"
+        gap="16px"
+        alignItems="flex-start"
+      >
+        <Heading variant="h3" withAccentUnderline normalWeight>
+          Odber noviniek
+        </Heading>
         <Button
           disabled={changeLoading}
           variant="accent"
           onClick={submitChangedNewsletter}
           style={{alignSelf: 'stretch'}}
-        >Prihlásiť sa na odber noviniek</Button>
+        >
+          Prihlásiť sa na odber noviniek
+        </Button>
       </NewsletterFlexWrapper>
     )
   }
@@ -138,8 +146,16 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
             variant="accent"
             style={{flex: 1}}
             onClick={submitChangedName}
-          >Potvrdiť</Button>
-          <Button disabled={changeLoading} style={{flex: 1}} onClick={cancelEditName}>Zrušiť</Button>
+          >
+            Potvrdiť
+          </Button>
+          <Button
+            disabled={changeLoading}
+            style={{flex: 1}}
+            onClick={cancelEditName}
+          >
+            Zrušiť
+          </Button>
         </Flex>
       </Flex>
     )
@@ -147,17 +163,35 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
 
   return (
     <>
-      <GoBackText size="small" onClick={handleGoBack}>&larr; Späť</GoBackText>
+      <GoBackText size="small" onClick={handleGoBack}>
+        &larr; Späť
+      </GoBackText>
       <Flex direction="column" gap="32px" alignItems="flex-start">
-        <ProfileInfoWithNewsletterFlex justifyContent="space-between" alignSelf="stretch" gap="16px">
+        <ProfileInfoWithNewsletterFlex
+          justifyContent="space-between"
+          alignSelf="stretch"
+          gap="16px"
+        >
           <ProfileInfoFlex alignSelf="flex-start" gap="32px">
-            <UserAvatar imageUrl={socUser.imageUrl || ''} name={socUser.name} sizePx={150} />
-            <Flex direction="row" gap="16px" alignSelf="flex-start" alignItems="center">
-              {!nameEditing &&
-              <>
-                <Heading variant="h3" withAccentUnderline normalWeight>{socUser.name}</Heading>
-                <StyledEditIcon onClick={() => setNameEditing(true)} />
-              </>}
+            <UserAvatar
+              imageUrl={socUser.imageUrl || ''}
+              name={socUser.name}
+              sizePx={150}
+            />
+            <Flex
+              direction="row"
+              gap="16px"
+              alignSelf="flex-start"
+              alignItems="center"
+            >
+              {!nameEditing && (
+                <>
+                  <Heading variant="h3" withAccentUnderline normalWeight>
+                    {socUser.name}
+                  </Heading>
+                  <StyledEditIcon onClick={() => setNameEditing(true)} />
+                </>
+              )}
               {nameEditing && renderEditNameTextField()}
             </Flex>
           </ProfileInfoFlex>
@@ -166,11 +200,21 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
         </ProfileInfoWithNewsletterFlex>
 
         <QueryGuard {...getMyCoursesQuery}>
-          {(courses) =>
-            (<Flex direction="column" gap="32px" alignSelf="flex-start" alignItems="flex-start">
-              {courses.length > 0 && <Heading variant="h3" withAccentUnderline normalWeight>Moje kurzy</Heading>}
+          {(courses) => (
+            <Flex
+              direction="column"
+              gap="32px"
+              alignSelf="flex-start"
+              alignItems="flex-start"
+            >
+              {courses.length > 0 && (
+                <Heading variant="h3" withAccentUnderline normalWeight>
+                  Moje kurzy
+                </Heading>
+              )}
               <Courses courses={courses} />
-            </Flex>)}
+            </Flex>
+          )}
         </QueryGuard>
 
         <Button onClick={logout}>Odhlásiť</Button>

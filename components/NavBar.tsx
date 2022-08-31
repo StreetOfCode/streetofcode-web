@@ -20,37 +20,80 @@ const NavBar = () => {
     return (
       <MobileNavbarOptionsFlex gap="24px">
         <ThemeSwitcher />
-        {!mobileNavbarOpen && <OpenMenuIcon onClick={() => setMobileNavbarOpen(!mobileNavbarOpen)} />}
-        {mobileNavbarOpen && <CloseMenuIcon onClick={() => setMobileNavbarOpen(!mobileNavbarOpen)} />}
+        {!mobileNavbarOpen && (
+          <OpenMenuIcon
+            onClick={() => setMobileNavbarOpen(!mobileNavbarOpen)}
+          />
+        )}
+        {mobileNavbarOpen && (
+          <CloseMenuIcon
+            onClick={() => setMobileNavbarOpen(!mobileNavbarOpen)}
+          />
+        )}
       </MobileNavbarOptionsFlex>
     )
   }
 
   return (
-    <WrapperFlex alignSelf="center" justifyContent="space-between" mobileNavbarOpen={mobileNavbarOpen}>
+    <WrapperFlex
+      alignSelf="center"
+      justifyContent="space-between"
+      mobileNavbarOpen={mobileNavbarOpen}
+    >
       <LogoWrapper>
-        <LogoImage layout="fill" alt="Logo" src="/soc_logo.png" onClick={() => router.push('/')} />
+        <LogoImage
+          layout="fill"
+          alt="Logo"
+          src="/soc_logo.png"
+          onClick={() => router.push('/')}
+        />
       </LogoWrapper>
       <MobileNavbarOptions />
       <MenuFlex>
         <MenuItems justifyContent="center" gap={'48px'}>
           <ThemeSwitcher />
-          <NextLink styleIfActive href="/kurzy"><Text uppercase>kurzy</Text></NextLink>
-          <NextLink styleIfActive href="/podcasty"><Text uppercase>podcasty</Text></NextLink>
-          <NextLink styleIfActive href="/clanky"><Text uppercase>články</Text></NextLink>
-          <NextLink styleIfActive href="/o-projekte"><Text uppercase>o projekte</Text></NextLink>
-          <NextLink styleIfActive href="/feedback"><Text uppercase>feedback</Text></NextLink>
+          <NextLink styleIfActive href="/kurzy">
+            <Text uppercase>kurzy</Text>
+          </NextLink>
+          <NextLink styleIfActive href="/podcasty">
+            <Text uppercase>podcasty</Text>
+          </NextLink>
+          <NextLink styleIfActive href="/clanky">
+            <Text uppercase>články</Text>
+          </NextLink>
+          <NextLink styleIfActive href="/o-projekte">
+            <Text uppercase>o projekte</Text>
+          </NextLink>
+          <NextLink styleIfActive href="/feedback">
+            <Text uppercase>feedback</Text>
+          </NextLink>
         </MenuItems>
         <LogInOrOutButton />
       </MenuFlex>
       <MobileMenuFlex open={mobileNavbarOpen}>
         <MenuItems direction="column" alignItems="flex-start" gap={'32px'}>
-          {!user && <NextLink href={`/login/${encodeURIComponent(router.asPath)}`}><Text>Prihlásiť</Text></NextLink>}
-          {user && <NextLink styleIfActive href="/profil"><Text>Moje kurzy a nastavenia</Text></NextLink>}
-          <NextLink styleIfActive href="/podcasty"><Text>Podcasty</Text></NextLink>
-          <NextLink styleIfActive href="/clanky"><Text>Články</Text></NextLink>
-          <NextLink styleIfActive href="/o-projekte"><Text>O projekte</Text></NextLink>
-          <NextLink styleIfActive href="/feedback"><Text>Feedback</Text></NextLink>
+          {!user && (
+            <NextLink href={`/login/${encodeURIComponent(router.asPath)}`}>
+              <Text>Prihlásiť</Text>
+            </NextLink>
+          )}
+          {user && (
+            <NextLink styleIfActive href="/profil">
+              <Text>Moje kurzy a nastavenia</Text>
+            </NextLink>
+          )}
+          <NextLink styleIfActive href="/podcasty">
+            <Text>Podcasty</Text>
+          </NextLink>
+          <NextLink styleIfActive href="/clanky">
+            <Text>Články</Text>
+          </NextLink>
+          <NextLink styleIfActive href="/o-projekte">
+            <Text>O projekte</Text>
+          </NextLink>
+          <NextLink styleIfActive href="/feedback">
+            <Text>Feedback</Text>
+          </NextLink>
           {user && <LogoutText onClick={logout}>Odhlásiť</LogoutText>}
         </MenuItems>
       </MobileMenuFlex>
@@ -65,11 +108,11 @@ const WrapperFlex = styled(Flex)<{mobileNavbarOpen: boolean}>`
   position: relative;
 
   @media ${device.tablet} {
-    background-color: ${(props) => props.mobileNavbarOpen && props.theme.primaryColor};
+    background-color: ${(props) =>
+      props.mobileNavbarOpen && props.theme.primaryColor};
     width: ${(props) => props.mobileNavbarOpen && '100vw'};
   }
 `
-
 
 const MenuItems = styled(Flex)`
   margin-right: 64px;
@@ -86,7 +129,7 @@ const menuIconStyle = css`
   height: 24px;
 
   &:hover {
-    cursor: pointer
+    cursor: pointer;
   }
 
   @media ${device.tablet} {
@@ -120,7 +163,7 @@ const MobileMenuFlex = styled(Flex)<{open: boolean}>`
   display: none;
 
   @media ${device.tablet} {
-    display: ${(props) => props.open ? 'flex' : 'none'};
+    display: ${(props) => (props.open ? 'flex' : 'none')};
     align-items: flex-start;
     position: absolute;
     padding: 24px 32px;
@@ -150,7 +193,8 @@ const LogoutText = styled(Text)`
 `
 
 const LogoImage = styled(Image)`
-  filter: ${(props) => props.theme.type === 'LIGHT' ? 'unset' : 'invert(100%)'};
+  filter: ${(props) =>
+    props.theme.type === 'LIGHT' ? 'unset' : 'invert(100%)'};
 `
 
 export default NavBar

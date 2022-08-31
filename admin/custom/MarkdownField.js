@@ -6,8 +6,5 @@ export const MarkdownField = ({source}) => {
   const record = useRecordContext()
   if (!record) return null
 
-  return (
-    <MarkdownView children={record[source]} />
-  )
-
+  return <MarkdownView children={record[source]} />
 }

@@ -1,5 +1,12 @@
 import React from 'react'
-import {Create, SimpleForm, NumberInput, TextInput, useRedirect, BooleanInput} from 'react-admin'
+import {
+  Create,
+  SimpleForm,
+  NumberInput,
+  TextInput,
+  useRedirect,
+  BooleanInput,
+} from 'react-admin'
 
 const QuizQuestionAnswerCreate = () => {
   const redirect = useRedirect()
@@ -8,13 +15,11 @@ const QuizQuestionAnswerCreate = () => {
     redirect('show', 'quiz/question', data.questionId)
   }
 
-  const transform = (data) => (
-    {
-      questionId: data.quizQuestionId,
-      text: data.text,
-      isCorrect: data.isCorrect,
-    }
-  )
+  const transform = (data) => ({
+    questionId: data.quizQuestionId,
+    text: data.text,
+    isCorrect: data.isCorrect,
+  })
 
   return (
     <Create

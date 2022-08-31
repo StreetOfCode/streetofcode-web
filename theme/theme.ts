@@ -1,11 +1,11 @@
 export type ThemeType = {
-  type: 'LIGHT' | 'DARK',
-  primaryColor: string, // mostly background
-  secondaryColor: string, // mostly text color
-  accentColor: string, // button colors, heading underline colors, icon colors
-  greyColor: string, // helper texts, etc.
-  dangerColor: string, // error texts, i.e in TextField or incorrect quiz question
-  successColor: string, // i.e correct quiz question
+  type: 'LIGHT' | 'DARK'
+  primaryColor: string // mostly background
+  secondaryColor: string // mostly text color
+  accentColor: string // button colors, heading underline colors, icon colors
+  greyColor: string // helper texts, etc.
+  dangerColor: string // error texts, i.e in TextField or incorrect quiz question
+  successColor: string // i.e correct quiz question
 }
 
 export const lightTheme: ThemeType = {
@@ -27,5 +27,3 @@ export const darkTheme: ThemeType = {
   dangerColor: '#CB2041',
   successColor: '#4CBF6B',
 }
-
-

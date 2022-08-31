@@ -26,7 +26,8 @@ const CreateLecture = () => {
         pathname: '/lecture/create',
         search: `?source=${JSON.stringify({chapterId: record.id})}`,
       }}
-    >Create new lecture
+    >
+      Create new lecture
     </Button>
   )
 }
@@ -36,16 +37,30 @@ const ChapterShow = () => {
     <Show>
       <SimpleShowLayout>
         <NumberField source="id" />
-        <ReferenceField label="Course" source="course.id" reference="course" link="show">
+        <ReferenceField
+          label="Course"
+          source="course.id"
+          reference="course"
+          link="show"
+        >
           <TextField source="name" />
         </ReferenceField>
         <TextField source="name" />
         <NumberField source="chapterOrder" />
         <DateField source="createdAt" />
         <DateField source="updatedAt" />
-        <ReferenceManyField label="Lectures" reference="lecture" target="chapterId">
+        <ReferenceManyField
+          label="Lectures"
+          reference="lecture"
+          target="chapterId"
+        >
           <Datagrid>
-            <ReferenceField label="Lecture" source="id" reference="lecture" link="show">
+            <ReferenceField
+              label="Lecture"
+              source="id"
+              reference="lecture"
+              link="show"
+            >
               <TextField source="name" />
             </ReferenceField>
             <NumberField source="lectureOrder" />

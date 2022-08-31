@@ -5,7 +5,6 @@ import {CourseProgressOverview} from '../../types'
 import {queryKeys as courseQueryKeys} from './courses'
 import {queryKeys as courseOverviewQueryKeys} from './courseOverview'
 
-
 const P = 'courseProgress'
 
 export const mutationKeys = {
@@ -47,15 +46,16 @@ const updateProgressLecture = async (lectureId: number) => {
   return (await result.json()) as CourseProgressOverview
 }
 
-
 export const useGetCourseProgressOverview = (courseId: number) => {
   return useQuery(
     queryKeys.get(courseId),
-    () => fetchCourseProgressOverview(courseId), {
+    () => fetchCourseProgressOverview(courseId),
+    {
       cacheTime: 60000,
       staleTime: 60000,
       refetchOnWindowFocus: false,
-    })
+    },
+  )
 }
 
 export const useResetLecture = (courseId: number, courseSlug: string) => {
@@ -70,15 +70,17 @@ export const useResetLecture = (courseId: number, courseSlug: string) => {
           [
             courseQueryKeys.getCourses,
             courseOverviewQueryKeys.get(courseSlug),
-          ].map(
-            (key) => queryClient.invalidateQueries(key),
-          ),
+          ].map((key) => queryClient.invalidateQueries(key)),
         )
       },
-    })
+    },
+  )
 }
 
-export const useUpdateProgressLecture = (courseId: number, courseSlug: string) => {
+export const useUpdateProgressLecture = (
+  courseId: number,
+  courseSlug: string,
+) => {
   return useMutation(
     mutationKeys.updateLecture(),
     (lectureId: number) => updateProgressLecture(lectureId),
@@ -90,10 +92,9 @@ export const useUpdateProgressLecture = (courseId: number, courseSlug: string) =
           [
             courseQueryKeys.getCourses,
             courseOverviewQueryKeys.get(courseSlug),
-          ].map(
-            (key) => queryClient.invalidateQueries(key),
-          ),
+          ].map((key) => queryClient.invalidateQueries(key)),
         )
       },
-    })
+    },
+  )
 }
