@@ -4,6 +4,8 @@ import Image from 'next/image'
 import {device} from '../../theme/device'
 import Slider from '../Slider'
 import {videos} from './videos'
+import Flex from '../core/Flex'
+import Heading from '../core/Heading'
 
 type Props = {
   className?: string
@@ -14,9 +16,12 @@ const VideosSlider = ({className, showVideosCount}: Props) => {
   return (
     <Slider className={className} items={videos} showItemsCount={showVideosCount} itemLayout={(video, i) => {
       return (
-        <ImageWrapper key={i} href={video.youtubeUrl} target="blank">
-          <StyledImage src={video.imageUrl} alt={video.name} layout="fill" />
-        </ImageWrapper>
+        <Flex key={i} direction="column" gap="16px">
+          <Heading variant="h4" maxWidth="430px" align="center">{video.name}</Heading>
+          <ImageWrapper href={video.youtubeUrl} target="blank">
+            <StyledImage src={video.imageUrl} alt={video.name} layout="fill" />
+          </ImageWrapper>
+        </Flex>
       )
     }}
     />

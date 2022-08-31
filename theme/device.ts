@@ -6,4 +6,5 @@
 export const device = {
   mobile: '(max-width: 720px)',
   tablet: '(max-width: 1024px)',
+  default: '(min-width: 1025px)',
 }
