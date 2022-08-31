@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prettier:check": "prettier --check .",
+    "prettier": "prettier --write .",
+    "test": "yarn lint && yarn prettier:check"
   },
   "dependencies": {
     "@emotion/core": "^11.0.0",
