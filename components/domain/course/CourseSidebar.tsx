@@ -11,7 +11,10 @@ import * as Utils from '../../../utils'
 import CircullarProgressWithLabel from '../../CircullarProgressWithLabel'
 import {useRouter} from 'next/router'
 import NextLink from '../../core/NextLink'
-import {useResetLecture, useUpdateProgressLecture} from '../../api/courseProgress'
+import {
+  useResetLecture,
+  useUpdateProgressLecture,
+} from '../../api/courseProgress'
 import CheckBox from '../../core/CheckBox'
 import {device} from '../../../theme/device'
 
@@ -25,7 +28,6 @@ type Props = {
   hasResources?: boolean
 } & HTMLAttributes<HTMLElement>
 
-
 const CourseSidebar = ({
   className,
   courseProgressOverview,
@@ -36,17 +38,21 @@ const CourseSidebar = ({
   hasResources,
   ...props
 }: Props) => {
-
   const router = useRouter()
   const resetLecture = useResetLecture(Number(courseId), courseSlug)
-  const updateProgressLecture = useUpdateProgressLecture(Number(courseId), courseSlug)
+  const updateProgressLecture = useUpdateProgressLecture(
+    Number(courseId),
+    courseSlug,
+  )
 
   useEffect(() => {
     const maybeUpdateProgressLecture = async () => {
       // if lecture is not already viewed
-      if (!courseProgressOverview.chapters
-        .find((chapter) =>
-          chapter.lectures.find((lecture) => lecture.id === Number(lectureId) && lecture.viewed),
+      if (
+        !courseProgressOverview.chapters.find((chapter) =>
+          chapter.lectures.find(
+            (lecture) => lecture.id === Number(lectureId) && lecture.viewed,
+          ),
         )
       ) {
         await updateProgressLecture.mutateAsync(Number(lectureId))
@@ -56,23 +62,36 @@ const CourseSidebar = ({
     maybeUpdateProgressLecture()
   }, [lectureId])
 
-  const getChapterLengthInfo = (chapter: ChapterProgressOverview): React.ReactNode => {
+  const getChapterLengthInfo = (
+    chapter: ChapterProgressOverview,
+  ): React.ReactNode => {
     return (
       <Text>
-        {chapter.lectures.length} {Utils.numOfLecturesText(chapter.lectures.length)}
-        { } | {chapter.chapterDurationMinutes} {Utils.numOfMinutesText(chapter.chapterDurationMinutes)}
+        {chapter.lectures.length}{' '}
+        {Utils.numOfLecturesText(chapter.lectures.length)}
+        {} | {chapter.chapterDurationMinutes}{' '}
+        {Utils.numOfMinutesText(chapter.chapterDurationMinutes)}
       </Text>
     )
   }
 
-  const handleLectureOnClick = (e: React.MouseEvent, chapterId: number, lectureId: number) => {
+  const handleLectureOnClick = (
+    e: React.MouseEvent,
+    chapterId: number,
+    lectureId: number,
+  ) => {
     e.preventDefault()
     e.stopPropagation()
 
-    router.push(`/kurzy/${courseSlug}/kapitola/${chapterId}/lekcia/${lectureId}`)
+    router.push(
+      `/kurzy/${courseSlug}/kapitola/${chapterId}/lekcia/${lectureId}`,
+    )
   }
 
-  const handleLectureCheckboxOnClick = async (checkboxValue: boolean, lectureId: number) => {
+  const handleLectureCheckboxOnClick = async (
+    checkboxValue: boolean,
+    lectureId: number,
+  ) => {
     if (checkboxValue) {
       await updateProgressLecture.mutateAsync(lectureId)
     } else {
@@ -90,15 +109,22 @@ const CourseSidebar = ({
       <Flex direction="column" gap="16px" className={className} {...props}>
         <TopWrapperFlex justifyContent="space-between" alignSelf="stretch">
           <Flex gap="12px" alignSelf="flex-start">
-            <CircullarProgressWithLabel value={progressValuePercent} accentColor />
+            <CircullarProgressWithLabel
+              value={progressValuePercent}
+              accentColor
+            />
             <Text>
-              {courseProgressOverview.lecturesViewed} / {courseProgressOverview.courseLecturesCount}
+              {courseProgressOverview.lecturesViewed} /{' '}
+              {courseProgressOverview.courseLecturesCount}
             </Text>
           </Flex>
 
-          {hasResources &&
+          {hasResources && (
             <NextLink
-              href={{pathname: `/kurzy/${courseSlug}/zdroje`, query: {chapterId, lectureId}}}
+              href={{
+                pathname: `/kurzy/${courseSlug}/zdroje`,
+                query: {chapterId, lectureId},
+              }}
               alignSelf="center"
             >
               <ResourcesWrapper gap="8px">
@@ -106,23 +132,23 @@ const CourseSidebar = ({
                 <ResourcesIcon />
               </ResourcesWrapper>
             </NextLink>
-          }
+          )}
         </TopWrapperFlex>
 
         <AccordionRoot
           type="multiple"
-          defaultValue={
-            courseProgressOverview.chapters
-              .filter((chapter) => chapter.id === Number(chapterId))
-              .map((chapter) => chapter.id.toString())
-          }
+          defaultValue={courseProgressOverview.chapters
+            .filter((chapter) => chapter.id === Number(chapterId))
+            .map((chapter) => chapter.id.toString())}
         >
           {courseProgressOverview.chapters.map((chapter) => (
             <Item value={chapter.id.toString()} key={chapter.id}>
               <Header>
                 <Trigger>
                   <Flex direction="column" alignItems="flex-start" gap="8px">
-                    <Heading variant="h5" normalWeight>{chapter.name}</Heading>
+                    <Heading variant="h5" normalWeight>
+                      {chapter.name}
+                    </Heading>
                     {getChapterLengthInfo(chapter)}
                   </Flex>
                   <AccordionChevron />
@@ -131,24 +157,36 @@ const CourseSidebar = ({
               {chapter.lectures.map((lecture) => (
                 <ItemContent
                   key={lecture.id}
-                  onClick={(e) => handleLectureOnClick(e, chapter.id, lecture.id)}
-                  selected={lectureId !== undefined && lecture.id === Number(lectureId)}
+                  onClick={(e) =>
+                    handleLectureOnClick(e, chapter.id, lecture.id)
+                  }
+                  selected={
+                    lectureId !== undefined && lecture.id === Number(lectureId)
+                  }
                 >
                   <Flex gap="12px" justifyContent="space-between" flex="1">
                     <Flex gap="8px">
                       {Utils.getLectureTypeIcon(lecture.lectureType)}
-                      <Flex direction="column" alignItems="flex-start" gap="2px">
+                      <Flex
+                        direction="column"
+                        alignItems="flex-start"
+                        gap="2px"
+                      >
                         <StyledText>{lecture.name}</StyledText>
-                        {lecture.videoDurationSeconds > 0 &&
+                        {lecture.videoDurationSeconds > 0 && (
                           <StyledText size="small">
-                            {Utils.formatDurationFromSeconds(lecture.videoDurationSeconds)}
+                            {Utils.formatDurationFromSeconds(
+                              lecture.videoDurationSeconds,
+                            )}
                           </StyledText>
-                        }
+                        )}
                       </Flex>
                     </Flex>
                     <CheckBox
                       checked={lecture.viewed}
-                      onToggle={(newValue) => handleLectureCheckboxOnClick(newValue, lecture.id)}
+                      onToggle={(newValue) =>
+                        handleLectureCheckboxOnClick(newValue, lecture.id)
+                      }
                       alignSelf="center"
                     />
                   </Flex>
@@ -222,29 +260,31 @@ const ItemContent = styled(Accordion.Content)<{selected?: boolean}>`
     cursor: pointer;
   }
 
-  [data-state=open] & {
+  [data-state='open'] & {
     animation: ${openContentAnimation} 300ms ease-out forwards;
-  };
+  }
 
-  [data-state=closed] & {
+  [data-state='closed'] & {
     animation: ${closeContentAnimation} 300ms ease-out forwards;
     overflow: hidden;
-  };
+  }
 
   svg {
-    color: ${(props) => props.selected ? props.theme.accentColor : props.theme.secondaryColor};
+    color: ${(props) =>
+      props.selected ? props.theme.accentColor : props.theme.secondaryColor};
   }
 
   ${StyledText} {
-    color: ${(props) => props.selected ? props.theme.accentColor  : props.theme.secondaryColor};
+    color: ${(props) =>
+      props.selected ? props.theme.accentColor : props.theme.secondaryColor};
   }
 `
 
 const AccordionChevron = styled(BiChevronDown)`
   transition: transform 300ms;
-  [data-state=open] & {
+  [data-state='open'] & {
     transform: rotate(180deg);
-  };
+  }
 
   &:hover {
     cursor: pointer;
@@ -261,6 +301,5 @@ const ResourcesWrapper = styled(Flex)`
 const ResourcesIcon = styled(CgNotes)`
   color: ${(props) => props.theme.secondaryColor};
 `
-
 
 export default CourseSidebar

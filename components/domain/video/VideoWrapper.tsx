@@ -9,12 +9,11 @@ type Props = {
 }
 
 const VideoWrapper = ({className, autoplay, vimeoVideoId}: Props) => {
-  return (<StyledVideoWrapper className={className}>
-    <Vimeo
-      video={vimeoVideoId}
-      autoplay={autoplay}
-    />
-  </StyledVideoWrapper>)
+  return (
+    <StyledVideoWrapper className={className}>
+      <Vimeo video={vimeoVideoId} autoplay={autoplay} />
+    </StyledVideoWrapper>
+  )
 }
 
 const StyledVideoWrapper = styled.div`

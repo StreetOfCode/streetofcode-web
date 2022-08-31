@@ -1,5 +1,11 @@
 import React from 'react'
-import {Edit, NumberInput, SimpleForm, TextInput, useRedirect} from 'react-admin'
+import {
+  Edit,
+  NumberInput,
+  SimpleForm,
+  TextInput,
+  useRedirect,
+} from 'react-admin'
 import {MarkdownInput} from '../../custom/MarkdownInput'
 
 const LectureEdit = () => {
@@ -10,7 +16,11 @@ const LectureEdit = () => {
   }
 
   return (
-    <Edit title="Edit a lecture" mutationMode="pessimistic" mutationOptions={{onSuccess: onSuccessHandler}} >
+    <Edit
+      title="Edit a lecture"
+      mutationMode="pessimistic"
+      mutationOptions={{onSuccess: onSuccessHandler}}
+    >
       <SimpleForm>
         <NumberInput disabled source="id" />
         <TextInput source="name" />

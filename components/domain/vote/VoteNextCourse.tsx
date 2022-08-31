@@ -33,10 +33,11 @@ const VoteNextCourse = () => {
     }
   }, [])
 
-
   const handleOnSelected = (nextCourseVoteId: number) => {
     if (selectedNextCourses.includes(nextCourseVoteId)) {
-      setSelectedNextCourses(selectedNextCourses.filter((id) => id !== nextCourseVoteId))
+      setSelectedNextCourses(
+        selectedNextCourses.filter((id) => id !== nextCourseVoteId),
+      )
     } else {
       setSelectedNextCourses(selectedNextCourses.concat([nextCourseVoteId]))
     }
@@ -70,36 +71,44 @@ const VoteNextCourse = () => {
   if (isLoading) return <Loading />
 
   if (voteStatus === 'VOTE_JUST_SUBMITTED') {
-    return (<Text align="center" style={{alignSelf: 'center'}}>
-      Ďakujeme, tvoj hlas bol zarátaný.
-    </Text>)
+    return (
+      <Text align="center" style={{alignSelf: 'center'}}>
+        Ďakujeme, tvoj hlas bol zarátaný.
+      </Text>
+    )
   } else if (voteStatus === 'ALREADY_VOTED') {
     return null
   } else {
     return (
       <QueryGuard {...getVoteNextCourse}>
-        {(nextCourseOptions) => nextCourseOptions.length > 0 ? (
-          <Flex direction="column" gap="22px" alignSelf="center">
-            <Text align="center">
-              Keď chceš, aby sme spravili dáky kurz, tak zahlasuj
-              a možno (ale len možno) budeš vypočutý/á!
-            </Text>
-            <CourseOptionsWrapper>
-              {nextCourseOptions.map((courseOption) =>
-                (<CourseOptionButton
-                  key={courseOption.id}
-                  onClick={() => handleOnSelected(courseOption.id)}
-                  selected={selectedNextCourses.includes(courseOption.id)}
-                >{courseOption.name}</CourseOptionButton>),
-              )}
-            </CourseOptionsWrapper>
-            <Button
-              variant="accent"
-              onClick={handleOnSubmit}
-              disabled={selectedNextCourses.length === 0 || submitLoading}
-            >Odoslať</Button>
-          </Flex>
-        ) : null }
+        {(nextCourseOptions) =>
+          nextCourseOptions.length > 0 ? (
+            <Flex direction="column" gap="22px" alignSelf="center">
+              <Text align="center">
+                Keď chceš, aby sme spravili dáky kurz, tak zahlasuj a možno (ale
+                len možno) budeš vypočutý/á!
+              </Text>
+              <CourseOptionsWrapper>
+                {nextCourseOptions.map((courseOption) => (
+                  <CourseOptionButton
+                    key={courseOption.id}
+                    onClick={() => handleOnSelected(courseOption.id)}
+                    selected={selectedNextCourses.includes(courseOption.id)}
+                  >
+                    {courseOption.name}
+                  </CourseOptionButton>
+                ))}
+              </CourseOptionsWrapper>
+              <Button
+                variant="accent"
+                onClick={handleOnSubmit}
+                disabled={selectedNextCourses.length === 0 || submitLoading}
+              >
+                Odoslať
+              </Button>
+            </Flex>
+          ) : null
+        }
       </QueryGuard>
     )
   }

@@ -12,13 +12,24 @@ type Props = {
   styleIfActive?: boolean // used in NavBar
 } & HTMLAttributes<HTMLElement>
 
-const NextLink = ({className, href, alignSelf, styleIfActive, children, ...props}: Props) => {
+const NextLink = ({
+  className,
+  href,
+  alignSelf,
+  styleIfActive,
+  children,
+  ...props
+}: Props) => {
   const router = useRouter()
   const isActive = router.asPath === href
 
   return (
     <StyledLink href={href} {...props} passHref>
-      <StyledA className={className} alignSelf={alignSelf} active={styleIfActive && isActive}>
+      <StyledA
+        className={className}
+        alignSelf={alignSelf}
+        active={styleIfActive && isActive}
+      >
         {children}
       </StyledA>
     </StyledLink>
@@ -29,7 +40,7 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 `
 
-const StyledA = styled.a<{alignSelf?: AlignItems, active?: boolean}>`
+const StyledA = styled.a<{alignSelf?: AlignItems; active?: boolean}>`
   text-decoration: none;
   color: unset;
   align-self: ${(props) => props.alignSelf};
@@ -37,7 +48,6 @@ const StyledA = styled.a<{alignSelf?: AlignItems, active?: boolean}>`
   span {
     text-decoration: ${(props) => props.active && 'underline'};
   }
-
 `
 
 export default NextLink

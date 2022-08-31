@@ -21,7 +21,6 @@ async function fetchAPI(query: string, variables?: object) {
   return json.data
 }
 
-
 export async function getAllPosts(categoryName: string): Promise<Post[]> {
   const data = await fetchAPI(
     `
@@ -68,8 +67,9 @@ export async function getAllPosts(categoryName: string): Promise<Post[]> {
   return data?.posts?.nodes
 }
 
-
-export async function getAllPostsWithSlug(categoryName: string): Promise<Post[]> {
+export async function getAllPostsWithSlug(
+  categoryName: string,
+): Promise<Post[]> {
   const data = await fetchAPI(`
     {
       posts(first: 1000, where: {categoryName: "${categoryName}"}) {

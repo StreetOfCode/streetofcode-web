@@ -18,7 +18,10 @@ const fetchAuthorOverview = async (slug: string) => {
   return (await response.json()) as AuthorOverview
 }
 
-export const useGetAuthorOverview = (slug: string, enabled?: boolean | undefined) => {
+export const useGetAuthorOverview = (
+  slug: string,
+  enabled?: boolean | undefined,
+) => {
   return useQuery(queryKeys.get(slug), () => fetchAuthorOverview(slug), {
     cacheTime: 60000,
     staleTime: 60000,

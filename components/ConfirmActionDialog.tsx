@@ -30,13 +30,14 @@ const ConfirmActionDialog = ({
   onPrimaryButtonClick: () => void
   onSecondaryButtonClick?: () => void
 }) => {
-
-  const Transition = React.forwardRef((
-    props: TransitionProps & { children?: React.ReactElement },
-    ref: React.Ref<unknown>,
-  ) => {
-    return <Slide direction="up" ref={ref} {...props} />
-  })
+  const Transition = React.forwardRef(
+    (
+      props: TransitionProps & {children?: React.ReactElement},
+      ref: React.Ref<unknown>,
+    ) => {
+      return <Slide direction="up" ref={ref} {...props} />
+    },
+  )
 
   return (
     <StyledDialog
@@ -59,9 +60,7 @@ const ConfirmActionDialog = ({
         )}
       </DialogContentWrapper>
       <DialogActionsWrapper>
-        <Button onClick={onSecondaryButtonClick}>
-          {secondaryButtonText}
-        </Button>
+        <Button onClick={onSecondaryButtonClick}>{secondaryButtonText}</Button>
         <Button onClick={onPrimaryButtonClick} variant="danger">
           {primaryButtonText}
         </Button>

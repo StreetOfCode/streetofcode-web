@@ -9,14 +9,16 @@ import styled from 'styled-components'
 import {useGetQuizQuestionsByQuiz} from '../../../api/quizQuestions'
 import {device} from '../../../../theme/device'
 
-
-const Quiz = ({quiz, lecture}: {quiz: IQuiz, lecture: Lecture}) => {
+const Quiz = ({quiz, lecture}: {quiz: IQuiz; lecture: Lecture}) => {
   const [questionsFinished, setQuestionsFinished] = useState<QuestionId[]>([])
 
   const questionsFinishedRef = useRef(questionsFinished)
   questionsFinishedRef.current = questionsFinished
 
-  const setQuestionFinished = (questionId: QuestionId, isAnsweredCorrectly: boolean) => {
+  const setQuestionFinished = (
+    questionId: QuestionId,
+    isAnsweredCorrectly: boolean,
+  ) => {
     if (questionsFinished.includes(questionId) && !isAnsweredCorrectly) {
       setQuestionsFinished(questionsFinished.filter((x) => x !== questionId))
       return
@@ -36,33 +38,45 @@ const Quiz = ({quiz, lecture}: {quiz: IQuiz, lecture: Lecture}) => {
       <QueryGuard {...quizQuestionsByQuiz}>
         {(quizQuestions) => {
           return (
-            <Flex gap="32px" direction="column" alignSelf="stretch" alignItems="stretch">
+            <Flex
+              gap="32px"
+              direction="column"
+              alignSelf="stretch"
+              alignItems="stretch"
+            >
               <Flex direction="column" gap="24px">
-                { lecture.content && lecture.videoUrl &&
-                  <Heading variant="h2" withAccentUnderline normalWeight align="center" >{ quiz.title }</Heading> }
-                <Heading variant="h4" align="center" normalWeight>{ quiz.subtitle }</Heading>
+                {lecture.content && lecture.videoUrl && (
+                  <Heading
+                    variant="h2"
+                    withAccentUnderline
+                    normalWeight
+                    align="center"
+                  >
+                    {quiz.title}
+                  </Heading>
+                )}
+                <Heading variant="h4" align="center" normalWeight>
+                  {quiz.subtitle}
+                </Heading>
               </Flex>
 
               <Flex direction="column" gap="60px">
-                {
-                  quizQuestions.map((q) => {
-                    return (
-                      <QuizQuestion
-                        key={q.id}
-                        question={q}
-                        questionNumber={quiz.questionIds.length}
-                        onQuestionFinished={(isAnsweredCorrectly: boolean) =>
-                          setQuestionFinished(q.id, isAnsweredCorrectly)}
-                      />
-                    )
-                  })
-                }
+                {quizQuestions.map((q) => {
+                  return (
+                    <QuizQuestion
+                      key={q.id}
+                      question={q}
+                      questionNumber={quiz.questionIds.length}
+                      onQuestionFinished={(isAnsweredCorrectly: boolean) =>
+                        setQuestionFinished(q.id, isAnsweredCorrectly)
+                      }
+                    />
+                  )
+                })}
 
-                {
-                  questionsFinished.length === quiz.questionIds.length &&
+                {questionsFinished.length === quiz.questionIds.length && (
                   <Heading variant="h3">{quiz.finishedMessage}</Heading>
-                }
-
+                )}
               </Flex>
             </Flex>
           )

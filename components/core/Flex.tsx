@@ -4,8 +4,8 @@ import styled from 'styled-components'
 type Props = {
   className?: string
   alignSelf?: AlignItems
-  gap?: string,
-  flex?: string,
+  gap?: string
+  flex?: string
   direction?: Direction
   justifyContent?: JustifyContent
   alignItems?: AlignItems

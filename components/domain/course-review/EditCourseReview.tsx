@@ -10,8 +10,17 @@ type EditCourseReviewProps = {
   onEdited: () => void
 }
 
-const EditCourseReview = ({courseSlug, review, onCancelled, onEdited}: EditCourseReviewProps) => {
-  const editCourseReviewMutation = useEditCourseReview(review.id, review.courseId, courseSlug)
+const EditCourseReview = ({
+  courseSlug,
+  review,
+  onCancelled,
+  onEdited,
+}: EditCourseReviewProps) => {
+  const editCourseReviewMutation = useEditCourseReview(
+    review.id,
+    review.courseId,
+    courseSlug,
+  )
 
   const onEdit = async (rating: number, text: string) => {
     await editCourseReviewMutation.mutateAsync({
@@ -33,6 +42,5 @@ const EditCourseReview = ({courseSlug, review, onCancelled, onEdited}: EditCours
     />
   )
 }
-
 
 export default EditCourseReview

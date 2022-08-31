@@ -24,30 +24,35 @@ const Header = ({course}: {course: CourseOverview}) => {
   )
 }
 
-const TakeCoursePage: NextPage<Props> = ({courseSlug, chapterId, lectureId}: Props) => {
+const TakeCoursePage: NextPage<Props> = ({
+  courseSlug,
+  chapterId,
+  lectureId,
+}: Props) => {
   const getCourseOverview = useGetCourseOverview(courseSlug, true)
   const {user} = useAuth()
   const router = useRouter()
 
   if (!user) {
     // this page can be seen only by logged in users
-    router.replace({pathname: `/login/${encodeURIComponent(location.pathname)}`})
+    router.replace({
+      pathname: `/login/${encodeURIComponent(location.pathname)}`,
+    })
   }
 
   return (
     <QueryGuard {...getCourseOverview}>
-      {(courseOverview) =>
-        (
-          <>
-            <Header course={courseOverview} />
-            <TakeCourse
-              resourcesMode={false}
-              courseOverview={courseOverview}
-              chapterId={chapterId}
-              lectureId={lectureId}
-            />
-          </>)
-      }
+      {(courseOverview) => (
+        <>
+          <Header course={courseOverview} />
+          <TakeCourse
+            resourcesMode={false}
+            courseOverview={courseOverview}
+            chapterId={chapterId}
+            lectureId={lectureId}
+          />
+        </>
+      )}
     </QueryGuard>
   )
 }

@@ -35,7 +35,10 @@ const OnboardingProtectionRoute = ({children}: {children: React.ReactNode}) => {
             return <>{children}</>
           } else {
             // socUser does not exist but user is logged in, it means he has to onboard
-            router.replace({pathname: '/onboarding', query: {from: location.pathname}})
+            router.replace({
+              pathname: '/onboarding',
+              query: {from: location.pathname},
+            })
             return <></>
           }
         }}
@@ -53,34 +56,42 @@ function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter()
 
   if (router.pathname === '/admin') {
-    return (<AuthContextProvider>
-      <RootWrapper>
-        <Component {...pageProps} />
-      </RootWrapper>
-    </AuthContextProvider>)
+    return (
+      <AuthContextProvider>
+        <RootWrapper>
+          <Component {...pageProps} />
+        </RootWrapper>
+      </AuthContextProvider>
+    )
   }
 
   return (
     <Sentry.ErrorBoundary fallback={<ErrorBoundaryFallBack />}>
-      <GoogleReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY || ''}>
+      <GoogleReCaptchaProvider
+        reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY || ''}
+      >
         <ThemeSwitchingContext.Provider value={{theme, setTheme}}>
           <ThemeProvider theme={theme}>
             <AuthContextProvider>
               <RootWrapper>
                 <QueryClientProvider client={queryClient}>
                   <GlobalStyles />
-                  {routesThatDontNeedOnBoardingProtection.includes(router.pathname) &&
+                  {routesThatDontNeedOnBoardingProtection.includes(
+                    router.pathname,
+                  ) && (
                     <>
                       <Component {...pageProps} />
                       <Footer />
                     </>
-                  }
-                  {!routesThatDontNeedOnBoardingProtection.includes(router.pathname) &&
+                  )}
+                  {!routesThatDontNeedOnBoardingProtection.includes(
+                    router.pathname,
+                  ) && (
                     <OnboardingProtectionRoute>
                       <Component {...pageProps} />
                       <Footer />
                     </OnboardingProtectionRoute>
-                  }
+                  )}
                 </QueryClientProvider>
               </RootWrapper>
             </AuthContextProvider>

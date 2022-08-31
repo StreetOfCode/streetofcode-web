@@ -42,7 +42,6 @@ const useEditItemActions = ({
   }
 
   const EditItemActions: FC = (): ReactElement => {
-
     return (
       <Wrapper disabled={disabled || isEditing}>
         <Flex gap="8px">

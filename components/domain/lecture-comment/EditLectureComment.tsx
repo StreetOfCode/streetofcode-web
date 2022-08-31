@@ -10,11 +10,16 @@ type EditLectureCommentProps = {
   onCancelled: () => void
 }
 
-const EditLectureComment = (
-  {lectureId, comment, onCommentEdited, onCancelled}: EditLectureCommentProps,
-) => {
-
-  const editLectureCommentMutation = useEditLectureComment(comment.id, lectureId)
+const EditLectureComment = ({
+  lectureId,
+  comment,
+  onCommentEdited,
+  onCancelled,
+}: EditLectureCommentProps) => {
+  const editLectureCommentMutation = useEditLectureComment(
+    comment.id,
+    lectureId,
+  )
 
   const onEdit = async (commentText: string) => {
     await editLectureCommentMutation.mutateAsync({
@@ -38,6 +43,5 @@ const EditLectureComment = (
     />
   )
 }
-
 
 export default EditLectureComment

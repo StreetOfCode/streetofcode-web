@@ -11,7 +11,13 @@ type Props = {
   totalPages: number
 }
 
-const PaginationWrapper = ({className, initialPage, forcePage, handlePageClick, totalPages}: Props) => {
+const PaginationWrapper = ({
+  className,
+  initialPage,
+  forcePage,
+  handlePageClick,
+  totalPages,
+}: Props) => {
   return (
     <StyledReactPaginage
       className={className}
@@ -20,7 +26,9 @@ const PaginationWrapper = ({className, initialPage, forcePage, handlePageClick, 
       previousLabel="Prechádzajúce"
       initialPage={initialPage}
       forcePage={forcePage}
-      onPageChange={(selectedItem: { selected: number }) => handlePageClick(selectedItem.selected)}
+      onPageChange={(selectedItem: {selected: number}) =>
+        handlePageClick(selectedItem.selected)
+      }
       pageCount={totalPages}
     />
   )

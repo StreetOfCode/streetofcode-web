@@ -8,7 +8,15 @@ type Props = {
   customSize?: string
 } & RatingProps
 
-const Rating = ({className, name, value, readOnly, customSize, precision, ...props}: Props) => {
+const Rating = ({
+  className,
+  name,
+  value,
+  readOnly,
+  customSize,
+  precision,
+  ...props
+}: Props) => {
   return (
     <StyledRating
       className={className}
@@ -28,10 +36,9 @@ const FilledStar = styled(StarIcon)`
 `
 
 const EmptyStar = styled(StarIcon)`
-  color: #DBCDF8 !important;
+  color: #dbcdf8 !important;
 `
 
 const StyledRating = styled(MuiRating)``
-
 
 export default Rating

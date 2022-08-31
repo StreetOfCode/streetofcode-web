@@ -35,7 +35,6 @@ const SinglePostPage: NextPage<Props> = ({post}) => {
   )
 }
 
-
 export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context?.params?.slug as string
 

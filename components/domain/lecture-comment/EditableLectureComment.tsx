@@ -13,9 +13,11 @@ type EditableLectureCommentProps = {
   onSubmit: (text: string) => Promise<void>
 }
 
-const EditableLectureComment = (
-  {initialText, onEditCancelled, onSubmit}: EditableLectureCommentProps,
-) => {
+const EditableLectureComment = ({
+  initialText,
+  onEditCancelled,
+  onSubmit,
+}: EditableLectureCommentProps) => {
   const [text, setText] = useState<string>(initialText || '')
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -50,7 +52,6 @@ const EditableLectureComment = (
         </Flex>
       )}
     </WrapperFlex>
-
   )
 }
 

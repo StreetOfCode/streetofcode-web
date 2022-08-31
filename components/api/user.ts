@@ -44,16 +44,13 @@ const editUser = async (editUser: EditSocUser) => {
   return (await result.json()) as SocUser
 }
 
-
 export const useGetUser = (enabled: boolean | undefined) => {
-  return useQuery(
-    queryKeys.get,
-    () => fetchUser(), {
-      cacheTime: 60000,
-      staleTime: 60000,
-      enabled,
-      refetchOnWindowFocus: false,
-    })
+  return useQuery(queryKeys.get, () => fetchUser(), {
+    cacheTime: 60000,
+    staleTime: 60000,
+    enabled,
+    refetchOnWindowFocus: false,
+  })
 }
 
 export const useAddUser = () => {
@@ -64,7 +61,8 @@ export const useAddUser = () => {
       onSuccess: (data) => {
         queryClient.setQueryData('user', data)
       },
-    })
+    },
+  )
 }
 
 export const useEditUser = () => {
@@ -75,5 +73,6 @@ export const useEditUser = () => {
       onSuccess: (data) => {
         queryClient.setQueryData('user', data)
       },
-    })
+    },
+  )
 }

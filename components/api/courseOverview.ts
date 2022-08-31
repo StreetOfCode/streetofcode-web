@@ -18,7 +18,10 @@ const fetchCourseOverview = async (slug: string) => {
   return (await response.json()) as CourseOverview
 }
 
-export const useGetCourseOverview = (slug: string, enabled: boolean | undefined) => {
+export const useGetCourseOverview = (
+  slug: string,
+  enabled: boolean | undefined,
+) => {
   return useQuery(queryKeys.get(slug), () => fetchCourseOverview(slug), {
     cacheTime: 60000,
     staleTime: 60000,

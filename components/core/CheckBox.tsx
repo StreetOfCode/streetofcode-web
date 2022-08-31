@@ -28,7 +28,6 @@ const CheckBox = ({
   alignSelf,
   ...props
 }: Props) => {
-
   const handleClick = (e: React.MouseEvent) => {
     if (disabled) {
       e.preventDefault()
@@ -49,7 +48,9 @@ const CheckBox = ({
       onClick={(e) => handleClick(e)}
       disabled={disabled}
     >
-      {checked && <CheckedIcon disabled={disabled} size={size} color={checkedColor} />}
+      {checked && (
+        <CheckedIcon disabled={disabled} size={size} color={checkedColor} />
+      )}
       {!checked && <UncheckedIcon disabled={disabled} size={size} />}
       {label && <Label labelColor={labelColor}>{label}</Label>}
     </WrapperFlex>
@@ -57,34 +58,56 @@ const CheckBox = ({
 }
 
 const WrapperFlex = styled(Flex)<{disabled?: boolean}>`
-  ${(props) => !props.disabled ? `
+  ${(props) =>
+    !props.disabled
+      ? `
   &:hover {
     cursor: pointer;
-  }` : ''}
+  }`
+      : ''}
 `
 
-const iconStyle = (props: { disabled?: boolean, size?: string, borderColor?: string, theme: {accentColor: string}}) => `
+const iconStyle = (props: {
+  disabled?: boolean
+  size?: string
+  borderColor?: string
+  theme: {accentColor: string}
+}) => `
   width: ${props.size || '18px'};
   aspect-ratio: 1;
   color: ${props.theme.accentColor};
-  ${!props.disabled ? `
+  ${
+    !props.disabled
+      ? `
   :hover {
     cursor: pointer;
-  }` : ''}
+  }`
+      : ''
+  }
 `
 
-const CheckedIcon = styled(MdCheckBox)<{disabled?: boolean, size?: string, color?: string, borderColor?: string}>`
+const CheckedIcon = styled(MdCheckBox)<{
+  disabled?: boolean
+  size?: string
+  color?: string
+  borderColor?: string
+}>`
   ${(props) => iconStyle(props)}
-  ${(props) => props.color ? `color: ${props.color}` : ''}
+  ${(props) => (props.color ? `color: ${props.color}` : '')}
 `
 
-const UncheckedIcon = styled(MdCheckBoxOutlineBlank)<{disabled?: boolean, size?: string, borderColor?: string}>`
+const UncheckedIcon = styled(MdCheckBoxOutlineBlank)<{
+  disabled?: boolean
+  size?: string
+  borderColor?: string
+}>`
   ${(props) => iconStyle(props)}
 `
 
 const Label = styled(Text)<{labelColor?: string}>`
   display: inline;
-  color: ${(props) => props.labelColor ? props.labelColor : props.theme.secondaryColor};
+  color: ${(props) =>
+    props.labelColor ? props.labelColor : props.theme.secondaryColor};
 `
 
 export default CheckBox

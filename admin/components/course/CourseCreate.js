@@ -1,15 +1,31 @@
 import React from 'react'
-import {Create, SimpleForm, TextInput, SelectInput, ReferenceInput} from 'react-admin'
+import {
+  Create,
+  SimpleForm,
+  TextInput,
+  SelectInput,
+  ReferenceInput,
+} from 'react-admin'
 import {MarkdownInput} from '../../custom/MarkdownInput'
 
 const CourseCreate = () => {
   return (
     <Create title="Create a course">
       <SimpleForm>
-        <ReferenceInput required label="Author" source="authorId" reference="author">
+        <ReferenceInput
+          required
+          label="Author"
+          source="authorId"
+          reference="author"
+        >
           <SelectInput optionText="name" />
         </ReferenceInput>
-        <ReferenceInput required label="Difficulty" source="difficultyId" reference="difficulty">
+        <ReferenceInput
+          required
+          label="Difficulty"
+          source="difficultyId"
+          reference="difficulty"
+        >
           <SelectInput optionText="name" />
         </ReferenceInput>
         <TextInput required source="name" />

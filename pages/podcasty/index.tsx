@@ -5,7 +5,10 @@ import PageContentWrapper from '../../components/PageContentWrapper'
 import {getAllPosts} from '../../wp/api'
 import {Post} from '../../wp/types'
 import NavBar from '../../components/NavBar'
-import {CATEGORY_NAME, PAGINATION_BY} from '../../components/domain/post/podcasty-constants'
+import {
+  CATEGORY_NAME,
+  PAGINATION_BY,
+} from '../../components/domain/post/podcasty-constants'
 import {useRouter} from 'next/router'
 import PaginationWrapper from '../../components/domain/pagination/PaginationWrapper'
 import Flex from '../../components/core/Flex'
@@ -40,11 +43,16 @@ const PodcastsPage: NextPage<Props> = ({posts}) => {
       <NavBar />
       <PageContentWrapper>
         <Flex direction="column" gap="72px" alignItems="flex-start">
-          {firstPagePosts && firstPagePosts.map((post, i) => (
-            <PostPreview key={i} post={post} isPodcast />
-          ))}
+          {firstPagePosts &&
+            firstPagePosts.map((post, i) => (
+              <PostPreview key={i} post={post} isPodcast />
+            ))}
         </Flex>
-        <PaginationWrapper handlePageClick={handlePageClick} totalPages={numberOfPossiblePages} forcePage={0} />
+        <PaginationWrapper
+          handlePageClick={handlePageClick}
+          totalPages={numberOfPossiblePages}
+          forcePage={0}
+        />
       </PageContentWrapper>
     </>
   )

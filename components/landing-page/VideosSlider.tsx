@@ -14,16 +14,26 @@ type Props = {
 
 const VideosSlider = ({className, showVideosCount}: Props) => {
   return (
-    <Slider className={className} items={videos} showItemsCount={showVideosCount} itemLayout={(video, i) => {
-      return (
-        <Flex key={i} direction="column" gap="16px">
-          <Heading variant="h4" maxWidth="430px" align="center">{video.name}</Heading>
-          <ImageWrapper href={video.youtubeUrl} target="blank">
-            <StyledImage src={video.imageUrl} alt={video.name} layout="fill" />
-          </ImageWrapper>
-        </Flex>
-      )
-    }}
+    <Slider
+      className={className}
+      items={videos}
+      showItemsCount={showVideosCount}
+      itemLayout={(video, i) => {
+        return (
+          <Flex key={i} direction="column" gap="16px">
+            <Heading variant="h4" maxWidth="430px" align="center">
+              {video.name}
+            </Heading>
+            <ImageWrapper href={video.youtubeUrl} target="blank">
+              <StyledImage
+                src={video.imageUrl}
+                alt={video.name}
+                layout="fill"
+              />
+            </ImageWrapper>
+          </Flex>
+        )
+      }}
     />
   )
 }
@@ -39,7 +49,7 @@ const ImageWrapper = styled.a`
   &:hover {
     transform: scale(1.1);
     transition: 250ms ease-in-out;
-    box-shadow: 1px 8px 20px #D6D6D6;
+    box-shadow: 1px 8px 20px #d6d6d6;
   }
 
   @media ${device.mobile} {
@@ -57,6 +67,5 @@ const StyledImage = styled(Image)`
   border-radius: 22px;
   border: ${(props) => `2px solid ${props.theme.accentColor} !important`};
 `
-
 
 export default VideosSlider

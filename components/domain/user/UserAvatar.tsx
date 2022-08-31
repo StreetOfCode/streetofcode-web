@@ -15,7 +15,14 @@ type Props = {
 // otherwise create circle shaped initials
 const UserAvatar = ({className, imageUrl, name, sizePx}: Props) => {
   if (imageUrl) {
-    return <Avatar className={className} src={imageUrl} altName={name} sizePx={sizePx} />
+    return (
+      <Avatar
+        className={className}
+        src={imageUrl}
+        altName={name}
+        sizePx={sizePx}
+      />
+    )
   } else {
     return (
       <InitialsAvatar
@@ -23,14 +30,16 @@ const UserAvatar = ({className, imageUrl, name, sizePx}: Props) => {
         alignItems="center"
         justifyContent="center"
         sizePx={sizePx}
-      >{createAvatarName(name)}
-      </InitialsAvatar>)
+      >
+        {createAvatarName(name)}
+      </InitialsAvatar>
+    )
   }
 }
 
 const InitialsAvatar = styled(Flex)<{sizePx: number}>`
   width: ${(props) => `${props.sizePx}px`};
-  height:${(props) => `${props.sizePx}px`};
+  height: ${(props) => `${props.sizePx}px`};
   border-radius: 50%;
   border: 2px solid ${(props) => props.theme.secondaryColor}; // TODO this is probably not working
   margin: 0 auto;

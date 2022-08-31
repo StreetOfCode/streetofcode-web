@@ -1,7 +1,11 @@
 import {useMutation, useQuery} from 'react-query'
 import * as Api from '../../api'
 import queryClient from '../../queryClient'
-import {LectureComment, LectureCommentAddRequest, LectureCommentEditRequest} from '../../types'
+import {
+  LectureComment,
+  LectureCommentAddRequest,
+  LectureCommentEditRequest,
+} from '../../types'
 
 const P = 'lectureComments'
 
@@ -25,7 +29,10 @@ const fetchLectureComments = async (lectureId: number) => {
   return (await response.json()) as LectureComment[]
 }
 
-const addLectureComment = async (lectureId: number, lectureComment: LectureCommentAddRequest) => {
+const addLectureComment = async (
+  lectureId: number,
+  lectureComment: LectureCommentAddRequest,
+) => {
   const result = await Api.authPost<LectureCommentAddRequest>(
     Api.lectureCommentsUrl(lectureId),
     lectureComment,
@@ -44,7 +51,8 @@ const editLectureComment = async (
   lectureCommentEditRequest: LectureCommentEditRequest,
 ) => {
   const result = await Api.authPut<LectureCommentEditRequest>(
-    Api.lectureCommentUrl(lectureId, commentId), lectureCommentEditRequest,
+    Api.lectureCommentUrl(lectureId, commentId),
+    lectureCommentEditRequest,
   )
 
   if (!result.ok) {
@@ -54,10 +62,7 @@ const editLectureComment = async (
   return (await result.json()) as LectureComment
 }
 
-const deleteLectureComment = async (
-  commentId: number,
-  lectureId: number,
-) => {
+const deleteLectureComment = async (commentId: number, lectureId: number) => {
   const result = await Api.authDelete(
     Api.lectureCommentUrl(lectureId, commentId),
   )
@@ -70,27 +75,29 @@ const deleteLectureComment = async (
 export const useGetLectureComments = (lectureId: number) => {
   return useQuery(
     queryKeys.get(lectureId),
-    () => fetchLectureComments(lectureId), {
+    () => fetchLectureComments(lectureId),
+    {
       cacheTime: 60000,
       staleTime: 60000,
       refetchOnWindowFocus: false,
-    })
+    },
+  )
 }
 
 export const useAddLectureComment = (lectureId: number) => {
   return useMutation(
     mutationKeys.add,
-    (addRequest: LectureCommentAddRequest) => addLectureComment(lectureId, addRequest),
+    (addRequest: LectureCommentAddRequest) =>
+      addLectureComment(lectureId, addRequest),
     {
       onSuccess: () =>
         Promise.all(
-          [
-            queryKeys.get(lectureId),
-          ].map(
-            (key) => queryClient.invalidateQueries(key),
+          [queryKeys.get(lectureId)].map((key) =>
+            queryClient.invalidateQueries(key),
           ),
         ),
-    })
+    },
+  )
 }
 
 export const useEditLectureComment = (commentId: number, lectureId: number) => {
@@ -106,17 +113,19 @@ export const useEditLectureComment = (commentId: number, lectureId: number) => {
     {
       onSuccess: () => {
         return Promise.all(
-          [
-            queryKeys.get(lectureId),
-          ].map(
-            (key) => queryClient.invalidateQueries(key),
+          [queryKeys.get(lectureId)].map((key) =>
+            queryClient.invalidateQueries(key),
           ),
-        )},
+        )
+      },
     },
   )
 }
 
-export const useDeleteLectureComment = (commentId: number, lectureId: number) => {
+export const useDeleteLectureComment = (
+  commentId: number,
+  lectureId: number,
+) => {
   return useMutation(
     mutationKeys.delete(commentId),
     () => {
@@ -125,12 +134,11 @@ export const useDeleteLectureComment = (commentId: number, lectureId: number) =>
     {
       onSuccess: () => {
         return Promise.all(
-          [
-            queryKeys.get(lectureId),
-          ].map(
-            (key) => queryClient.invalidateQueries(key),
+          [queryKeys.get(lectureId)].map((key) =>
+            queryClient.invalidateQueries(key),
           ),
-        )},
+        )
+      },
     },
   )
 }

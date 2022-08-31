@@ -9,9 +9,16 @@ import Heading from '../components/core/Heading'
 import Button from '../components/core/Button'
 import NavBar from '../components/NavBar'
 import {spotifyImageUrl, spotifyUrl} from '../components/landing-page/podcasts'
-import {youtubeLightImageUrl, youtubeDarkImageUrl, youtubeUrl} from '../components/landing-page/videos'
+import {
+  youtubeLightImageUrl,
+  youtubeDarkImageUrl,
+  youtubeUrl,
+} from '../components/landing-page/videos'
 import VideosSlider from '../components/landing-page/VideosSlider'
-import {discordImageUrl, discordInviteUrl} from '../components/landing-page/discord'
+import {
+  discordImageUrl,
+  discordInviteUrl,
+} from '../components/landing-page/discord'
 import TypingAnimation from '../theme/animations/TypingAnimation'
 import {CoursesSliderWrapper} from '../components/landing-page/CoursesSlider'
 import * as Api from '../api'
@@ -38,7 +45,8 @@ const Home: NextPage<Props> = ({courses}) => {
   const {theme} = useContext(ThemeSwitchingContext)
   const coursesRef = useRef<null | HTMLDivElement>(null)
 
-  const youtubeImageUrl = theme.type === 'LIGHT' ? youtubeDarkImageUrl : youtubeLightImageUrl
+  const youtubeImageUrl =
+    theme.type === 'LIGHT' ? youtubeDarkImageUrl : youtubeLightImageUrl
 
   const handleVerticalSliderClick = () => {
     if (coursesRef.current) {
@@ -56,17 +64,32 @@ const Home: NextPage<Props> = ({courses}) => {
           <NavBar />
           <Box>
             <HeroSection gap="16px" justifyContent="space-between">
-              <HeroSectionTextFles direction="column" gap="48px" alignItems="flex-start" alignSelf="stretch">
+              <HeroSectionTextFles
+                direction="column"
+                gap="48px"
+                alignItems="flex-start"
+                alignSelf="stretch"
+              >
                 <div>
-                  <Heading variant="title" noWrap>Nauč sa s nami</Heading>
-                  <Heading variant="title" color="accent">programovať</Heading>
+                  <Heading variant="title" noWrap>
+                    Nauč sa s nami
+                  </Heading>
+                  <Heading variant="title" color="accent">
+                    programovať
+                  </Heading>
                 </div>
                 <div>
-                  <Heading variant="h3">Pomôžeme ti na tvojej ceste začínajúceho</Heading>
-                  <Heading variant="h3">programátora či začínajúcej programátorky</Heading>
+                  <Heading variant="h3">
+                    Pomôžeme ti na tvojej ceste začínajúceho
+                  </Heading>
+                  <Heading variant="h3">
+                    programátora či začínajúcej programátorky
+                  </Heading>
                 </div>
                 <NextLink href={'/kurzy'}>
-                  <Button variant="accent" size="very-large" uppercase bold>online kurzy</Button>
+                  <Button variant="accent" size="very-large" uppercase bold>
+                    online kurzy
+                  </Button>
                 </NextLink>
               </HeroSectionTextFles>
               <AnimationWrapper>
@@ -79,7 +102,9 @@ const Home: NextPage<Props> = ({courses}) => {
             <Flex direction="column" gap="48px" alignItems="flex-start">
               <div>
                 <Heading variant="h2">Pozri si naše</Heading>
-                <Heading variant="h1" color="accent">kurzy</Heading>
+                <Heading variant="h1" color="accent">
+                  kurzy
+                </Heading>
               </div>
               <CoursesSlider showCoursesCount={3} courses={courses} />
               <MobileCoursesSlider showCoursesCount={1} courses={courses} />
@@ -90,7 +115,8 @@ const Home: NextPage<Props> = ({courses}) => {
                   align="center"
                   withAccentUnderline
                   size="large"
-                >zobraziť všetky
+                >
+                  zobraziť všetky
                 </AllCoursesText>
               </NextLink>
             </Flex>
@@ -101,16 +127,32 @@ const Home: NextPage<Props> = ({courses}) => {
             <div>
               <Heading variant="h2">Po ceste do školy, do práce alebo</Heading>
               <Heading variant="h2">pri upratovaní si môžeš pustiť náš</Heading>
-              <Heading variant="h1" color="accent">podcast</Heading>
+              <Heading variant="h1" color="accent">
+                podcast
+              </Heading>
             </div>
             <PodcastSliderStyled showPodcastsCount={3} />
             <MobilePodcastSlider showPodcastsCount={1} />
-            <PodcastSocialsFlex justifyContent="center" gap="64px" alignSelf="center">
+            <PodcastSocialsFlex
+              justifyContent="center"
+              gap="64px"
+              alignSelf="center"
+            >
               <a href={spotifyUrl} target="blank">
-                <Image src={spotifyImageUrl} alt="Street of Code podcast" width="280" height="63" />
+                <Image
+                  src={spotifyImageUrl}
+                  alt="Street of Code podcast"
+                  width="280"
+                  height="63"
+                />
               </a>
               <a href={youtubeUrl} target="blank">
-                <Image src={youtubeImageUrl} alt="Street of Code video" width="280" height="63" />
+                <Image
+                  src={youtubeImageUrl}
+                  alt="Street of Code video"
+                  width="280"
+                  height="63"
+                />
               </a>
             </PodcastSocialsFlex>
           </Flex>
@@ -118,14 +160,25 @@ const Home: NextPage<Props> = ({courses}) => {
         <Box>
           <Flex direction="column" gap="48px" alignItems="flex-start">
             <div>
-              <Heading variant="h2">Keď ti popri tom všetkom raste ešte</Heading>
-              <Heading variant="h2">zostane čas, tak si môžeš pozrieť naše</Heading>
-              <Heading variant="h1" color="accent">videá</Heading>
+              <Heading variant="h2">
+                Keď ti popri tom všetkom raste ešte
+              </Heading>
+              <Heading variant="h2">
+                zostane čas, tak si môžeš pozrieť naše
+              </Heading>
+              <Heading variant="h1" color="accent">
+                videá
+              </Heading>
             </div>
             <VideosSliderStyled showVideosCount={2} />
             <MobileVideosSlider showVideosCount={1} />
             <a href={youtubeUrl} target="blank" style={{alignSelf: 'center'}}>
-              <Image src={youtubeImageUrl} alt="Street of Code video" width="280" height="63" />
+              <Image
+                src={youtubeImageUrl}
+                alt="Street of Code video"
+                width="280"
+                height="63"
+              />
             </a>
           </Flex>
         </Box>
@@ -135,7 +188,9 @@ const Home: NextPage<Props> = ({courses}) => {
               <Heading variant="h2">Ak sa na niečom zasekneš</Heading>
               <Heading variant="h2">alebo budeš potrebovať pomoc,</Heading>
               <Heading variant="h2">tak ju možno nájdeš na našom</Heading>
-              <Heading variant="h1" color="accent">Discorde</Heading>
+              <Heading variant="h1" color="accent">
+                Discorde
+              </Heading>
               <a href={discordInviteUrl} target="blank">
                 <DiscordButton variant="accent" size="large">
                   Pridaj sa!
@@ -154,10 +209,19 @@ const Home: NextPage<Props> = ({courses}) => {
         <Box>
           <Flex direction="column" gap="32px" alignItems="flex-start">
             <div>
-              <Heading variant="h2" inline>A kto sme vlastne</Heading>
-              <Heading variant="h1" color="accent" inline> my?</Heading>
+              <Heading variant="h2" inline>
+                A kto sme vlastne
+              </Heading>
+              <Heading variant="h1" color="accent" inline>
+                {' '}
+                my?
+              </Heading>
             </div>
-            <AboutUsContentWrapper gap="32px" justifyContent="space-between" alignItems="flex-start">
+            <AboutUsContentWrapper
+              gap="32px"
+              justifyContent="space-between"
+              alignItems="flex-start"
+            >
               <UsImage>
                 <StyledImage
                   src="http://streetofcode.sk/wp-content/uploads/2022/06/P1200649-scaled.jpg"
@@ -167,16 +231,15 @@ const Home: NextPage<Props> = ({courses}) => {
               </UsImage>
               <Heading variant="h3" normalWeight>
                 Sme dvaja kamaráti, full-time programátori, ktorí sa rozhodli,
-                že by chceli robiť okrem práce aj niečo navyše.
-                Niečo, čo by potenciálne mohlo aj pomôcť iným ľudom.
-                Preto sme sa rozhodli vytvoriť Street of Code.
+                že by chceli robiť okrem práce aj niečo navyše. Niečo, čo by
+                potenciálne mohlo aj pomôcť iným ľudom. Preto sme sa rozhodli
+                vytvoriť Street of Code.
               </Heading>
             </AboutUsContentWrapper>
           </Flex>
         </Box>
       </Wrapper>
     </>
-
   )
 }
 
@@ -186,7 +249,8 @@ const Wrapper = styled.div`
 `
 
 const GradientWrapper = styled.div`
-  background: ${(props) => `linear-gradient(150deg, ${props.theme.accentColor}, ${props.theme.primaryColor} 35%)`};
+  background: ${(props) =>
+    `linear-gradient(150deg, ${props.theme.accentColor}, ${props.theme.primaryColor} 35%)`};
   margin-bottom: 2em;
 `
 
@@ -234,7 +298,7 @@ const MobileCoursesSlider = styled(CoursesSliderWrapper)`
   display: none;
 
   @media ${device.tablet} {
-    display: flex;;
+    display: flex;
   }
 `
 
@@ -248,7 +312,7 @@ const MobilePodcastSlider = styled(PodcastsSlider)`
   display: none;
 
   @media ${device.tablet} {
-    display: flex;;
+    display: flex;
   }
 `
 
@@ -272,7 +336,6 @@ const PodcastSocialsFlex = styled(Flex)`
     gap: 32px;
   }
 `
-
 
 const HeroSection = styled(Flex)`
   padding-top: 3em;
@@ -311,7 +374,7 @@ const VerticalSlider = styled.div`
 
   ::after {
     position: absolute;
-    content: "";
+    content: '';
     display: block;
     width: 18px;
     height: 18px;
@@ -352,7 +415,6 @@ const DiscordImage = styled.div`
   }
 `
 
-
 const UsImage = styled.div`
   position: relative;
   flex-shrink: 0;
@@ -362,7 +424,7 @@ const UsImage = styled.div`
 
   transition: 250ms ease-in-out;
 
-   &:hover {
+  &:hover {
     transform: scale(1.1);
     transition: 250ms ease-in-out;
   }
@@ -394,7 +456,7 @@ const AboutUsContentWrapper = styled(Flex)`
 export const getStaticProps = async () => {
   const response = await Api.noAuthFetch(Api.coursesOverviewUrl())
 
-  const courses = await response.json() as CourseOverview[]
+  const courses = (await response.json()) as CourseOverview[]
 
   return {
     props: {courses}, // will be passed to the page component as props

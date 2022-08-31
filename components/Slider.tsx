@@ -29,18 +29,23 @@ const getInitialWindow = (numberOfItems: number, showItemsCount: number) => {
 }
 
 type Props<T> = {
-  className?: string;
-  items: T[];
-  showItemsCount: number;
-  itemLayout: (item: T, index: number) => React.ReactElement;
-};
+  className?: string
+  items: T[]
+  showItemsCount: number
+  itemLayout: (item: T, index: number) => React.ReactElement
+}
 
 type SliderWindow = {
-  start: number;
-  end: number;
-};
+  start: number
+  end: number
+}
 
-const Slider = <T,>({className, items, itemLayout, showItemsCount}: Props<T>) => {
+const Slider = <T,>({
+  className,
+  items,
+  itemLayout,
+  showItemsCount,
+}: Props<T>) => {
   const [{start, end}, setWindow] = useState<SliderWindow>(
     getInitialWindow(items.length, showItemsCount),
   )
@@ -58,7 +63,12 @@ const Slider = <T,>({className, items, itemLayout, showItemsCount}: Props<T>) =>
   }
 
   return (
-    <WrapperFlex className={className} justifyContent="space-between" gap="32px" alignSelf="stretch">
+    <WrapperFlex
+      className={className}
+      justifyContent="space-between"
+      gap="32px"
+      alignSelf="stretch"
+    >
       <IconLeft onClick={handleLeftIconClick} disabled={start === 0} />
       {items.slice(start, end + 1).map((item, i) => itemLayout(item, i))}
       <IconRight
@@ -75,7 +85,7 @@ const WrapperFlex = styled(Flex)`
   }
 `
 
-const iconStyle = css<{ disabled: boolean }>`
+const iconStyle = css<{disabled: boolean}>`
   width: 40px;
   height: 40px;
   color: ${(props) => props.theme.accentColor};
@@ -92,11 +102,11 @@ const iconStyle = css<{ disabled: boolean }>`
   }
 `
 
-const IconLeft = styled(FaChevronLeft)<{ disabled: boolean }>`
+const IconLeft = styled(FaChevronLeft)<{disabled: boolean}>`
   ${iconStyle}
 `
 
-const IconRight = styled(FaChevronRight)<{ disabled: boolean }>`
+const IconRight = styled(FaChevronRight)<{disabled: boolean}>`
   ${iconStyle}
 `
 

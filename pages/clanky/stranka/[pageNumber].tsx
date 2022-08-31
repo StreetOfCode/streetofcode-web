@@ -5,7 +5,10 @@ import PageContentWrapper from '../../../components/PageContentWrapper'
 import {getAllPosts} from '../../../wp/api'
 import {Post} from '../../../wp/types'
 import NavBar from '../../../components/NavBar'
-import {CATEGORY_NAME, PAGINATION_BY} from '../../../components/domain/post/clanky-constants'
+import {
+  CATEGORY_NAME,
+  PAGINATION_BY,
+} from '../../../components/domain/post/clanky-constants'
 import {useRouter} from 'next/router'
 import PaginationWrapper from '../../../components/domain/pagination/PaginationWrapper'
 import PostPreview from '../../../components/domain/post/PostPreview'
@@ -26,7 +29,11 @@ const Header = () => {
   )
 }
 
-const PaginatedPostsPage: NextPage<Props> = ({posts, currentPage, totalPages}) => {
+const PaginatedPostsPage: NextPage<Props> = ({
+  posts,
+  currentPage,
+  totalPages,
+}) => {
   const router = useRouter()
 
   const handlePageClick = (pageNumber: number) => {
@@ -43,16 +50,17 @@ const PaginatedPostsPage: NextPage<Props> = ({posts, currentPage, totalPages}) =
       <NavBar />
       <PageContentWrapper>
         <Flex direction="column" gap="72px" alignItems="flex-start">
-          {posts && posts.map((post, i) => (
-            <PostPreview key={i} post={post} />
-          ))}
+          {posts && posts.map((post, i) => <PostPreview key={i} post={post} />)}
         </Flex>
-        <PaginationWrapper forcePage={currentPage - 1} handlePageClick={handlePageClick} totalPages={totalPages} />
+        <PaginationWrapper
+          forcePage={currentPage - 1}
+          handlePageClick={handlePageClick}
+          totalPages={totalPages}
+        />
       </PageContentWrapper>
     </>
   )
 }
-
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const pageNumber = context?.params?.pageNumber as string
@@ -62,7 +70,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const totalPages = Math.ceil(posts.length / PAGINATION_BY)
 
   const currentPageindexStart = (Number(pageNumber) - 1) * PAGINATION_BY
-  const postsInPage = posts.slice(currentPageindexStart, currentPageindexStart + PAGINATION_BY)
+  const postsInPage = posts.slice(
+    currentPageindexStart,
+    currentPageindexStart + PAGINATION_BY,
+  )
 
   return {
     props: {posts: postsInPage, totalPages, currentPage: Number(pageNumber)},
@@ -76,13 +87,14 @@ export const getStaticPaths = async () => {
   const totalPages = Math.ceil(allPosts.length / PAGINATION_BY)
 
   const possiblePaths = []
-  for (let i = 1; i < totalPages; i++) { // start from the second page
+  for (let i = 1; i < totalPages; i++) {
+    // start from the second page
     possiblePaths.push(i + 1)
   }
 
-  const paths = possiblePaths.map(
-    (pageNumber) => ({params: {pageNumber: pageNumber.toString()}}),
-  )
+  const paths = possiblePaths.map((pageNumber) => ({
+    params: {pageNumber: pageNumber.toString()},
+  }))
 
   return {
     paths,

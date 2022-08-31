@@ -18,11 +18,11 @@ const LectureDetail = ({lectureId}: Props) => {
     <QueryGuard {...getLectureQuery}>
       {(lecture) => {
         return (
-          <Flex direction="column"  gap="32px">
-            {lecture.videoUrl && <VideoWrapper vimeoVideoId={lecture.videoUrl} autoplay />}
-            {lecture.content && (
-              <MarkdownView children={lecture.content} />
+          <Flex direction="column" gap="32px">
+            {lecture.videoUrl && (
+              <VideoWrapper vimeoVideoId={lecture.videoUrl} autoplay />
             )}
+            {lecture.content && <MarkdownView children={lecture.content} />}
             <LectureQuiz lecture={lecture} />
             <LectureComments lectureId={lecture.id} />
           </Flex>

@@ -2,12 +2,11 @@ import React, {useState, HTMLAttributes, useEffect} from 'react'
 import styled from 'styled-components'
 import Flex from './Flex'
 
-
 type Props = {
-  children: React.ReactNode[],
-  onRadioClick: (i: number) => void,
-  selected?: number,
-  applyColor?: (i: number) => string | undefined,
+  children: React.ReactNode[]
+  onRadioClick: (i: number) => void
+  selected?: number
+  applyColor?: (i: number) => string | undefined
   disabled?: boolean
 } & HTMLAttributes<HTMLElement>
 
@@ -18,7 +17,8 @@ function RadioGroup({
   applyColor,
   disabled,
 }: Props) {
-  const initialSelected = (selected === undefined || selected === -1) ? null : selected
+  const initialSelected =
+    selected === undefined || selected === -1 ? null : selected
   const [selectedId, setSelectedId] = useState<number | null>(null)
 
   useEffect(() => {
@@ -27,44 +27,40 @@ function RadioGroup({
 
   return (
     <Flex alignItems="stretch" alignSelf="stretch" direction="column" gap="8px">
-      {
-        children.map((childComponent: React.ReactNode, i: number) => {
-          const isSelected = selectedId === i
+      {children.map((childComponent: React.ReactNode, i: number) => {
+        const isSelected = selectedId === i
 
+        return (
+          <RadioContainer
+            isChecked={isSelected}
+            color={applyColor !== undefined ? applyColor(i) : undefined}
+            key={i}
+            disabled={disabled}
+            onClick={() => {
+              if (disabled) {
+                return
+              }
 
-          return (
-            <RadioContainer
-              isChecked={isSelected}
-              color={applyColor !== undefined ? applyColor(i) : undefined}
-              key={i}
-              disabled={disabled}
-              onClick={() => {
-                if (disabled) {
-                  return
-                }
-
-                setSelectedId(selectedId === i ? null : i)
-                onRadioClick(i)
-              }}
-            >
-              <Radio isChecked={isSelected} />
-              {childComponent}
-            </RadioContainer>
-          )
-        })
-
-      }
+              setSelectedId(selectedId === i ? null : i)
+              onRadioClick(i)
+            }}
+          >
+            <Radio isChecked={isSelected} />
+            {childComponent}
+          </RadioContainer>
+        )
+      })}
     </Flex>
   )
 }
 
 const RadioContainer = styled.div<{
   isChecked: boolean
-  color?: string,
+  color?: string
   disabled?: boolean
 }>`
   display: flex;
-  ${(props) => !props.disabled ? 'cursor: pointer;' : ''}
+  ${(props) => (!props.disabled ? 'cursor: pointer;' : '')}
   gap: 12px;
   align-items: center;
   padding: 12px;
@@ -79,11 +75,15 @@ const RadioContainer = styled.div<{
       return `background-color: ${props.theme.accentColor};
               color: ${props.theme.primaryColor};
               border: 1px solid ${props.theme.accentColor};`
-    }  else {
+    } else {
       return `
-              ${!props.disabled ? `:hover {
+              ${
+                !props.disabled
+                  ? `:hover {
                 background-color: ${props.theme.secondaryAccentColor};
-              }` : ''}
+              }`
+                  : ''
+              }
               color: ${props.theme.secondaryColor};
               border: 1px solid ${props.theme.accentColor};
               `
@@ -94,9 +94,12 @@ const RadioContainer = styled.div<{
 const Radio = styled.span<{
   isChecked: boolean
 }>`
-  border: 1px solid ${(props) => {
-    return props.isChecked ? props.theme.primaryColor : props.theme.accentColor
-  }};
+  border: 1px solid
+    ${(props) => {
+      return props.isChecked
+        ? props.theme.primaryColor
+        : props.theme.accentColor
+    }};
 
   width: 20px;
   aspect-ratio: 1;

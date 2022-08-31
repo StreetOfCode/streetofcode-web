@@ -18,13 +18,18 @@ import {device} from '../theme/device'
 const TOTAL_STEPS = 3
 
 type ConfirmNameProps = {
-  currentStep: number,
-  displayName: string,
-  imageUrl: string | null,
+  currentStep: number
+  displayName: string
+  imageUrl: string | null
   onStepForward: (name: string) => void
 }
 
-const ConfirmName = ({currentStep, displayName, imageUrl, onStepForward}: ConfirmNameProps) => {
+const ConfirmName = ({
+  currentStep,
+  displayName,
+  imageUrl,
+  onStepForward,
+}: ConfirmNameProps) => {
   const [name, setName] = useState(displayName || '')
   const [nameError, setNameError] = useState('')
   const onNameChanged = (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,29 +49,41 @@ const ConfirmName = ({currentStep, displayName, imageUrl, onStepForward}: Confir
     <PageContent>
       <UserAvatar imageUrl={imageUrl || ''} name={name} sizePx={150} />
       <Flex direction="column" alignItems="flex-start" gap="20px">
-        <Heading normalWeight variant="h3" align="left" withAccentUnderline>Meno</Heading>
+        <Heading normalWeight variant="h3" align="left" withAccentUnderline>
+          Meno
+        </Heading>
         <TextField
           text={name}
           onTextChanged={onNameChanged}
           label="Meno"
           errorText={nameError}
         />
-        <Button variant="accent" onClick={onSubmit}>Pokračovať</Button>
+        <Button variant="accent" onClick={onSubmit}>
+          Pokračovať
+        </Button>
       </Flex>
-      <Text weight="bold" align="right">{currentStep + 1}/{TOTAL_STEPS}</Text>
+      <Text weight="bold" align="right">
+        {currentStep + 1}/{TOTAL_STEPS}
+      </Text>
     </PageContent>
   )
 }
 
 type NewsletterProps = {
-  currentStep: number,
+  currentStep: number
   email: string
   receiveNewsletter: boolean
   onStepForward: (newsletter: boolean) => void
   onStepBack: () => void
 }
 
-const Newsletter = ({currentStep, email, receiveNewsletter, onStepForward, onStepBack}: NewsletterProps) => {
+const Newsletter = ({
+  currentStep,
+  email,
+  receiveNewsletter,
+  onStepForward,
+  onStepBack,
+}: NewsletterProps) => {
   const [newsletter, setNewsletter] = useState(receiveNewsletter)
 
   const onSubmit = () => {
@@ -76,20 +93,29 @@ const Newsletter = ({currentStep, email, receiveNewsletter, onStepForward, onSte
   return (
     <PageContent>
       <Flex direction="column" alignItems="flex-start" gap="20px">
-        <Heading normalWeight variant="h3" withAccentUnderline noWrap>Prihlásenie na odber noviniek</Heading>
-        <Text>Prihlás sa na odber našich noviniek a medzi prvými sa dozvieš o nových kurzoch, videách,
-          podcastoch a všeličom ďalšom, čo podnikneme. Neboj sa, nebudeme ťa spamovať a občas ta potešíme aj nejakou
-          tou programátorskou radou.</Text>
+        <Heading normalWeight variant="h3" withAccentUnderline noWrap>
+          Prihlásenie na odber noviniek
+        </Heading>
+        <Text>
+          Prihlás sa na odber našich noviniek a medzi prvými sa dozvieš o nových
+          kurzoch, videách, podcastoch a všeličom ďalšom, čo podnikneme. Neboj
+          sa, nebudeme ťa spamovať a občas ta potešíme aj nejakou tou
+          programátorskou radou.
+        </Text>
         <CheckBox
           checked={newsletter}
           onToggle={(newValue) => setNewsletter(newValue)}
           label={`Poslať potvrdzujúci email (${email})`}
           size={'22px'}
         />
-        <Button variant="accent" onClick={onSubmit}>Pokračovať</Button>
+        <Button variant="accent" onClick={onSubmit}>
+          Pokračovať
+        </Button>
         <Flex justifyContent="space-between" alignSelf="stretch">
           <BackButton onClick={onStepBack}>Späť</BackButton>
-          <Text weight="bold" align="right">{currentStep + 1}/{TOTAL_STEPS}</Text>
+          <Text weight="bold" align="right">
+            {currentStep + 1}/{TOTAL_STEPS}
+          </Text>
         </Flex>
       </Flex>
     </PageContent>
@@ -97,8 +123,8 @@ const Newsletter = ({currentStep, email, receiveNewsletter, onStepForward, onSte
 }
 
 type DiscordProps = {
-  currentStep: number,
-  email: string,
+  currentStep: number
+  email: string
   onStepForward: (invitation: boolean) => void
   onStepBack: () => void
   disableButtons?: boolean
@@ -128,26 +154,33 @@ const DiscordServer = ({
   return (
     <PageContent>
       <Flex direction="column" alignItems="flex-start" gap="20px">
-        <Heading normalWeight variant="h3" withAccentUnderline noWrap>Discord server</Heading>
-        <Text>Ak sa učíš programovať, tak možno ta bude zaujímať aj náš Discord server,
-          kde sa vieš na všeličo opýtať,
-          prípadne vieš iba sledovať, čo sa pýtajú ostatní a niečo sa priučiť.</Text>
+        <Heading normalWeight variant="h3" withAccentUnderline noWrap>
+          Discord server
+        </Heading>
+        <Text>
+          Ak sa učíš programovať, tak možno ta bude zaujímať aj náš Discord
+          server, kde sa vieš na všeličo opýtať, prípadne vieš iba sledovať, čo
+          sa pýtajú ostatní a niečo sa priučiť.
+        </Text>
         <CheckBox
           checked={sendDiscord}
           onToggle={(newValue) => setSendDiscord(newValue)}
           label={`Chcem dostať pozvánku (${email})`}
           size={'22px'}
         />
-        <Button disabled={disableButtons} variant="accent" onClick={onSubmit}>Dokončiť</Button>
+        <Button disabled={disableButtons} variant="accent" onClick={onSubmit}>
+          Dokončiť
+        </Button>
         <Flex justifyContent="space-between" alignSelf="stretch">
           <BackButton onClick={handleOnStepBack}>Späť</BackButton>
-          <Text weight="bold" align="right">{currentStep + 1}/{TOTAL_STEPS}</Text>
+          <Text weight="bold" align="right">
+            {currentStep + 1}/{TOTAL_STEPS}
+          </Text>
         </Flex>
       </Flex>
     </PageContent>
   )
 }
-
 
 const OnboardingPage: NextPage = () => {
   const {user, isLoading} = useAuth()
@@ -182,7 +215,7 @@ const OnboardingPage: NextPage = () => {
       setLoading(false)
     } finally {
       if (router.query && router.query.from) {
-        router.replace((router.query.from) as string)
+        router.replace(router.query.from as string)
       } else {
         router.replace('/')
       }
@@ -195,7 +228,9 @@ const OnboardingPage: NextPage = () => {
         <LogoWrapper>
           <LogoImage layout="fill" alt="Logo" src="/soc_logo.png" />
         </LogoWrapper>
-        <Heading variant="h3" normalWeight withAccentUnderline>Onboarding</Heading>
+        <Heading variant="h3" normalWeight withAccentUnderline>
+          Onboarding
+        </Heading>
         <LogoWrapper style={{visibility: 'hidden'}} />
       </NavBarWrapper>
       <WrapperFlex
@@ -206,35 +241,40 @@ const OnboardingPage: NextPage = () => {
         alignItems="center"
         alignContent="center"
       >
-        {currentStep === 0 && <ConfirmName
-          currentStep={currentStep}
-          displayName={name || ''}
-          imageUrl={user.photoURL}
-          onStepForward={(name) => {
-            setName(name)
-            setCurrentStep(currentStep + 1)
-          }}
-        />}
-        {currentStep === 1 && <Newsletter
-          currentStep={currentStep}
-          email={email}
-          receiveNewsletter={receiveNewsletter}
-          onStepBack={() => setCurrentStep(currentStep - 1)}
-          onStepForward={(receiveNewsletter) => {
-            setReceiveNewsletter(receiveNewsletter)
-            setCurrentStep(currentStep + 1)
-          }}
-
-        />}
-        {currentStep === 2 && <DiscordServer
-          currentStep={currentStep}
-          email={email}
-          onStepBack={() => setCurrentStep(currentStep - 1)}
-          onStepForward={async (sendInvitation) => {
-            await handleFinishOnboarding(sendInvitation)
-          }}
-          disableButtons={loading}
-        />}
+        {currentStep === 0 && (
+          <ConfirmName
+            currentStep={currentStep}
+            displayName={name || ''}
+            imageUrl={user.photoURL}
+            onStepForward={(name) => {
+              setName(name)
+              setCurrentStep(currentStep + 1)
+            }}
+          />
+        )}
+        {currentStep === 1 && (
+          <Newsletter
+            currentStep={currentStep}
+            email={email}
+            receiveNewsletter={receiveNewsletter}
+            onStepBack={() => setCurrentStep(currentStep - 1)}
+            onStepForward={(receiveNewsletter) => {
+              setReceiveNewsletter(receiveNewsletter)
+              setCurrentStep(currentStep + 1)
+            }}
+          />
+        )}
+        {currentStep === 2 && (
+          <DiscordServer
+            currentStep={currentStep}
+            email={email}
+            onStepBack={() => setCurrentStep(currentStep - 1)}
+            onStepForward={async (sendInvitation) => {
+              await handleFinishOnboarding(sendInvitation)
+            }}
+            disableButtons={loading}
+          />
+        )}
       </WrapperFlex>
     </Wrapper>
   )
@@ -283,5 +323,6 @@ const BackButton = styled(Text)`
 `
 
 const LogoImage = styled(Image)`
-  filter: ${(props) => props.theme.type === 'LIGHT' ? 'unset' : 'invert(100%)'};
+  filter: ${(props) =>
+    props.theme.type === 'LIGHT' ? 'unset' : 'invert(100%)'};
 `

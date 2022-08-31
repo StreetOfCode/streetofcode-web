@@ -6,7 +6,6 @@ import Box from '@mui/material/Box'
 import Text from '../components/core/Text'
 import styled from 'styled-components'
 
-
 type Props = {
   value: number
   // width and height (i.e: 50px)
@@ -14,7 +13,6 @@ type Props = {
   withoutTextInMiddle?: boolean
   accentColor?: boolean
 } & CircularProgressProps
-
 
 const CircullarProgressWithLabel = ({
   value,
@@ -24,7 +22,11 @@ const CircullarProgressWithLabel = ({
   ...props
 }: Props) => {
   return (
-    <BoxWrapper sx={{position: 'relative', display: 'inline-flex'}} size={size || '50px'} accentColor={accentColor}>
+    <BoxWrapper
+      sx={{position: 'relative', display: 'inline-flex'}}
+      size={size || '50px'}
+      accentColor={accentColor}
+    >
       <StyledCircullarProgress variant="determinate" value={value} {...props} />
       <Box
         sx={{
@@ -38,13 +40,15 @@ const CircullarProgressWithLabel = ({
           justifyContent: 'center',
         }}
       >
-        {!withoutTextInMiddle && <Text size="very-small">{`${Math.round(value)}%`}</Text>}
+        {!withoutTextInMiddle && (
+          <Text size="very-small">{`${Math.round(value)}%`}</Text>
+        )}
       </Box>
     </BoxWrapper>
   )
 }
 
-const BoxWrapper = styled(Box)<{size: string, accentColor?: boolean}>`
+const BoxWrapper = styled(Box)<{size: string; accentColor?: boolean}>`
   width: ${(props) => props.size};
   height: ${(props) => props.size};
 
@@ -53,13 +57,12 @@ const BoxWrapper = styled(Box)<{size: string, accentColor?: boolean}>`
     height: ${(props) => props.size} !important;
   }
 
-
   .MuiCircularProgress-colorPrimary {
-    color: ${(props) => props.accentColor ? props.theme.accentColor : props.theme.secondaryColor};
+    color: ${(props) =>
+      props.accentColor ? props.theme.accentColor : props.theme.secondaryColor};
   }
 `
 
-const StyledCircullarProgress = styled(CircularProgress)`
-`
+const StyledCircullarProgress = styled(CircularProgress)``
 
 export default CircullarProgressWithLabel

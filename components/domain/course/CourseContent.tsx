@@ -21,28 +21,40 @@ const CourseContent = ({className, course, ...props}: Props) => {
   const getChapterLengthInfo = (chapter: ChapterOverview): React.ReactNode => {
     return (
       <Text>
-        {chapter.lectures.length} {Utils.numOfLecturesText(chapter.lectures.length)}
-        { } | {chapter.chapterDurationMinutes} {Utils.numOfMinutesText(chapter.chapterDurationMinutes)}
+        {chapter.lectures.length}{' '}
+        {Utils.numOfLecturesText(chapter.lectures.length)}
+        {} | {chapter.chapterDurationMinutes}{' '}
+        {Utils.numOfMinutesText(chapter.chapterDurationMinutes)}
       </Text>
     )
   }
 
-  const handleLectureOnClick = (e: React.MouseEvent, chapterId: number, lectureId: number) => {
+  const handleLectureOnClick = (
+    e: React.MouseEvent,
+    chapterId: number,
+    lectureId: number,
+  ) => {
     e.preventDefault()
     e.stopPropagation()
 
-    router.push(`/kurzy/${course.slug}/kapitola/${chapterId}/lekcia/${lectureId}`)
+    router.push(
+      `/kurzy/${course.slug}/kapitola/${chapterId}/lekcia/${lectureId}`,
+    )
   }
-
 
   return (
     <Wrapper className={className} {...props}>
-      <AccordionRoot type="multiple" defaultValue={course.chapters.map((c) => c.id.toString())}>
+      <AccordionRoot
+        type="multiple"
+        defaultValue={course.chapters.map((c) => c.id.toString())}
+      >
         {course.chapters.map((chapter) => (
           <Item value={chapter.id.toString()} key={chapter.id}>
             <Header>
               <Trigger>
-                <Heading variant="h4" normalWeight>{chapter.name}</Heading>
+                <Heading variant="h4" normalWeight>
+                  {chapter.name}
+                </Heading>
                 <Flex gap="24px">
                   {getChapterLengthInfo(chapter)}
                   <AccordionChevron />
@@ -52,19 +64,20 @@ const CourseContent = ({className, course, ...props}: Props) => {
             {chapter.lectures.map((lecture) => (
               <ItemContent
                 key={lecture.id}
-                onClick={(e) => handleLectureOnClick(e, chapter.id, lecture.id)
-                }
+                onClick={(e) => handleLectureOnClick(e, chapter.id, lecture.id)}
               >
                 <Flex gap="12px">
                   {Utils.getLectureTypeIcon(lecture.lectureType)}
                   <StyledText>{lecture.name}</StyledText>
                 </Flex>
                 <Flex>
-                  {lecture.videoDurationSeconds > 0 &&
-                    <StyledText size="small">{
-                      Utils.formatDurationFromSeconds(lecture.videoDurationSeconds)
-                    }</StyledText>
-                  }
+                  {lecture.videoDurationSeconds > 0 && (
+                    <StyledText size="small">
+                      {Utils.formatDurationFromSeconds(
+                        lecture.videoDurationSeconds,
+                      )}
+                    </StyledText>
+                  )}
                 </Flex>
               </ItemContent>
             ))}
@@ -72,7 +85,6 @@ const CourseContent = ({className, course, ...props}: Props) => {
         ))}
       </AccordionRoot>
     </Wrapper>
-
   )
 }
 
@@ -120,7 +132,6 @@ const closeContentAnimation = keyframes({
   to: {height: 0},
 })
 
-
 const ItemContent = styled(Accordion.Content)`
   padding: 0 4px;
   display: flex;
@@ -135,14 +146,14 @@ const ItemContent = styled(Accordion.Content)`
     }
   }
 
-  [data-state=open] & {
+  [data-state='open'] & {
     animation: ${openContentAnimation} 300ms ease-out forwards;
-  };
+  }
 
-  [data-state=closed] & {
+  [data-state='closed'] & {
     animation: ${closeContentAnimation} 300ms ease-out forwards;
     overflow: hidden;
-  };
+  }
 
   svg {
     color: ${(props) => props.theme.secondaryColor};
@@ -151,9 +162,9 @@ const ItemContent = styled(Accordion.Content)`
 
 const AccordionChevron = styled(BiChevronDown)`
   transition: transform 300ms;
-  [data-state=open] & {
+  [data-state='open'] & {
     transform: rotate(180deg);
-  };
+  }
 
   &:hover {
     cursor: pointer;
@@ -162,7 +173,4 @@ const AccordionChevron = styled(BiChevronDown)`
   flex-shrink: 0;
 `
 
-
 export default CourseContent
-
-

@@ -41,12 +41,23 @@ const Footer = () => {
           flex="1"
         >
           <LogoWrapper>
-            <LogoImage alt="Logo" src="/soc_logo.png" layout="fill" onClick={() => router.push('/')} />
+            <LogoImage
+              alt="Logo"
+              src="/soc_logo.png"
+              layout="fill"
+              onClick={() => router.push('/')}
+            />
           </LogoWrapper>
           <div>
-            <Text color="primary" size="small">Street of Code o.z.</Text>
-            <Text color="primary" size="small">Hlaváčiková 29</Text>
-            <Text color="primary" size="small">84105, Bratislava</Text>
+            <Text color="primary" size="small">
+              Street of Code o.z.
+            </Text>
+            <Text color="primary" size="small">
+              Hlaváčiková 29
+            </Text>
+            <Text color="primary" size="small">
+              84105, Bratislava
+            </Text>
           </div>
         </LogoWithAddressFlex>
         <NewsletterCopyrightAndSocials
@@ -61,7 +72,9 @@ const Footer = () => {
             {(socUser) => {
               return (
                 <>
-                  {socUser && !socUser.receiveNewsletter && <NewsletterForm user={socUser} />}
+                  {socUser && !socUser.receiveNewsletter && (
+                    <NewsletterForm user={socUser} />
+                  )}
                   {socUser && socUser.receiveNewsletter && <EmptyBox />}
                   {user && !socUser && <EmptyBox />}
                 </>
@@ -69,32 +82,56 @@ const Footer = () => {
             }}
           </QueryGuard>
           <Flex direction="column" gap="24px">
-            <Text color="primary">Copyright © {getCurrentYear()} Street of Code</Text>
+            <Text color="primary">
+              Copyright © {getCurrentYear()} Street of Code
+            </Text>
             <Flex gap="8px">
-              <SocialIconLink href="https://github.com/StreetOfCode" target="_blank">
+              <SocialIconLink
+                href="https://github.com/StreetOfCode"
+                target="_blank"
+              >
                 <AiFillGithub size={iconSize} />
               </SocialIconLink>
-              <SocialIconLink href="https://twitter.com/StreetofCode1" target="_blank">
+              <SocialIconLink
+                href="https://twitter.com/StreetofCode1"
+                target="_blank"
+              >
                 <AiFillTwitterCircle size={iconSize} />
               </SocialIconLink>
-              <SocialIconLink href="https://www.facebook.com/streetofcode/" target="_blank">
+              <SocialIconLink
+                href="https://www.facebook.com/streetofcode/"
+                target="_blank"
+              >
                 <AiFillFacebook size={iconSize} />
               </SocialIconLink>
               <SocialIconLink
                 href="https://open.spotify.com/show/1nBhViArymuLrxuU4XkwRP?si=3w6MXuQ-SPKpffrsQd3rKg&nd=1"
                 target="_blank"
-              ><FaSpotify size={iconSize} />
+              >
+                <FaSpotify size={iconSize} />
               </SocialIconLink>
-              <SocialIconLink href="https://www.patreon.com/streetofcode" target="_blank">
+              <SocialIconLink
+                href="https://www.patreon.com/streetofcode"
+                target="_blank"
+              >
                 <SiPatreon size={iconSize} />
               </SocialIconLink>
-              <SocialIconLink href="https://discord.com/invite/7K4dG6Nru4" target="_blank">
+              <SocialIconLink
+                href="https://discord.com/invite/7K4dG6Nru4"
+                target="_blank"
+              >
                 <FaDiscord size={iconSize} />
               </SocialIconLink>
-              <SocialIconLink href="https://www.instagram.com/streetofcode/" target="_blank">
+              <SocialIconLink
+                href="https://www.instagram.com/streetofcode/"
+                target="_blank"
+              >
                 <AiFillInstagram size={iconSize} />
               </SocialIconLink>
-              <SocialIconLink href="https://www.youtube.com/channel/UCzt3kHgfLwGGPcTk6jP1_Cg" target="_blank">
+              <SocialIconLink
+                href="https://www.youtube.com/channel/UCzt3kHgfLwGGPcTk6jP1_Cg"
+                target="_blank"
+              >
                 <AiFillYoutube size={iconSize} />
               </SocialIconLink>
             </Flex>
@@ -104,19 +141,29 @@ const Footer = () => {
         <NavigationFlex justifyContent="flex-end" flex="1">
           <Flex direction="column" gap={'24px'} alignItems="stretch">
             <NextLink href="/kurzy">
-              <Text color="primary" uppercase>kurzy</Text>
+              <Text color="primary" uppercase>
+                kurzy
+              </Text>
             </NextLink>
             <NextLink href="/clanky">
-              <Text color="primary" uppercase>články</Text>
+              <Text color="primary" uppercase>
+                články
+              </Text>
             </NextLink>
             <NextLink href="/o-projekte">
-              <Text color="primary" uppercase>O projekte</Text>
+              <Text color="primary" uppercase>
+                O projekte
+              </Text>
             </NextLink>
             <NextLink href="/podcasty">
-              <Text color="primary" uppercase>podcasty</Text>
+              <Text color="primary" uppercase>
+                podcasty
+              </Text>
             </NextLink>
             <NextLink href="/feedback">
-              <Text color="primary" uppercase>feedback</Text>
+              <Text color="primary" uppercase>
+                feedback
+              </Text>
             </NextLink>
           </Flex>
         </NavigationFlex>
@@ -187,7 +234,8 @@ const LogoWrapper = styled.div`
 `
 
 const LogoImage = styled(Image)`
-  filter: ${(props) => props.theme.type === 'LIGHT' ? 'invert(100%)' : 'unset'};
+  filter: ${(props) =>
+    props.theme.type === 'LIGHT' ? 'invert(100%)' : 'unset'};
 `
 
 export default Footer

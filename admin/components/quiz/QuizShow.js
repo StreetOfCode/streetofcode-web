@@ -16,7 +16,6 @@ import {
 } from 'react-admin'
 
 const QuizShow = () => {
-
   const CreateQuizQuestion = () => {
     const record = useRecordContext()
     if (!record) return null
@@ -28,7 +27,8 @@ const QuizShow = () => {
           pathname: '/quiz/question/create',
           search: `?source=${JSON.stringify({quizId: record.id})}`,
         }}
-      >Create new quiz question
+      >
+        Create new quiz question
       </Button>
     )
   }
@@ -37,15 +37,29 @@ const QuizShow = () => {
     <Show>
       <SimpleShowLayout>
         <NumberField source="id" />
-        <ReferenceField label="Lecture" source="lecture.id" reference="lecture" link="show">
+        <ReferenceField
+          label="Lecture"
+          source="lecture.id"
+          reference="lecture"
+          link="show"
+        >
           <TextField source="name" />
         </ReferenceField>
         <TextField source="title" />
         <TextField source="subtitle" />
         <TextField source="finishedMessage" />
-        <ReferenceManyField label="Quiz questions" reference="quiz/question" target="quizId">
+        <ReferenceManyField
+          label="Quiz questions"
+          reference="quiz/question"
+          target="quizId"
+        >
           <Datagrid>
-            <ReferenceField label="Quiz question" source="id" reference="quiz/question" link="show">
+            <ReferenceField
+              label="Quiz question"
+              source="id"
+              reference="quiz/question"
+              link="show"
+            >
               <TextField source="text" />
             </ReferenceField>
             <NumberField source="questionOrder" />

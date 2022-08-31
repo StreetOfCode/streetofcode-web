@@ -15,13 +15,15 @@ type EditableCourseReviewProps = {
   onSubmit: (rating: number, text: string) => Promise<void>
 }
 
-const EditableCourseReview = (
-  {initialRating, initialText, onEditCancelled, onSubmit}: EditableCourseReviewProps,
-) => {
+const EditableCourseReview = ({
+  initialRating,
+  initialText,
+  onEditCancelled,
+  onSubmit,
+}: EditableCourseReviewProps) => {
   const [rating, setRating] = useState<number>(initialRating || 5)
   const [text, setText] = useState<string>(initialText || '')
   const [isLoading, setIsLoading] = useState<boolean>(false)
-
 
   const onRatingChanged = (e: SyntheticEvent, value: number | null) => {
     setRating(value ?? 0)
@@ -44,7 +46,12 @@ const EditableCourseReview = (
         maxLength={360}
         label="Sem napíš svoje hodnotenie"
         itemBefore={
-          <Rating name="half-rating-read" value={rating} onChange={onRatingChanged} style={{marginBottom: '12px'}} />
+          <Rating
+            name="half-rating-read"
+            value={rating}
+            onChange={onRatingChanged}
+            style={{marginBottom: '12px'}}
+          />
         }
       />
       {isLoading && <Loading />}
@@ -56,10 +63,8 @@ const EditableCourseReview = (
           </SubmitButton>
           {onEditCancelled && <Button onClick={onEditCancelled}>Zrušiť</Button>}
         </Flex>
-
       )}
     </WrapperFlex>
-
   )
 }
 

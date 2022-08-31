@@ -15,7 +15,7 @@ import {CourseOverview} from '../../../types'
 import {device} from '../../../theme/device'
 
 interface CourseReviewsProps {
-  courseOverview: CourseOverview;
+  courseOverview: CourseOverview
 }
 
 const CourseReviews = ({courseOverview}: CourseReviewsProps) => {
@@ -27,33 +27,48 @@ const CourseReviews = ({courseOverview}: CourseReviewsProps) => {
   const getCourseReviewsQuery = useGetCourseReviews(courseId)
   const getCourseReviewsOverviewQuery = useGetCourseReviewsOverview(courseId)
 
-  const hasUserReview = getCourseReviewsQuery.data
-    && getCourseReviewsQuery.data.some((courseReview) => courseReview.userId === userId)
+  const hasUserReview =
+    getCourseReviewsQuery.data &&
+    getCourseReviewsQuery.data.some(
+      (courseReview) => courseReview.userId === userId,
+    )
   const canAddReview = userId && !hasUserReview
 
   if (isLoading) return <Loading />
 
   return (
-    <WrapperFlex direction="column"  gap="32px" alignSelf="flex-start">
+    <WrapperFlex direction="column" gap="32px" alignSelf="flex-start">
       <QueryGuard {...getCourseReviewsOverviewQuery}>
         {(courseReviewsOverview) => (
           <Flex alignSelf="flex-start" gap="32px">
-            <Heading variant="h3" normalWeight>Hodnotenia</Heading>
+            <Heading variant="h3" normalWeight>
+              Hodnotenia
+            </Heading>
             <Flex gap="8px">
-              <Rating readOnly value={courseReviewsOverview.averageRating} customSize="32px" />
+              <Rating
+                readOnly
+                value={courseReviewsOverview.averageRating}
+                customSize="32px"
+              />
               <Text>({courseReviewsOverview.numberOfReviews})</Text>
             </Flex>
           </Flex>
         )}
       </QueryGuard>
 
-      {canAddReview && <AddCourseReview courseId={courseId} courseSlug={courseSlug} />}
+      {canAddReview && (
+        <AddCourseReview courseId={courseId} courseSlug={courseSlug} />
+      )}
 
       <QueryGuard {...getCourseReviewsQuery}>
         {(courseReviews) => (
           <Flex direction="column" gap="16px" alignSelf="stretch">
             {courseReviews.map((courseReview) => (
-              <CourseReviewItem key={courseReview.id} review={courseReview} courseSlug={courseSlug} />
+              <CourseReviewItem
+                key={courseReview.id}
+                review={courseReview}
+                courseSlug={courseSlug}
+              />
             ))}
           </Flex>
         )}
@@ -69,6 +84,5 @@ const WrapperFlex = styled(Flex)`
     width: 100%;
   }
 `
-
 
 export default CourseReviews

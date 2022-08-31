@@ -12,7 +12,6 @@ import NextLink from '../../core/NextLink'
 import Loading from '../../Loading'
 import UserAvatar from '../user/UserAvatar'
 
-
 const LogInOrOutButton = () => {
   const {user, isLoading, logout} = useAuth()
 
@@ -24,32 +23,33 @@ const LogInOrOutButton = () => {
   return (
     <QueryGuard {...useGetSocUser}>
       {(socUser: SocUser | null) => {
-        return (<>
-          {(!user || !socUser) && <NextLink href={`/login/${encodeURIComponent(router.asPath)}`}>
-            <Button>
-              Prihlásiť
-            </Button>
-          </NextLink>}
+        return (
+          <>
+            {(!user || !socUser) && (
+              <NextLink href={`/login/${encodeURIComponent(router.asPath)}`}>
+                <Button>Prihlásiť</Button>
+              </NextLink>
+            )}
 
-          {user && socUser &&
-          <DropdownMenu.Root>
-            <Trigger>
-              <StyledUserAvatar imageUrl={socUser.imageUrl || ''} name={socUser.name} sizePx={40} />
-            </Trigger>
-            <StyledContent sideOffset={3}>
-              <Link href={'/profil'}>
-                <DropDownItem>
-                  Moje kurzy a nastavenia
-                </DropDownItem>
-              </Link>
-              <DropDownItem onClick={logout}>
-                Odhlásiť
-              </DropDownItem>
-              <DropwDownMenuArrow offset={12} />
-            </StyledContent>
-          </DropdownMenu.Root>
-          }
-        </>
+            {user && socUser && (
+              <DropdownMenu.Root>
+                <Trigger>
+                  <StyledUserAvatar
+                    imageUrl={socUser.imageUrl || ''}
+                    name={socUser.name}
+                    sizePx={40}
+                  />
+                </Trigger>
+                <StyledContent sideOffset={3}>
+                  <Link href={'/profil'}>
+                    <DropDownItem>Moje kurzy a nastavenia</DropDownItem>
+                  </Link>
+                  <DropDownItem onClick={logout}>Odhlásiť</DropDownItem>
+                  <DropwDownMenuArrow offset={12} />
+                </StyledContent>
+              </DropdownMenu.Root>
+            )}
+          </>
         )
       }}
     </QueryGuard>
@@ -80,10 +80,11 @@ const DropDownItem = styled(DropdownMenu.Item)`
   white-space: nowrap;
   color: ${(props) => props.theme.secondaryColor};
 
-  &:focus, &:hover {
+  &:focus,
+  &:hover {
     color: ${(props) => props.theme.accentColor};
     cursor: pointer;
-  };
+  }
 `
 
 const DropwDownMenuArrow = styled(DropdownMenu.Arrow)`

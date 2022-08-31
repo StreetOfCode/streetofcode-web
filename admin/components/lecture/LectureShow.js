@@ -18,7 +18,6 @@ import {
 import {MarkdownField} from '../../custom/MarkdownField'
 
 const LectureShow = () => {
-
   const CreateQuiz = () => {
     const record = useRecordContext()
     if (!record) return null
@@ -30,7 +29,8 @@ const LectureShow = () => {
           pathname: '/quiz/create',
           search: `?source=${JSON.stringify({lectureId: record.id})}`,
         }}
-      >Create new quiz
+      >
+        Create new quiz
       </Button>
     )
   }
@@ -39,12 +39,22 @@ const LectureShow = () => {
     <Show>
       <SimpleShowLayout>
         <NumberField source="id" />
-        <ReferenceField label="Chapter" source="chapter.id" reference="chapter" link="show">
+        <ReferenceField
+          label="Chapter"
+          source="chapter.id"
+          reference="chapter"
+          link="show"
+        >
           <TextField source="name" />
         </ReferenceField>
         <ReferenceManyField label="Quizzes" reference="quiz" target="lectureId">
           <Datagrid>
-            <ReferenceField label="Quiz" source="id" reference="quiz" link="show">
+            <ReferenceField
+              label="Quiz"
+              source="id"
+              reference="quiz"
+              link="show"
+            >
               <TextField source="title" />
             </ReferenceField>
             <ShowButton />

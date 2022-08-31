@@ -28,19 +28,31 @@ const PostPreview = ({className, isPodcast, post}: Props) => {
     : null
 
   return (
-    <WrapperFlex className={className} direction="column" gap="12px" alignItems="flex-start">
-      {featuredImage && featuredImage.sourceUrl &&
+    <WrapperFlex
+      className={className}
+      direction="column"
+      gap="12px"
+      alignItems="flex-start"
+    >
+      {featuredImage && featuredImage.sourceUrl && (
         <NextLink href={`/${isPodcast ? 'podcasty' : 'clanky'}/${post.slug}`}>
           <ImageWrapper>
-            <Image layout="fill" src={featuredImage.sourceUrl} alt={post.title || ''} objectFit="contain" />
+            <Image
+              layout="fill"
+              src={featuredImage.sourceUrl}
+              alt={post.title || ''}
+              objectFit="contain"
+            />
           </ImageWrapper>
         </NextLink>
-      }
+      )}
       <NextLink href={`/${isPodcast ? 'podcasty' : 'clanky'}/${post.slug}`}>
         <Heading variant="h3">{post.title}</Heading>
       </NextLink>
       {post.date && <Text size="small">{formatDate(new Date(post.date))}</Text>}
-      {post.excerpt && <Text size="large" dangerouslySetInnerHTML={{__html: post.excerpt}} />}
+      {post.excerpt && (
+        <Text size="large" dangerouslySetInnerHTML={{__html: post.excerpt}} />
+      )}
       {!isPodcast && authorName && <Text weight="bold">{authorName}</Text>}
     </WrapperFlex>
   )

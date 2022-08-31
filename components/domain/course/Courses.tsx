@@ -5,7 +5,7 @@ import {CourseOverview} from '../../../types'
 import NextLink from '../../core/NextLink'
 import CourseCard from './CourseCard'
 
-const Courses = ({courses}: { courses: CourseOverview[] }) => {
+const Courses = ({courses}: {courses: CourseOverview[]}) => {
   return (
     <Wrapper>
       {courses.map((c) => (

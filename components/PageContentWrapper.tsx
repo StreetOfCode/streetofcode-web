@@ -6,9 +6,11 @@ type Props = {
 } & HTMLAttributes<HTMLElement>
 
 const PageContentWrapper = ({className, children, ...props}: Props) => {
-  return (<Wrapper className={className} {...props}>
-    {children}
-  </Wrapper>)
+  return (
+    <Wrapper className={className} {...props}>
+      {children}
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.div`

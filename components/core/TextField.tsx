@@ -29,8 +29,8 @@ const TextField = ({
   disabled,
   borderColor,
   inputBackgroundColor,
-  ...props}: Props,
-) => {
+  ...props
+}: Props) => {
   return (
     <InputBox
       className={className}
@@ -60,10 +60,14 @@ const TextField = ({
   )
 }
 
-const InputBox = styled.div<{itemBefore?: React.ReactNode, borderColor: Color, inputBackgroundColor?: Color}>`
+const InputBox = styled.div<{
+  itemBefore?: React.ReactNode
+  borderColor: Color
+  inputBackgroundColor?: Color
+}>`
   width: 100%;
   padding: 12px;
-  padding-top: ${(props) => props.itemBefore ? '12px' : '4px'};
+  padding-top: ${(props) => (props.itemBefore ? '12px' : '4px')};
   padding-bottom: 4px;
   border-radius: 12px;
 
@@ -90,7 +94,6 @@ const InputBox = styled.div<{itemBefore?: React.ReactNode, borderColor: Color, i
       return props.theme.accentColor
     }
   }};
-
 `
 
 const ErrorMessage = styled.span`
@@ -99,7 +102,6 @@ const ErrorMessage = styled.span`
 `
 
 const StyledTextField = styled(MuiTextField)<{disabled?: boolean}>`
-
   .MuiInputBase-input {
     font-family: soleil, sans-serif;
     color: ${(props) => props.theme.greyColor};

@@ -8,5 +8,4 @@ const AdminPage: NextPage = () => {
   return <AdminApp />
 }
 
-
 export default AdminPage

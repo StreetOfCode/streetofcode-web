@@ -16,9 +16,15 @@ const MarkdownView = ({children, className, ...props}: Props) => {
       children={children}
       linkTarget="_blank"
       components={{
-        h1: ({children}) => <Heading variant="h1" normalWeight children={children} />,
-        h2: ({children}) => <Heading variant="h2" normalWeight children={children} />,
-        h3: ({children}) => <Heading variant="h3" normalWeight children={children} />,
+        h1: ({children}) => (
+          <Heading variant="h1" normalWeight children={children} />
+        ),
+        h2: ({children}) => (
+          <Heading variant="h2" normalWeight children={children} />
+        ),
+        h3: ({children}) => (
+          <Heading variant="h3" normalWeight children={children} />
+        ),
         p: ({children}) => <Text children={children} />,
       }}
       {...props}
