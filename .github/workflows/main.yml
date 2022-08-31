@@ -1,0 +1,16 @@
+name: Main checks
+on: pull_request
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js 16.16.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.16.0'
+      - name: Set up yarn
+        run: yarn
+
+      - name: Run test
+        run: yarn test
