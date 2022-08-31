@@ -20,7 +20,7 @@ export const lightTheme: ThemeType = {
 
 export const darkTheme: ThemeType = {
   type: 'DARK',
-  primaryColor: '#121212',
+  primaryColor: '#212121',
   secondaryColor: 'white',
   accentColor: '#7E50E6',
   greyColor: '#545454',
