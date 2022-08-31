@@ -40,6 +40,8 @@ const VideosSlider = ({className, showVideosCount}: Props) => {
 
 const ImageWrapper = styled.a`
   position: relative;
+  border-radius: 22px;
+  border: ${(props) => `2px solid ${props.theme.accentColor} !important`};
 
   width: 448px;
   aspect-ratio: 16 / 9;
@@ -65,7 +67,6 @@ const ImageWrapper = styled.a`
 
 const StyledImage = styled(Image)`
   border-radius: 22px;
-  border: ${(props) => `2px solid ${props.theme.accentColor} !important`};
 `
 
 export default VideosSlider
