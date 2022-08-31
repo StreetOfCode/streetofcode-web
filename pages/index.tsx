@@ -138,22 +138,22 @@ const Home: NextPage<Props> = ({courses}) => {
               gap="64px"
               alignSelf="center"
             >
-              <a href={spotifyUrl} target="blank">
+              <ProviderLink href={spotifyUrl} target="blank">
                 <Image
                   src={spotifyImageUrl}
                   alt="Street of Code podcast"
                   width="280"
                   height="63"
                 />
-              </a>
-              <a href={youtubeUrl} target="blank">
+              </ProviderLink>
+              <ProviderLink href={youtubeUrl} target="blank">
                 <Image
                   src={youtubeImageUrl}
                   alt="Street of Code video"
                   width="280"
                   height="63"
                 />
-              </a>
+              </ProviderLink>
             </PodcastSocialsFlex>
           </Flex>
         </Box>
@@ -172,14 +172,18 @@ const Home: NextPage<Props> = ({courses}) => {
             </div>
             <VideosSliderStyled showVideosCount={2} />
             <MobileVideosSlider showVideosCount={1} />
-            <a href={youtubeUrl} target="blank" style={{alignSelf: 'center'}}>
+            <ProviderLink
+              href={youtubeUrl}
+              target="blank"
+              style={{alignSelf: 'center'}}
+            >
               <Image
                 src={youtubeImageUrl}
                 alt="Street of Code video"
                 width="280"
                 height="63"
               />
-            </a>
+            </ProviderLink>
           </Flex>
         </Box>
         <Box>
@@ -330,10 +334,19 @@ const MobileVideosSlider = styled(VideosSlider)`
   }
 `
 
+const ProviderLink = styled('a')`
+  @media ${device.tablet} {
+    width: 180px;
+  }
+`
+
 const PodcastSocialsFlex = styled(Flex)`
   @media ${device.tablet} {
-    flex-direction: column;
     gap: 32px;
+  }
+
+  @media ${device.mobile} {
+    flex-direction: column;
   }
 `
 
