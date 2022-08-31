@@ -11,6 +11,7 @@ type Props = {
   normalWeight?: boolean
   withAccentUnderline?: boolean
   noWrap?: boolean
+  maxWidth?: string
 } & HTMLAttributes<HTMLElement>
 
 
@@ -28,6 +29,7 @@ const Heading = ({
   normalWeight,
   withAccentUnderline,
   noWrap,
+  maxWidth,
   ...props
 }: Props) => {
   return (
@@ -40,6 +42,7 @@ const Heading = ({
       normalWeight={normalWeight}
       withAccentUnderline={withAccentUnderline}
       noWrap={noWrap}
+      maxWidth={maxWidth}
       {...props}
     >{children}
     </StyledHeading>
@@ -81,6 +84,7 @@ const StyledHeading = styled.span<{
   normalWeight?: boolean
   withAccentUnderline?: boolean
   noWrap?: boolean
+  maxWidth?: string
 }>`
   display: ${(props) => props.inline ? 'inline' : 'block'};
 
@@ -110,6 +114,21 @@ const StyledHeading = styled.span<{
   @media ${device.mobile} {
     font-size: ${(props) => styleValues['mobile'][props.variant].fontSize};
     line-height: ${(props) => styleValues['mobile'][props.variant].lineHeight} ;
+  }
+
+  @media ${device.default} {
+    ${(props) => {
+    if (props.maxWidth) {
+      return `
+        max-width: ${props.maxWidth};
+        display: block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: break-word;
+        overflow: hidden;`
+    }
+    return ''
+  }}
   }
 `
 
