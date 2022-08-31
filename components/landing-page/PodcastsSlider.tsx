@@ -38,6 +38,8 @@ const PodcastsSlider = ({className, showPodcastsCount}: Props) => {
 
 const ImageWrapper = styled.a`
   position: relative;
+  border-radius: 22px;
+  border: ${(props) => `2px solid ${props.theme.accentColor} !important`};
 
   width: 300px;
   aspect-ratio: 1;
@@ -66,7 +68,6 @@ const ImageWrapper = styled.a`
 
 const StyledImage = styled(Image)`
   border-radius: 22px;
-  border: ${(props) => `2px solid ${props.theme.accentColor} !important`};
 `
 
 export default PodcastsSlider
