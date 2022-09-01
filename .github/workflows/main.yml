@@ -1,7 +1,7 @@
 name: Main checks
 on: pull_request
 jobs:
-  run-tests:
+  run-checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -9,8 +9,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16.16.0'
+
       - name: Set up yarn
         run: yarn
 
-      - name: Run test
-        run: yarn test
+      - name: Run lint
+        run: yarn lint
+
+      - name: Run prettier
+        run: yarn prettier:check
