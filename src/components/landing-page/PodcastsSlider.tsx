@@ -67,7 +67,7 @@ const ImageWrapper = styled.a`
 `
 
 const StyledImage = styled(Image)`
-  border-radius: 22px;
+  border-radius: 20px;
 `
 
 export default PodcastsSlider

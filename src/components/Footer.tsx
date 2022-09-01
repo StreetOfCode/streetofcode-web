@@ -173,7 +173,7 @@ const Footer = () => {
 }
 
 const Background = styled.div`
-  background-color: ${(props) => props.theme.footerColor};
+  background-color: ${(props) => props.theme.footerBackgroundColor};
 `
 
 const EmptyBox = styled.div`

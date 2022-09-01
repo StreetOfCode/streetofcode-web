@@ -21,7 +21,7 @@ const VideosSlider = ({className, showVideosCount}: Props) => {
       itemLayout={(video, i) => {
         return (
           <Flex key={i} direction="column" gap="16px">
-            <Heading variant="h4" maxWidth="430px" align="center">
+            <Heading variant="h5" maxWidth="430px" align="center">
               {video.name}
             </Heading>
             <ImageWrapper href={video.youtubeUrl} target="blank">
@@ -66,7 +66,7 @@ const ImageWrapper = styled.a`
 `
 
 const StyledImage = styled(Image)`
-  border-radius: 22px;
+  border-radius: 20px;
 `
 
 export default VideosSlider
