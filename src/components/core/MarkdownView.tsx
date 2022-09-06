@@ -17,13 +17,13 @@ const MarkdownView = ({children, className, ...props}: Props) => {
       linkTarget="_blank"
       components={{
         h1: ({children}) => (
-          <Heading variant="h1" normalWeight children={children} />
+          <StyledHeading variant="h1" normalWeight children={children} marginBottomPx={12} />
         ),
         h2: ({children}) => (
-          <Heading variant="h2" normalWeight children={children} />
+          <StyledHeading variant="h2" normalWeight children={children} marginBottomPx={8} />
         ),
         h3: ({children}) => (
-          <Heading variant="h3" normalWeight children={children} />
+          <StyledHeading variant="h3" normalWeight children={children} marginBottomPx={4} />
         ),
         p: ({children}) => <Text children={children} />,
       }}
@@ -31,6 +31,10 @@ const MarkdownView = ({children, className, ...props}: Props) => {
     />
   )
 }
+
+const StyledHeading = styled(Heading)<{marginBottomPx?: number}>`
+  margin-bottom: ${(props) => props.marginBottomPx && `${props.marginBottomPx}px`};
+`
 
 const StyledMarkdown = styled(ReactMarkdown)`
   display: flex;

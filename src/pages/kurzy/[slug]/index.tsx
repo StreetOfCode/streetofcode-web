@@ -67,7 +67,7 @@ const CourseDetailPage: NextPage<Props> = ({slug, courseOverview}: Props) => {
       </QueryGuard>
     )
   } else if (!courseOverview) {
-    // this can happend when unathorized (not admin) user tries to access course which is not public
+    // this can happen when unathorized (not admin) user tries to access course which is not public
     return <h1>Pre tento kurz nemáš dostatočné oprávnenie</h1>
   } else {
     return (
@@ -146,7 +146,7 @@ const CourseDetailContent = ({
           direction="column"
           alignSelf="flex-start"
           alignItems="flex-start"
-          gap="32px"
+          gap="24px"
         >
           <Heading variant="h1" normalWeight>
             {courseOverview.name}
