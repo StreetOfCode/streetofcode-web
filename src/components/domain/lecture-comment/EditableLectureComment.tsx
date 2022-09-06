@@ -44,7 +44,7 @@ const EditableLectureComment = ({
       {isLoading && <Loading />}
       {!isLoading && (
         <Flex alignItems="flex-end" gap="12px" alignSelf="flex-start">
-          <SubmitButton variant="accent" onClick={handleOnSubmit}>
+          <SubmitButton disabled={text.trim().length === 0} variant="accent" onClick={handleOnSubmit}>
             {initialText && 'Upraviť komentár'}
             {!initialText && 'Pridať komentár'}
           </SubmitButton>
