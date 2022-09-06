@@ -1,4 +1,4 @@
-import React, {ChangeEvent, HTMLAttributes} from 'react'
+import React, {ChangeEvent, HTMLAttributes, useRef} from 'react'
 import MuiTextField from '@material-ui/core/TextField'
 
 import styled from 'styled-components'
@@ -31,17 +31,21 @@ const TextField = ({
   inputBackgroundColor,
   ...props
 }: Props) => {
+  const inputRef = useRef<HTMLDivElement>()
+
   return (
     <InputBox
       className={className}
       itemBefore={itemBefore}
       borderColor={borderColor || 'accent'}
       inputBackgroundColor={inputBackgroundColor}
+      onClick={() => inputRef.current?.focus()}
       {...props}
     >
       {itemBefore}
       <StyledTextField
         placeholder={label}
+        inputRef={inputRef}
         value={text}
         onChange={onTextChanged}
         multiline
