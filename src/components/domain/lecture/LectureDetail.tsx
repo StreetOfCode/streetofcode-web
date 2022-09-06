@@ -6,7 +6,7 @@ import MarkdownView from '../../core/MarkdownView'
 import LectureComments from '../lecture-comment/LectureComments'
 import LectureQuiz from './LectureQuiz'
 import VideoWrapper from '../video/VideoWrapper'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 
 type Props = {
   lectureId: number
@@ -25,7 +25,10 @@ const LectureDetail = ({lectureId}: Props) => {
         return (
           <Flex direction="column" gap="32px">
             {lecture.videoUrl && (
-              <VideoWrapper vimeoVideoId={lecture.videoUrl} autoplay={shouldAutoPlayLecture} />
+              <VideoWrapper
+                vimeoVideoId={lecture.videoUrl}
+                autoplay={shouldAutoPlayLecture}
+              />
             )}
             {lecture.content && <MarkdownView children={lecture.content} />}
             <LectureQuiz lecture={lecture} />

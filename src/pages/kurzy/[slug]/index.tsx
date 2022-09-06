@@ -164,7 +164,10 @@ const CourseDetailContent = ({
           {renderThubmnailOrTrailer()}
           {isLoading && <Loading />}
           {!isLoading && user && (
-            <NextLink href={{pathname: url, query: {'autoplay': 'false'}}} alignSelf="stretch">
+            <NextLink
+              href={{pathname: url, query: {autoplay: 'false'}}}
+              alignSelf="stretch"
+            >
               <StyledButton variant="accent">
                 {courseOverview.userProgressMetadata
                   ? 'Pokračovať v kurze'

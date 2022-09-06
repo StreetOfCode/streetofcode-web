@@ -183,7 +183,7 @@ const DiscordServer = ({
 }
 
 const OnboardingPage: NextPage = () => {
-  const {user, isLoading} = useAuth()
+  const {user, logout, isLoading} = useAuth()
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState<number>(0)
   const [name, setName] = useState(user?.displayName || '')
@@ -231,7 +231,7 @@ const OnboardingPage: NextPage = () => {
         <Heading variant="h3" normalWeight withAccentUnderline>
           Onboarding
         </Heading>
-        <LogoWrapper style={{visibility: 'hidden'}} />
+        <Button onClick={logout}>Odhlásiť</Button>
       </NavBarWrapper>
       <WrapperFlex
         direction="column"
