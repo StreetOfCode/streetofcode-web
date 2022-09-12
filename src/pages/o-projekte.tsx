@@ -87,6 +87,7 @@ const ProjectPage: NextPage = () => {
                   sizePx={200}
                   imageUrl={JakubImageUrl}
                   name="Jakub Jahič"
+                  priority
                 />
                 <Text size="small">
                   <b>Jakub (29).</b> Spoluzakladeľ Street of Code. Baví ma
@@ -100,6 +101,7 @@ const ProjectPage: NextPage = () => {
                   sizePx={200}
                   imageUrl={GabrielIamgeUrl}
                   name="Gabriel Kerekeš"
+                  priority
                 />
                 <Text size="small">
                   <b>Gabriel (28).</b> Spoluzakladateľ Street of Code. Various
@@ -113,6 +115,7 @@ const ProjectPage: NextPage = () => {
                   sizePx={200}
                   imageUrl={IvanImageUrl}
                   name="Ivan Hrabčák"
+                  priority
                 />
                 <Text size="small">
                   <b>Ivan (17).</b> Stážista v Street of Code. Various versions
@@ -257,6 +260,7 @@ const ProjectPage: NextPage = () => {
                 width="348"
                 height="495"
                 alt="Návrh webstránky"
+                priority
               />
               <Text size="very-small">Návrh kurzovej platformy (2020)</Text>
             </Flex>
@@ -286,6 +290,7 @@ const ProjectPage: NextPage = () => {
                   width="480"
                   height="270"
                   alt="Návrh webstránky"
+                  priority
                 />
                 <Text size="very-small">
                   Prvá nakódená verzia - úvodná stránka
@@ -302,6 +307,7 @@ const ProjectPage: NextPage = () => {
                   width="480"
                   height="322"
                   alt="Návrh webstránky"
+                  priority
                 />
                 <Text size="very-small">
                   Prvá nakódená verzia - detail kurzu
@@ -318,6 +324,7 @@ const ProjectPage: NextPage = () => {
                   width="480"
                   height="445"
                   alt="Návrh webstránky"
+                  priority
                 />
                 <Text size="very-small">
                   Prvá nakódená verzia - robenie kurzu

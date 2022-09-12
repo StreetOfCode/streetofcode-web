@@ -29,6 +29,7 @@ const VideosSlider = ({className, showVideosCount}: Props) => {
                 src={video.imageUrl}
                 alt={video.name}
                 layout="fill"
+                priority
               />
             </ImageWrapper>
           </Flex>

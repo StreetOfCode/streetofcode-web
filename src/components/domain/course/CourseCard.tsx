@@ -59,6 +59,7 @@ const CourseCard = ({course}: {course: CourseOverview}) => {
             src={course.iconUrl}
             width={100}
             height={100}
+            priority
           />
           <Rating readOnly value={course.reviewsOverview.averageRating} />
         </Flex>

@@ -144,6 +144,7 @@ const Home: NextPage<Props> = ({courses}) => {
                   alt="Street of Code podcast"
                   width="280"
                   height="63"
+                  priority
                 />
               </ProviderLink>
               <ProviderLink href={youtubeUrl} target="blank">
@@ -152,6 +153,7 @@ const Home: NextPage<Props> = ({courses}) => {
                   alt="Street of Code video"
                   width="280"
                   height="63"
+                  priority
                 />
               </ProviderLink>
             </PodcastSocialsFlex>
@@ -182,6 +184,7 @@ const Home: NextPage<Props> = ({courses}) => {
                 alt="Street of Code video"
                 width="280"
                 height="63"
+                priority
               />
             </ProviderLink>
           </Flex>
@@ -206,6 +209,7 @@ const Home: NextPage<Props> = ({courses}) => {
                 src={discordImageUrl}
                 alt="Street of Code Discord"
                 layout="fill"
+                priority
               />
             </DiscordImage>
           </Flex>
@@ -231,6 +235,7 @@ const Home: NextPage<Props> = ({courses}) => {
                   src="http://streetofcode.sk/wp-content/uploads/2022/06/P1200649-scaled.jpg"
                   alt="Street of Code"
                   layout="fill"
+                  priority
                 />
               </UsImage>
               <Heading variant="h3" normalWeight>

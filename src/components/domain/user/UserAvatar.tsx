@@ -7,13 +7,14 @@ import Flex from '../../core/Flex'
 type Props = {
   className?: string
   imageUrl?: string
+  priority?: boolean
   name: string
   sizePx: number
 }
 
 // If user has imageUrl then creates circle shaped avatar from image
 // otherwise create circle shaped initials
-const UserAvatar = ({className, imageUrl, name, sizePx}: Props) => {
+const UserAvatar = ({className, imageUrl, priority, name, sizePx}: Props) => {
   if (imageUrl) {
     return (
       <Avatar
@@ -21,6 +22,7 @@ const UserAvatar = ({className, imageUrl, name, sizePx}: Props) => {
         src={imageUrl}
         altName={name}
         sizePx={sizePx}
+        priority={priority}
       />
     )
   } else {

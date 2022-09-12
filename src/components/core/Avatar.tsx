@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 type Props = {
   className?: string
+  priority?: boolean
   altName: string
   src: string
   sizePx: number
@@ -12,10 +13,11 @@ type Props = {
 /***
  * Avatar is circle shaped image
  */
-const Avatar = ({className, altName, src, sizePx}: Props) => {
+const Avatar = ({className, priority, altName, src, sizePx}: Props) => {
   return (
     <StyledAvatar
       className={className}
+      priority={priority}
       alt={altName}
       src={src}
       width={sizePx}

@@ -133,6 +133,7 @@ const CourseDetailContent = ({
             alt={courseOverview.name}
             src={courseOverview.thumbnailUrl}
             layout="fill"
+            priority
           />
         </CardImageWrapper>
       )
@@ -238,6 +239,7 @@ const CourseDetailContent = ({
                   altName={courseOverview.author.name}
                   src={courseOverview.author.imageUrl}
                   sizePx={28}
+                  priority
                 />
                 <Text>{courseOverview.author.name}</Text>
               </CourseInfoItem>

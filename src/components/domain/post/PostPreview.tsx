@@ -42,6 +42,7 @@ const PostPreview = ({className, isPodcast, post}: Props) => {
               src={featuredImage.sourceUrl}
               alt={post.title || ''}
               objectFit="contain"
+              priority
             />
           </ImageWrapper>
         </NextLink>
