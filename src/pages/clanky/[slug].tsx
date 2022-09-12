@@ -1,13 +1,12 @@
 import React from 'react'
 import Head from 'next/head'
-import {GetStaticProps, NextPage} from 'next'
+import {GetServerSideProps, NextPage} from 'next'
 import PageContentWrapper from '../../components/PageContentWrapper'
-import {getAllPostsWithSlug, getPostBySlug} from '../../wp/api'
+import {getPostBySlug} from '../../wp/api'
 import {Post} from '../../wp/types'
 import NavBar from '../../components/NavBar'
 import BackLink from '../../components/core/BackLink'
 import PostView from '../../components/domain/post/PostView'
-import {CATEGORY_NAME} from '../../components/domain/post/clanky-constants'
 
 interface Props {
   post: Post
@@ -35,7 +34,7 @@ const SinglePostPage: NextPage<Props> = ({post}) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const slug = context?.params?.slug as string
 
   const post = await getPostBySlug(slug)
@@ -44,18 +43,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       post,
     },
-    revalidate: 600,
-  }
-}
-
-export const getStaticPaths = async () => {
-  const allPostsWithSlug = await getAllPostsWithSlug(CATEGORY_NAME)
-
-  const paths = allPostsWithSlug.map((post) => ({params: {slug: post.slug}}))
-
-  return {
-    paths,
-    fallback: true,
   }
 }
 
