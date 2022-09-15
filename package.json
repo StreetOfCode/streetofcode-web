@@ -30,7 +30,7 @@
     "@uiw/react-md-editor": "3.6.0",
     "clsx": "^1.2.1",
     "firebase": "^9.9.0",
-    "next": "12.2.1",
+    "next": "12.2.4-canary.3",
     "next-remove-imports": "^1.0.6",
     "ra-data-simple-rest": "^4.2.7",
     "react": "18.2.0",

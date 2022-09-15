@@ -122,6 +122,7 @@ export const authPut = async <T,>(url: string, body: T | null = null) => {
   return fetch(url, params)
 }
 
+// eslint-disable-next-line require-await
 const noAuthCreateParams = async (method: string): Promise<RequestInit> => {
   let params: RequestInit = {method}
   const headers: HeadersInit = {'Content-Type': 'application/json'}
