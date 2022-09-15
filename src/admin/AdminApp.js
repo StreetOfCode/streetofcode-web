@@ -60,6 +60,7 @@ const AdminApp = ({user, logout}) => {
     <>
       {dataProvider && (
         <Admin
+          disableTelemetry
           dataProvider={dataProvider}
           logoutButton={LogoutButton}
           loginPage={LoginPage}
