@@ -25,6 +25,7 @@ const transform = (data) => ({
   authorId: data.author.id,
   difficultyId: data.difficulty.id,
   name: data.name,
+  slug: data.slug,
   shortDescription: data.shortDescription,
   longDescription: data.longDescription,
   resources: data.resources,
