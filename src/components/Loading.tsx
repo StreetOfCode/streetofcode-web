@@ -14,6 +14,10 @@ const Loading = () => {
 const WrapperFlex = styled(Flex)`
   align-self: center;
   flex: 1;
+
+  .MuiCircularProgress-colorPrimary {
+    color: ${(props) => props.theme.accentColor};
+  }
 `
 
 export default Loading
