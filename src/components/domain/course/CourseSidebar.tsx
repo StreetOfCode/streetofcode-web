@@ -1,5 +1,5 @@
 import React, {HTMLAttributes, useEffect} from 'react'
-import styled, {keyframes} from 'styled-components'
+import styled from 'styled-components'
 import {ChapterProgressOverview, CourseProgressOverview} from '../../../types'
 import Flex from '../../core/Flex'
 import {BiChevronDown} from 'react-icons/bi'
@@ -241,16 +241,6 @@ const Item = styled(Accordion.Item)`
 
 const StyledText = styled(Text)``
 
-const openContentAnimation = keyframes({
-  from: {height: 0},
-  to: {height: 'var(--radix-accordion-content-height)'},
-})
-
-const closeContentAnimation = keyframes({
-  from: {height: 'var(--radix-accordion-content-height)'},
-  to: {height: 0},
-})
-
 const ItemContent = styled(Accordion.Content)<{selected?: boolean}>`
   padding: 0 4px;
   display: flex;
@@ -260,13 +250,8 @@ const ItemContent = styled(Accordion.Content)<{selected?: boolean}>`
     cursor: pointer;
   }
 
-  [data-state='open'] & {
-    animation: ${openContentAnimation} 300ms ease-out forwards;
-  }
-
   [data-state='closed'] & {
-    animation: ${closeContentAnimation} 300ms ease-out forwards;
-    overflow: hidden;
+    display: none;
   }
 
   svg {
