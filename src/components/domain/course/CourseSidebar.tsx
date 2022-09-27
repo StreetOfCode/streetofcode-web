@@ -166,7 +166,7 @@ const CourseSidebar = ({
                 >
                   <Flex gap="12px" justifyContent="space-between" flex="1">
                     <Flex gap="8px">
-                      {Utils.getLectureTypeIcon(lecture.lectureType)}
+                      <LectureTypeIcon>{Utils.getLectureTypeIcon(lecture.lectureType)}</LectureTypeIcon>
                       <Flex
                         direction="column"
                         alignItems="flex-start"
@@ -219,10 +219,18 @@ const TopWrapperFlex = styled(Flex)`
   }
 `
 
+const LectureTypeIcon = styled.span`
+  flex-shrink: 0;
+`
+
 const Header = styled(Accordion.Header)`
   margin: 0;
   padding: 0 4px 4px 4px;
   border-bottom: 2px solid ${(props) => props.theme.accentColor};
+
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 const Trigger = styled(Accordion.Trigger)`
@@ -276,6 +284,8 @@ const AccordionChevron = styled(BiChevronDown)`
   }
 
   flex-shrink: 0;
+
+  color: ${(props) => props.theme.secondaryColor};
 `
 
 const ResourcesWrapper = styled(Flex)`

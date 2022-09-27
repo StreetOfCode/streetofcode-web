@@ -67,7 +67,7 @@ const CourseContent = ({className, course, ...props}: Props) => {
                 onClick={(e) => handleLectureOnClick(e, chapter.id, lecture.id)}
               >
                 <Flex gap="12px">
-                  {Utils.getLectureTypeIcon(lecture.lectureType)}
+                  <LectureTypeIcon>{Utils.getLectureTypeIcon(lecture.lectureType)}</LectureTypeIcon>
                   <StyledText>{lecture.name}</StyledText>
                 </Flex>
                 <Flex>
@@ -100,6 +100,10 @@ const Header = styled(Accordion.Header)`
   margin: 0;
   padding: 0 4px 4px 4px;
   border-bottom: 2px solid ${(props) => props.theme.accentColor};
+
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 const Trigger = styled(Accordion.Trigger)`
@@ -118,6 +122,10 @@ const Item = styled(Accordion.Item)`
   display: flex;
   flex-direction: column;
   gap: 12px;
+`
+
+const LectureTypeIcon = styled.span`
+  flex-shrink: 0;
 `
 
 const StyledText = styled(Text)``
@@ -156,6 +164,7 @@ const AccordionChevron = styled(BiChevronDown)`
   }
 
   flex-shrink: 0;
+  color: ${(props) => props.theme.secondaryColor};
 `
 
 export default CourseContent
