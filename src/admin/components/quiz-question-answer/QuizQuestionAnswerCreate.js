@@ -29,7 +29,7 @@ const QuizQuestionAnswerCreate = () => {
     >
       <SimpleForm>
         <NumberInput disabled source="quizQuestionId" />
-        <TextInput required source="text" />
+        <TextInput multiline required source="text" />
         <BooleanInput label="Is correct" source="isCorrect" />
       </SimpleForm>
     </Create>

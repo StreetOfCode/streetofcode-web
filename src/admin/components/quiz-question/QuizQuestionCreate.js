@@ -23,7 +23,7 @@ const QuizQuestionCreate = () => {
       <SimpleForm>
         <NumberInput disabled source="quizId" />
         <NumberInput required source="questionOrder" />
-        <TextInput required source="text" />
+        <TextInput multiline required source="text" />
         <SelectInput
           required
           source="type"

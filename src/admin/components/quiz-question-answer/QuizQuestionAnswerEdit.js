@@ -32,7 +32,7 @@ const QuizQuestionAnswerEdit = () => {
       <SimpleForm>
         <NumberInput disabled source="id" />
         <NumberInput disabled source="questionId" />
-        <TextInput required source="text" />
+        <TextInput multiline required source="text" />
         <BooleanInput label="Is correct" source="isCorrect" />
       </SimpleForm>
     </Edit>

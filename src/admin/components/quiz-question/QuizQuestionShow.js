@@ -63,10 +63,17 @@ const QuizQuestionShow = () => {
             >
               <TextField source="text" />
             </ReferenceField>
-            <BooleanField source="isCorrect" />
+            <ReferenceField
+              label="Correctness"
+              source="id"
+              reference="quiz/question/answer"
+              link="show"
+            >
+              <BooleanField source="isCorrect" />
+            </ReferenceField>
             <ShowButton />
-            <DeleteWithConfirmButton />
             <EditButton />
+            <DeleteWithConfirmButton />
           </Datagrid>
         </ReferenceManyField>
         <CreateQuizQuestionAnswer />

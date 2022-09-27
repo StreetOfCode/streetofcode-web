@@ -34,7 +34,7 @@ const QuizQuestionEdit = () => {
         <NumberInput disabled source="id" />
         <NumberInput disabled source="quiz.id" />
         <NumberInput required source="questionOrder" />
-        <TextInput required source="text" />
+        <TextInput multiline required source="text" />
         <SelectInput
           required
           source="type"

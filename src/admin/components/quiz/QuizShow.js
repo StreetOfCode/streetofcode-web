@@ -39,7 +39,7 @@ const QuizShow = () => {
         <NumberField source="id" />
         <ReferenceField
           label="Lecture"
-          source="lecture.id"
+          source="lectureId"
           reference="lecture"
           link="show"
         >

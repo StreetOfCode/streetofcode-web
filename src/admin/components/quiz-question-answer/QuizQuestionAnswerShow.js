@@ -15,7 +15,7 @@ const QuizQuestionAnswerShow = () => {
         <NumberField source="id" />
         <ReferenceField
           label="Quiz Question"
-          source="quizQuestion.id"
+          source="questionId"
           reference="quiz/question"
           link="show"
         >
