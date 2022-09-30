@@ -8,11 +8,10 @@ import NavBar from '../../components/NavBar'
 import {
   CATEGORY_NAME,
   PAGINATION_BY,
-} from '../../components/domain/post/podcasty-constants'
+} from '../../components/domain/post/podcast/podcasty-constants'
 import {useRouter} from 'next/router'
 import PaginationWrapper from '../../components/domain/pagination/PaginationWrapper'
-import Flex from '../../components/core/Flex'
-import PostPreview from '../../components/domain/post/PostPreview'
+import Podcasts from '../../components/domain/post/podcast/Podcasts'
 
 interface Props {
   posts: Post[]
@@ -42,12 +41,7 @@ const PodcastsPage: NextPage<Props> = ({posts}) => {
       <Header />
       <NavBar />
       <PageContentWrapper>
-        <Flex direction="column" gap="72px" alignItems="flex-start">
-          {firstPagePosts &&
-            firstPagePosts.map((post, i) => (
-              <PostPreview key={i} post={post} isPodcast />
-            ))}
-        </Flex>
+        <Podcasts posts={firstPagePosts} />
         <PaginationWrapper
           handlePageClick={handlePageClick}
           totalPages={numberOfPossiblePages}

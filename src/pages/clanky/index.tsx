@@ -8,11 +8,10 @@ import NavBar from '../../components/NavBar'
 import {
   CATEGORY_NAME,
   PAGINATION_BY,
-} from '../../components/domain/post/clanky-constants'
+} from '../../components/domain/post/blog/clanky-constants'
 import {useRouter} from 'next/router'
 import PaginationWrapper from '../../components/domain/pagination/PaginationWrapper'
-import Flex from '../../components/core/Flex'
-import PostPreview from '../../components/domain/post/PostPreview'
+import BlogPosts from '../../components/domain/post/blog/BlogPosts'
 
 interface Props {
   posts: Post[]
@@ -42,12 +41,7 @@ const PostsPage: NextPage<Props> = ({posts}) => {
       <Header />
       <NavBar />
       <PageContentWrapper>
-        <Flex direction="column" gap="72px" alignItems="flex-start">
-          {firstPagePosts &&
-            firstPagePosts.map((post, i) => (
-              <PostPreview key={i} post={post} />
-            ))}
-        </Flex>
+        <BlogPosts posts={firstPagePosts} />
         <PaginationWrapper
           handlePageClick={handlePageClick}
           totalPages={numberOfPossiblePages}
