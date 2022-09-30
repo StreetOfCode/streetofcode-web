@@ -13,46 +13,43 @@ export const podcasts: Podcast[] = [
   {
     title: 'Ep 86',
     name: 'School 42 – bezplatná škola programovania',
-    imageUrl: 'http://streetofcode.sk/wp-content/uploads/2022/06/Ep86.png',
+    imageUrl:
+      'http://streetofcode.sk/wp-content/uploads/2022/09/ep86-landing-1.png',
     podcastUrl: 'https://streetofcode.sk/podcast/school-42/',
   },
   {
     title: 'Ep 85',
     name: 'Príbeh Learn2Code, a prečo sa mení na Skillmea',
-    imageUrl: 'http://streetofcode.sk/wp-content/uploads/2022/05/Ep85.png',
+    imageUrl:
+      'http://streetofcode.sk/wp-content/uploads/2022/09/ep85-landing-1.png',
     podcastUrl: 'https://streetofcode.sk/podcast/skillmea/',
   },
   {
     title: 'Ep 83',
     name: 'Ako môže samouk programátor zaujať firmu?',
-    imageUrl: 'http://streetofcode.sk/wp-content/uploads/2022/04/Ep-83.png',
+    imageUrl:
+      'http://streetofcode.sk/wp-content/uploads/2022/09/ep83-landing-1.png',
     podcastUrl: 'https://streetofcode.sk/podcast/ako-moze-samouk-zaujat-firmu/',
   },
   {
     title: 'Ep 82',
     name: 'Dievčatá a ženy v IT – Aj Ty v IT',
-    imageUrl: 'http://streetofcode.sk/wp-content/uploads/2022/04/Ep82.png',
+    imageUrl:
+      'http://streetofcode.sk/wp-content/uploads/2022/09/ep82-landing-1.png',
     podcastUrl: 'https://streetofcode.sk/podcast/dievcata-a-zeny-v-it/',
   },
   {
-    title: 'Ep 81',
-    name: 'Testovanie softvéru s Matejom Kukučkom zo SANAE',
-    imageUrl: 'http://streetofcode.sk/wp-content/uploads/2022/03/Ep-81.png',
-    podcastUrl:
-      'https://streetofcode.sk/podcast/ep-81-testovanie-softveru-rozhovor/',
-  },
-  {
-    title: 'Ep 80',
-    name: 'O živote ako takom – ako sa máme, čo robíme a prečo to robíme',
+    title: 'Ep 91',
+    name: 'Najväčšie výzvy samoukov (junior.guru)',
     imageUrl:
-      'http://streetofcode.sk/wp-content/uploads/2022/03/Artboard-1-copy-2.png',
-    podcastUrl: 'https://streetofcode.sk/podcast/o-zivote-ako-takom/',
+      'http://streetofcode.sk/wp-content/uploads/2022/09/ep91-landing-1.png',
+    podcastUrl: 'https://streetofcode.sk/podcast/juniorguru/',
   },
   {
-    title: 'Ep 79',
-    name: 'Prečo sú algoritmy dôležité?',
-    imageUrl: 'http://streetofcode.sk/wp-content/uploads/2022/02/Ep.79.png',
-    podcastUrl:
-      'https://streetofcode.sk/podcast/ep-79-preco-su-algoritmy-dolezite/',
+    title: 'Ep 87',
+    name: 'Aké je to byť frontend freelancer?',
+    imageUrl:
+      'http://streetofcode.sk/wp-content/uploads/2022/09/ep87-landing-1.png',
+    podcastUrl: 'https://streetofcode.sk/podcast/o-zivote-ako-takom/',
   },
 ]
