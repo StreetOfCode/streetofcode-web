@@ -129,7 +129,9 @@ const FeedbackPage: NextPage = () => {
         >
           <FAQItemsFlex direction="column" gap="32px" alignItems="flex-start">
             <Flex direction="column" gap="8px" alignItems="flex-start">
-              <Heading variant="h3">Kde vám môžem napísať?</Heading>
+              <Heading normalWeight variant="h3">
+                Kde vám môžem napísať?
+              </Heading>
               <Text>
                 Najviac by sme preferovali, kebyže nám napíšeš na{' '}
                 {renderDiscordLink('Discorde')}. Avšak môžeš nám napísať priamo
@@ -138,7 +140,9 @@ const FeedbackPage: NextPage = () => {
               </Text>
             </Flex>
             <Flex direction="column" gap="8px" alignItems="flex-start">
-              <Heading variant="h3">Ako môžem nahlásiť problém?</Heading>
+              <Heading normalWeight variant="h3">
+                Ako môžem nahlásiť problém?
+              </Heading>
               <Text>
                 Ak si našiel alebo našla nejakú chybu, či už vizuálneho alebo
                 funkčného charakteru, najlepšie bude, ak nám napíšes podrobnosti
@@ -155,14 +159,18 @@ const FeedbackPage: NextPage = () => {
               </StyledUL>
             </Flex>
             <Flex direction="column" gap="8px" alignItems="flex-start">
-              <Heading variant="h3">Chýba vám kurz, ktorý potrebujem</Heading>
+              <Heading normalWeight variant="h3">
+                Chýba vám kurz, ktorý potrebujem
+              </Heading>
               <Text>
                 Ak si myslíš, že by tu určite nemal chýbať nejaký kurz, tak nám
                 daj vedieť aký a možno ho pripravíme.
               </Text>
             </Flex>
             <Flex direction="column" gap="8px" alignItems="flex-start">
-              <Heading variant="h3">Chcem s vami spolupracovať</Heading>
+              <Heading normalWeight variant="h3">
+                Chcem s vami spolupracovať
+              </Heading>
               <Text>
                 Radi si tvoj nápad na spoluprácu vypočujeme. Napíš nám o čo ide
                 a určite sa ti ozveme.

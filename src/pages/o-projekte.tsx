@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import {NextPage} from 'next'
@@ -13,6 +13,7 @@ import {device} from '../theme/device'
 import {spotifyUrl} from '../components/landing-page/podcasts'
 import {youtubeUrl} from '../components/landing-page/videos'
 import {discordInviteUrl} from '../components/landing-page/discord'
+import VerticalSlider from '../components/VerticalSlider'
 
 const Header = () => {
   return (
@@ -52,6 +53,8 @@ const Informatika101 =
 const Patreon = 'https://www.patreon.com/streetofcode'
 
 const ProjectPage: NextPage = () => {
+  const storyStartRef = useRef<null | HTMLDivElement>(null)
+
   const renderLink = (text: string, src: string) => {
     return (
       <a href={src} target="blank">
@@ -70,12 +73,13 @@ const ProjectPage: NextPage = () => {
             <AlignedHeading variant="h2">
               Čo je to Street of Code?
             </AlignedHeading>
-            <Text>
-              Street of Code je miesto, kde sa môžeš vzdelávať o programovaní.
-              Vytvárame programátorský podcast, videá a kurzy pre začínajúcich
+            <Text align="center">
+              Na Street of Code sa môžeš vzdelávať o programovaní. Tvoríme
+              podcast o programovaní, kurzy a videá najmä pre začínajúcich
               programátorov. Street of Code založili dvaja full-time
-              programátori, ktorí sa rozhodli, že by chceli robiť okrem práce aj
-              niečo navyše. Niečo, čo by potenciálne mohlo aj pomôcť iným ľudom.
+              programátori, ktorí sa rozhodli, že by chceli okrem práce robiť aj
+              niečo navyše. Niečo, čo by mohlo pomôcť iným ľudom na ich
+              programátorskej ceste.
             </Text>
           </Flex>
 
@@ -104,9 +108,10 @@ const ProjectPage: NextPage = () => {
                   priority
                 />
                 <Text size="small">
-                  <b>Gabriel (28).</b> Spoluzakladateľ Street of Code. Various
-                  versions have evolved over the years, sometimes by accident,
-                  sometimes on purpose (injected humour and the like).
+                  <b>Gabriel (28).</b> Spoluzakladateľ Street of Code.
+                  Programovanie ma baví. Podobne ma baví aj odovzdávanie
+                  skúseností. Popri tom sa snažím aj dostatočne hýbať a tráviť
+                  veľa času s rozrastajúcou sa rodinou.
                 </Text>
               </Flex>
 
@@ -118,83 +123,89 @@ const ProjectPage: NextPage = () => {
                   priority
                 />
                 <Text size="small">
-                  <b>Ivan (17).</b> Stážista v Street of Code. Various versions
-                  have evolved over the years, sometimes by accident, sometimes
-                  on purpose (injected humour and the like).
+                  <b>Ivan (17).</b> Stážista v Street of Code. Hrám na gitaru a
+                  milujem programovanie. Okrem programátora som vo voľnom čase
+                  aj skautom.
                 </Text>
               </Flex>
             </AvatarsFlexWrapper>
+            <VerticalSlider innerRef={storyStartRef} />
           </Flex>
 
-          <Flex direction="column" gap="16px" alignItems="flex-start">
-            <AlignedHeading variant="h3">
-              Ako to celé začalo? (2018)
-            </AlignedHeading>
-            <Text>
-              V roku 2018 sme doštudovali FEI-ku. Už počas školy sme sa cez
-              prázdniny pokúšali viackrát vytvoriť nejaký projekt, mobilnú appku
-              alebo niečo podobné, avšak na začiatku školského roka sme na to už
-              buď nemali čas, alebo ten projekt sám o sebe ani vlastne nebol
-              dostatočne zaujímavý.
-            </Text>
-            <Flex
-              direction="column"
-              alignSelf="center"
-              alignItems="center"
-              gap="8px"
-            >
-              <Image
-                src={FirstPodcastImageUrl}
-                width="512"
-                height="316"
-                alt="Prvý podcast"
-              />
-              <Text size="very-small">Natáčanie prvých podcastov (2018)</Text>
+          <div ref={storyStartRef}>
+            <Flex direction="column" gap="16px" alignItems="flex-start">
+              <AlignedHeading variant="h3">
+                Ako to celé začalo? (2018)
+              </AlignedHeading>
+              <Text>
+                V roku 2018 sme dokončili štúdium aplikovanej informatiky na FEI
+                STU. Už počas školy (najmä cez prázdniny) sme sa pokúšali
+                viackrát vytvoriť nejaký projekt, mobilnú appku alebo niečo
+                podobné. Na začiatku školského roka sme na projekt už buď nemali
+                čas, alebo ten projekt sám o sebe ani vlastne nebol dostatočne
+                zaujímavý.
+              </Text>
+              <Flex
+                direction="column"
+                alignSelf="center"
+                alignItems="center"
+                gap="8px"
+              >
+                <Image
+                  src={FirstPodcastImageUrl}
+                  width="512"
+                  height="316"
+                  alt="Prvý podcast"
+                />
+                <Text size="very-small">Natáčanie prvých podcastov (2018)</Text>
+              </Flex>
+              <Text>
+                V lete 2018 však prišiel nápad vytvoriť podcast. V tom čase na
+                Slovensku neboli žiadne podcasty o programovaní (alebo aspoň sme
+                o nich nevedeli). Celkovo podcasty neboli ešte také rozšírené,
+                ako je tomu dnes.
+              </Text>
+              <Text>
+                Mali sme za sebou vysokú školu a prvé roky praxe, o čom sa dalo
+                veľa kecať, tak sme to skúsili. Ohlasy neboli veľké, ale nás to
+                bavilo a stále sme rástli. Vtedy sme ešte netušili, či nám to
+                vydrží a už duplom sme netušili, že okrem podcastov budeme robiť
+                aj niečov viac.
+              </Text>
+              <Text>
+                Btw ak ti príde náš názov Street of Code divný, tak aj nad
+                týmito názvami sme uvažovali:
+              </Text>
+              <OtherNamesGrid>
+                <Text size="small">Objektovo orientovaný</Text>
+                <Text size="small">Binárny podcast</Text>
+                <Text size="small">Jednotky a Nulky</Text>
+                <Text size="small">Ify a Elsy</Text>
+                <Text size="small">Na binárnej vlne</Text>
+                <Text size="small">Poctivý kód</Text>
+                <Text size="small">Čisté kódy</Text>
+                <Text size="small">Kód je život</Text>
+                <Text size="small">Republika Kódu</Text>
+                <Text size="small">Kódovinky</Text>
+                <Text size="small">Bodkočiarka</Text>
+                <Text size="small">Snívam v kódoch</Text>
+                <Text size="small">Kódy z vody</Text>
+                <Text size="small">Riadky kódu</Text>
+                <Text size="small">Binárny svet</Text>
+              </OtherNamesGrid>
             </Flex>
-            <Text>
-              V lete 2018 však prišiel nápad vytvoriť podcast. V tom čase na
-              Slovensko neboli žiadne programátorské podcasty. Celkovo podcasty
-              neboli ešte také populárne. Mali sme za sebou vysokú školu a prvé
-              roky praxe, o čom sa dalo veľa kecať, tak sme to skúšili. Ohlasy
-              neboli veľké, ale nás to bavilo a stále sme rástli.
-            </Text>
-            <Text>
-              Vtedy sme ešte netušili, či nám to vydrží a už duplom sme
-              netušili, že budeme robiť aj niečo iné ako podcasty.
-            </Text>
-            <Text>
-              Btw ak ti príde náš názov Street of Code divný, tak aj nad týmito
-              názvami sme uvažovali:
-            </Text>
-            <OtherNamesGrid>
-              <Text size="small">Objektovo orientovaný</Text>
-              <Text size="small">Binárny podcast</Text>
-              <Text size="small">Jednotky a Nulky</Text>
-              <Text size="small">Ify a Elsy</Text>
-              <Text size="small">Na binárnej vlne</Text>
-              <Text size="small">Poctivý kód</Text>
-              <Text size="small">Čisté kódy</Text>
-              <Text size="small">Kód je život</Text>
-              <Text size="small">Republika Kódu</Text>
-              <Text size="small">Kódovinky</Text>
-              <Text size="small">Bodkočiarka</Text>
-              <Text size="small">Snívam v kódoch</Text>
-              <Text size="small">Kódy z vody</Text>
-              <Text size="small">Riadky kódu</Text>
-              <Text size="small">Binárny svet</Text>
-            </OtherNamesGrid>
-          </Flex>
+          </div>
 
           <Flex direction="column" gap="16px" alignItems="flex-start">
             <AlignedHeading variant="h3">
               Ako to prebiehalo? (2019-2022)
             </AlignedHeading>
             <Text>
-              Podcasty sme nahrávali každé dva týždne. Dĺžka a kvalita (dúfajme)
-              sa stále zvyšovala. Vytvorili sme si Wordpress stránku a
-              uploadovali sme podcasty na {renderLink('Spotify', spotifyUrl)}.
+              Epizódy sme nahrávali každé dva týždne. Dĺžka a kvalita sa
+              (dúfajme) stále zvyšovala. Vytvorili sme Wordpress stránku a
+              podcast sme uploadovali na {renderLink('Spotify', spotifyUrl)}.
               Neskôr sme si založili {renderLink('YouTube', youtubeUrl)} kanál,
-              kam ktorého sme dávali podcasty.
+              kam sme tiež epizódy uploadovali.
             </Text>
             <Text>
               V prvom roku sme sa snažili písať aj články. Dokonca naše prvé
@@ -204,8 +215,8 @@ const ProjectPage: NextPage = () => {
               v júni 2019.
             </Text>
             <Text>
-              Rok 2019 bol prvý pre nás, v ktorom sme obaja boli full-time
-              zamestnaní, na čo si bolo treba zvyknúť.
+              V roku 2019 sme zároveň obaja začali pracovať full-time, na čo sme
+              si museli zvyknúť.
             </Text>
             <AlignedHeading variant="h4">Prelomový rok 2020</AlignedHeading>
             <Text>V tomto roku sme mali niekoľko významných miľlníkov:</Text>
@@ -225,8 +236,8 @@ const ProjectPage: NextPage = () => {
                   víziach, cieľoch a zmysle života.
                 </li>
                 <li>
-                  Nápad a vytvorenie projektu kurzová platforma (čo je vlastne
-                  táto stránka). Páčila sa nám idea mať vlastnú stránku s našimi
+                  Nápad a vytvorenie projektu “Kurzová platforma” (čo je vlastne
+                  táto stránka). Páčil sa nám nápad mať vlastnú stránku s našimi
                   kurzami. Brainstormovali sme, ako by to mohlo vyzerať, navrhli
                   sme databázu, zvolili sme technológie (React + Kotlin Spring
                   Boot) a vytvorili projekt.
@@ -265,11 +276,11 @@ const ProjectPage: NextPage = () => {
               <Text size="very-small">Návrh kurzovej platformy (2020)</Text>
             </Flex>
             <Text>
-              V roku 2021 a 2022 sme začali pravidelne pozývať rôznych hosťov do
-              našich podcastov. Vždy bol náš cieľ, aby bol podcast poučný pre
-              začínajúcich programátorov, a zároveň aj dostatočne zaujímavý pre
-              tých skúsenejších. Taktiež sme experimentovali s novým typom
-              obsahu, ako napr. streamy na YouTube či rôzne videá.
+              V roku 2021 a 2022 sme začali do našich podcastov pravidelne
+              pozývať rôznych hosťov. Vždy bolo našim cieľom, aby bol podcast
+              poučný pre začínajúcich programátorov, a zároveň aj dostatočne
+              zaujímavý pre tých skúsenejších. Taktiež sme experimentovali s
+              novým typom obsahu, ako napr. streamy na YouTube či rôzne videá.
             </Text>
             <Text>
               Projekt kurzová platforma a samotné vytváranie kurzov bol oveľa

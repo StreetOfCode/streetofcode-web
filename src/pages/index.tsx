@@ -2,7 +2,7 @@ import React, {useContext, useRef} from 'react'
 import {NextPage} from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import styled, {keyframes} from 'styled-components'
+import styled from 'styled-components'
 import Flex from '../components/core/Flex'
 import Text from '../components/core/Text'
 import Heading from '../components/core/Heading'
@@ -27,6 +27,7 @@ import PodcastsSlider from '../components/landing-page/PodcastsSlider'
 import NextLink from '../components/core/NextLink'
 import {device} from '../theme/device'
 import ThemeSwitchingContext from '../theme/ThemeSwitchingContext'
+import VerticalSlider from '../components/VerticalSlider'
 
 interface Props {
   courses: CourseOverview[]
@@ -47,14 +48,6 @@ const Home: NextPage<Props> = ({courses}) => {
 
   const youtubeImageUrl =
     theme.type === 'LIGHT' ? youtubeDarkImageUrl : youtubeLightImageUrl
-
-  const handleVerticalSliderClick = () => {
-    if (coursesRef.current) {
-      coursesRef.current.scrollIntoView({
-        behavior: 'smooth',
-      })
-    }
-  }
 
   return (
     <>
@@ -96,7 +89,7 @@ const Home: NextPage<Props> = ({courses}) => {
                 <TypingAnimation />
               </AnimationWrapper>
             </HeroSection>
-            <VerticalSlider onClick={handleVerticalSliderClick} />
+            <VerticalSlider innerRef={coursesRef} />
           </Box>
           <Box ref={coursesRef}>
             <Flex direction="column" gap="48px" alignItems="flex-start">
@@ -369,39 +362,6 @@ const AnimationWrapper = styled.div`
 
   @media ${device.mobile} {
     display: none;
-  }
-`
-
-const verticalSliderAnimation = keyframes({
-  '0%': {top: 43},
-  '50%': {top: 2},
-  '100%': {top: 43},
-})
-
-const VerticalSlider = styled.div`
-  position: relative;
-  margin-top: 6em;
-  width: 30px;
-  height: 70px;
-  border-radius: 22px;
-  border: ${(props) => `4px solid ${props.theme.accentColor}`};
-
-  :hover {
-    cursor: pointer;
-  }
-
-  ::after {
-    position: absolute;
-    content: '';
-    display: block;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background-color: ${(props) => props.theme.accentColor};
-    top: 43px;
-    left: 2px;
-
-    animation: ${verticalSliderAnimation} 2.5s linear infinite;
   }
 `
 
