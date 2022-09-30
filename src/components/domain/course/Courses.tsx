@@ -2,17 +2,29 @@ import React from 'react'
 import styled from 'styled-components'
 import {device} from '../../../theme/device'
 import {CourseOverview} from '../../../types'
+import * as Utils from '../../../utils'
 import NextLink from '../../core/NextLink'
 import CourseCard from './CourseCard'
 
-const Courses = ({courses}: {courses: CourseOverview[]}) => {
+const Courses = ({
+  courses,
+  shouldLinkToTakeCourse = false,
+}: {
+  courses: CourseOverview[]
+  shouldLinkToTakeCourse?: boolean
+}) => {
   return (
     <Wrapper>
-      {courses.map((c) => (
-        <NextLink key={c.id} href={`/kurzy/${c.slug}`}>
-          <CourseCard course={c} />
-        </NextLink>
-      ))}
+      {courses.map((c) => {
+        const link = shouldLinkToTakeCourse
+          ? Utils.getTakeCourseUrl(c)
+          : `/kurzy/${c.slug}`
+        return (
+          <NextLink key={c.id} href={link}>
+            <CourseCard course={c} />
+          </NextLink>
+        )
+      })}
     </Wrapper>
   )
 }

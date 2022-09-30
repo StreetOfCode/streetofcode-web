@@ -212,7 +212,7 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
                   Moje kurzy
                 </Heading>
               )}
-              <Courses courses={courses} />
+              <Courses courses={courses} shouldLinkToTakeCourse />
             </Flex>
           )}
         </QueryGuard>

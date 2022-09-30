@@ -74,6 +74,7 @@ const CoursesPageContent = ({courses}: Props) => {
               </Heading>
               <Courses
                 courses={courses.filter((c) => c.userProgressMetadata)}
+                shouldLinkToTakeCourse
               />
               {courses.filter((c) => !c.userProgressMetadata).length > 0 && (
                 <>
