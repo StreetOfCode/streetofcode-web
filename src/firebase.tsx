@@ -1,16 +1,13 @@
 import {initializeApp} from 'firebase/app'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBYS2iRogvuU6mbHuHDoB1XaELDGUKeBp8',
-  authDomain: 'course-platform-5ebc0.firebaseapp.com', // TODO change to our domain
-  projectId: 'course-platform-5ebc0',
-  storageBucket: 'course-platform-5ebc0.appspot.com',
-  messagingSenderId: '476289106525',
-  appId: '1:476289106525:web:ecf6aa7dd5d04bfbc343b4',
-  measurementId: 'G-FBD8N5QH07',
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 }
 
 export const firebase = initializeApp(firebaseConfig)
-
-// for react-admin           LOCAL STORAGE IS NOT DEFINED
-// export const firebaseAuthProvider = FirebaseAuthProvider(firebaseConfig, {})
