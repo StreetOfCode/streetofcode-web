@@ -12,6 +12,7 @@ type Props = {
   disabled?: boolean
   size?: Size
   iconBefore?: React.ReactNode
+  noWrap?: boolean
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
 type Variant = 'accent' | 'default' | 'outline' | 'danger'
@@ -64,6 +65,7 @@ const Button = ({
   disabled,
   size,
   iconBefore,
+  noWrap,
   ...props
 }: Props) => {
   const {theme} = useContext(ThemeSwitchingContext)
@@ -77,6 +79,7 @@ const Button = ({
       bold={bold}
       disabled={disabled}
       size={size || 'default'}
+      noWrap={noWrap}
       {...props}
     >
       <Flex gap="12px" justifyContent="center">
@@ -94,6 +97,7 @@ const StyledButton = styled.button<{
   bold?: boolean
   disabled?: boolean
   size: Size
+  noWrap?: boolean
 }>`
   background-color: ${(props) =>
     variantStyleValues(props.theme)[props.variant].backgroundColor};
@@ -104,8 +108,8 @@ const StyledButton = styled.button<{
   font-size: ${(props) => sizeStyleValues[props.size].fontSize};
   font-weight: ${(props) => (props.bold ? 'bold' : 'normal')};
   opacity: ${(props) => props.disabled && 0.7};
-
   text-transform: ${(props) => (props.uppercase ? 'uppercase' : 'unset')};
+  white-space: ${(props) => (props.noWrap ? 'nowrap' : 'unset')};
 
   &:hover {
     cursor: ${(props) => !props.disabled && 'pointer'};
