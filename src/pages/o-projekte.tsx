@@ -31,7 +31,7 @@ const JakubImageUrl =
 const GabrielIamgeUrl =
   'http://streetofcode.sk/wp-content/uploads/2020/04/7520735.png'
 const IvanImageUrl =
-  'http://streetofcode.sk/wp-content/uploads/2022/08/Ivan.jpg'
+  'http://streetofcode.sk/wp-content/uploads/2022/09/ivan-final.png'
 const FirstPodcastImageUrl =
   'http://streetofcode.sk/wp-content/uploads/2022/08/prvy_podcast-scaled.jpg'
 const ProjectMockupImageUrl =
