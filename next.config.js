@@ -11,7 +11,7 @@ const nextConfig = {
   },
   images: {
     domains: [
-      'streetofcode.sk',
+      'wp.streetofcode.sk',
       'lh3.googleusercontent.com',
       'process.env.WORDPRESS_API_URL.match(/(http(?:s)?:\\/\\/)(.*)/)[2]',
     ],
@@ -37,7 +37,7 @@ const sentryWebpackPluginOptions = {
   // recommended:
   //   release, url, org, project, authToken, configFile, stripPrefix,
   //   urlPrefix, include, ignore
-
+  hideSourceMaps: true,
   silent: true, // Suppresses all logs
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
