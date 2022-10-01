@@ -31,7 +31,7 @@ const Podcasts = ({posts}: Props) => {
       </Flex>
       <GridWrapper>
         {posts.map((post) => (
-          <NextLink key={post.id} href={`/clanky/${post.slug}`}>
+          <NextLink key={post.id} href={`/podcast/${post.slug}`}>
             <PostPreviewCard isPodcast post={post} />
           </NextLink>
         ))}
