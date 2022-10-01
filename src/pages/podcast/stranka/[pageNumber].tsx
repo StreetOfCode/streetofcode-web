@@ -8,7 +8,7 @@ import NavBar from '../../../components/NavBar'
 import {
   CATEGORY_NAME,
   PAGINATION_BY,
-} from '../../../components/domain/post/podcast/podcasty-constants'
+} from '../../../components/domain/post/podcast/podcast-constants'
 import {useRouter} from 'next/router'
 import PaginationWrapper from '../../../components/domain/pagination/PaginationWrapper'
 import Podcasts from '../../../components/domain/post/podcast/Podcasts'
@@ -22,7 +22,7 @@ interface Props {
 const Header = () => {
   return (
     <Head>
-      <title>Street of Code | Podcasty</title>
+      <title>Street of Code | Podcast</title>
       <meta name="description">Naučíme ťa programovať</meta>
     </Head>
   )
@@ -37,9 +37,9 @@ const PaginatedPostsPage: NextPage<Props> = ({
 
   const handlePageClick = (pageNumber: number) => {
     if (pageNumber === 0) {
-      router.push('/podcasty')
+      router.push('/podcast')
     } else {
-      router.push(`/podcasty/stranka/${pageNumber + 1}`)
+      router.push(`/podcast/stranka/${pageNumber + 1}`)
     }
   }
 

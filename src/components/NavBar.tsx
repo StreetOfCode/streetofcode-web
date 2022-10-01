@@ -55,8 +55,8 @@ const NavBar = () => {
           <NextLink styleIfActive href="/kurzy">
             <Text uppercase>kurzy</Text>
           </NextLink>
-          <NextLink styleIfActive href="/podcasty">
-            <Text uppercase>podcasty</Text>
+          <NextLink styleIfActive href="/podcast">
+            <Text uppercase>podcast</Text>
           </NextLink>
           <NextLink styleIfActive href="/clanky">
             <Text uppercase>články</Text>
@@ -82,8 +82,8 @@ const NavBar = () => {
               <Text>Moje kurzy a nastavenia</Text>
             </NextLink>
           )}
-          <NextLink styleIfActive href="/podcasty">
-            <Text>Podcasty</Text>
+          <NextLink styleIfActive href="/podcast">
+            <Text>Podcast</Text>
           </NextLink>
           <NextLink styleIfActive href="/clanky">
             <Text>Články</Text>

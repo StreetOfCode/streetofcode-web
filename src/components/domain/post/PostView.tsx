@@ -54,18 +54,14 @@ const redirectLinks = (content: Maybe<string> | undefined) => {
   for (const splitted of content.split('a href="')) {
     if (splitted.startsWith('https://wp.streetofcode.sk/podcast/')) {
       const link = splitted.substring(0, splitted.indexOf('/"'))
-      const updatedLink = link
-        .replace('podcast', 'podcasty')
-        .replace('https://wp.streetofcode.sk', '')
+      const updatedLink = link.replace('https://wp.streetofcode.sk', '')
       content = content.replace(link, updatedLink)
       continue
     }
 
     if (splitted.startsWith('http://wp.streetofcode.sk/podcast/')) {
       const link = splitted.substring(0, splitted.indexOf('/"'))
-      const updatedLink = link
-        .replace('podcast', 'podcasty')
-        .replace('http://wp.streetofcode.sk', '')
+      const updatedLink = link.replace('http://wp.streetofcode.sk', '')
       content = content.replace(link, updatedLink)
       continue
     }

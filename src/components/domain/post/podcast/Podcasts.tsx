@@ -17,11 +17,11 @@ const Podcasts = ({posts}: Props) => {
       <Flex direction="column" gap="16px">
         <div>
           <Heading inline align="center" variant="h1">
-            Naše
+            Náš
           </Heading>
           <Heading inline variant="h1" color="accent">
             {' '}
-            podcasty
+            podcast
           </Heading>
         </div>
         <Text align="center">

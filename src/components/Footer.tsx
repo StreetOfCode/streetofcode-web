@@ -155,9 +155,9 @@ const Footer = () => {
                 O projekte
               </Text>
             </NextLink>
-            <NextLink href="/podcasty">
+            <NextLink href="/podcast">
               <Text color="primary" uppercase>
-                podcasty
+                podcast
               </Text>
             </NextLink>
             <NextLink href="/feedback">

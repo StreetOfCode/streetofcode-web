@@ -27,7 +27,7 @@ const SinglePostPage: NextPage<Props> = ({post}) => {
       <Header post={post} />
       <NavBar />
       <PageContentWrapper>
-        <BackLink to={'/podcasty'} text={'Späť na podcasty'} />
+        <BackLink to={'/podcast'} text={'Späť na podcast'} />
         <PostView post={post} isPodcast />
       </PageContentWrapper>
     </>

@@ -12,7 +12,7 @@ import {EMPTY_BLOG_IMAGE_PLACEHOLDER_URL} from './blog/clanky-constants'
 import {
   EMPTY_PODCAST_IMAGE_PLACEHOLDER_URL,
   PODCAST_MICROPHONE_IMG,
-} from './podcast/podcasty-constants'
+} from './podcast/podcast-constants'
 
 type Props = {
   post: Post
@@ -46,7 +46,7 @@ const PostPreviewCard = ({post, isPodcast}: Props) => {
           )}
         </Flex>
         {featuredImage && featuredImage.sourceUrl && (
-          <NextLink href={`/${isPodcast ? 'podcasty' : 'clanky'}/${post.slug}`}>
+          <NextLink href={`/${isPodcast ? 'podcast' : 'clanky'}/${post.slug}`}>
             <ImageWrapper>
               <Image
                 layout="fill"
@@ -59,7 +59,7 @@ const PostPreviewCard = ({post, isPodcast}: Props) => {
           </NextLink>
         )}
         {!featuredImage && (
-          <NextLink href={`/${isPodcast ? 'podcasty' : 'clanky'}/${post.slug}`}>
+          <NextLink href={`/${isPodcast ? 'podcast' : 'clanky'}/${post.slug}`}>
             <ImageWrapper>
               <Image
                 layout="fill"
