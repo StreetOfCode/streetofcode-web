@@ -75,6 +75,7 @@ const iconStyle = (props: {
 }) => `
   width: ${props.size || '18px'};
   aspect-ratio: 1;
+  flex-shrink: 0;
   color: ${props.theme.accentColor};
   ${
     !props.disabled
