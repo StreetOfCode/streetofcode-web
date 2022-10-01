@@ -16,6 +16,7 @@ import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3'
 import ErrorBoundaryFallBack from '../components/domain/ErrorBoundaryFallBack'
 import ThemeSwitchingContext from '../theme/ThemeSwitchingContext'
 import '../theme/animations/TypingAnimation.css'
+import GoogleAnalytics from '../GoogleAnalytics'
 
 const OnboardingProtectionRoute = ({children}: {children: React.ReactNode}) => {
   const {user, isLoading} = useAuth()
@@ -74,6 +75,7 @@ function MyApp({Component, pageProps}: AppProps) {
           <ThemeProvider theme={theme}>
             <AuthContextProvider>
               <RootWrapper>
+                <GoogleAnalytics />
                 <QueryClientProvider client={queryClient}>
                   <GlobalStyles />
                   {routesThatDontNeedOnBoardingProtection.includes(
