@@ -456,4 +456,10 @@ const AvatarsFlexWrapper = styled(Flex)`
   }
 `
 
+export const getStaticProps = () => {
+  return {
+    props: {},
+  }
+}
+
 export default ProjectPage
