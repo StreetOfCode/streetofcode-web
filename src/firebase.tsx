@@ -1,3 +1,4 @@
+import {getAnalytics} from 'firebase/analytics'
 import {initializeApp} from 'firebase/app'
 
 const firebaseConfig = {
@@ -11,3 +12,5 @@ const firebaseConfig = {
 }
 
 export const firebase = initializeApp(firebaseConfig)
+export const analytics =
+  typeof window !== 'undefined' ? getAnalytics(firebase) : undefined
