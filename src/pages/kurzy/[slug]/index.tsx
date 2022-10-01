@@ -42,8 +42,21 @@ type Props = {
 const Header = ({course}: {course: CourseOverview}) => {
   return (
     <Head>
-      <title>{course.name}</title>
+      <title>{course.name} | Street of Code</title>
       <meta name="description">{course.shortDescription}</meta>
+      <meta property="og:locale" content="sk_SK" />
+      <meta property="og:title" content={`${course.name} | Street of Code`} />
+      <meta property="og:type" content="website" />
+      <meta property="og:description" content={course.shortDescription} />
+      <meta
+        property="og:url"
+        content={`https://streetofcode.sk/kurzy/${course.slug}`}
+      />
+      <meta property="og:image" content={course.iconUrl} />
+      <meta property="og:image:alt" content="Obrázok kurzu" />
+      <meta property="og:site_name" content="Street of Code" />
+      <meta property="twitter:card" content="summary_large_image" />
+      <meta property="twitter:site" content="@StreetofCode1" />
     </Head>
   )
 }

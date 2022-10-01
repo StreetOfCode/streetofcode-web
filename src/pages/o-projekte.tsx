@@ -28,8 +28,21 @@ import {
 const Header = () => {
   return (
     <Head>
-      <title>Street of Code</title>
-      <meta name="description">Miesto, kde sa naučíš programovať</meta>
+      <title>O projekte | Street of Code</title>
+      <meta name="description">Nauč sa s nami programovať!</meta>
+      <meta property="og:locale" content="sk_SK" />
+      <meta property="og:title" content="O Projekte | Street of Code" />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="https://www.streetofcode.sk/kurzy" />
+      <meta property="og:description" content="Nauč sa s nami programovať!" />
+      <meta
+        property="og:image"
+        content="https://wp.streetofcode.sk/wp-content/uploads/2022/10/purple-logo-small.jpg"
+      />
+      <meta property="og:image:alt" content="Logo Street of Code" />
+      <meta property="og:site_name" content="Street of Code" />
+      <meta property="twitter:card" content="summary_large_image" />
+      <meta property="twitter:site" content="@StreetofCode1" />
     </Head>
   )
 }
