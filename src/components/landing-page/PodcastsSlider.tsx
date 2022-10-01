@@ -22,7 +22,7 @@ const PodcastsSlider = ({className, showPodcastsCount}: Props) => {
         return (
           <FlexWrapper key={i} direction="column" gap="16px" visible={visible}>
             <Heading variant="h3">{podcast.title}</Heading>
-            <ImageWrapper href={podcast.podcastUrl} target="blank">
+            <ImageWrapper href={podcast.podcastUrl}>
               <StyledImage
                 src={podcast.image}
                 alt={podcast.name}
