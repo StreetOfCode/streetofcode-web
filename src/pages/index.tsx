@@ -354,13 +354,15 @@ const HeroSection = styled(Flex)`
 `
 
 const AnimationWrapper = styled.div`
+  width: 100%;
   max-width: 500px;
+  min-width: 150px;
   padding-top: 24px;
   svg {
     overflow: visible;
   }
 
-  @media ${device.mobile} {
+  @media (max-width: 829px) {
     display: none;
   }
 `
