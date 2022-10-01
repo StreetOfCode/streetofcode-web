@@ -37,6 +37,7 @@ const TakeCoursePage: NextPage<Props> = ({
     // this page can be seen only by logged in users
     router.replace({
       pathname: `/login/${encodeURIComponent(location.pathname)}`,
+      query: {returnTo: `/kurzy/${courseSlug}`},
     })
   }
 

@@ -87,7 +87,15 @@ const LoginPage: NextPage = () => {
                 </Button>
               </div>
             )}
-            {router.query?.redirectUri && (
+
+            {/* Prioritize returnTo query parameter if specified */}
+            {router.query?.returnTo && (
+              <BackLink
+                to={decodeURIComponent(router.query.returnTo as string)}
+                text={'Späť'}
+              />
+            )}
+            {!router.query?.returnTo && router.query?.redirectUri && (
               <BackLink
                 to={decodeURIComponent(router.query.redirectUri as string)}
                 text={'Späť'}
