@@ -18,24 +18,29 @@ const PodcastsSlider = ({className, showPodcastsCount}: Props) => {
       className={className}
       items={podcasts}
       showItemsCount={showPodcastsCount}
-      itemLayout={(podcast, i) => {
+      itemLayout={(podcast, i, visible) => {
         return (
-          <Flex key={i} direction="column" gap="16px">
+          <FlexWrapper key={i} direction="column" gap="16px" visible={visible}>
             <Heading variant="h3">{podcast.title}</Heading>
             <ImageWrapper href={podcast.podcastUrl} target="blank">
               <StyledImage
                 src={podcast.imageUrl}
                 alt={podcast.name}
                 layout="fill"
-                lazyBoundary="400px"
+                priority
               />
             </ImageWrapper>
-          </Flex>
+          </FlexWrapper>
         )
       }}
     />
   )
 }
+
+const FlexWrapper = styled(Flex)<{visible: boolean}>`
+  // If display is set to none, then image is refetched in background and slider will be faster
+  display: ${(props) => (props.visible ? 'flex' : 'none')};
+`
 
 const ImageWrapper = styled.a`
   position: relative;

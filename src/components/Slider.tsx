@@ -32,7 +32,7 @@ type Props<T> = {
   className?: string
   items: T[]
   showItemsCount: number
-  itemLayout: (item: T, index: number) => React.ReactElement
+  itemLayout: (item: T, index: number, visible: boolean) => React.ReactElement
 }
 
 type SliderWindow = {
@@ -70,7 +70,7 @@ const Slider = <T,>({
       alignSelf="stretch"
     >
       <IconLeft onClick={handleLeftIconClick} disabled={start === 0} />
-      {items.slice(start, end + 1).map((item, i) => itemLayout(item, i))}
+      {items.map((item, i) => itemLayout(item, i, i >= start && i < end + 1))}
       <IconRight
         onClick={handRightIconClick}
         disabled={end === items.length - 1}

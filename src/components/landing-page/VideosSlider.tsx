@@ -18,9 +18,9 @@ const VideosSlider = ({className, showVideosCount}: Props) => {
       className={className}
       items={videos}
       showItemsCount={showVideosCount}
-      itemLayout={(video, i) => {
+      itemLayout={(video, i, visible) => {
         return (
-          <Flex key={i} direction="column" gap="16px">
+          <FlexWrapper key={i} direction="column" gap="16px" visible={visible}>
             <Heading variant="h5" maxWidth="430px" align="center">
               {video.name}
             </Heading>
@@ -29,15 +29,20 @@ const VideosSlider = ({className, showVideosCount}: Props) => {
                 src={video.image}
                 alt={video.name}
                 layout="fill"
-                lazyBoundary="400px"
+                priority
               />
             </ImageWrapper>
-          </Flex>
+          </FlexWrapper>
         )
       }}
     />
   )
 }
+
+const FlexWrapper = styled(Flex)<{visible: boolean}>`
+  // If display is set to none, then image is refetched in background and slider will be faster
+  display: ${(props) => (props.visible ? 'flex' : 'none')};
+`
 
 const ImageWrapper = styled.a`
   position: relative;

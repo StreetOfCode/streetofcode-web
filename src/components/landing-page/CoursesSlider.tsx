@@ -1,4 +1,5 @@
 import React, {HTMLAttributes} from 'react'
+import styled from 'styled-components'
 import {useAuth} from '../../AuthUserContext'
 import {QueryGuard} from '../../QueryGuard'
 import {CourseOverview} from '../../types'
@@ -52,15 +53,21 @@ const CoursesSlider = ({className, courses, showCoursesCount}: Props) => {
       className={className}
       items={courses}
       showItemsCount={showCoursesCount}
-      itemLayout={(course, i) => {
+      itemLayout={(course, i, visible) => {
         return (
-          <NextLink key={i} href={`/kurzy/${course.slug}`}>
-            <CourseCard course={course} />
-          </NextLink>
+          <Wrapper visible={visible}>
+            <NextLink key={i} href={`/kurzy/${course.slug}`}>
+              <CourseCard course={course} />
+            </NextLink>
+          </Wrapper>
         )
       }}
     />
   )
 }
+
+const Wrapper = styled.div<{visible: boolean}>`
+  display: ${(props) => (props.visible ? 'block' : 'none')};
+`
 
 export default CoursesSliderWrapper
