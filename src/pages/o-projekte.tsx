@@ -70,7 +70,7 @@ const ProjectPage: NextPage = () => {
       <StyledPagedContentWrapper>
         <Flex direction="column" gap="48px">
           <Flex direction="column" gap="16px" alignItems="flex-start">
-            <AlignedHeading variant="h2">
+            <AlignedHeading align="center" variant="h2">
               Čo je to Street of Code?
             </AlignedHeading>
             <Text align="center">
