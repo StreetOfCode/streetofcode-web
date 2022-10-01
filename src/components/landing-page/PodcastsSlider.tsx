@@ -24,7 +24,7 @@ const PodcastsSlider = ({className, showPodcastsCount}: Props) => {
             <Heading variant="h3">{podcast.title}</Heading>
             <ImageWrapper href={podcast.podcastUrl} target="blank">
               <StyledImage
-                src={podcast.imageUrl}
+                src={podcast.image}
                 alt={podcast.name}
                 layout="fill"
                 priority

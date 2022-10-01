@@ -17,9 +17,9 @@ type Video = {
 }
 
 export const youtubeDarkImageUrl =
-  'http://streetofcode.sk/wp-content/uploads/2022/06/youtube.png'
+  'http://wp.streetofcode.sk/wp-content/uploads/2022/06/youtube.png'
 export const youtubeLightImageUrl =
-  'http://streetofcode.sk/wp-content/uploads/2022/08/youtube-white.png'
+  'http://wp.streetofcode.sk/wp-content/uploads/2022/08/youtube-white.png'
 export const youtubeUrl =
   'https://www.youtube.com/channel/UCzt3kHgfLwGGPcTk6jP1_Cg'
 

@@ -52,38 +52,38 @@ const redirectLinks = (content: Maybe<string> | undefined) => {
   }
 
   for (const splitted of content.split('a href="')) {
-    if (splitted.startsWith('https://streetofcode.sk/podcast/')) {
+    if (splitted.startsWith('https://wp.streetofcode.sk/podcast/')) {
       const link = splitted.substring(0, splitted.indexOf('/"'))
       const updatedLink = link
         .replace('podcast', 'podcasty')
-        .replace('https://streetofcode.sk', '')
+        .replace('https://wp.streetofcode.sk', '')
       content = content.replace(link, updatedLink)
       continue
     }
 
-    if (splitted.startsWith('http://streetofcode.sk/podcast/')) {
+    if (splitted.startsWith('http://wp.streetofcode.sk/podcast/')) {
       const link = splitted.substring(0, splitted.indexOf('/"'))
       const updatedLink = link
         .replace('podcast', 'podcasty')
-        .replace('http://streetofcode.sk', '')
+        .replace('http://wp.streetofcode.sk', '')
       content = content.replace(link, updatedLink)
       continue
     }
 
-    if (splitted.startsWith('https://streetofcode.sk/blog/')) {
+    if (splitted.startsWith('https://wp.streetofcode.sk/blog/')) {
       const link = splitted.substring(0, splitted.indexOf('/"'))
       const updatedLink = link
         .replace('blog', 'clanky')
-        .replace('https://streetofcode.sk', '')
+        .replace('https://wp.streetofcode.sk', '')
       content = content.replace(link, updatedLink)
       continue
     }
 
-    if (splitted.startsWith('http://streetofcode.sk/blog/')) {
+    if (splitted.startsWith('http://wp.streetofcode.sk/blog/')) {
       const link = splitted.substring(0, splitted.indexOf('/"'))
       const updatedLink = link
         .replace('blog', 'clanky')
-        .replace('http://streetofcode.sk', '')
+        .replace('http://wp.streetofcode.sk', '')
       content = content.replace(link, updatedLink)
       continue
     }
