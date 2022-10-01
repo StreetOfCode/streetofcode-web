@@ -14,6 +14,16 @@ import {spotifyUrl} from '../components/landing-page/podcasts'
 import {youtubeUrl} from '../components/landing-page/videos'
 import {discordInviteUrl} from '../components/landing-page/discord'
 import VerticalSlider from '../components/VerticalSlider'
+import {
+  FirstDesignCourseDetail,
+  FirstDesignHome,
+  FirstDesignTakeCoursePage,
+  FirstPodcast,
+  Gabriel,
+  Ivan,
+  Jakub,
+  ProjectMockup,
+} from '../images'
 
 const Header = () => {
   return (
@@ -23,17 +33,6 @@ const Header = () => {
     </Head>
   )
 }
-
-// Images
-// eslint-disable-next-line max-len
-const JakubImageUrl = '/images/jakub.jpg'
-const GabrielIamgeUrl = '/images/gabriel.jpg'
-const IvanImageUrl = '/images/ivan-final.png'
-const FirstPodcastImageUrl = '/images/prvy_podcast-scaled.jpg'
-const ProjectMockupImageUrl = '/images/leto-2020_EDITED.jpg'
-const FirstDesignHome = '/images/Home.jpg'
-const FirstDesignCourseDetail = '/images/Course-Detail.jpg'
-const FirstDesignTakeCoursePage = '/images/Take-Course.jpg'
 
 // Links
 const UcimeSaOOP =
@@ -81,7 +80,7 @@ const ProjectPage: NextPage = () => {
               <Flex direction="column" gap="16px">
                 <UserAvatar
                   sizePx={200}
-                  imageUrl={JakubImageUrl}
+                  src={Jakub}
                   name="Jakub Jahič"
                   priority
                 />
@@ -95,7 +94,7 @@ const ProjectPage: NextPage = () => {
               <Flex direction="column" gap="16px">
                 <UserAvatar
                   sizePx={200}
-                  imageUrl={GabrielIamgeUrl}
+                  src={Gabriel}
                   name="Gabriel Kerekeš"
                   priority
                 />
@@ -110,7 +109,7 @@ const ProjectPage: NextPage = () => {
               <Flex direction="column" gap="16px">
                 <UserAvatar
                   sizePx={200}
-                  imageUrl={IvanImageUrl}
+                  src={Ivan}
                   name="Ivan Hrabčák"
                   priority
                 />
@@ -144,10 +143,11 @@ const ProjectPage: NextPage = () => {
                 gap="8px"
               >
                 <Image
-                  src={FirstPodcastImageUrl}
+                  src={FirstPodcast}
                   width="512"
                   height="316"
                   alt="Prvý podcast"
+                  lazyBoundary="400px"
                 />
                 <Text size="very-small">Natáčanie prvých podcastov (2018)</Text>
               </Flex>
@@ -259,11 +259,11 @@ const ProjectPage: NextPage = () => {
               gap="8px"
             >
               <Image
-                src={ProjectMockupImageUrl}
+                src={ProjectMockup}
                 width="348"
                 height="495"
                 alt="Návrh webstránky"
-                priority
+                lazyBoundary="400px"
               />
               <Text size="very-small">Návrh kurzovej platformy (2020)</Text>
             </Flex>
@@ -293,7 +293,7 @@ const ProjectPage: NextPage = () => {
                   width="480"
                   height="270"
                   alt="Návrh webstránky"
-                  priority
+                  lazyBoundary="400px"
                 />
                 <Text size="very-small">
                   Prvá nakódená verzia - úvodná stránka
@@ -310,7 +310,7 @@ const ProjectPage: NextPage = () => {
                   width="480"
                   height="322"
                   alt="Návrh webstránky"
-                  priority
+                  lazyBoundary="400px"
                 />
                 <Text size="very-small">
                   Prvá nakódená verzia - detail kurzu
@@ -327,7 +327,7 @@ const ProjectPage: NextPage = () => {
                   width="480"
                   height="445"
                   alt="Návrh webstránky"
-                  priority
+                  lazyBoundary="400px"
                 />
                 <Text size="very-small">
                   Prvá nakódená verzia - robenie kurzu

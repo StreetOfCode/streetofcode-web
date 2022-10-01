@@ -50,7 +50,7 @@ const CourseReviewItem = ({review, courseSlug}: CourseReviewItemProps) => {
           justifyContent="center"
         >
           <UserAvatar
-            imageUrl={review.imageUrl}
+            src={review.imageUrl}
             name={review.userName}
             sizePx={42}
           />

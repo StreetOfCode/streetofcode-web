@@ -174,7 +174,7 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
         >
           <ProfileInfoFlex alignSelf="flex-start" gap="32px">
             <UserAvatar
-              imageUrl={socUser.imageUrl || ''}
+              src={socUser.imageUrl || ''}
               name={socUser.name}
               sizePx={150}
             />

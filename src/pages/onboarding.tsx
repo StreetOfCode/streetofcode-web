@@ -47,7 +47,7 @@ const ConfirmName = ({
 
   return (
     <PageContent>
-      <UserAvatar imageUrl={imageUrl || ''} name={name} sizePx={150} />
+      <UserAvatar src={imageUrl || ''} name={name} sizePx={150} />
       <Flex direction="column" alignItems="flex-start" gap="20px">
         <Heading normalWeight variant="h3" align="left" withAccentUnderline>
           Meno

@@ -49,7 +49,7 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
           justifyContent="center"
         >
           <UserAvatar
-            imageUrl={comment.imageUrl}
+            src={comment.imageUrl}
             name={comment.userName}
             sizePx={42}
           />

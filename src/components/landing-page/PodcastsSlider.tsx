@@ -5,6 +5,7 @@ import Flex from '../core/Flex'
 import Heading from '../core/Heading'
 import Slider from '../Slider'
 import {podcasts} from './podcasts'
+import {device} from '../../theme/device'
 
 type Props = {
   className?: string
@@ -26,8 +27,7 @@ const PodcastsSlider = ({className, showPodcastsCount}: Props) => {
                 src={podcast.imageUrl}
                 alt={podcast.name}
                 layout="fill"
-                loading="eager"
-                priority
+                lazyBoundary="400px"
               />
             </ImageWrapper>
           </Flex>
@@ -44,6 +44,26 @@ const ImageWrapper = styled.a`
 
   width: 300px;
   aspect-ratio: 1;
+
+  transition: 250ms ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+    transition: 250ms ease-in-out;
+    box-shadow: 1px 8px 20px #d6d6d6;
+  }
+
+  // special one-time only case
+  @media (max-width: 1200px) {
+    width: 260px;
+  }
+
+  @media ${device.mobile} {
+    &:hover {
+      transform: unset;
+      transition: unset;
+      box-shadow: unset;
+    }
   }
 `
 

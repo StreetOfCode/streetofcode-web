@@ -26,11 +26,10 @@ const VideosSlider = ({className, showVideosCount}: Props) => {
             </Heading>
             <ImageWrapper href={video.youtubeUrl} target="blank">
               <StyledImage
-                src={video.imageUrl}
+                src={video.image}
                 alt={video.name}
                 layout="fill"
-                priority
-                loading="eager"
+                lazyBoundary="400px"
               />
             </ImageWrapper>
           </Flex>

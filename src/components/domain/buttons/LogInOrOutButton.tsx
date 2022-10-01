@@ -35,7 +35,7 @@ const LogInOrOutButton = () => {
               <DropdownMenu.Root>
                 <Trigger>
                   <StyledUserAvatar
-                    imageUrl={socUser.imageUrl || ''}
+                    src={socUser.imageUrl || ''}
                     name={socUser.name}
                     sizePx={40}
                   />

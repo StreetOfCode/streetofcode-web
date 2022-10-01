@@ -1,12 +1,12 @@
 import React from 'react'
-import Image from 'next/image'
+import Image, {StaticImageData} from 'next/image'
 import styled from 'styled-components'
 
 type Props = {
   className?: string
   priority?: boolean
   altName: string
-  src: string
+  src: string | StaticImageData
   sizePx: number
 }
 

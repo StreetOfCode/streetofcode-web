@@ -1,3 +1,4 @@
+import {StaticImageData} from 'next/image'
 import React from 'react'
 import styled from 'styled-components'
 import {createAvatarName} from '../../../utils'
@@ -6,7 +7,7 @@ import Flex from '../../core/Flex'
 
 type Props = {
   className?: string
-  imageUrl?: string
+  src?: string | StaticImageData
   priority?: boolean
   name: string
   sizePx: number
@@ -14,12 +15,12 @@ type Props = {
 
 // If user has imageUrl then creates circle shaped avatar from image
 // otherwise create circle shaped initials
-const UserAvatar = ({className, imageUrl, priority, name, sizePx}: Props) => {
-  if (imageUrl) {
+const UserAvatar = ({className, src, priority, name, sizePx}: Props) => {
+  if (src) {
     return (
       <Avatar
         className={className}
-        src={imageUrl}
+        src={src}
         altName={name}
         sizePx={sizePx}
         priority={priority}
