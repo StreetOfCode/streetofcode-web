@@ -11,11 +11,19 @@ type Props = {
   priority?: boolean
   name: string
   sizePx: number
+  placeholder?: boolean
 }
 
 // If user has imageUrl then creates circle shaped avatar from image
 // otherwise create circle shaped initials
-const UserAvatar = ({className, src, priority, name, sizePx}: Props) => {
+const UserAvatar = ({
+  className,
+  src,
+  priority,
+  name,
+  sizePx,
+  placeholder,
+}: Props) => {
   if (src) {
     return (
       <Avatar
@@ -24,6 +32,7 @@ const UserAvatar = ({className, src, priority, name, sizePx}: Props) => {
         altName={name}
         sizePx={sizePx}
         priority={priority}
+        placeholder={placeholder}
       />
     )
   } else {

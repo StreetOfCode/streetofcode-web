@@ -8,12 +8,13 @@ type Props = {
   altName: string
   src: string | StaticImageData
   sizePx: number
+  placeholder?: boolean
 }
 
 /***
  * Avatar is circle shaped image
  */
-const Avatar = ({className, altName, src, sizePx}: Props) => {
+const Avatar = ({className, altName, src, sizePx, placeholder}: Props) => {
   return (
     <StyledAvatar
       className={className}
@@ -23,6 +24,7 @@ const Avatar = ({className, altName, src, sizePx}: Props) => {
       src={src}
       width={sizePx}
       height={sizePx}
+      placeholder={placeholder ? 'blur' : undefined}
     />
   )
 }

@@ -83,6 +83,7 @@ const ProjectPage: NextPage = () => {
                   src={Jakub}
                   name="Jakub Jahič"
                   priority
+                  placeholder
                 />
                 <Text size="small">
                   <b>Jakub (29).</b> Spoluzakladeľ Street of Code. Baví ma
@@ -97,6 +98,7 @@ const ProjectPage: NextPage = () => {
                   src={Gabriel}
                   name="Gabriel Kerekeš"
                   priority
+                  placeholder
                 />
                 <Text size="small">
                   <b>Gabriel (28).</b> Spoluzakladateľ Street of Code.
@@ -112,6 +114,7 @@ const ProjectPage: NextPage = () => {
                   src={Ivan}
                   name="Ivan Hrabčák"
                   priority
+                  placeholder
                 />
                 <Text size="small">
                   <b>Ivan (17).</b> Stážista v Street of Code. Hrám na gitaru a
