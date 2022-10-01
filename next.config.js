@@ -16,6 +16,15 @@ const nextConfig = {
       'process.env.WORDPRESS_API_URL.match(/(http(?:s)?:\\/\\/)(.*)/)[2]',
     ],
   },
+  redirects: () => {
+    return [
+      {
+        source: '/blog/:slug*',
+        destination: '/clanky/:slug*',
+        permanent: true,
+      },
+    ]
+  },
   webpack(config) {
     config.resolve.fallback = {
       ...config.resolve.fallback, // if you miss it, all the other options in fallback, specified
