@@ -26,6 +26,7 @@ const PodcastsSlider = ({className, showPodcastsCount}: Props) => {
                 src={podcast.imageUrl}
                 alt={podcast.name}
                 layout="fill"
+                loading="eager"
                 priority
               />
             </ImageWrapper>

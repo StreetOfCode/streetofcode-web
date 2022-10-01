@@ -30,6 +30,7 @@ const VideosSlider = ({className, showVideosCount}: Props) => {
                 alt={video.name}
                 layout="fill"
                 priority
+                loading="eager"
               />
             </ImageWrapper>
           </Flex>

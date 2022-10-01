@@ -13,11 +13,12 @@ type Props = {
 /***
  * Avatar is circle shaped image
  */
-const Avatar = ({className, priority, altName, src, sizePx}: Props) => {
+const Avatar = ({className, altName, src, sizePx}: Props) => {
   return (
     <StyledAvatar
       className={className}
-      priority={priority}
+      loading="eager"
+      priority
       alt={altName}
       src={src}
       width={sizePx}
