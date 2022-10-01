@@ -225,7 +225,7 @@ const Home: NextPage<Props> = ({courses}) => {
             >
               <UsImage>
                 <StyledImage
-                  src="http://streetofcode.sk/wp-content/uploads/2022/06/P1200649-scaled.jpg"
+                  src="/images/P1200649-scaled.jpg"
                   alt="Street of Code"
                   layout="fill"
                   priority

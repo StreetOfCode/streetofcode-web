@@ -26,22 +26,14 @@ const Header = () => {
 
 // Images
 // eslint-disable-next-line max-len
-const JakubImageUrl =
-  'http://streetofcode.sk/wp-content/uploads/2020/03/00100lPORTRAIT_00100_BURST20190815135005128_COVER1.jpg'
-const GabrielIamgeUrl =
-  'http://streetofcode.sk/wp-content/uploads/2020/04/7520735.png'
-const IvanImageUrl =
-  'http://streetofcode.sk/wp-content/uploads/2022/09/ivan-final.png'
-const FirstPodcastImageUrl =
-  'http://streetofcode.sk/wp-content/uploads/2022/08/prvy_podcast-scaled.jpg'
-const ProjectMockupImageUrl =
-  'http://streetofcode.sk/wp-content/uploads/2022/08/leto-2020_EDITED.jpg'
-const FirstDesignHome =
-  'http://streetofcode.sk/wp-content/uploads/2022/08/Home.png'
-const FirstDesignCourseDetail =
-  'http://streetofcode.sk/wp-content/uploads/2022/08/Course-Detail.png'
-const FirstDesignTakeCoursePage =
-  'http://streetofcode.sk/wp-content/uploads/2022/08/Take-Course.png'
+const JakubImageUrl = '/images/jakub.jpg'
+const GabrielIamgeUrl = '/images/gabriel.jpg'
+const IvanImageUrl = '/images/ivan-final.png'
+const FirstPodcastImageUrl = '/images/prvy_podcast-scaled.jpg'
+const ProjectMockupImageUrl = '/images/leto-2020_EDITED.jpg'
+const FirstDesignHome = '/images/Home.jpg'
+const FirstDesignCourseDetail = '/images/Course-Detail.jpg'
+const FirstDesignTakeCoursePage = '/images/Take-Course.jpg'
 
 // Links
 const UcimeSaOOP =
