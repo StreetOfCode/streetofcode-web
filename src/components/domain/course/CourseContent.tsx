@@ -67,7 +67,9 @@ const CourseContent = ({className, course, ...props}: Props) => {
                 onClick={(e) => handleLectureOnClick(e, chapter.id, lecture.id)}
               >
                 <Flex gap="12px">
-                  <LectureTypeIcon>{Utils.getLectureTypeIcon(lecture.lectureType)}</LectureTypeIcon>
+                  <LectureTypeIcon>
+                    {Utils.getLectureTypeIcon(lecture.lectureType)}
+                  </LectureTypeIcon>
                   <StyledText>{lecture.name}</StyledText>
                 </Flex>
                 <Flex>

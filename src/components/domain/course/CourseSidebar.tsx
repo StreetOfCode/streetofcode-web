@@ -166,7 +166,9 @@ const CourseSidebar = ({
                 >
                   <Flex gap="12px" justifyContent="space-between" flex="1">
                     <Flex gap="8px">
-                      <LectureTypeIcon>{Utils.getLectureTypeIcon(lecture.lectureType)}</LectureTypeIcon>
+                      <LectureTypeIcon>
+                        {Utils.getLectureTypeIcon(lecture.lectureType)}
+                      </LectureTypeIcon>
                       <Flex
                         direction="column"
                         alignItems="flex-start"
