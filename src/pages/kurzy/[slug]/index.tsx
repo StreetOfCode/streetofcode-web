@@ -42,8 +42,8 @@ type Props = {
 const Header = ({course}: {course: CourseOverview}) => {
   return (
     <Head>
-      <title>{course.name} | Street of Code</title>
-      <meta name="description">{course.shortDescription}</meta>
+      <title>{`${course.name} | Street of Code`}</title>
+      <meta name="description" content={course.shortDescription} />
       <meta property="og:locale" content="sk_SK" />
       <meta property="og:title" content={`${course.name} | Street of Code`} />
       <meta property="og:type" content="website" />

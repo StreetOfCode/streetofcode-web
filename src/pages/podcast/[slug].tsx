@@ -17,9 +17,12 @@ const Header = ({post}: {post: Post}) => {
   return (
     <Head>
       <title>{post.title} | Street of Code</title>
-      <meta name="description">
-        {post.excerpt?.replace('<p>', '').replace('</p>', '') || 'Chýba úrivok'}
-      </meta>
+      <meta
+        name="description"
+        content={
+          post.excerpt?.replace('<p>', '').replace('</p>', '') || 'Chýba úrivok'
+        }
+      />
       <meta property="og:locale" content="sk_SK" />
       <meta
         property="og:title"

@@ -29,7 +29,7 @@ const BlogPosts = ({posts}: Props) => {
         </Text>
       </Flex>
       <GridWrapper>
-        {posts.map((post, i) => (
+        {posts?.map((post, i) => (
           <NextLink key={i} href={`/clanky/${post.slug}`}>
             <PostPreviewCard post={post} />
           </NextLink>

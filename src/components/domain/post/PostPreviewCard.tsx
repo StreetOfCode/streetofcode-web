@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import {Post} from '../../../wp/types'
-import NextLink from '../../core/NextLink'
 import Heading from '../../core/Heading'
 import Text from '../../core/Text'
 import {formatDate} from '../../../utils'
@@ -46,34 +45,30 @@ const PostPreviewCard = ({post, isPodcast}: Props) => {
           )}
         </Flex>
         {featuredImage && featuredImage.sourceUrl && (
-          <NextLink href={`/${isPodcast ? 'podcast' : 'clanky'}/${post.slug}`}>
-            <ImageWrapper>
-              <Image
-                layout="fill"
-                src={featuredImage.sourceUrl}
-                alt={post.title || ''}
-                objectFit="contain"
-                priority
-              />
-            </ImageWrapper>
-          </NextLink>
+          <ImageWrapper>
+            <Image
+              layout="fill"
+              src={featuredImage.sourceUrl}
+              alt={post.title || ''}
+              objectFit="contain"
+              priority
+            />
+          </ImageWrapper>
         )}
         {!featuredImage && (
-          <NextLink href={`/${isPodcast ? 'podcast' : 'clanky'}/${post.slug}`}>
-            <ImageWrapper>
-              <Image
-                layout="fill"
-                src={
-                  isPodcast
-                    ? EMPTY_PODCAST_IMAGE_PLACEHOLDER_URL
-                    : EMPTY_BLOG_IMAGE_PLACEHOLDER_URL
-                }
-                alt={post.title || ''}
-                objectFit="contain"
-                priority
-              />
-            </ImageWrapper>
-          </NextLink>
+          <ImageWrapper>
+            <Image
+              layout="fill"
+              src={
+                isPodcast
+                  ? EMPTY_PODCAST_IMAGE_PLACEHOLDER_URL
+                  : EMPTY_BLOG_IMAGE_PLACEHOLDER_URL
+              }
+              alt={post.title || ''}
+              objectFit="contain"
+              priority
+            />
+          </ImageWrapper>
         )}
       </Flex>
       {isPodcast && (

@@ -8,6 +8,8 @@ import {
   LectureType,
 } from './types'
 
+export const isRunningOnServer = () => typeof window === 'undefined'
+
 /***
  * i.e from 287 => 4h 47minút
  */

@@ -25,7 +25,10 @@ const Header = ({author}: {author: AuthorOverview}) => {
   return (
     <Head>
       <title>{author.name}</title>
-      <meta name="description">{`Street of Code lektor ${author.name}`}</meta>
+      <meta
+        name="description"
+        content={`Street of Code lektor ${author.name}`}
+      />
     </Head>
   )
 }

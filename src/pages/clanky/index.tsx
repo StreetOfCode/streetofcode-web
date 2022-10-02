@@ -22,9 +22,10 @@ const Header = () => {
   return (
     <Head>
       <title>Články | Street of Code</title>
-      <meta name="description">
-        Píšeme o všeličom. Tutorály, rozhovory, blogy.
-      </meta>
+      <meta
+        name="description"
+        content="Píšeme o všeličom. Tutorály, rozhovory, blogy."
+      />
       <meta property="og:locale" content="sk_SK" />
       <meta property="og:title" content="Podcast | Street of Code" />
       <meta property="og:type" content="website" />

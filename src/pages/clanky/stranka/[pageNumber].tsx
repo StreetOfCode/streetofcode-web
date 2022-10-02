@@ -23,7 +23,7 @@ const Header = () => {
   return (
     <Head>
       <title>Street of Code | Články</title>
-      <meta name="description">Naučíme ťa programovať</meta>
+      <meta name="description" content="Naučíme ťa programovať" />
     </Head>
   )
 }

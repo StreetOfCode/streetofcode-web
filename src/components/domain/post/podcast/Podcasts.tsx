@@ -30,7 +30,7 @@ const Podcasts = ({posts}: Props) => {
         </Text>
       </Flex>
       <GridWrapper>
-        {posts.map((post, i) => (
+        {posts?.map((post, i) => (
           <NextLink key={i} href={`/podcast/${post.slug}`}>
             <PostPreviewCard isPodcast post={post} />
           </NextLink>

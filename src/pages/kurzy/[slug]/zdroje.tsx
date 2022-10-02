@@ -18,7 +18,7 @@ const Header = ({course}: {course: CourseOverview}) => {
   return (
     <Head>
       <title>{course.name}</title>
-      <meta name="description">{course.shortDescription}</meta>
+      <meta name="description" content={course.shortDescription} />
       <meta name="robots" content="noindex" />
     </Head>
   )

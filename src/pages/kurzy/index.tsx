@@ -22,7 +22,7 @@ const Header = () => {
   return (
     <Head>
       <title>Kurzy | Street of Code</title>
-      <meta name="description">Nauč sa s nami programovať!</meta>
+      <meta name="description" content="Nauč sa s nami programovať!" />
       <meta property="og:locale" content="sk_SK" />
       <meta property="og:title" content="Kurzy | Street of Code" />
       <meta property="og:type" content="website" />

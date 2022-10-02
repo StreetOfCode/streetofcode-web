@@ -25,7 +25,7 @@ const Header = () => {
   return (
     <Head>
       <title>Street of Code | Feedback</title>
-      <meta name="description">Chceme tvoj feedback</meta>
+      <meta name="description" content="Chceme tvoj feedback" />
     </Head>
   )
 }
