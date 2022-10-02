@@ -131,7 +131,7 @@ const PaddedFlex = styled(Flex)`
 const Excerpt = styled(Text)`
   text-overflow: ellipsis;
   overflow: hidden;
-  height: 4.4em;
+  height: 4.6em;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;

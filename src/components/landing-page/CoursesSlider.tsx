@@ -55,8 +55,8 @@ const CoursesSlider = ({className, courses, showCoursesCount}: Props) => {
       showItemsCount={showCoursesCount}
       itemLayout={(course, i, visible) => {
         return (
-          <Wrapper visible={visible}>
-            <NextLink key={i} href={`/kurzy/${course.slug}`}>
+          <Wrapper key={i} visible={visible}>
+            <NextLink href={`/kurzy/${course.slug}`}>
               <CourseCard course={course} />
             </NextLink>
           </Wrapper>
