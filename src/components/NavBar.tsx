@@ -10,6 +10,7 @@ import NextLink from './core/NextLink'
 import {device} from '../theme/device'
 import {useAuth} from '../AuthUserContext'
 import ThemeSwitcher from '../theme/ThemeSwitcher'
+import {socLogo} from '../images'
 
 const NavBar = () => {
   const [mobileNavbarOpen, setMobileNavbarOpen] = useState(false)
@@ -44,7 +45,7 @@ const NavBar = () => {
         <LogoImage
           layout="fill"
           alt="Logo"
-          src="/soc_logo.png"
+          src={socLogo}
           onClick={() => router.push('/')}
           priority
         />
