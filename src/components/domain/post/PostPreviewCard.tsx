@@ -110,7 +110,7 @@ const WrapperFlex = styled(Flex)`
   &:hover {
     transform: scale(1.1);
     transition: 250ms ease-in-out;
-    box-shadow: 1px 8px 20px #d6d6d6;
+    box-shadow: ${(props) => `1px 8px 20px ${props.theme.shadowColor}`};
   }
 
   @media ${device.mobile} {
