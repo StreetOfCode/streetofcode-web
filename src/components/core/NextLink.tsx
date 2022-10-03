@@ -45,8 +45,12 @@ const StyledA = styled.a<{alignSelf?: AlignItems; active?: boolean}>`
   color: unset;
   align-self: ${(props) => props.alignSelf};
 
-  span {
+  & > span {
     text-decoration: ${(props) => props.active && 'underline'};
+  }
+
+  & > span:hover {
+    opacity: 0.7;
   }
 `
 
