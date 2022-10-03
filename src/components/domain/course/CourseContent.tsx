@@ -1,5 +1,5 @@
 import React, {HTMLAttributes} from 'react'
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 import * as Accordion from '@radix-ui/react-accordion'
 import {ChapterOverview, CourseOverview} from '../../../types'
 import Heading from '../../core/Heading'
@@ -61,28 +61,33 @@ const CourseContent = ({className, course, ...props}: Props) => {
                 </Flex>
               </Trigger>
             </Header>
-            {chapter.lectures.map((lecture) => (
-              <ItemContent
-                key={lecture.id}
-                onClick={(e) => handleLectureOnClick(e, chapter.id, lecture.id)}
-              >
-                <Flex gap="12px">
-                  <LectureTypeIcon>
-                    {Utils.getLectureTypeIcon(lecture.lectureType)}
-                  </LectureTypeIcon>
-                  <StyledText>{lecture.name}</StyledText>
-                </Flex>
-                <Flex>
-                  {lecture.videoDurationSeconds > 0 && (
-                    <StyledText size="small">
-                      {Utils.formatDurationFromSeconds(
-                        lecture.videoDurationSeconds,
-                      )}
-                    </StyledText>
-                  )}
-                </Flex>
-              </ItemContent>
-            ))}
+            <AccordionContent>
+              {chapter.lectures.map((lecture) => (
+                <AccordionContentWrapper
+                  key={lecture.id}
+                  onClick={(e) =>
+                    handleLectureOnClick(e, chapter.id, lecture.id)
+                  }
+                  justifyContent="space-between"
+                >
+                  <Flex gap="12px">
+                    <LectureTypeIcon>
+                      {Utils.getLectureTypeIcon(lecture.lectureType)}
+                    </LectureTypeIcon>
+                    <StyledText>{lecture.name}</StyledText>
+                  </Flex>
+                  <Flex>
+                    {lecture.videoDurationSeconds > 0 && (
+                      <StyledText size="small">
+                        {Utils.formatDurationFromSeconds(
+                          lecture.videoDurationSeconds,
+                        )}
+                      </StyledText>
+                    )}
+                  </Flex>
+                </AccordionContentWrapper>
+              ))}
+            </AccordionContent>
           </Item>
         ))}
       </AccordionRoot>
@@ -132,10 +137,33 @@ const LectureTypeIcon = styled.span`
 
 const StyledText = styled(Text)``
 
-const ItemContent = styled(Accordion.Content)`
-  padding: 0 4px;
+const openContentAnimation = keyframes({
+  from: {height: 0},
+  to: {height: 'var(--radix-accordion-content-height)'},
+})
+
+const closeContentAnimation = keyframes({
+  from: {height: 'var(--radix-accordion-content-height)'},
+  to: {height: 0},
+})
+
+const AccordionContent = styled(Accordion.Content)`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 12px;
+
+  [data-state='open'] & {
+    animation: ${openContentAnimation} 300ms ease-out forwards;
+    overflow: hidden;
+  }
+  [data-state='closed'] & {
+    animation: ${closeContentAnimation} 300ms ease-out forwards;
+    overflow: hidden;
+  }
+`
+
+const AccordionContentWrapper = styled(Flex)`
+  padding: 0 4px;
 
   &:hover {
     cursor: pointer;
@@ -144,10 +172,6 @@ const ItemContent = styled(Accordion.Content)`
     ${StyledText} {
       color: ${(props) => props.theme.accentColor};
     }
-  }
-
-  [data-state='closed'] & {
-    display: none;
   }
 
   svg {

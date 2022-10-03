@@ -1,5 +1,5 @@
 import React, {HTMLAttributes, useEffect} from 'react'
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 import {ChapterProgressOverview, CourseProgressOverview} from '../../../types'
 import Flex from '../../core/Flex'
 import {BiChevronDown} from 'react-icons/bi'
@@ -154,46 +154,50 @@ const CourseSidebar = ({
                   <AccordionChevron />
                 </Trigger>
               </Header>
-              {chapter.lectures.map((lecture) => (
-                <ItemContent
-                  key={lecture.id}
-                  onClick={(e) =>
-                    handleLectureOnClick(e, chapter.id, lecture.id)
-                  }
-                  selected={
-                    lectureId !== undefined && lecture.id === Number(lectureId)
-                  }
-                >
-                  <Flex gap="12px" justifyContent="space-between" flex="1">
-                    <Flex gap="8px">
-                      <LectureTypeIcon>
-                        {Utils.getLectureTypeIcon(lecture.lectureType)}
-                      </LectureTypeIcon>
-                      <Flex
-                        direction="column"
-                        alignItems="flex-start"
-                        gap="2px"
-                      >
-                        <StyledText>{lecture.name}</StyledText>
-                        {lecture.videoDurationSeconds > 0 && (
-                          <StyledText size="small">
-                            {Utils.formatDurationFromSeconds(
-                              lecture.videoDurationSeconds,
-                            )}
-                          </StyledText>
-                        )}
+              <AccordionContent>
+                {chapter.lectures.map((lecture) => (
+                  <AccordionContentWrapper
+                    key={lecture.id}
+                    onClick={(e) =>
+                      handleLectureOnClick(e, chapter.id, lecture.id)
+                    }
+                    selected={
+                      lectureId !== undefined &&
+                      lecture.id === Number(lectureId)
+                    }
+                    justifyContent="space-between"
+                  >
+                    <Flex gap="12px" justifyContent="space-between" flex="1">
+                      <Flex gap="8px">
+                        <LectureTypeIcon>
+                          {Utils.getLectureTypeIcon(lecture.lectureType)}
+                        </LectureTypeIcon>
+                        <Flex
+                          direction="column"
+                          alignItems="flex-start"
+                          gap="2px"
+                        >
+                          <StyledText>{lecture.name}</StyledText>
+                          {lecture.videoDurationSeconds > 0 && (
+                            <StyledText size="small">
+                              {Utils.formatDurationFromSeconds(
+                                lecture.videoDurationSeconds,
+                              )}
+                            </StyledText>
+                          )}
+                        </Flex>
                       </Flex>
+                      <CheckBox
+                        checked={lecture.viewed}
+                        onToggle={(newValue) =>
+                          handleLectureCheckboxOnClick(newValue, lecture.id)
+                        }
+                        alignSelf="center"
+                      />
                     </Flex>
-                    <CheckBox
-                      checked={lecture.viewed}
-                      onToggle={(newValue) =>
-                        handleLectureCheckboxOnClick(newValue, lecture.id)
-                      }
-                      alignSelf="center"
-                    />
-                  </Flex>
-                </ItemContent>
-              ))}
+                  </AccordionContentWrapper>
+                ))}
+              </AccordionContent>
             </Item>
           ))}
         </AccordionRoot>
@@ -251,17 +255,36 @@ const Item = styled(Accordion.Item)`
 
 const StyledText = styled(Text)``
 
-const ItemContent = styled(Accordion.Content)<{selected?: boolean}>`
-  padding: 0 4px;
+const openContentAnimation = keyframes({
+  from: {height: 0},
+  to: {height: 'var(--radix-accordion-content-height)'},
+})
+
+const closeContentAnimation = keyframes({
+  from: {height: 'var(--radix-accordion-content-height)'},
+  to: {height: 0},
+})
+
+const AccordionContent = styled(Accordion.Content)`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 12px;
+
+  [data-state='open'] & {
+    animation: ${openContentAnimation} 300ms ease-out forwards;
+    overflow: hidden;
+  }
+  [data-state='closed'] & {
+    animation: ${closeContentAnimation} 300ms ease-out forwards;
+    overflow: hidden;
+  }
+`
+
+const AccordionContentWrapper = styled(Flex)<{selected?: boolean}>`
+  padding: 0 4px;
 
   &:hover {
     cursor: pointer;
-  }
-
-  [data-state='closed'] & {
-    display: none;
   }
 
   svg {
