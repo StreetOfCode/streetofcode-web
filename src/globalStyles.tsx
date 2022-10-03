@@ -33,6 +33,10 @@ const GlobalStyles = createGlobalStyle`
   a {
     color: ${(props) => props.theme.accentColor};
   }
+
+  .grecaptcha-badge {
+    visibility: hidden;
+  }
 `
 
 export default GlobalStyles

@@ -46,6 +46,7 @@ const NavBar = () => {
           alt="Logo"
           src="/soc_logo.png"
           onClick={() => router.push('/')}
+          priority
         />
       </LogoWrapper>
       <MobileNavbarOptions />
@@ -71,7 +72,7 @@ const NavBar = () => {
         <LogInOrOutButton />
       </MenuFlex>
       <MobileMenuFlex open={mobileNavbarOpen}>
-        <MenuItems direction="column" alignItems="flex-start" gap={'32px'}>
+        <MobileMenuItems direction="column" alignItems="stretch" gap={'32px'}>
           {!user && (
             <NextLink href={`/login/${encodeURIComponent(router.asPath)}`}>
               <Text>Prihlásiť</Text>
@@ -95,7 +96,7 @@ const NavBar = () => {
             <Text>Feedback</Text>
           </NextLink>
           {user && <LogoutText onClick={logout}>Odhlásiť</LogoutText>}
-        </MenuItems>
+        </MobileMenuItems>
       </MobileMenuFlex>
     </WrapperFlex>
   )
@@ -116,6 +117,15 @@ const WrapperFlex = styled(Flex)<{mobileNavbarOpen: boolean}>`
 
 const MenuItems = styled(Flex)`
   margin-right: 64px;
+
+  a {
+    text-decoration: none;
+    color: unset;
+  }
+`
+
+const MobileMenuItems = styled(Flex)`
+  width: 100%;
 
   a {
     text-decoration: none;
