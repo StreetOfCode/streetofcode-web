@@ -1,10 +1,9 @@
 import {useRouter} from 'next/router'
 import React from 'react'
-import {Loading} from 'react-admin'
 import {useAuth} from '../AuthUserContext'
 import {QueryGuard} from '../QueryGuard'
-import {isRunningOnServer} from '../utils'
 import {useGetUser} from './api/user'
+import Loading from './Loading'
 
 const routesThatDontNeedOnBoardingProtection = ['/login', '/onboarding']
 
@@ -14,7 +13,6 @@ const OnboardingProtectionRoute = ({children}: {children: React.ReactNode}) => {
   const router = useRouter()
 
   if (isLoading) {
-    if (isRunningOnServer()) return <>{children}</>
     return <Loading />
   }
 

@@ -16,6 +16,7 @@ import ErrorBoundaryFallBack from '../components/domain/ErrorBoundaryFallBack'
 import ThemeSwitchingContext from '../theme/ThemeSwitchingContext'
 import '../theme/animations/TypingAnimation.css'
 import OnboardingProtectionRoute from '../components/OnboardingProtectionRoute'
+import SSRWrapper from '../components/SSRWrapper'
 
 function MyApp({Component, pageProps}: AppProps) {
   const [theme, setTheme] = useState(lightTheme)
@@ -64,10 +65,20 @@ function MyApp({Component, pageProps}: AppProps) {
               <RootWrapper>
                 <QueryClientProvider client={queryClient}>
                   <GlobalStyles />
-                  <OnboardingProtectionRoute>
-                    <Component {...pageProps} />
-                    <Footer />
-                  </OnboardingProtectionRoute>
+                  <SSRWrapper
+                    ClientChildren={() => (
+                      <OnboardingProtectionRoute>
+                        <Component {...pageProps} />
+                        <Footer />
+                      </OnboardingProtectionRoute>
+                    )}
+                    SSRChildren={() => (
+                      <>
+                        <Component {...pageProps} />
+                        <Footer />
+                      </>
+                    )}
+                  />
                 </QueryClientProvider>
               </RootWrapper>
             </AuthContextProvider>
