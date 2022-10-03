@@ -20,7 +20,7 @@ const Header = ({post}: {post: Post}) => {
       <meta
         name="description"
         content={
-          post.excerpt?.replace('<p>', '').replace('</p>', '') || 'Chýba úrivok'
+          post.excerpt?.replace('<p>', '').replace('</p>', '') || 'Chýba úryvok'
         }
       />
       <meta property="og:locale" content="sk_SK" />
@@ -32,7 +32,7 @@ const Header = ({post}: {post: Post}) => {
       <meta
         property="og:description"
         content={
-          post.excerpt?.replace('<p>', '').replace('</p>', '') || 'Chýba úrivok'
+          post.excerpt?.replace('<p>', '').replace('</p>', '') || 'Chýba úryvok'
         }
       />
       <meta property="og:url" content={post.uri || ''} />

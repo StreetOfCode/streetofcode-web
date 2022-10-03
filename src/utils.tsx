@@ -24,9 +24,9 @@ export const formatDurationFromMinutes = (minutes: number) => {
  */
 export const formatDurationFromSeconds = (seconds: number) => {
   const minutes = Math.floor(seconds / 60)
-  seconds = seconds % 60
+  const remainingSeconds = seconds % 60
 
-  return `${minutes}m ${seconds}s`
+  return `${minutes}m ${remainingSeconds}s`
 }
 
 /***

@@ -58,7 +58,7 @@ const FeedbackPage: NextPage = () => {
 
   const onSubmit = async () => {
     if (!email.trimEnd()) {
-      setEmailError('Email je prádzny')
+      setEmailError('Email je prázdny')
       return
     } else if (!emailRegex.test(email)) {
       setEmailError('Email má nesprávny formát')

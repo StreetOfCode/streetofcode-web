@@ -33,7 +33,7 @@ const NewsletterForm = ({className, user, ...props}: Props) => {
 
   const onSubmit = async () => {
     if (!newsletterEmail.trimEnd()) {
-      setNewsletterError('Email je prádzny')
+      setNewsletterError('Email je prázdny')
       return
     } else if (!emailRegex.test(newsletterEmail)) {
       setNewsletterError('Email má nesprávny formát')
