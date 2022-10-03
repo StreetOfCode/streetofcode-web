@@ -182,7 +182,7 @@ const CourseDetailContent = ({
               href={{pathname: url, query: {autoplay: 'false'}}}
               alignSelf="stretch"
             >
-              <StyledButton variant="accent">
+              <StyledButton variant="accent" disableHoverTransform>
                 {courseOverview.userProgressMetadata
                   ? 'Pokračovať v kurze'
                   : 'Spustiť kurz'}

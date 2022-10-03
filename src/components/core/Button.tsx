@@ -13,6 +13,7 @@ type Props = {
   size?: Size
   iconBefore?: React.ReactNode
   noWrap?: boolean
+  disableHoverTransform?: boolean
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
 type Variant = 'accent' | 'default' | 'outline' | 'danger'
@@ -66,6 +67,7 @@ const Button = ({
   size,
   iconBefore,
   noWrap,
+  disableHoverTransform = false,
   ...props
 }: Props) => {
   const {theme} = useContext(ThemeSwitchingContext)
@@ -80,6 +82,7 @@ const Button = ({
       disabled={disabled}
       size={size || 'default'}
       noWrap={noWrap}
+      disableHoverTransform={disableHoverTransform}
       {...props}
     >
       <Flex gap="12px" justifyContent="center">
@@ -98,6 +101,7 @@ const StyledButton = styled.button<{
   disabled?: boolean
   size: Size
   noWrap?: boolean
+  disableHoverTransform?: boolean
 }>`
   background-color: ${(props) =>
     variantStyleValues(props.theme)[props.variant].backgroundColor};
@@ -107,12 +111,26 @@ const StyledButton = styled.button<{
   border-radius: 10px;
   font-size: ${(props) => sizeStyleValues[props.size].fontSize};
   font-weight: ${(props) => (props.bold ? 'bold' : 'normal')};
-  opacity: ${(props) => props.disabled && 0.7};
+  opacity: ${(props) => props.disabled && 0.5};
   text-transform: ${(props) => (props.uppercase ? 'uppercase' : 'unset')};
   white-space: ${(props) => (props.noWrap ? 'nowrap' : 'unset')};
 
+  transition: ${(props) =>
+    !props.disabled &&
+    !props.disableHoverTransform &&
+    'transform 0.2s ease-in-out'};
+
   &:hover {
     cursor: ${(props) => !props.disabled && 'pointer'};
+    transform: ${(props) =>
+      !props.disabled && !props.disableHoverTransform && 'scale(1.05)'};
+    transition: ${(props) =>
+      !props.disabled &&
+      !props.disableHoverTransform &&
+      'transform 0.2s ease-in-out'};
+    opacity: ${(props) => !props.disabled && '0.9'};
+    box-shadow: ${(props) =>
+      !props.disabled && `0 0 10px 0 ${props.theme.shadowColor}`};
   }
 
   svg {
