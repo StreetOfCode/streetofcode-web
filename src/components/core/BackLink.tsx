@@ -10,17 +10,11 @@ type Props = {
 
 const BackLink = ({className, text, to, ...props}: Props) => {
   return (
-    <StyledLink href={to} {...props} passHref>
+    <Link href={to} {...props} passHref>
       <StyledA className={className}>&larr; {text}</StyledA>
-    </StyledLink>
+    </Link>
   )
 }
-
-const StyledLink = styled(Link)`
-  &:hover {
-    text-decoration: underline;
-  }
-`
 
 const StyledA = styled.a`
   display: block;
@@ -29,6 +23,10 @@ const StyledA = styled.a`
   text-decoration: none;
   color: ${(props) => props.theme.secondaryColor};
   margin-bottom: 32px;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `
 
 export default BackLink
