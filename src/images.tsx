@@ -22,6 +22,7 @@ import FirstPodcastImage from '../public/images/prvy_podcast-scaled.jpg'
 import FirstDesignTakeCoursePageImage from '../public/images/Take-Course.jpg'
 import ThumbnailImage from '../public/images/Thumbnail.jpg'
 import uvahyRefaktorovanieImage from '../public/images/uvahyRefaktorovanie.jpg'
+import socLogoImage from '../public/images/soc_logo.png'
 
 export const akoSaNaucisFrontend = akoSaNaucisFrontendImage as StaticImageData
 export const FirstDesignCourseDetail =
@@ -49,3 +50,4 @@ export const FirstDesignTakeCoursePage =
   FirstDesignTakeCoursePageImage as StaticImageData
 export const Thumbnail = ThumbnailImage as StaticImageData
 export const uvahyRefaktorovanie = uvahyRefaktorovanieImage as StaticImageData
+export const socLogo = socLogoImage as StaticImageData
