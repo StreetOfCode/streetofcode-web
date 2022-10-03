@@ -7,6 +7,7 @@ export type ThemeType = {
   dangerColor: string // error texts, i.e in TextField or incorrect quiz question
   successColor: string // i.e correct quiz question
   footerBackgroundColor: string
+  shadowColor: string
 }
 
 export const lightTheme: ThemeType = {
@@ -18,6 +19,7 @@ export const lightTheme: ThemeType = {
   dangerColor: '#CB2041',
   successColor: '#4CBF6B',
   footerBackgroundColor: '#212121',
+  shadowColor: 'rgba(0,0,0,0.2)',
 }
 
 export const darkTheme: ThemeType = {
@@ -29,4 +31,5 @@ export const darkTheme: ThemeType = {
   dangerColor: '#CB2041',
   successColor: '#4CBF6B',
   footerBackgroundColor: '#efefef',
+  shadowColor: 'rgba(255,255,255,0.2)',
 }
