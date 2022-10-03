@@ -7,6 +7,7 @@ import {useRouter} from 'next/router'
 import {useAuth} from '../../../AuthUserContext'
 import TakeCourse from '../../../components/domain/course/TakeCourse'
 import {CourseOverview} from '../../../types'
+import Loading from '../../../components/Loading'
 
 type Props = {
   courseSlug: string
@@ -30,8 +31,12 @@ const ResourcesPage: NextPage<Props> = ({
   lectureId,
 }: Props) => {
   const getCourseOverview = useGetCourseOverview(courseSlug, true)
-  const {user} = useAuth()
+  const {user, isLoading} = useAuth()
   const router = useRouter()
+
+  if (isLoading) {
+    return <Loading />
+  }
 
   if (!user) {
     // this page can be seen only by logged in users
