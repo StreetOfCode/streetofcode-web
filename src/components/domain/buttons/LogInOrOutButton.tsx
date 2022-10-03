@@ -59,6 +59,7 @@ const LogInOrOutButton = () => {
 const StyledUserAvatar = styled(UserAvatar)`
   &:hover {
     cursor: pointer;
+    opacity: 0.9;
   }
 `
 
