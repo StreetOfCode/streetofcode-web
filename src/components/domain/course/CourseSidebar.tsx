@@ -285,6 +285,7 @@ const AccordionContentWrapper = styled(Flex)<{selected?: boolean}>`
 
   &:hover {
     cursor: pointer;
+    opacity: 0.7;
   }
 
   svg {
@@ -316,6 +317,7 @@ const AccordionChevron = styled(BiChevronDown)`
 const ResourcesWrapper = styled(Flex)`
   &:hover {
     cursor: pointer;
+    opacity: 0.7;
   }
 `
 const ResourcesIcon = styled(CgNotes)`
