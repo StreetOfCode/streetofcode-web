@@ -61,9 +61,9 @@ const ProjectPage: NextPage = () => {
 
   const renderLink = (text: string, src: string) => {
     return (
-      <a href={src} target="blank">
+      <StyledLink href={src} target="blank">
         {text}
-      </a>
+      </StyledLink>
     )
   }
 
@@ -423,6 +423,12 @@ const ProjectPage: NextPage = () => {
     </>
   )
 }
+
+const StyledLink = styled('a')`
+  &:hover {
+    opacity: 0.8;
+  }
+`
 
 const StyledPagedContentWrapper = styled(PageContentWrapper)`
   span {

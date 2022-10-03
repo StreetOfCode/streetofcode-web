@@ -111,9 +111,9 @@ const FeedbackPage: NextPage = () => {
 
   const renderDiscordLink = (text: string) => {
     return (
-      <a href={discordInviteUrl} target="blank">
+      <StyledLink href={discordInviteUrl} target="blank">
         {text}
-      </a>
+      </StyledLink>
     )
   }
 
@@ -240,6 +240,12 @@ const FeedbackPage: NextPage = () => {
     </>
   )
 }
+
+const StyledLink = styled('a')`
+  &:hover {
+    opacity: 0.8;
+  }
+`
 
 const FAQItemsFlex = styled(Flex)`
   width: 600px;
