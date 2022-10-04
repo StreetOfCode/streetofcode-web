@@ -24,6 +24,10 @@ type ConfirmNameProps = {
   onStepForward: (name: string) => void
 }
 
+const CHECK_EMAIL_IN_SPAN_NOTICE =
+  'Prosím skontroluj, či ti email neprišiel do spamu. Ak áno, tak ho ' +
+  'prosím vo svojej emailovej službe označ ako "not spam".'
+
 const ConfirmName = ({
   currentStep,
   displayName,
@@ -108,6 +112,7 @@ const Newsletter = ({
           label={`Poslať potvrdzujúci email (${email})`}
           size={'22px'}
         />
+        <Text size="very-small">{CHECK_EMAIL_IN_SPAN_NOTICE}</Text>
         <Button variant="accent" onClick={onSubmit}>
           Pokračovať
         </Button>
@@ -168,6 +173,7 @@ const DiscordServer = ({
           label={`Chcem dostať pozvánku (${email})`}
           size={'22px'}
         />
+        <Text size="very-small">{CHECK_EMAIL_IN_SPAN_NOTICE}</Text>
         <Button disabled={disableButtons} variant="accent" onClick={onSubmit}>
           Dokončiť
         </Button>
