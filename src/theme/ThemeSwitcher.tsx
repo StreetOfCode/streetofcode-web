@@ -1,33 +1,55 @@
-import React, {HTMLAttributes, useContext} from 'react'
+import React, {HTMLAttributes} from 'react'
 import styled from 'styled-components'
 import Button from '../components/core/Button'
-import {MdOutlineLightMode, MdOutlineDarkMode} from 'react-icons/md'
-import {darkTheme, lightTheme} from './theme'
-import ThemeSwitchingContext from './ThemeSwitchingContext'
+import {
+  MdOutlineLightMode,
+  MdOutlineDarkMode,
+  MdOutlineHdrAuto,
+} from 'react-icons/md'
+import {useTheme} from '../hooks/useTheme'
+import {lightTheme, ThemeType} from './theme'
+import {ThemeSetting} from '../types'
+
+const useThemeConfig = (themeSetting: ThemeSetting, theme: ThemeType) => {
+  return {
+    LIGHT: {
+      nextThemeSetting: 'DARK' as ThemeSetting,
+      icon: <MdOutlineLightMode />,
+    },
+    DARK: {
+      nextThemeSetting: 'AUTO' as ThemeSetting,
+      icon: <MdOutlineDarkMode />,
+    },
+    AUTO: {
+      nextThemeSetting: 'LIGHT' as ThemeSetting,
+      icon: <MdOutlineHdrAuto />,
+    },
+    'NOT-SET': {
+      nextThemeSetting: (theme === lightTheme
+        ? 'DARK'
+        : 'LIGHT') as ThemeSetting,
+      icon:
+        theme === lightTheme ? <MdOutlineLightMode /> : <MdOutlineDarkMode />,
+    },
+  }[themeSetting]
+}
 
 type Props = {
   className?: string
 } & HTMLAttributes<HTMLElement>
 
 const ThemeSwitcher = ({className, ...props}: Props) => {
-  const {theme, setTheme} = useContext(ThemeSwitchingContext)
+  const {theme, themeSetting, setThemeSetting} = useTheme()
+
+  const {nextThemeSetting, icon} = useThemeConfig(themeSetting, theme)
 
   const switchTheme = () => {
-    if (theme.type === 'LIGHT') {
-      setTheme(darkTheme)
-    } else {
-      setTheme(lightTheme)
-    }
+    setThemeSetting(nextThemeSetting)
   }
 
   return (
     <StyledWrapper className={className} {...props}>
-      <StyledButton
-        iconBefore={
-          theme === lightTheme ? <MdOutlineDarkMode /> : <MdOutlineLightMode />
-        }
-        onClick={switchTheme}
-      />
+      <StyledButton iconBefore={icon} onClick={switchTheme} />
     </StyledWrapper>
   )
 }

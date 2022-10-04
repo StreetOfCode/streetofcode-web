@@ -1,10 +1,9 @@
 import {Analytics, logEvent} from 'firebase/analytics'
-import React, {useEffect, useState} from 'react'
+import React, {HTMLAttributes, useEffect, useState} from 'react'
 import * as Sentry from '@sentry/react'
 import type {AppProps} from 'next/app'
 import GlobalStyles from '../globalStyles'
 import styled, {ThemeProvider} from 'styled-components'
-import {lightTheme} from '../theme/theme'
 import Footer from '../components/Footer'
 import {QueryClientProvider} from 'react-query'
 import queryClient from '../queryClient'
@@ -13,13 +12,22 @@ import {useRouter} from 'next/router'
 import {analytics} from '../firebase'
 import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3'
 import ErrorBoundaryFallBack from '../components/domain/ErrorBoundaryFallBack'
-import ThemeSwitchingContext from '../theme/ThemeSwitchingContext'
+import ThemeSettingContext from '../theme/ThemeSettingContext'
 import '../theme/animations/TypingAnimation.css'
 import OnboardingProtectionRoute from '../components/OnboardingProtectionRoute'
 import SSRWrapper from '../components/SSRWrapper'
+import {useTheme} from '../hooks/useTheme'
+import {storage} from '../localStorage'
+
+const _ThemeProvider = ({children}: HTMLAttributes<HTMLElement>) => {
+  const {theme} = useTheme()
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>
+}
 
 function MyApp({Component, pageProps}: AppProps) {
-  const [theme, setTheme] = useState(lightTheme)
+  const [themeSetting, setThemeSetting] = useState(
+    storage.getThemeSetting() || 'NOT-SET',
+  )
   const router = useRouter()
 
   useEffect(() => {
@@ -59,8 +67,8 @@ function MyApp({Component, pageProps}: AppProps) {
       <GoogleReCaptchaProvider
         reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY || ''}
       >
-        <ThemeSwitchingContext.Provider value={{theme, setTheme}}>
-          <ThemeProvider theme={theme}>
+        <ThemeSettingContext.Provider value={{themeSetting, setThemeSetting}}>
+          <_ThemeProvider>
             <AuthContextProvider>
               <RootWrapper>
                 <QueryClientProvider client={queryClient}>
@@ -82,8 +90,8 @@ function MyApp({Component, pageProps}: AppProps) {
                 </QueryClientProvider>
               </RootWrapper>
             </AuthContextProvider>
-          </ThemeProvider>
-        </ThemeSwitchingContext.Provider>
+          </_ThemeProvider>
+        </ThemeSettingContext.Provider>
       </GoogleReCaptchaProvider>
     </Sentry.ErrorBoundary>
   )

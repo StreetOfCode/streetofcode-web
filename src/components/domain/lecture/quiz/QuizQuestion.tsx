@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import * as Api from '../../../../api'
 import Button from '../../../core/Button'
@@ -13,7 +13,7 @@ import {
   QuestionCorrectness,
 } from '../../../../types'
 import RadioGroup from '../../../core/RadioGroup'
-import ThemeSwitchingContext from '../../../../theme/ThemeSwitchingContext'
+import {useTheme} from '../../../../hooks/useTheme'
 
 const QuizAnswer = ({quizAnswer}: {quizAnswer: QuizQuestionAnswer}) => {
   return <WrappedText>{quizAnswer.text}</WrappedText>
@@ -32,7 +32,7 @@ export const QuizQuestion = ({
   const [wasAnsweredCorrectly, setAnsweredCorrectly] = useState<boolean | null>(
     null,
   )
-  const {theme} = useContext(ThemeSwitchingContext)
+  const {theme} = useTheme()
 
   useEffect(() => {
     const fetchSelectedAnswers = async () => {

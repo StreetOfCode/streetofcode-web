@@ -1,7 +1,7 @@
-import React, {ButtonHTMLAttributes, useContext} from 'react'
+import React, {ButtonHTMLAttributes} from 'react'
 import styled from 'styled-components'
+import {useTheme} from '../../hooks/useTheme'
 import {ThemeType} from '../../theme/theme'
-import ThemeSwitchingContext from '../../theme/ThemeSwitchingContext'
 import Flex from './Flex'
 
 type Props = {
@@ -70,7 +70,7 @@ const Button = ({
   disableHoverTransform = false,
   ...props
 }: Props) => {
-  const {theme} = useContext(ThemeSwitchingContext)
+  const {theme} = useTheme()
 
   return (
     <StyledButton
