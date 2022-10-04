@@ -63,7 +63,7 @@ const ImageWrapper = styled.a`
     width: 260px;
   }
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     &:hover {
       transform: unset;
       transition: unset;

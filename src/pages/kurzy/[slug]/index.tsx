@@ -275,7 +275,7 @@ const CourseDetailContent = ({
 }
 
 const WrapperFlex = styled(Flex)`
-  @media ${device.mobile} {
+  @media ${device.S} {
     flex-direction: column;
     gap: 32px;
   }
@@ -284,7 +284,7 @@ const WrapperFlex = styled(Flex)`
 const CourseDetailsFlex = styled(Flex)`
   max-width: 50%;
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     max-width: 100%;
     order: 2;
   }
@@ -313,11 +313,11 @@ const CardFlex = styled(Flex)`
   position: sticky;
   top: 80px;
 
-  @media ${device.tablet} {
+  @media ${device.M} {
     position: static;
   }
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     align-self: center;
     width: 100%;
     order: 1;

@@ -5,6 +5,7 @@ import Flex from '../../core/Flex'
 import Text from '../../core/Text'
 import Heading from '../../core/Heading'
 import {formatDate} from '../../../utils'
+import {device} from '../../../theme/device'
 
 type Props = {
   className?: string
@@ -113,6 +114,14 @@ const WrapperFlex = styled(Flex)`
     iframe {
       width: 320px;
       height: 180px;
+    }
+  }
+
+  // youtube video
+  @media ${device.XS} {
+    iframe {
+      width: 240px;
+      height: 135px;
     }
   }
 `

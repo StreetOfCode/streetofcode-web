@@ -34,12 +34,12 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 48px;
 
-  @media ${device.tablet} {
+  @media ${device.M} {
     grid-template-columns: repeat(2, 1fr);
     gap: 32px;
   }
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     grid-template-columns: repeat(1, 1fr);
   }
 `

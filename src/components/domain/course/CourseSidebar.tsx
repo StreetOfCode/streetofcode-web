@@ -218,7 +218,7 @@ const AccordionRoot = styled(Accordion.Root)`
 `
 
 const TopWrapperFlex = styled(Flex)`
-  @media ${device.tablet} {
+  @media ${device.M} {
     align-self: flex-start;
     flex-direction: column;
     gap: 16px;

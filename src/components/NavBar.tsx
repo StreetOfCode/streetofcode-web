@@ -55,19 +55,19 @@ const NavBar = () => {
         <MenuItems justifyContent="center" gap={'48px'}>
           <ThemeSwitcher />
           <NextLink styleIfActive href="/kurzy">
-            <Text uppercase>kurzy</Text>
+            <MenuItemText>kurzy</MenuItemText>
           </NextLink>
           <NextLink styleIfActive href="/podcast">
-            <Text uppercase>podcast</Text>
+            <MenuItemText>podcast</MenuItemText>
           </NextLink>
           <NextLink styleIfActive href="/clanky">
-            <Text uppercase>články</Text>
+            <MenuItemText>články</MenuItemText>
           </NextLink>
           <NextLink styleIfActive href="/o-projekte">
-            <Text uppercase>o projekte</Text>
+            <MenuItemText>o projekte</MenuItemText>
           </NextLink>
           <NextLink styleIfActive href="/feedback">
-            <Text uppercase>feedback</Text>
+            <MenuItemText>feedback</MenuItemText>
           </NextLink>
         </MenuItems>
         <LogInOrOutButton />
@@ -106,13 +106,21 @@ const NavBar = () => {
 const WrapperFlex = styled(Flex)<{mobileNavbarOpen: boolean}>`
   margin: 0 auto;
   padding: 24px 32px;
-  width: clamp(360px, 100%, 1200px);
+  width: clamp(320px, 100%, 1200px);
   position: relative;
 
-  @media ${device.tablet} {
+  @media ${device.L} {
+    max-width: 900px;
+  }
+
+  @media ${device.M} {
     background-color: ${(props) =>
       props.mobileNavbarOpen && props.theme.primaryColor};
     width: ${(props) => props.mobileNavbarOpen && '100vw'};
+  }
+
+  @media ${device.XS} {
+    padding: 24px 24px;
   }
 `
 
@@ -123,6 +131,15 @@ const MenuItems = styled(Flex)`
     text-decoration: none;
     color: unset;
   }
+
+  @media ${device.L} {
+    gap: 32px;
+  }
+`
+
+const MenuItemText = styled(Text)`
+  text-transform: uppercase;
+  white-space: nowrap;
 `
 
 const MobileMenuItems = styled(Flex)`
@@ -143,9 +160,11 @@ const menuIconStyle = css`
     cursor: pointer;
   }
 
-  @media ${device.tablet} {
+  @media ${device.M} {
     display: block;
   }
+
+  color: ${(props) => props.theme.secondaryColor};
 `
 
 const OpenMenuIcon = styled(AiOutlineMenu)`
@@ -159,13 +178,13 @@ const CloseMenuIcon = styled(AiOutlineClose)`
 const MobileNavbarOptionsFlex = styled(Flex)`
   display: none;
 
-  @media ${device.tablet} {
+  @media ${device.M} {
     display: flex;
   }
 `
 
 const MenuFlex = styled(Flex)`
-  @media ${device.tablet} {
+  @media ${device.M} {
     display: none;
   }
 `
@@ -173,7 +192,7 @@ const MenuFlex = styled(Flex)`
 const MobileMenuFlex = styled(Flex)<{open: boolean}>`
   display: none;
 
-  @media ${device.tablet} {
+  @media ${device.M} {
     display: ${(props) => (props.open ? 'flex' : 'none')};
     align-items: flex-start;
     position: absolute;

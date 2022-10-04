@@ -69,10 +69,10 @@ const Home: NextPage<Props> = ({courses}) => {
         <GradientWrapper>
           <NavBar />
           <Box>
-            <HeroSection gap="16px" justifyContent="space-between">
+            <HeroSection gap="64px" justifyContent="space-between">
               <HeroSectionTextFles
                 direction="column"
-                gap="48px"
+                gap="32px"
                 alignItems="flex-start"
                 alignSelf="stretch"
               >
@@ -84,14 +84,10 @@ const Home: NextPage<Props> = ({courses}) => {
                     programovať
                   </Heading>
                 </div>
-                <div>
-                  <Heading variant="h3">
-                    Pomôžeme ti na tvojej ceste začínajúceho
-                  </Heading>
-                  <Heading variant="h3">
-                    programátora či začínajúcej programátorky
-                  </Heading>
-                </div>
+                <Heading variant="h3">
+                  Pomôžeme ti na tvojej ceste začínajúceho programátora či
+                  začínajúcej programátorky
+                </Heading>
                 <NextLink href={'/kurzy'}>
                   <Button variant="accent" size="very-large" uppercase bold>
                     online kurzy
@@ -107,8 +103,11 @@ const Home: NextPage<Props> = ({courses}) => {
           <Box ref={coursesRef}>
             <Flex direction="column" gap="48px" alignItems="flex-start">
               <div>
-                <Heading variant="h2">Pozri si naše</Heading>
-                <Heading variant="h1" color="accent">
+                <Heading inline variant="h2">
+                  Pozri si naše
+                </Heading>
+                <Heading inline variant="h2" color="accent">
+                  {' '}
                   kurzy
                 </Heading>
               </div>
@@ -131,9 +130,12 @@ const Home: NextPage<Props> = ({courses}) => {
         <Box>
           <Flex direction="column" gap="48px" alignItems="flex-start">
             <div>
-              <Heading variant="h2">Po ceste do školy, do práce alebo</Heading>
-              <Heading variant="h2">pri upratovaní si môžeš pustiť náš</Heading>
-              <Heading variant="h1" color="accent">
+              <Heading inline variant="h2">
+                Po ceste do školy, do práce alebo pri upratovaní si môžeš pustiť
+                náš
+              </Heading>
+              <Heading inline variant="h2" color="accent">
+                {' '}
                 podcast
               </Heading>
             </div>
@@ -168,13 +170,12 @@ const Home: NextPage<Props> = ({courses}) => {
         <Box>
           <Flex direction="column" gap="48px" alignItems="flex-start">
             <div>
-              <Heading variant="h2">
-                Keď ti popri tom všetkom raste ešte
+              <Heading inline variant="h2">
+                Keď ti popri tom všetkom raste ešte zostane čas, tak si môžeš
+                pozrieť naše
               </Heading>
-              <Heading variant="h2">
-                zostane čas, tak si môžeš pozrieť naše
-              </Heading>
-              <Heading variant="h1" color="accent">
+              <Heading inline variant="h2" color="accent">
+                {' '}
                 videá
               </Heading>
             </div>
@@ -198,17 +199,19 @@ const Home: NextPage<Props> = ({courses}) => {
         <Box>
           <Flex justifyContent="space-between" gap="32px">
             <div>
-              <Heading variant="h2">Ak sa na niečom zasekneš</Heading>
-              <Heading variant="h2">alebo budeš potrebovať pomoc,</Heading>
-              <Heading variant="h2">tak ju možno nájdeš na našom</Heading>
-              <Heading variant="h1" color="accent">
+              <Heading variant="h2" inline>
+                Ak sa na niečom zasekneš, alebo budeš potrebovať pomoc, tak ju
+                možno nájdeš na našom
+              </Heading>
+              <Heading variant="h2" color="accent" inline>
+                {' '}
                 Discorde
               </Heading>
-              <a href={discordInviteUrl} target="blank">
+              <DiscordButtonLink href={discordInviteUrl} target="blank">
                 <DiscordButton variant="accent" size="large">
                   Pridaj sa!
                 </DiscordButton>
-              </a>
+              </DiscordButtonLink>
             </div>
             <DiscordImage>
               <StyledImage
@@ -226,7 +229,7 @@ const Home: NextPage<Props> = ({courses}) => {
               <Heading variant="h2" inline>
                 A kto sme vlastne
               </Heading>
-              <Heading variant="h1" color="accent" inline>
+              <Heading variant="h2" color="accent" inline>
                 {' '}
                 my?
               </Heading>
@@ -244,7 +247,7 @@ const Home: NextPage<Props> = ({courses}) => {
                   priority
                 />
               </UsImage>
-              <Heading variant="h3" normalWeight>
+              <Heading variant="h4" normalWeight>
                 Sme dvaja kamaráti, full-time programátori, ktorí sa rozhodli,
                 že by chceli robiť okrem práce aj niečo navyše. Niečo, čo by
                 potenciálne mohlo aj pomôcť iným ľudom. Preto sme sa rozhodli
@@ -281,30 +284,34 @@ const Box = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding: 24px 32px;
+  padding: 24px 48px;
   margin-bottom: 64px;
 
   > * {
     margin-right: 2em;
     margin-left: 2em;
-    width: clamp(360px, 100%, 1200px);
+    width: clamp(320px, 100%, 1200px);
     align-self: center;
     flex-grow: 1;
+
+    @media ${device.L} {
+      max-width: 900px;
+    }
   }
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     margin-bottom: 16px;
   }
 `
 
 const HeroSectionTextFles = styled(Flex)`
-  @media ${device.mobile} {
+  @media ${device.S} {
     gap: 32px;
   }
 `
 
 const CoursesSlider = styled(CoursesSliderWrapper)`
-  @media ${device.tablet} {
+  @media ${device.M} {
     display: none;
   }
 `
@@ -312,13 +319,13 @@ const CoursesSlider = styled(CoursesSliderWrapper)`
 const MobileCoursesSlider = styled(CoursesSliderWrapper)`
   display: none;
 
-  @media ${device.tablet} {
+  @media ${device.M} {
     display: flex;
   }
 `
 
 const PodcastSliderStyled = styled(PodcastsSlider)`
-  @media ${device.tablet} {
+  @media ${device.M} {
     display: none;
   }
 `
@@ -326,13 +333,13 @@ const PodcastSliderStyled = styled(PodcastsSlider)`
 const MobilePodcastSlider = styled(PodcastsSlider)`
   display: none;
 
-  @media ${device.tablet} {
+  @media ${device.M} {
     display: flex;
   }
 `
 
 const VideosSliderStyled = styled(VideosSlider)`
-  @media ${device.tablet} {
+  @media ${device.M} {
     display: none;
   }
 `
@@ -340,25 +347,29 @@ const VideosSliderStyled = styled(VideosSlider)`
 const MobileVideosSlider = styled(VideosSlider)`
   display: none;
 
-  @media ${device.tablet} {
+  @media ${device.M} {
     display: flex;
   }
 `
 
 const ProviderLink = styled('a')`
-  @media ${device.tablet} {
+  @media ${device.M} {
     width: 180px;
   }
 `
 
 const PodcastSocialsFlex = styled(Flex)`
-  @media ${device.tablet} {
+  @media ${device.M} {
     gap: 32px;
   }
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     flex-direction: column;
   }
+`
+
+const DiscordButtonLink = styled.a`
+  display: block;
 `
 
 const HeroSection = styled(Flex)`
@@ -368,7 +379,6 @@ const HeroSection = styled(Flex)`
 
 const AnimationWrapper = styled.div`
   width: 100%;
-  max-width: 500px;
   min-width: 150px;
   padding-top: 24px;
   svg {
@@ -378,6 +388,18 @@ const AnimationWrapper = styled.div`
   @media (max-width: 829px) {
     display: none;
   }
+
+  @media ${device.XL} {
+    max-width: 400px;
+  }
+
+  @media ${device.L} {
+    max-width: 300px;
+  }
+
+  @media ${device.M} {
+    max-width: 250px;
+  }
 `
 
 const DiscordButton = styled(Button)`
@@ -385,7 +407,6 @@ const DiscordButton = styled(Button)`
 `
 
 const DiscordImage = styled.div`
-  position: relative;
   flex-shrink: 0;
 
   width: 200px;
@@ -399,11 +420,15 @@ const DiscordImage = styled.div`
     transition: 250ms ease-in-out;
   }
 
-  @media ${device.tablet} {
+  @media ${device.L} {
+    width: 180px;
+  }
+
+  @media ${device.M} {
     width: 160px;
   }
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     display: none;
   }
 `
@@ -422,11 +447,11 @@ const UsImage = styled.div`
     transition: 250ms ease-in-out;
   }
 
-  @media ${device.tablet} {
+  @media ${device.M} {
     width: 300px;
   }
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     &:hover {
       transform: unset;
       transition: unset;
@@ -441,7 +466,7 @@ const StyledImage = styled(Image)`
 `
 
 const AboutUsContentWrapper = styled(Flex)`
-  @media ${device.tablet} {
+  @media ${device.M} {
     flex-direction: column;
   }
 `

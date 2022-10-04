@@ -121,7 +121,7 @@ const TakeCourse = ({
               to={`/kurzy/${courseOverview.slug}`}
               text={'Späť na kurz'}
             />
-            <ThemeSwitcher />
+            <StyledThemeSwitcher />
           </Flex>
           <MobileSidebarHeaderFlex justifyContent="space-between">
             <NextLink href={'/kurzy'}>
@@ -159,6 +159,10 @@ const WrapperFlex = styled(Flex)`
   position: relative;
 `
 
+const StyledThemeSwitcher = styled(ThemeSwitcher)`
+  margin-bottom: 12px;
+`
+
 const Sidebar = styled.div<{mobileOpen: boolean}>`
   width: 300px;
   align-self: stretch;
@@ -166,11 +170,11 @@ const Sidebar = styled.div<{mobileOpen: boolean}>`
   border-right: solid 1px ${(props) => props.theme.accentColor};
   flex-shrink: 0;
 
-  @media ${device.tablet} {
+  @media ${device.M} {
     width: 250px;
   }
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     display: ${(props) => (props.mobileOpen ? 'block' : 'none')};
     position: absolute;
     z-index: 1;
@@ -192,7 +196,7 @@ const EmptyBox = styled.div`
   visibility: hidden;
   flex: 1;
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     flex: 0;
   }
 `
@@ -202,7 +206,7 @@ const Box = styled.div<{justifyContent: JustifyContent}>`
   flex: 1;
   justify-content: ${(props) => props.justifyContent};
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     flex: 0;
   }
 `
@@ -210,7 +214,7 @@ const Box = styled.div<{justifyContent: JustifyContent}>`
 const ContentNavbarFlex = styled(Flex)`
   margin-bottom: 32px;
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     justify-content: center;
     gap: 32px;
   }
@@ -219,30 +223,34 @@ const ContentNavbarFlex = styled(Flex)`
 const MobileArrowLeft = styled(AiOutlineArrowLeft)`
   display: none;
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     display: block;
     width: 22px;
     height: 22px;
   }
+
+  color: ${(props) => props.theme.secondaryColor};
 `
 
 const MobileArrowRight = styled(AiOutlineArrowRight)`
   display: none;
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     display: block;
     width: 22px;
     height: 22px;
   }
+
+  color: ${(props) => props.theme.secondaryColor};
 `
 
 const ButtonPreviousLecture = styled(Button)`
-  @media ${device.mobile} {
+  @media ${device.S} {
     display: none;
   }
 `
 const ButtonNextLecture = styled(Button)`
-  @media ${device.mobile} {
+  @media ${device.S} {
     display: none;
   }
 `
@@ -250,7 +258,7 @@ const ButtonNextLecture = styled(Button)`
 const mobileSidebarIconStyle = css`
   display: none;
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     display: block;
     width: 22px;
     height: 22px;
@@ -259,6 +267,8 @@ const mobileSidebarIconStyle = css`
       cursor: pointer;
     }
   }
+
+  color: ${(props) => props.theme.secondaryColor};
 `
 
 const MobileSidebarOpenIcon = styled(AiOutlineMenu)`
@@ -270,7 +280,7 @@ const MobileSidebarCloseIcon = styled(AiOutlineClose)`
 `
 
 const StyledBackLink = styled(BackLink)`
-  @media ${device.mobile} {
+  @media ${device.S} {
     display: none !important;
   }
 `
@@ -278,7 +288,7 @@ const StyledBackLink = styled(BackLink)`
 const MobileSidebarHeaderFlex = styled(Flex)`
   display: none;
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     display: flex;
     flex-direction: row;
     gap: 8px;

@@ -76,11 +76,11 @@ const LectureCommentsContent = ({
 const WrapperFlex = styled(Flex)`
   width: 500px;
 
-  @media ${device.tablet} {
+  @media ${device.M} {
     width: 400px;
   }
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     width: 100%;
   }
 `

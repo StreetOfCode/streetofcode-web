@@ -129,7 +129,7 @@ const StyledDescription = styled(Text)`
 `
 
 const AboutAuthorFlex = styled(Flex)`
-  @media ${device.mobile} {
+  @media ${device.S} {
     flex-direction: column;
   }
 `

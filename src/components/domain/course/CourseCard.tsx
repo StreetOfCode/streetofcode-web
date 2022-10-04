@@ -20,6 +20,7 @@ import {
   numOfLecturesText,
   numOfQuizzesText,
 } from '../../../utils'
+import {device} from '../../../theme/device'
 
 const CourseCard = ({course}: {course: CourseOverview}) => {
   let lecturesCount = 0
@@ -54,19 +55,20 @@ const CourseCard = ({course}: {course: CourseOverview}) => {
           <Text align="center">{course.shortDescription}</Text>
         </Flex>
         <Flex direction="column" gap="12px">
-          <Image
-            alt={`${course.name}`}
-            src={course.iconUrl}
-            width={100}
-            height={100}
-            priority
-          />
+          <CourseIconImageWrapper>
+            <Image
+              alt={`${course.name}`}
+              src={course.iconUrl}
+              layout="fill"
+              priority
+            />
+          </CourseIconImageWrapper>
           <Rating readOnly value={course.reviewsOverview.averageRating} />
         </Flex>
       </Flex>
 
       <Flex justifyContent="space-between" alignSelf="stretch">
-        <Flex
+        <CourseInfoItemsWrapper
           direction="column"
           alignItems="flex-start"
           alignSelf="flex-start"
@@ -94,7 +96,7 @@ const CourseCard = ({course}: {course: CourseOverview}) => {
               </Text>
             </CourseInfoItem>
           )}
-        </Flex>
+        </CourseInfoItemsWrapper>
         <Flex
           direction="column"
           alignItems="flex-start"
@@ -133,6 +135,33 @@ const WrapperFlex = styled(Flex)`
     transform: scale(1.1);
     transition: 250ms ease-in-out;
     box-shadow: ${(props) => `1px 8px 20px ${props.theme.shadowColor}`};
+  }
+
+  @media ${device.S} {
+    width: 250px;
+    height: 375px;
+
+    &:hover {
+      transform: unset;
+      transition: unset;
+      box-shadow: unset;
+    }
+  }
+`
+
+const CourseIconImageWrapper = styled.div`
+  position: relative;
+  width: 100px;
+  aspect-ratio: 1;
+
+  @media ${device.S} {
+    width: 75px;
+  }
+`
+
+const CourseInfoItemsWrapper = styled(Flex)`
+  @media ${device.S} {
+    gap: 8px;
   }
 `
 

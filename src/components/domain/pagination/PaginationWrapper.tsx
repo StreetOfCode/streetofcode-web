@@ -78,14 +78,14 @@ const StyledReactPaginage = styled(ReactPaginate).attrs({
     cursor: default;
   }
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     .previousLabel,
     .nextLabel {
       display: none;
     }
 
     gap: 8px;
-    max-width: 360px;
+    max-width: 320px;
   }
 `
 

@@ -66,8 +66,9 @@ const Slider = <T,>({
     <WrapperFlex
       className={className}
       justifyContent="space-between"
-      gap="32px"
-      alignSelf="stretch"
+      alignItems="flex-end"
+      gap="48px"
+      alignSelf="center"
     >
       <IconLeft onClick={handleLeftIconClick} disabled={start === 0} />
       {items.map((item, i) => itemLayout(item, i, i >= start && i < end + 1))}
@@ -80,12 +81,21 @@ const Slider = <T,>({
 }
 
 const WrapperFlex = styled(Flex)`
-  @media ${device.mobile} {
+  @media ${device.L} {
+    gap: 32px;
+  }
+
+  @media ${device.M} {
+    gap: 16px;
+  }
+
+  @media ${device.S} {
     gap: 8px;
   }
 `
 
 const iconStyle = css<{disabled: boolean}>`
+  align-self: center;
   width: 40px;
   height: 40px;
   color: ${(props) => props.theme.accentColor};
@@ -96,7 +106,7 @@ const iconStyle = css<{disabled: boolean}>`
     cursor: ${(props) => (props.disabled ? 'unset' : 'pointer')};
   }
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     width: 24px;
     height: 24px;
   }

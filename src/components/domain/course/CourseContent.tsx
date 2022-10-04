@@ -120,7 +120,7 @@ const Trigger = styled(Accordion.Trigger)`
   align-items: center;
   width: 550px;
 
-  @media ${device.tablet} {
+  @media ${device.L} {
     width: 100%;
   }
 `

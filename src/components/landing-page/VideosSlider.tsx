@@ -20,7 +20,13 @@ const VideosSlider = ({className, showVideosCount}: Props) => {
       showItemsCount={showVideosCount}
       itemLayout={(video, i, visible) => {
         return (
-          <FlexWrapper key={i} direction="column" gap="16px" visible={visible}>
+          <FlexWrapper
+            key={i}
+            direction="column"
+            gap="16px"
+            visible={visible}
+            justifyContent="center"
+          >
             <Heading variant="h5" maxWidth="430px" align="center">
               {video.name}
             </Heading>
@@ -42,6 +48,7 @@ const VideosSlider = ({className, showVideosCount}: Props) => {
 const FlexWrapper = styled(Flex)<{visible: boolean}>`
   // If display is set to none, then image is refetched in background and slider will be faster
   display: ${(props) => (props.visible ? 'flex' : 'none')};
+  max-width: 448px;
 `
 
 const ImageWrapper = styled.a`
@@ -60,8 +67,22 @@ const ImageWrapper = styled.a`
     box-shadow: ${(props) => `1px 8px 20px ${props.theme.shadowColor}`};
   }
 
-  @media ${device.mobile} {
+  @media ${device.L} {
+    width: 400px;
+  }
+
+  @media ${device.S} {
     width: 300px;
+
+    &:hover {
+      transform: unset;
+      transition: unset;
+      box-shadow: unset;
+    }
+  }
+
+  @media ${device.XS} {
+    width: 260px;
 
     &:hover {
       transform: unset;

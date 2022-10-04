@@ -175,11 +175,20 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
           gap="16px"
         >
           <ProfileInfoFlex alignSelf="flex-start" gap="32px">
-            <UserAvatar
-              src={socUser.imageUrl || ''}
-              name={socUser.name}
-              sizePx={150}
-            />
+            <DefaultUserAvatar>
+              <UserAvatar
+                src={socUser.imageUrl || ''}
+                name={socUser.name}
+                sizePx={150}
+              />
+            </DefaultUserAvatar>
+            <MobileUserAvatar>
+              <UserAvatar
+                src={socUser.imageUrl || ''}
+                name={socUser.name}
+                sizePx={100}
+              />
+            </MobileUserAvatar>
             <Flex
               direction="row"
               gap="16px"
@@ -235,27 +244,41 @@ const StyledEditIcon = styled(AiOutlineEdit)`
 `
 
 const ProfileInfoWithNewsletterFlex = styled(Flex)`
-  @media ${device.tablet} {
+  @media ${device.M} {
     flex-direction: column;
     gap: 32px;
   }
 `
 
 const ProfileInfoFlex = styled(Flex)`
-  @media ${device.mobile} {
+  @media ${device.S} {
     flex-direction: column;
   }
 `
 
 const NewsletterFlexWrapper = styled(Flex)`
-  @media ${device.tablet} {
+  @media ${device.M} {
     align-self: flex-start;
+  }
+`
+
+const DefaultUserAvatar = styled.div`
+  @media ${device.S} {
+    display: none;
+  }
+`
+
+const MobileUserAvatar = styled.div`
+  display: none;
+
+  @media ${device.S} {
+    display: block;
   }
 `
 
 const StyledTextField = styled(TextField)`
   width: 340px;
-  @media ${device.mobile} {
+  @media ${device.S} {
     width: 100%;
   }
 `

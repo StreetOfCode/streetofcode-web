@@ -250,17 +250,17 @@ const StyledLink = styled('a')`
 const FAQItemsFlex = styled(Flex)`
   width: 600px;
 
-  @media ${device.tablet} {
+  @media ${device.M} {
     width: 50%;
   }
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     width: 100%;
   }
 `
 
 const WrapperFlex = styled(Flex)`
-  @media ${device.mobile} {
+  @media ${device.S} {
     flex-direction: column;
     gap: 64px;
   }
@@ -280,11 +280,11 @@ const StyledUL = styled.ul`
 const FormWrapper = styled.div`
   width: 400px;
 
-  @media ${device.tablet} {
+  @media ${device.M} {
     width: 50%;
   }
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     width: 100%;
   }
 `

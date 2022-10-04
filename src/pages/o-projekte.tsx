@@ -465,7 +465,7 @@ const AlignedHeading = styled(Heading)`
 `
 
 const AvatarsFlexWrapper = styled(Flex)`
-  @media ${device.mobile} {
+  @media ${device.S} {
     flex-direction: column;
   }
 `

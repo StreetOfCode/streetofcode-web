@@ -1,5 +1,6 @@
 import React, {HTMLAttributes} from 'react'
 import styled, {keyframes} from 'styled-components'
+import {device} from '../theme/device'
 
 type Props = {
   innerRef: React.MutableRefObject<null | HTMLDivElement>
@@ -48,6 +49,10 @@ const Slider = styled.div`
     left: 2px;
 
     animation: ${verticalSliderAnimation} 2.5s linear infinite;
+  }
+
+  @media ${device.S} {
+    display: none;
   }
 `
 export default VerticalSlider

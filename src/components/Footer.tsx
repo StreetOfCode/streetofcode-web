@@ -68,19 +68,21 @@ const Footer = () => {
           flex="1"
         >
           {!user && <NewsletterForm />}
-          <QueryGuard {...getSocUser}>
-            {(socUser) => {
-              return (
-                <>
-                  {socUser && !socUser.receiveNewsletter && (
-                    <NewsletterForm user={socUser} />
-                  )}
-                  {socUser && socUser.receiveNewsletter && <EmptyBox />}
-                  {user && !socUser && <EmptyBox />}
-                </>
-              )
-            }}
-          </QueryGuard>
+          {user && (
+            <QueryGuard {...getSocUser}>
+              {(socUser) => {
+                return (
+                  <>
+                    {socUser && !socUser.receiveNewsletter && (
+                      <NewsletterForm user={socUser} />
+                    )}
+                    {socUser && socUser.receiveNewsletter && <EmptyBox />}
+                    {user && !socUser && <EmptyBox />}
+                  </>
+                )
+              }}
+            </QueryGuard>
+          )}
           <Flex direction="column" gap="24px">
             <Text color="primary">
               Copyright © {getCurrentYear()} Street of Code
@@ -179,17 +181,21 @@ const Background = styled.div`
 const EmptyBox = styled.div`
   flex: 1;
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     display: none;
   }
 `
 
 const WrapperFlex = styled(Flex)`
   padding: 24px 32px;
-  width: clamp(360px, 100%, 1200px);
+  width: clamp(320px, 100%, 1200px);
   margin: 0 auto;
 
-  @media ${device.mobile} {
+  @media ${device.L} {
+    max-width: 900px;
+  }
+
+  @media ${device.S} {
     flex-direction: column;
     align-items: center;
     gap: 32px;
@@ -197,7 +203,7 @@ const WrapperFlex = styled(Flex)`
 `
 
 const LogoWithAddressFlex = styled(Flex)`
-  @media ${device.mobile} {
+  @media ${device.S} {
     flex-direction: row;
     justify-content: center;
     gap: 32px;
@@ -206,14 +212,14 @@ const LogoWithAddressFlex = styled(Flex)`
 `
 
 const NewsletterCopyrightAndSocials = styled(Flex)`
-  @media ${device.mobile} {
+  @media ${device.S} {
     align-self: center;
     order: 3;
   }
 `
 
 const NavigationFlex = styled(Flex)`
-  @media ${device.mobile} {
+  @media ${device.S} {
     order: 1;
   }
 `

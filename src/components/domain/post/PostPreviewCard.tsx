@@ -113,9 +113,19 @@ const WrapperFlex = styled(Flex)`
     box-shadow: ${(props) => `1px 8px 20px ${props.theme.shadowColor}`};
   }
 
-  @media ${device.mobile} {
+  @media ${device.L} {
+    width: 345px;
+    height: 500px;
+  }
+
+  @media ${device.S} {
     width: 330px;
     height: 480px;
+  }
+
+  @media ${device.XS} {
+    width: 300px;
+    height: 420px;
   }
 `
 
@@ -126,6 +136,7 @@ const PaddedFlex = styled(Flex)`
 const Excerpt = styled(Text)`
   text-overflow: ellipsis;
   overflow: hidden;
+  line-height: 1.2;
   height: 4.6em;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -140,6 +151,11 @@ const ImageWrapper = styled.div`
 
   img {
     object-position: left;
+  }
+
+  @media ${device.XS} {
+    width: 200px;
+    height: 200px;
   }
 `
 

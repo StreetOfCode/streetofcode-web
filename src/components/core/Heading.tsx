@@ -49,26 +49,42 @@ const Heading = ({
   )
 }
 
-const styleValues = {
-  default: {
-    title: {fontSize: '112px', lineHeight: '1.0'},
-    h1: {fontSize: '72px', lineHeight: '1.1'},
+const styleValuesBasedOnDevice = {
+  XL: {
+    title: {fontSize: '82px', lineHeight: '1.0'},
+    h1: {fontSize: '62px', lineHeight: '1.1'},
     h2: {fontSize: '48px', lineHeight: '1.2'},
     h3: {fontSize: '32px', lineHeight: '1.3'},
     h4: {fontSize: '24px', lineHeight: '1.4'},
     h5: {fontSize: '22px', lineHeight: '1.4'},
   },
-  tablet: {
-    title: {fontSize: '86px', lineHeight: '1.0'},
-    h1: {fontSize: '60px', lineHeight: '1.1'},
+  L: {
+    title: {fontSize: '72px', lineHeight: '1.0'},
+    h1: {fontSize: '52px', lineHeight: '1.1'},
+    h2: {fontSize: '42px', lineHeight: '1.2'},
+    h3: {fontSize: '30px', lineHeight: '1.3'},
+    h4: {fontSize: '22px', lineHeight: '1.4'},
+    h5: {fontSize: '18px', lineHeight: '1.4'},
+  },
+  M: {
+    title: {fontSize: '62px', lineHeight: '1.0'},
+    h1: {fontSize: '42px', lineHeight: '1.1'},
     h2: {fontSize: '36px', lineHeight: '1.2'},
     h3: {fontSize: '28px', lineHeight: '1.3'},
     h4: {fontSize: '22px', lineHeight: '1.4'},
     h5: {fontSize: '18px', lineHeight: '1.4'},
   },
-  mobile: {
+  S: {
     title: {fontSize: '48px', lineHeight: '1.0'},
     h1: {fontSize: '42px', lineHeight: '1.1'},
+    h2: {fontSize: '32px', lineHeight: '1.2'},
+    h3: {fontSize: '22px', lineHeight: '1.3'},
+    h4: {fontSize: '20px', lineHeight: '1.4'},
+    h5: {fontSize: '16px', lineHeight: '1.4'},
+  },
+  XS: {
+    title: {fontSize: '38px', lineHeight: '1.0'},
+    h1: {fontSize: '36px', lineHeight: '1.1'},
     h2: {fontSize: '32px', lineHeight: '1.2'},
     h3: {fontSize: '22px', lineHeight: '1.3'},
     h4: {fontSize: '20px', lineHeight: '1.4'},
@@ -106,32 +122,39 @@ const StyledHeading = styled.span<{
       : 'unset'};
   white-space: ${(props) => (props.noWrap ? 'nowrap' : 'unset')};
 
-  font-size: ${(props) => styleValues['default'][props.variant].fontSize};
-  line-height: ${(props) => styleValues['default'][props.variant].lineHeight};
-
-  @media ${device.tablet} {
-    font-size: ${(props) => styleValues['tablet'][props.variant].fontSize};
-    line-height: ${(props) => styleValues['tablet'][props.variant].lineHeight};
+  @media ${device.XL} {
+    font-size: ${(props) =>
+      styleValuesBasedOnDevice['XL'][props.variant].fontSize};
+    line-height: ${(props) =>
+      styleValuesBasedOnDevice['XL'][props.variant].lineHeight};
   }
 
-  @media ${device.mobile} {
-    font-size: ${(props) => styleValues['mobile'][props.variant].fontSize};
-    line-height: ${(props) => styleValues['mobile'][props.variant].lineHeight};
+  @media ${device.L} {
+    font-size: ${(props) =>
+      styleValuesBasedOnDevice['L'][props.variant].fontSize};
+    line-height: ${(props) =>
+      styleValuesBasedOnDevice['L'][props.variant].lineHeight};
   }
 
-  @media ${device.default} {
-    ${(props) => {
-      if (props.maxWidth) {
-        return `
-        max-width: ${props.maxWidth};
-        display: block;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        word-wrap: break-word;
-        overflow: hidden;`
-      }
-      return ''
-    }}
+  @media ${device.M} {
+    font-size: ${(props) =>
+      styleValuesBasedOnDevice['M'][props.variant].fontSize};
+    line-height: ${(props) =>
+      styleValuesBasedOnDevice['M'][props.variant].lineHeight};
+  }
+
+  @media ${device.S} {
+    font-size: ${(props) =>
+      styleValuesBasedOnDevice['S'][props.variant].fontSize};
+    line-height: ${(props) =>
+      styleValuesBasedOnDevice['S'][props.variant].lineHeight};
+  }
+
+  @media ${device.XS} {
+    font-size: ${(props) =>
+      styleValuesBasedOnDevice['XS'][props.variant].fontSize};
+    line-height: ${(props) =>
+      styleValuesBasedOnDevice['XS'][props.variant].lineHeight};
   }
 `
 

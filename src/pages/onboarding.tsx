@@ -239,6 +239,18 @@ const OnboardingPage: NextPage = () => {
         </Heading>
         <Button onClick={logout}>Odhlásiť</Button>
       </NavBarWrapper>
+      <MobileNavBarWrapper direction="column" gap="32px">
+        <Flex justifyContent="space-between" alignSelf="stretch">
+          <LogoWrapper>
+            <LogoImage layout="fill" alt="Logo" src="/soc_logo.png" />
+          </LogoWrapper>
+
+          <Button onClick={logout}>Odhlásiť</Button>
+        </Flex>
+        <Heading variant="h3" normalWeight withAccentUnderline>
+          Onboarding
+        </Heading>
+      </MobileNavBarWrapper>
       <WrapperFlex
         direction="column"
         gap="20px"
@@ -290,11 +302,15 @@ export default OnboardingPage
 
 const Wrapper = styled.div`
   margin: 0 auto;
-  width: clamp(360px, 100%, 1200px);
+  width: clamp(320px, 100%, 1200px);
   flex: 1;
   margin-bottom: 150px;
 
-  @media ${device.mobile} {
+  @media ${device.L} {
+    max-width: 900px;
+  }
+
+  @media ${device.S} {
     width: 100%;
   }
 `
@@ -302,6 +318,20 @@ const Wrapper = styled.div`
 const NavBarWrapper = styled(Flex)`
   padding: 24px 32px;
   margin-bottom: 200px;
+
+  @media ${device.S} {
+    display: none;
+  }
+`
+
+const MobileNavBarWrapper = styled(Flex)`
+  display: none;
+  padding: 24px 32px;
+  margin-bottom: 200px;
+
+  @media ${device.S} {
+    display: flex;
+  }
 `
 
 const LogoWrapper = styled.div`

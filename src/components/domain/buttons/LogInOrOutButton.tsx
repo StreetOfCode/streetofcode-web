@@ -21,40 +21,46 @@ const LogInOrOutButton = () => {
   if (isLoading) return <Loading />
 
   return (
-    <QueryGuard {...useGetSocUser}>
-      {(socUser: SocUser | null) => {
-        return (
-          <>
-            {(!user || !socUser) && (
-              <NextLink href={`/login/${encodeURIComponent(router.asPath)}`}>
-                <Button>Prihlásiť</Button>
-              </NextLink>
-            )}
+    <Wrapper>
+      <QueryGuard {...useGetSocUser}>
+        {(socUser: SocUser | null) => {
+          return (
+            <>
+              {(!user || !socUser) && (
+                <NextLink href={`/login/${encodeURIComponent(router.asPath)}`}>
+                  <Button>Prihlásiť</Button>
+                </NextLink>
+              )}
 
-            {user && socUser && (
-              <DropdownMenu.Root>
-                <Trigger>
-                  <StyledUserAvatar
-                    src={socUser.imageUrl || ''}
-                    name={socUser.name}
-                    sizePx={40}
-                  />
-                </Trigger>
-                <StyledContent sideOffset={3}>
-                  <Link href={'/profil'}>
-                    <DropDownItem>Moje kurzy a nastavenia</DropDownItem>
-                  </Link>
-                  <DropDownItem onClick={logout}>Odhlásiť</DropDownItem>
-                  <DropwDownMenuArrow offset={12} />
-                </StyledContent>
-              </DropdownMenu.Root>
-            )}
-          </>
-        )
-      }}
-    </QueryGuard>
+              {user && socUser && (
+                <DropdownMenu.Root>
+                  <Trigger>
+                    <StyledUserAvatar
+                      src={socUser.imageUrl || ''}
+                      name={socUser.name}
+                      sizePx={40}
+                    />
+                  </Trigger>
+                  <StyledContent sideOffset={3}>
+                    <Link href={'/profil'}>
+                      <DropDownItem>Moje kurzy a nastavenia</DropDownItem>
+                    </Link>
+                    <DropDownItem onClick={logout}>Odhlásiť</DropDownItem>
+                    <DropwDownMenuArrow offset={12} />
+                  </StyledContent>
+                </DropdownMenu.Root>
+              )}
+            </>
+          )
+        }}
+      </QueryGuard>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled.div`
+  flex-shrink: 0;
+`
 
 const StyledUserAvatar = styled(UserAvatar)`
   &:hover {

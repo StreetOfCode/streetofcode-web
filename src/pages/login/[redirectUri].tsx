@@ -138,7 +138,7 @@ const FlexWrapper = styled(Flex)`
   width: 500px;
   margin: 0 auto;
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     width: 100%;
   }
 `

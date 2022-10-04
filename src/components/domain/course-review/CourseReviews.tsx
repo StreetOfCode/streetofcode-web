@@ -80,7 +80,7 @@ const CourseReviews = ({courseOverview}: CourseReviewsProps) => {
 const WrapperFlex = styled(Flex)`
   width: 500px;
 
-  @media ${device.mobile} {
+  @media ${device.S} {
     width: 100%;
   }
 `

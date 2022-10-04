@@ -1,5 +1,6 @@
 import React, {HTMLAttributes} from 'react'
 import styled from 'styled-components'
+import {device} from '../../../theme/device'
 
 type Props = {
   className?: string
@@ -14,12 +15,12 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 48px;
 
-  @media (max-width: 1199px) {
+  @media ${device.L} {
     grid-template-columns: repeat(2, 1fr);
     gap: 32px;
   }
 
-  @media (max-width: 769px) {
+  @media ${device.M} {
     grid-template-columns: repeat(1, 1fr);
   }
 `
