@@ -1,6 +1,6 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import clsx from 'clsx'
-import ThemeSwitchingContext from '../ThemeSwitchingContext'
+import {useTheme} from '../../hooks/useTheme'
 
 type Props = {
   className?: string
@@ -8,7 +8,7 @@ type Props = {
 }
 
 const DifficultyIcon = ({className, difficultyLevel}: Props) => {
-  const {theme} = useContext(ThemeSwitchingContext)
+  const {theme} = useTheme()
 
   const classNames = clsx('feather feather-bar-chart', className)
   const greyDiffcultyBackgroundColor = theme.greyColor

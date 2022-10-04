@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from 'react'
+import React, {useRef} from 'react'
 import {NextPage} from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -26,8 +26,8 @@ import {CourseOverview} from '../types'
 import PodcastsSlider from '../components/landing-page/PodcastsSlider'
 import NextLink from '../components/core/NextLink'
 import {device} from '../theme/device'
-import ThemeSwitchingContext from '../theme/ThemeSwitchingContext'
 import VerticalSlider from '../components/VerticalSlider'
+import {useTheme} from '../hooks/useTheme'
 
 interface Props {
   courses: CourseOverview[]
@@ -56,7 +56,7 @@ const Header = () => {
 }
 
 const Home: NextPage<Props> = ({courses}) => {
-  const {theme} = useContext(ThemeSwitchingContext)
+  const {theme} = useTheme()
   const coursesRef = useRef<null | HTMLDivElement>(null)
 
   const youtubeImageUrl =

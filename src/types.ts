@@ -1,3 +1,5 @@
+export type ThemeSetting = 'NOT-SET' | 'LIGHT' | 'DARK' | 'AUTO'
+
 export interface Difficulty {
   id: number
   name: string
