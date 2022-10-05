@@ -1,5 +1,12 @@
 import React from 'react'
-import Document, {DocumentContext, DocumentInitialProps} from 'next/document'
+import Document, {
+  DocumentContext,
+  DocumentInitialProps,
+  Head,
+  Html,
+  Main,
+  NextScript,
+} from 'next/document'
 import {ServerStyleSheet} from 'styled-components'
 
 // A hack to get styled-components to work with SSR and to get rid
@@ -32,5 +39,18 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal()
     }
+  }
+
+  render() {
+    return (
+      <Html>
+        <Head />
+        <body>
+          <script src="/setBodyBackgroundColor.js" async />
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    )
   }
 }

@@ -18,6 +18,7 @@ import OnboardingProtectionRoute from '../components/OnboardingProtectionRoute'
 import SSRWrapper from '../components/SSRWrapper'
 import {useTheme} from '../hooks/useTheme'
 import {storage} from '../localStorage'
+import Loading from '../components/Loading'
 
 const _ThemeProvider = ({children}: HTMLAttributes<HTMLElement>) => {
   const {theme} = useTheme()
@@ -82,8 +83,11 @@ function MyApp({Component, pageProps}: AppProps) {
                     )}
                     SSRChildren={() => (
                       <>
-                        <Component {...pageProps} />
-                        <Footer />
+                        <div style={{display: 'none'}}>
+                          <Component {...pageProps} />
+                          <Footer />
+                        </div>
+                        <Loading />
                       </>
                     )}
                   />
