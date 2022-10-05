@@ -13,7 +13,10 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
 
-    background-color: ${({theme}: {theme: ThemeType}) => theme.primaryColor};
+    // !important has to be used so that the background-color set in
+    // _document.tsx is overridden by the current theme color.
+    background-color: ${({theme}: {theme: ThemeType}) =>
+      theme.primaryColor} !important;
   }
 
 
