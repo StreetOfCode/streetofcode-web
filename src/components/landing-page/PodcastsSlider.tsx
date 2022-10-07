@@ -3,43 +3,132 @@ import styled from 'styled-components'
 import Image from 'next/image'
 import Flex from '../core/Flex'
 import Heading from '../core/Heading'
-import Slider from '../Slider'
+import Slider, {SliderTemplateProps} from '../Slider'
 import {podcasts} from './podcasts'
 import {device} from '../../theme/device'
+import {Slide} from 'pure-react-carousel'
 
 type Props = {
   className?: string
-  showPodcastsCount: number
 } & HTMLAttributes<HTMLElement>
 
-const PodcastsSlider = ({className, showPodcastsCount}: Props) => {
+const XL_SIZE_WIDTH = 300
+const L_SIZE_WIDTH = 300
+const M_SIZE_WIDTH = 260
+const S_SIZE_WIDTH = 260
+const WIDTH_BUFFER = 48
+const HEIGHT_BUFFER = 64
+
+const PodcastsSliderTemplate = ({
+  className,
+  displayItemsCount,
+  slideWidth,
+  slideHeight,
+}: SliderTemplateProps) => {
   return (
     <Slider
       className={className}
       items={podcasts}
-      showItemsCount={showPodcastsCount}
-      itemLayout={(podcast, i, visible) => {
+      showItemsCount={displayItemsCount}
+      slideWidth={slideWidth}
+      startAtMiddle
+      slideHeight={slideHeight}
+      itemLayout={(podcast, i) => {
         return (
-          <FlexWrapper key={i} direction="column" gap="16px" visible={visible}>
-            <Heading variant="h3">{podcast.title}</Heading>
-            <ImageWrapper href={podcast.podcastUrl}>
-              <StyledImage
-                src={podcast.image}
-                alt={podcast.name}
-                layout="fill"
-                priority
-              />
-            </ImageWrapper>
-          </FlexWrapper>
+          <StyledSlide index={i} key={i}>
+            <Flex direction="column" gap="16px">
+              <Heading variant="h3">{podcast.title}</Heading>
+              <ImageWrapper href={podcast.podcastUrl}>
+                <StyledImage
+                  src={podcast.image}
+                  alt={podcast.name}
+                  layout="fill"
+                  priority
+                />
+              </ImageWrapper>
+            </Flex>
+          </StyledSlide>
         )
       }}
     />
   )
 }
 
-const FlexWrapper = styled(Flex)<{visible: boolean}>`
-  // If display is set to none, then image is refetched in background and slider will be faster
-  display: ${(props) => (props.visible ? 'flex' : 'none')};
+const PodcastsSlider = ({className}: Props) => {
+  return (
+    <>
+      <XLPodcastsSlider
+        className={className}
+        displayItemsCount={3}
+        slideWidth={XL_SIZE_WIDTH + WIDTH_BUFFER * 1.5}
+        slideHeight={XL_SIZE_WIDTH + HEIGHT_BUFFER * 1.5}
+      />
+      <LPodcastsSlider
+        className={className}
+        displayItemsCount={2}
+        slideWidth={L_SIZE_WIDTH + WIDTH_BUFFER * 1.5}
+        slideHeight={L_SIZE_WIDTH + HEIGHT_BUFFER * 1.5}
+      />
+      <MPodcastsSlider
+        className={className}
+        displayItemsCount={2}
+        slideWidth={M_SIZE_WIDTH + WIDTH_BUFFER}
+        slideHeight={M_SIZE_WIDTH + HEIGHT_BUFFER}
+      />
+      <SPodcastsSlider
+        className={className}
+        displayItemsCount={1}
+        slideWidth={S_SIZE_WIDTH + WIDTH_BUFFER}
+        slideHeight={S_SIZE_WIDTH + HEIGHT_BUFFER}
+      />
+    </>
+  )
+}
+
+const XLPodcastsSlider = styled(PodcastsSliderTemplate)`
+  @media ${device.XL} {
+    display: block;
+  }
+
+  @media ${device.L} {
+    display: none;
+  }
+`
+
+const LPodcastsSlider = styled(PodcastsSliderTemplate)`
+  display: none;
+
+  @media ${device.L} {
+    display: block;
+  }
+
+  @media ${device.M} {
+    display: none;
+  }
+`
+
+const MPodcastsSlider = styled(PodcastsSliderTemplate)`
+  display: none;
+
+  @media ${device.M} {
+    display: block;
+  }
+
+  @media ${device.S} {
+    display: none;
+  }
+`
+
+const SPodcastsSlider = styled(PodcastsSliderTemplate)`
+  display: none;
+
+  @media ${device.S} {
+    display: block;
+  }
+`
+
+const StyledSlide = styled(Slide)`
+  margin-top: 24px;
 `
 
 const ImageWrapper = styled.a`
@@ -47,7 +136,7 @@ const ImageWrapper = styled.a`
   border-radius: 22px;
   border: ${(props) => `2px solid ${props.theme.accentColor} !important`};
 
-  width: 300px;
+  width: ${XL_SIZE_WIDTH}px;
   aspect-ratio: 1;
 
   transition: 250ms ease-in-out;
@@ -58,9 +147,8 @@ const ImageWrapper = styled.a`
     box-shadow: ${(props) => `1px 8px 20px ${props.theme.shadowColor}`};
   }
 
-  // special one-time only case
-  @media (max-width: 1200px) {
-    width: 260px;
+  @media ${device.M} {
+    width: ${M_SIZE_WIDTH}px;
   }
 
   @media ${device.S} {

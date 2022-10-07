@@ -22,7 +22,13 @@ import {
 } from '../../../utils'
 import {device} from '../../../theme/device'
 
-const CourseCard = ({course}: {course: CourseOverview}) => {
+const CourseCard = ({
+  course,
+  className,
+}: {
+  course: CourseOverview
+  className?: string
+}) => {
   let lecturesCount = 0
   let courseDuration = ''
   let quizzesCount = 0
@@ -46,7 +52,11 @@ const CourseCard = ({course}: {course: CourseOverview}) => {
   }
 
   return (
-    <WrapperFlex direction="column" justifyContent="space-between">
+    <WrapperFlex
+      direction="column"
+      justifyContent="space-between"
+      className={className}
+    >
       <Flex direction="column" gap="24px">
         <Flex direction="column" gap="8px">
           <Heading variant="h4" align="center" normalWeight>
@@ -125,7 +135,8 @@ const CourseCard = ({course}: {course: CourseOverview}) => {
 
 const WrapperFlex = styled(Flex)`
   width: 300px;
-  height: 450px;
+  aspect-ratio: 1 / 1.5;
+
   padding: 1em 0.5em;
   border: ${(props) => props.theme.accentColor} 2px solid;
   border-radius: 22px;
@@ -139,7 +150,7 @@ const WrapperFlex = styled(Flex)`
 
   @media ${device.S} {
     width: 250px;
-    height: 400px;
+    aspect-ratio: 1 / 1.6;
 
     &:hover {
       transform: unset;

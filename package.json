@@ -32,6 +32,7 @@
     "firebase": "^9.9.0",
     "next": "12.3.1",
     "next-remove-imports": "^1.0.6",
+    "pure-react-carousel": "^1.29.0",
     "ra-data-simple-rest": "^4.2.7",
     "react": "18.2.0",
     "react-admin": "^4.2.7",

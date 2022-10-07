@@ -121,6 +121,7 @@ const StyledHeading = styled.span<{
       ? `4px solid ${props.theme.accentColor}`
       : 'unset'};
   white-space: ${(props) => (props.noWrap ? 'nowrap' : 'unset')};
+  max-width: ${(props) => props.maxWidth && props.maxWidth};
 
   @media ${device.XL} {
     font-size: ${(props) =>

@@ -111,8 +111,7 @@ const Home: NextPage<Props> = ({courses}) => {
                   kurzy
                 </Heading>
               </div>
-              <CoursesSlider showCoursesCount={3} courses={courses} />
-              <MobileCoursesSlider showCoursesCount={1} courses={courses} />
+              <CoursesSliderWrapper courses={courses} />
               <NextLink href={'/kurzy'} alignSelf="center">
                 <AllCoursesText
                   color="accent"
@@ -139,8 +138,7 @@ const Home: NextPage<Props> = ({courses}) => {
                 podcast
               </Heading>
             </div>
-            <PodcastSliderStyled showPodcastsCount={3} />
-            <MobilePodcastSlider showPodcastsCount={1} />
+            <PodcastsSlider />
             <PodcastSocialsFlex
               justifyContent="center"
               gap="64px"
@@ -179,8 +177,7 @@ const Home: NextPage<Props> = ({courses}) => {
                 videá
               </Heading>
             </div>
-            <VideosSliderStyled showVideosCount={2} />
-            <MobileVideosSlider showVideosCount={1} />
+            <VideosSlider />
             <ProviderLink
               href={youtubeUrl}
               target="blank"
@@ -307,48 +304,6 @@ const Box = styled.div`
 const HeroSectionTextFles = styled(Flex)`
   @media ${device.S} {
     gap: 32px;
-  }
-`
-
-const CoursesSlider = styled(CoursesSliderWrapper)`
-  @media ${device.M} {
-    display: none;
-  }
-`
-
-const MobileCoursesSlider = styled(CoursesSliderWrapper)`
-  display: none;
-
-  @media ${device.M} {
-    display: flex;
-  }
-`
-
-const PodcastSliderStyled = styled(PodcastsSlider)`
-  @media ${device.M} {
-    display: none;
-  }
-`
-
-const MobilePodcastSlider = styled(PodcastsSlider)`
-  display: none;
-
-  @media ${device.M} {
-    display: flex;
-  }
-`
-
-const VideosSliderStyled = styled(VideosSlider)`
-  @media ${device.M} {
-    display: none;
-  }
-`
-
-const MobileVideosSlider = styled(VideosSlider)`
-  display: none;
-
-  @media ${device.M} {
-    display: flex;
   }
 `
 

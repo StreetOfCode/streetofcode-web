@@ -13,12 +13,13 @@ import {analytics} from '../firebase'
 import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3'
 import ErrorBoundaryFallBack from '../components/domain/ErrorBoundaryFallBack'
 import ThemeSettingContext from '../theme/ThemeSettingContext'
-import '../theme/animations/TypingAnimation.css'
 import OnboardingProtectionRoute from '../components/OnboardingProtectionRoute'
 import SSRWrapper from '../components/SSRWrapper'
 import {useTheme} from '../hooks/useTheme'
 import {storage} from '../localStorage'
 import Loading from '../components/Loading'
+import '../theme/animations/TypingAnimation.css'
+import 'pure-react-carousel/dist/react-carousel.es.css'
 
 const _ThemeProvider = ({children}: HTMLAttributes<HTMLElement>) => {
   const {theme} = useTheme()

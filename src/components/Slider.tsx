@@ -1,43 +1,30 @@
-import React, {useState} from 'react'
+import React from 'react'
 import styled, {css} from 'styled-components'
 import {FaChevronLeft, FaChevronRight} from 'react-icons/fa'
-import Flex from '../components/core/Flex'
 import {device} from '../theme/device'
+import {
+  CarouselProvider,
+  Slider as PureSlider,
+  ButtonBack,
+  ButtonNext,
+} from 'pure-react-carousel'
+import Flex from './core/Flex'
 
-const getInitialWindow = (numberOfItems: number, showItemsCount: number) => {
-  // We want start and end be in the middle (based on numberOfItems)
-  if (showItemsCount >= numberOfItems) {
-    return {start: 0, end: numberOfItems - 1}
-  }
-
-  const middleIndex = Math.floor(numberOfItems / 2)
-  let start = middleIndex
-  let end = middleIndex
-
-  let itemsCount = 0
-  while (itemsCount < showItemsCount - 1) {
-    start--
-    end++
-    itemsCount += 2
-  }
-
-  if (itemsCount === showItemsCount) {
-    start += 1
-  }
-
-  return {start, end}
+export type SliderTemplateProps = {
+  className?: string
+  displayItemsCount: number
+  slideWidth: number
+  slideHeight: number
 }
 
 type Props<T> = {
   className?: string
   items: T[]
   showItemsCount: number
-  itemLayout: (item: T, index: number, visible: boolean) => React.ReactElement
-}
-
-type SliderWindow = {
-  start: number
-  end: number
+  slideWidth: number
+  slideHeight: number
+  startAtMiddle?: boolean
+  itemLayout: (item: T, index: number) => React.ReactElement
 }
 
 const Slider = <T,>({
@@ -45,66 +32,55 @@ const Slider = <T,>({
   items,
   itemLayout,
   showItemsCount,
+  slideWidth,
+  slideHeight,
+  startAtMiddle,
 }: Props<T>) => {
-  const [{start, end}, setWindow] = useState<SliderWindow>(
-    getInitialWindow(items.length, showItemsCount),
-  )
-
-  const handleLeftIconClick = () => {
-    if (start > 0) {
-      setWindow({start: start - 1, end: end - 1})
-    }
-  }
-
-  const handRightIconClick = () => {
-    if (end < items.length - 1) {
-      setWindow({start: start + 1, end: end + 1})
-    }
-  }
-
   return (
-    <WrapperFlex
+    <StyledCarouselProvider
       className={className}
-      justifyContent="space-between"
-      alignItems="flex-end"
-      gap="48px"
-      alignSelf="center"
+      currentSlide={startAtMiddle ? Math.floor(items.length / 2) : 0} // start at the middle
+      visibleSlides={showItemsCount}
+      totalSlides={items.length}
+      step={showItemsCount}
+      naturalSlideWidth={slideWidth}
+      naturalSlideHeight={slideHeight}
+      infinite
     >
-      <IconLeft onClick={handleLeftIconClick} disabled={start === 0} />
-      {items.map((item, i) => itemLayout(item, i, i >= start && i < end + 1))}
-      <IconRight
-        onClick={handRightIconClick}
-        disabled={end === items.length - 1}
-      />
-    </WrapperFlex>
+      <PureSlider>
+        {items.map((item, i) => (
+          <>{itemLayout(item, i)}</>
+        ))}
+      </PureSlider>
+      <ButtonFlexWrapper gap="12px" justifyContent="center">
+        <StyledButtonBack>
+          <IconLeft />
+        </StyledButtonBack>
+        <StyledButtonNext>
+          <IconRight />
+        </StyledButtonNext>
+      </ButtonFlexWrapper>
+    </StyledCarouselProvider>
   )
 }
 
-const WrapperFlex = styled(Flex)`
-  @media ${device.L} {
-    gap: 32px;
-  }
-
-  @media ${device.M} {
-    gap: 16px;
-  }
-
-  @media ${device.S} {
-    gap: 8px;
-  }
+const StyledCarouselProvider = styled(CarouselProvider)<{
+  naturalSlideWidth: number
+  visibleSlides: number
+}>`
+  width: calc(${(props) => props.naturalSlideWidth * props.visibleSlides}px);
+  margin: 0 auto;
 `
 
-const iconStyle = css<{disabled: boolean}>`
+const ButtonFlexWrapper = styled(Flex)`
+  margin-top: 12px;
+`
+
+const iconStyle = css`
   align-self: center;
   width: 40px;
   height: 40px;
   color: ${(props) => props.theme.accentColor};
-  opacity: ${(props) => props.disabled && 0.7};
-  flex-shrink: 0;
-
-  &:hover {
-    cursor: ${(props) => (props.disabled ? 'unset' : 'pointer')};
-  }
 
   @media ${device.S} {
     width: 24px;
@@ -112,11 +88,24 @@ const iconStyle = css<{disabled: boolean}>`
   }
 `
 
-const IconLeft = styled(FaChevronLeft)<{disabled: boolean}>`
+const buttonStyle = css`
+  background-color: unset;
+  border: none;
+`
+
+const StyledButtonNext = styled(ButtonNext)`
+  ${buttonStyle}
+`
+
+const StyledButtonBack = styled(ButtonBack)`
+  ${buttonStyle}
+`
+
+const IconLeft = styled(FaChevronLeft)`
   ${iconStyle}
 `
 
-const IconRight = styled(FaChevronRight)<{disabled: boolean}>`
+const IconRight = styled(FaChevronRight)`
   ${iconStyle}
 `
 
