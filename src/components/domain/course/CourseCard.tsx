@@ -139,7 +139,7 @@ const WrapperFlex = styled(Flex)`
 
   @media ${device.S} {
     width: 250px;
-    height: 375px;
+    height: 400px;
 
     &:hover {
       transform: unset;
