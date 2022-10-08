@@ -47,11 +47,7 @@ const Slider = <T,>({
       naturalSlideHeight={slideHeight}
       infinite
     >
-      <PureSlider>
-        {items.map((item, i) => (
-          <>{itemLayout(item, i)}</>
-        ))}
-      </PureSlider>
+      <PureSlider>{items.map((item, i) => itemLayout(item, i))}</PureSlider>
       <ButtonFlexWrapper gap="12px" justifyContent="center">
         <StyledButtonBack>
           <IconLeft />
