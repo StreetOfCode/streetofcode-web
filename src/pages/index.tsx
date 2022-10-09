@@ -204,11 +204,13 @@ const Home: NextPage<Props> = ({courses}) => {
                 {' '}
                 Discorde
               </Heading>
-              <DiscordButtonLink href={discordInviteUrl} target="blank">
-                <DiscordButton variant="accent" size="large">
-                  Pridaj sa!
-                </DiscordButton>
-              </DiscordButtonLink>
+              <div>
+                <a href={discordInviteUrl} target="blank">
+                  <DiscordButton variant="accent" size="large">
+                    Pridaj sa!
+                  </DiscordButton>
+                </a>
+              </div>
             </div>
             <DiscordImage>
               <StyledImage
@@ -321,10 +323,6 @@ const PodcastSocialsFlex = styled(Flex)`
   @media ${device.S} {
     flex-direction: column;
   }
-`
-
-const DiscordButtonLink = styled.a`
-  display: block;
 `
 
 const HeroSection = styled(Flex)`
