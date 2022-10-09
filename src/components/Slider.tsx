@@ -44,6 +44,7 @@ const Slider = <T,>({
       totalSlides={items.length}
       naturalSlideWidth={slideWidth}
       naturalSlideHeight={slideHeight}
+      lockOnWindowScroll
     >
       <PureSlider>{items.map((item, i) => itemLayout(item, i))}</PureSlider>
       <ButtonFlexWrapper gap="12px" justifyContent="center">
