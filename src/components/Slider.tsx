@@ -42,10 +42,8 @@ const Slider = <T,>({
       currentSlide={startAtMiddle ? Math.floor(items.length / 2) : 0} // start at the middle
       visibleSlides={showItemsCount}
       totalSlides={items.length}
-      step={showItemsCount}
       naturalSlideWidth={slideWidth}
       naturalSlideHeight={slideHeight}
-      infinite
     >
       <PureSlider>{items.map((item, i) => itemLayout(item, i))}</PureSlider>
       <ButtonFlexWrapper gap="12px" justifyContent="center">
@@ -66,6 +64,21 @@ const StyledCarouselProvider = styled(CarouselProvider)<{
 }>`
   width: calc(${(props) => props.naturalSlideWidth * props.visibleSlides}px);
   margin: 0 auto;
+
+  .carousel__slider {
+    touch-action: pan-y;
+  }
+
+  .carousel__back-button:disabled,
+  .carousel__next-button:disabled {
+    &:hover {
+      cursor: unset;
+    }
+
+    svg {
+      opacity: 0.3;
+    }
+  }
 `
 
 const ButtonFlexWrapper = styled(Flex)`
