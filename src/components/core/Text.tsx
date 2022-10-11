@@ -52,6 +52,7 @@ export const StyledText = styled.span<{
   withAccentUnderline?: boolean
 }>`
   display: block;
+  line-height: 1.5;
 
   color: ${(props) => {
     if (props.color === 'primary') {

@@ -89,7 +89,11 @@ const ProjectPage: NextPage = () => {
 
           <Flex direction="column" gap="16px" alignItems="flex-start">
             <AlignedHeading variant="h3">Tím</AlignedHeading>
-            <AvatarsFlexWrapper justifyContent="space-between" gap="32px">
+            <AvatarsFlexWrapper
+              justifyContent="space-between"
+              gap="32px"
+              alignItems="flex-start"
+            >
               <Flex direction="column" gap="16px">
                 <UserAvatar
                   sizePx={200}

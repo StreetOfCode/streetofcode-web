@@ -69,10 +69,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const post = await getPostBySlug(slug)
 
-  return {
-    props: {
-      post,
-    },
+  if (post === null) {
+    return {
+      notFound: true,
+    }
+  } else {
+    return {
+      props: {
+        post,
+      },
+    }
   }
 }
 
