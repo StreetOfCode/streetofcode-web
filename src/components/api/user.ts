@@ -46,10 +46,7 @@ const editUser = async (editUser: EditSocUser) => {
 
 export const useGetUser = (enabled: boolean | undefined) => {
   return useQuery(queryKeys.get, () => fetchUser(), {
-    cacheTime: 60000,
-    staleTime: 60000,
     enabled,
-    refetchOnWindowFocus: false,
   })
 }
 

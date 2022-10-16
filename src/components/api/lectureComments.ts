@@ -73,14 +73,8 @@ const deleteLectureComment = async (commentId: number, lectureId: number) => {
 }
 
 export const useGetLectureComments = (lectureId: number) => {
-  return useQuery(
-    queryKeys.get(lectureId),
-    () => fetchLectureComments(lectureId),
-    {
-      cacheTime: 60000,
-      staleTime: 60000,
-      refetchOnWindowFocus: false,
-    },
+  return useQuery(queryKeys.get(lectureId), () =>
+    fetchLectureComments(lectureId),
   )
 }
 

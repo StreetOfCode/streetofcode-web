@@ -23,9 +23,6 @@ export const useGetAuthorOverview = (
   enabled?: boolean | undefined,
 ) => {
   return useQuery(queryKeys.get(slug), () => fetchAuthorOverview(slug), {
-    cacheTime: 60000,
-    staleTime: 60000,
     enabled,
-    refetchOnWindowFocus: false,
   })
 }

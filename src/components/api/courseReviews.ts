@@ -72,11 +72,7 @@ const deleteCourseReview = async (reviewId: number) => {
 }
 
 export const useGetCourseReviews = (courseId: number) => {
-  return useQuery(queryKeys.get(courseId), () => fetchCourseReviews(courseId), {
-    cacheTime: 60000,
-    staleTime: 60000,
-    refetchOnWindowFocus: false,
-  })
+  return useQuery(queryKeys.get(courseId), () => fetchCourseReviews(courseId))
 }
 
 export const useAddCourseReview = (courseId: number, courseSlug: string) => {

@@ -47,14 +47,8 @@ const updateProgressLecture = async (lectureId: number) => {
 }
 
 export const useGetCourseProgressOverview = (courseId: number) => {
-  return useQuery(
-    queryKeys.get(courseId),
-    () => fetchCourseProgressOverview(courseId),
-    {
-      cacheTime: 60000,
-      staleTime: 60000,
-      refetchOnWindowFocus: false,
-    },
+  return useQuery(queryKeys.get(courseId), () =>
+    fetchCourseProgressOverview(courseId),
   )
 }
 

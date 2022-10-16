@@ -19,13 +19,5 @@ const fetchQuizQuestionsByQuiz = async (quizId: number) => {
 }
 
 export const useGetQuizQuestionsByQuiz = (quizId: number) => {
-  return useQuery(
-    queryKeys.get(quizId),
-    () => fetchQuizQuestionsByQuiz(quizId),
-    {
-      cacheTime: 600000,
-      staleTime: 600000,
-      refetchOnWindowFocus: false,
-    },
-  )
+  return useQuery(queryKeys.get(quizId), () => fetchQuizQuestionsByQuiz(quizId))
 }

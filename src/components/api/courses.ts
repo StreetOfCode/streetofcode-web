@@ -20,9 +20,6 @@ const fetchCourses = async () => {
 
 export const useGetCourses = (enabled: boolean | undefined) => {
   return useQuery(queryKeys.getCourses, () => fetchCourses(), {
-    cacheTime: 60000,
-    staleTime: 60000,
     enabled,
-    refetchOnWindowFocus: false,
   })
 }
