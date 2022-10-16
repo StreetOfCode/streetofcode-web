@@ -11,7 +11,7 @@ type Props = {
 const VideoWrapper = ({className, autoplay, vimeoVideoId}: Props) => {
   return (
     <StyledVideoWrapper className={className}>
-      <Vimeo video={vimeoVideoId} autoplay={autoplay} />
+      <Vimeo speed video={vimeoVideoId} autoplay={autoplay} />
     </StyledVideoWrapper>
   )
 }
