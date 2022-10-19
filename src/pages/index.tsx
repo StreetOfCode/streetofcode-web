@@ -313,6 +313,10 @@ const ProviderLink = styled('a')`
   @media ${device.M} {
     width: 180px;
   }
+
+  &:hover {
+    opacity: 0.75;
+  }
 `
 
 const PodcastSocialsFlex = styled(Flex)`
