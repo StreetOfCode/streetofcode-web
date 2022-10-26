@@ -24,6 +24,11 @@ const nextConfig = {
         destination: '/clanky/:slug*',
         permanent: true,
       },
+      {
+        source: '/discord',
+        destination: 'https://discord.com/invite/7K4dG6Nru4',
+        permanent: true,
+      },
     ]
   },
   webpack(config) {
