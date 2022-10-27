@@ -34,7 +34,7 @@ const PostPreviewCard = ({post, isPodcast}: Props) => {
     <WrapperFlex direction="column" justifyContent="space-between">
       <Flex direction="column" gap="18px">
         <Flex direction="column" gap="8px">
-          <FixedSizedHeading variant="h5" align="center" normalWeight>
+          <FixedSizedHeading variant="h6" align="center" normalWeight>
             {post.title}
           </FixedSizedHeading>
           {post.excerpt && (

@@ -49,7 +49,7 @@ const ConfirmActionDialog = ({
     >
       <DialogContentWrapper>
         <DialogTitle id="alert-dialog-title">
-          <Heading variant="h4">{title}</Heading>
+          <Heading variant="h5">{title}</Heading>
         </DialogTitle>
         {description && (
           <DialogContent>

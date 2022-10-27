@@ -52,7 +52,7 @@ const CourseContent = ({className, course, ...props}: Props) => {
           <Item value={chapter.id.toString()} key={chapter.id}>
             <Header>
               <Trigger>
-                <Heading variant="h4" normalWeight>
+                <Heading variant="h5" normalWeight>
                   {chapter.name}
                 </Heading>
                 <Flex gap="24px">

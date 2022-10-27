@@ -77,14 +77,14 @@ const Home: NextPage<Props> = ({courses}) => {
                 alignSelf="stretch"
               >
                 <div>
-                  <Heading variant="title" noWrap>
+                  <Heading variant="h1" noWrap>
                     Nauč sa s nami
                   </Heading>
-                  <Heading variant="title" color="accent">
+                  <Heading variant="h1" color="accent">
                     programovať
                   </Heading>
                 </div>
-                <Heading variant="h3">
+                <Heading variant="h4">
                   Pomôžeme ti na tvojej ceste začínajúceho programátora či
                   začínajúcej programátorky
                 </Heading>
@@ -103,10 +103,10 @@ const Home: NextPage<Props> = ({courses}) => {
           <Box ref={coursesRef}>
             <Flex direction="column" gap="48px" alignItems="flex-start">
               <div>
-                <Heading inline variant="h2">
+                <Heading inline variant="h3">
                   Pozri si naše
                 </Heading>
-                <Heading inline variant="h2" color="accent">
+                <Heading inline variant="h3" color="accent">
                   {' '}
                   kurzy
                 </Heading>
@@ -129,11 +129,11 @@ const Home: NextPage<Props> = ({courses}) => {
         <Box>
           <Flex direction="column" gap="48px" alignItems="flex-start">
             <div>
-              <Heading inline variant="h2">
+              <Heading inline variant="h3">
                 Po ceste do školy, do práce alebo pri upratovaní si môžeš pustiť
                 náš
               </Heading>
-              <Heading inline variant="h2" color="accent">
+              <Heading inline variant="h3" color="accent">
                 {' '}
                 podcast
               </Heading>
@@ -168,11 +168,11 @@ const Home: NextPage<Props> = ({courses}) => {
         <Box>
           <Flex direction="column" gap="48px" alignItems="flex-start">
             <div>
-              <Heading inline variant="h2">
+              <Heading inline variant="h3">
                 Keď ti popri tom všetkom raste ešte zostane čas, tak si môžeš
                 pozrieť naše
               </Heading>
-              <Heading inline variant="h2" color="accent">
+              <Heading inline variant="h3" color="accent">
                 {' '}
                 videá
               </Heading>
@@ -196,11 +196,11 @@ const Home: NextPage<Props> = ({courses}) => {
         <Box>
           <Flex justifyContent="space-between" gap="32px">
             <div>
-              <Heading variant="h2" inline>
+              <Heading variant="h3" inline>
                 Ak sa na niečom zasekneš, alebo budeš potrebovať pomoc, tak ju
                 možno nájdeš na našom
               </Heading>
-              <Heading variant="h2" color="accent" inline>
+              <Heading variant="h3" color="accent" inline>
                 {' '}
                 Discorde
               </Heading>
@@ -225,10 +225,10 @@ const Home: NextPage<Props> = ({courses}) => {
         <Box>
           <Flex direction="column" gap="32px" alignItems="flex-start">
             <div>
-              <Heading variant="h2" inline>
+              <Heading variant="h3" inline>
                 A kto sme vlastne
               </Heading>
-              <Heading variant="h2" color="accent" inline>
+              <Heading variant="h3" color="accent" inline>
                 {' '}
                 my?
               </Heading>
@@ -246,7 +246,7 @@ const Home: NextPage<Props> = ({courses}) => {
                   priority
                 />
               </UsImage>
-              <Heading variant="h4" normalWeight>
+              <Heading variant="h5" normalWeight>
                 Sme dvaja kamaráti, full-time programátori, ktorí sa rozhodli,
                 že by chceli robiť okrem práce aj niečo navyše. Niečo, čo by
                 potenciálne mohlo aj pomôcť iným ľudom. Preto sme sa rozhodli

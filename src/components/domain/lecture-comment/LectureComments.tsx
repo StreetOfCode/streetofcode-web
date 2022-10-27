@@ -52,7 +52,7 @@ const LectureCommentsContent = ({
   return (
     <WrapperFlex direction="column" gap="32px">
       <Flex gap="16px" alignSelf="flex-start">
-        <Heading variant="h3" normalWeight>
+        <Heading variant="h4" normalWeight>
           Komentáre
         </Heading>
         <Text>({lectureComments.length})</Text>

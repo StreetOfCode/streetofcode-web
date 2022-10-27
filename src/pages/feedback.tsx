@@ -129,7 +129,7 @@ const FeedbackPage: NextPage = () => {
         >
           <FAQItemsFlex direction="column" gap="32px" alignItems="flex-start">
             <Flex direction="column" gap="8px" alignItems="flex-start">
-              <Heading normalWeight variant="h3">
+              <Heading normalWeight variant="h4">
                 Kde vám môžem napísať?
               </Heading>
               <Text>
@@ -140,7 +140,7 @@ const FeedbackPage: NextPage = () => {
               </Text>
             </Flex>
             <Flex direction="column" gap="8px" alignItems="flex-start">
-              <Heading normalWeight variant="h3">
+              <Heading normalWeight variant="h4">
                 Ako môžem nahlásiť problém?
               </Heading>
               <Text>
@@ -159,7 +159,7 @@ const FeedbackPage: NextPage = () => {
               </StyledUL>
             </Flex>
             <Flex direction="column" gap="8px" alignItems="flex-start">
-              <Heading normalWeight variant="h3">
+              <Heading normalWeight variant="h4">
                 Chýba vám kurz, ktorý potrebujem
               </Heading>
               <Text>
@@ -168,7 +168,7 @@ const FeedbackPage: NextPage = () => {
               </Text>
             </Flex>
             <Flex direction="column" gap="8px" alignItems="flex-start">
-              <Heading normalWeight variant="h3">
+              <Heading normalWeight variant="h4">
                 Chcem s vami spolupracovať
               </Heading>
               <Text>
@@ -181,7 +181,7 @@ const FeedbackPage: NextPage = () => {
             <Flex direction="column" alignItems="flex-start" gap="20px">
               <Heading
                 normalWeight
-                variant="h4"
+                variant="h5"
                 align="left"
                 withAccentUnderline
               >
@@ -196,7 +196,7 @@ const FeedbackPage: NextPage = () => {
               />
               <Heading
                 normalWeight
-                variant="h4"
+                variant="h5"
                 align="left"
                 withAccentUnderline
               >
@@ -211,7 +211,7 @@ const FeedbackPage: NextPage = () => {
               />
               <Heading
                 normalWeight
-                variant="h4"
+                variant="h5"
                 align="left"
                 withAccentUnderline
               >

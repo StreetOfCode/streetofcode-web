@@ -47,7 +47,7 @@ const Quiz = ({quiz, lecture}: {quiz: IQuiz; lecture: Lecture}) => {
               <Flex direction="column" gap="24px">
                 {lecture.content && lecture.videoUrl && (
                   <Heading
-                    variant="h2"
+                    variant="h3"
                     withAccentUnderline
                     normalWeight
                     align="center"
@@ -55,7 +55,7 @@ const Quiz = ({quiz, lecture}: {quiz: IQuiz; lecture: Lecture}) => {
                     {quiz.title}
                   </Heading>
                 )}
-                <Heading variant="h4" align="center" normalWeight>
+                <Heading variant="h5" align="center" normalWeight>
                   {quiz.subtitle}
                 </Heading>
               </Flex>
@@ -75,7 +75,7 @@ const Quiz = ({quiz, lecture}: {quiz: IQuiz; lecture: Lecture}) => {
                 })}
 
                 {questionsFinished.length === quiz.questionIds.length && (
-                  <Heading variant="h3">{quiz.finishedMessage}</Heading>
+                  <Heading variant="h4">{quiz.finishedMessage}</Heading>
                 )}
               </Flex>
             </Flex>

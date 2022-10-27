@@ -74,7 +74,7 @@ const ProjectPage: NextPage = () => {
       <StyledPagedContentWrapper>
         <Flex direction="column" gap="48px">
           <Flex direction="column" gap="16px" alignItems="flex-start">
-            <AlignedHeading align="center" variant="h2">
+            <AlignedHeading align="center" variant="h3">
               Čo je to Street of Code?
             </AlignedHeading>
             <Text align="center">
@@ -88,7 +88,7 @@ const ProjectPage: NextPage = () => {
           </Flex>
 
           <Flex direction="column" gap="16px" alignItems="flex-start">
-            <AlignedHeading variant="h3">Tím</AlignedHeading>
+            <AlignedHeading variant="h4">Tím</AlignedHeading>
             <AvatarsFlexWrapper
               justifyContent="space-between"
               gap="32px"
@@ -145,7 +145,7 @@ const ProjectPage: NextPage = () => {
 
           <div ref={storyStartRef}>
             <Flex direction="column" gap="16px" alignItems="flex-start">
-              <AlignedHeading variant="h3">
+              <AlignedHeading variant="h4">
                 Ako to celé začalo? (2018)
               </AlignedHeading>
               <Text>
@@ -209,7 +209,7 @@ const ProjectPage: NextPage = () => {
           </div>
 
           <Flex direction="column" gap="16px" alignItems="flex-start">
-            <AlignedHeading variant="h3">
+            <AlignedHeading variant="h4">
               Ako to prebiehalo? (2019-2022)
             </AlignedHeading>
             <Text>
@@ -230,7 +230,7 @@ const ProjectPage: NextPage = () => {
               V roku 2019 sme zároveň obaja začali pracovať full-time, na čo sme
               si museli zvyknúť.
             </Text>
-            <AlignedHeading variant="h4">Prelomový rok 2020</AlignedHeading>
+            <AlignedHeading variant="h5">Prelomový rok 2020</AlignedHeading>
             <Text>V tomto roku sme mali niekoľko významných miľlníkov:</Text>
             <Text>
               <StyledUL>
@@ -372,7 +372,7 @@ const ProjectPage: NextPage = () => {
           </Flex>
 
           <Flex direction="column" gap="16px" alignItems="flex-start">
-            <AlignedHeading variant="h3">
+            <AlignedHeading variant="h4">
               Aké sú naše ciele? (2023 - )
             </AlignedHeading>
             <Text>
@@ -405,7 +405,7 @@ const ProjectPage: NextPage = () => {
           </Flex>
 
           <Flex direction="column" gap="16px" alignItems="flex-start">
-            <AlignedHeading variant="h3">
+            <AlignedHeading variant="h4">
               Ako náš môžeš podporiť?
             </AlignedHeading>
             <Text>
@@ -415,7 +415,7 @@ const ProjectPage: NextPage = () => {
           </Flex>
 
           <Flex direction="column" gap="16px" alignItems="flex-start">
-            <AlignedHeading variant="h3">Spolupráca</AlignedHeading>
+            <AlignedHeading variant="h4">Spolupráca</AlignedHeading>
             <Text>
               Spoluprácu vítame. Napíš nám tvoj nápad a určite sa ozveme. Ak by
               si nám náhodou vedel alebo vedela pomôcť s dotáciami, tak by sme

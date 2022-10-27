@@ -12,9 +12,9 @@ const NotFoundPage: NextPage = () => {
       <NavBar />
       <PageContentWrapper>
         <Flex direction="column" justifyContent="center" gap="48px">
-          <Heading variant="h2">Stránka nebola nájdená</Heading>
+          <Heading variant="h3">Stránka nebola nájdená</Heading>
           <NextLink href="/">
-            <Heading variant="h3" withAccentUnderline>
+            <Heading variant="h4" withAccentUnderline>
               Prejsť na hlavnú stránku
             </Heading>
           </NextLink>

@@ -167,7 +167,7 @@ const CourseDetailContent = ({
           </Heading>
           <Text size="large">{courseOverview.shortDescription}</Text>
           <MarkdownView children={courseOverview.longDescription} />
-          <Heading variant="h2" normalWeight>
+          <Heading variant="h3" normalWeight>
             Obsah
           </Heading>
           <CourseContent course={courseOverview} />

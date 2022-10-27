@@ -6,9 +6,9 @@ import NextLink from '../core/NextLink'
 const ErrorBoundaryFallBack = () => {
   return (
     <Flex direction="column" justifyContent="center" gap="48px">
-      <Heading variant="h2">Nastala neočakávaná chyba</Heading>
+      <Heading variant="h3">Nastala neočakávaná chyba</Heading>
       <NextLink href="/">
-        <Heading variant="h3" withAccentUnderline>
+        <Heading variant="h4" withAccentUnderline>
           Prejsť na hlavnú stránku
         </Heading>
       </NextLink>

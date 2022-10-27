@@ -82,7 +82,7 @@ const CoursesPageContent = ({courses}: Props) => {
         {shouldIncludeMyCourses(courses) && (
           <>
             <Flex direction="column" gap="36px" alignItems="flex-start">
-              <Heading variant="h3" withAccentUnderline normalWeight>
+              <Heading variant="h4" withAccentUnderline normalWeight>
                 Moje kurzy
               </Heading>
               <Courses
@@ -91,7 +91,7 @@ const CoursesPageContent = ({courses}: Props) => {
               />
               {courses.filter((c) => !c.userProgressMetadata).length > 0 && (
                 <>
-                  <Heading variant="h3" withAccentUnderline normalWeight>
+                  <Heading variant="h4" withAccentUnderline normalWeight>
                     Ďalšie kurzy
                   </Heading>
                   <Courses
@@ -107,10 +107,10 @@ const CoursesPageContent = ({courses}: Props) => {
           <>
             <Flex direction="column" gap="36px">
               <div>
-                <Heading align="center" variant="h1">
+                <Heading align="center" variant="h2">
                   Nauč sa s nami
                 </Heading>
-                <Heading align="center" variant="h1" color="accent">
+                <Heading align="center" variant="h2" color="accent">
                   programovať
                 </Heading>
               </div>

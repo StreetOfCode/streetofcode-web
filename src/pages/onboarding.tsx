@@ -53,7 +53,7 @@ const ConfirmName = ({
     <PageContent>
       <UserAvatar src={imageUrl || ''} name={name} sizePx={150} />
       <Flex direction="column" alignItems="flex-start" gap="20px">
-        <Heading normalWeight variant="h3" align="left" withAccentUnderline>
+        <Heading normalWeight variant="h4" align="left" withAccentUnderline>
           Meno
         </Heading>
         <TextField
@@ -97,7 +97,7 @@ const Newsletter = ({
   return (
     <PageContent>
       <Flex direction="column" alignItems="flex-start" gap="20px">
-        <Heading normalWeight variant="h3" withAccentUnderline noWrap>
+        <Heading normalWeight variant="h4" withAccentUnderline noWrap>
           Prihlásenie na odber noviniek
         </Heading>
         <Text>
@@ -159,7 +159,7 @@ const DiscordServer = ({
   return (
     <PageContent>
       <Flex direction="column" alignItems="flex-start" gap="20px">
-        <Heading normalWeight variant="h3" withAccentUnderline noWrap>
+        <Heading normalWeight variant="h4" withAccentUnderline noWrap>
           Discord server
         </Heading>
         <Text>
@@ -234,7 +234,7 @@ const OnboardingPage: NextPage = () => {
         <LogoWrapper>
           <LogoImage layout="fill" alt="Logo" src="/soc_logo.png" />
         </LogoWrapper>
-        <Heading variant="h3" normalWeight withAccentUnderline>
+        <Heading variant="h4" normalWeight withAccentUnderline>
           Onboarding
         </Heading>
         <Button onClick={logout}>Odhlásiť</Button>
@@ -247,7 +247,7 @@ const OnboardingPage: NextPage = () => {
 
           <Button onClick={logout}>Odhlásiť</Button>
         </Flex>
-        <Heading variant="h3" normalWeight withAccentUnderline>
+        <Heading variant="h4" normalWeight withAccentUnderline>
           Onboarding
         </Heading>
       </MobileNavBarWrapper>

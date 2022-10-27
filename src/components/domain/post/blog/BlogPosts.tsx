@@ -16,10 +16,10 @@ const BlogPosts = ({posts}: Props) => {
     <Flex direction="column" gap="36px">
       <Flex direction="column" gap="16px">
         <div>
-          <Heading inline align="center" variant="h1">
+          <Heading inline align="center" variant="h2">
             Naše
           </Heading>
-          <Heading inline variant="h1" color="accent">
+          <Heading inline variant="h2" color="accent">
             {' '}
             články
           </Heading>

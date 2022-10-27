@@ -146,7 +146,7 @@ const CourseSidebar = ({
               <Header>
                 <Trigger>
                   <Flex direction="column" alignItems="flex-start" gap="8px">
-                    <Heading variant="h5" normalWeight>
+                    <Heading variant="h6" normalWeight>
                       {chapter.name}
                     </Heading>
                     {getChapterLengthInfo(chapter)}

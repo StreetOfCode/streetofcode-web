@@ -59,7 +59,7 @@ const CourseCard = ({
     >
       <Flex direction="column" gap="24px">
         <Flex direction="column" gap="8px">
-          <Heading variant="h4" align="center" normalWeight>
+          <Heading variant="h5" align="center" normalWeight>
             {course.name}
           </Heading>
           <Text align="center">{course.shortDescription}</Text>

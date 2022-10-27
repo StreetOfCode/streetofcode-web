@@ -33,7 +33,7 @@ const PostView = ({className, isPodcast, post}: Props) => {
       alignItems="flex-start"
     >
       {post.date && <Text size="small">{formatDate(new Date(post.date))}</Text>}
-      <Heading variant="h2">{post.title}</Heading>
+      <Heading variant="h3">{post.title}</Heading>
       {post.content && (
         <Text size="large" dangerouslySetInnerHTML={{__html: post.content}} />
       )}

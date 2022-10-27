@@ -40,7 +40,7 @@ const CourseReviews = ({courseOverview}: CourseReviewsProps) => {
       <QueryGuard {...getCourseReviewsOverviewQuery}>
         {(courseReviewsOverview) => (
           <Flex alignSelf="flex-start" gap="32px">
-            <Heading variant="h3" normalWeight>
+            <Heading variant="h4" normalWeight>
               Hodnotenia
             </Heading>
             <Flex gap="8px">

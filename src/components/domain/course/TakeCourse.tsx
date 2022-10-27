@@ -64,7 +64,7 @@ const TakeCourse = ({
             <EmptyBox />
           )}
 
-          <Heading variant="h2" normalWeight withAccentUnderline>
+          <Heading variant="h4" normalWeight withAccentUnderline>
             {currentLecture?.name}
           </Heading>
 
@@ -102,7 +102,7 @@ const TakeCourse = ({
               <MobileArrowLeft />
             </NextLink>
           </Box>
-          <Heading variant="h2" normalWeight withAccentUnderline>
+          <Heading variant="h4" normalWeight withAccentUnderline>
             Materiály
           </Heading>
           <EmptyBox />

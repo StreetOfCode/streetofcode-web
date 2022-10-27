@@ -117,7 +117,7 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
         gap="16px"
         alignItems="flex-start"
       >
-        <Heading variant="h3" withAccentUnderline normalWeight>
+        <Heading variant="h4" withAccentUnderline normalWeight>
           Odber noviniek
         </Heading>
         <Button
@@ -197,7 +197,7 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
             >
               {!nameEditing && (
                 <>
-                  <Heading variant="h3" withAccentUnderline normalWeight>
+                  <Heading variant="h4" withAccentUnderline normalWeight>
                     {socUser.name}
                   </Heading>
                   <StyledEditIcon onClick={() => setNameEditing(true)} />
@@ -219,7 +219,7 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
               alignItems="flex-start"
             >
               {courses.length > 0 && (
-                <Heading variant="h3" withAccentUnderline normalWeight>
+                <Heading variant="h4" withAccentUnderline normalWeight>
                   Moje kurzy
                 </Heading>
               )}
