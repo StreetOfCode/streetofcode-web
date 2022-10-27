@@ -23,10 +23,12 @@ export const QuizQuestion = ({
   question,
   onQuestionFinished,
   questionNumber,
+  previouslySelectedAnswers,
 }: {
   question: IQuizQuestion
   onQuestionFinished: (wasAnsweredCorrectly: boolean) => void
   questionNumber: number
+  previouslySelectedAnswers: QuizQuestionUserAnswer[]
 }) => {
   const [selectedAnswerIds, setSelectedAnswerIds] = useState<number[]>([])
   const [wasAnsweredCorrectly, setAnsweredCorrectly] = useState<boolean | null>(
@@ -35,36 +37,28 @@ export const QuizQuestion = ({
   const {theme} = useTheme()
 
   useEffect(() => {
-    const fetchSelectedAnswers = async () => {
-      const previouslySelectedAnswers: QuizQuestionUserAnswer[] = await (
-        await Api.authFetch(Api.previousAnswersByQuizIdUrl(question.quiz.id))
-      ).json()
+    const savedAnswers = previouslySelectedAnswers.filter(
+      (a) => a.question.id === question.id,
+    )
 
-      const savedAnswers = previouslySelectedAnswers.filter(
-        (a) => a.question.id === question.id,
-      )
-
-      if (savedAnswers.length === 0) {
-        setAnsweredCorrectly(null)
-      } else {
-        const isAnsweredCorrectly =
-          savedAnswers.filter((x) => x.isCorrect).length !== 0
-        setAnsweredCorrectly(isAnsweredCorrectly)
-        onQuestionFinished(isAnsweredCorrectly)
-      }
-
-      setSelectedAnswerIds(
-        previouslySelectedAnswers
-          .filter((a) => a.question.id === question.id)
-          .map((a) => a.answer)
-          .flat()
-          .map((a) => {
-            return a.id
-          }),
-      )
+    if (savedAnswers.length === 0) {
+      setAnsweredCorrectly(null)
+    } else {
+      const isAnsweredCorrectly =
+        savedAnswers.filter((x) => x.isCorrect).length !== 0
+      setAnsweredCorrectly(isAnsweredCorrectly)
+      onQuestionFinished(isAnsweredCorrectly)
     }
 
-    fetchSelectedAnswers()
+    setSelectedAnswerIds(
+      previouslySelectedAnswers
+        .filter((a) => a.question.id === question.id)
+        .map((a) => a.answer)
+        .flat()
+        .map((a) => {
+          return a.id
+        }),
+    )
   }, [])
 
   const onAnswerSelected = (answer: QuizQuestionAnswer): string => {

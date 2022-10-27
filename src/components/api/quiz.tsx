@@ -19,7 +19,12 @@ const fetchQuizzesByLectureId = async (lectureId: number) => {
 }
 
 export const useGetQuizzesByLecture = (lectureId: number) => {
-  return useQuery(queryKeys.get(lectureId), () =>
-    fetchQuizzesByLectureId(lectureId),
+  return useQuery(
+    queryKeys.get(lectureId),
+    () => fetchQuizzesByLectureId(lectureId),
+    {
+      cacheTime: 60 * 60 * 1000,
+      staleTime: 30 * 60 * 1000,
+    },
   )
 }

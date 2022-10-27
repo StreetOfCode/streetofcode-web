@@ -71,23 +71,13 @@ export const useResetLecture = (courseId: number, courseSlug: string) => {
   )
 }
 
-export const useUpdateProgressLecture = (
-  courseId: number,
-  courseSlug: string,
-) => {
+export const useUpdateProgressLecture = (courseId: number) => {
   return useMutation(
     mutationKeys.updateLecture(),
     (lectureId: number) => updateProgressLecture(lectureId),
     {
       onSuccess: (data) => {
         queryClient.setQueryData(queryKeys.get(courseId), data)
-
-        Promise.all(
-          [
-            courseQueryKeys.getCourses,
-            courseOverviewQueryKeys.get(courseSlug),
-          ].map((key) => queryClient.invalidateQueries(key)),
-        )
       },
     },
   )

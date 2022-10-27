@@ -23,7 +23,12 @@ const fetchNextCourseOptions = async () => {
 }
 
 export const useGetNextCourseOptions = () => {
-  return useQuery(queryKeys.getNextCourseOptions, () =>
-    fetchNextCourseOptions(),
+  return useQuery(
+    queryKeys.getNextCourseOptions,
+    () => fetchNextCourseOptions(),
+    {
+      cacheTime: 60 * 60 * 1000,
+      staleTime: 30 * 60 * 1000,
+    },
   )
 }

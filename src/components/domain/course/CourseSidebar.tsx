@@ -40,10 +40,7 @@ const CourseSidebar = ({
 }: Props) => {
   const router = useRouter()
   const resetLecture = useResetLecture(Number(courseId), courseSlug)
-  const updateProgressLecture = useUpdateProgressLecture(
-    Number(courseId),
-    courseSlug,
-  )
+  const updateProgressLecture = useUpdateProgressLecture(Number(courseId))
 
   useEffect(() => {
     const maybeUpdateProgressLecture = async () => {

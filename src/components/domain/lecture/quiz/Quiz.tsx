@@ -8,6 +8,7 @@ import Text from '../../../core/Text'
 import styled from 'styled-components'
 import {useGetQuizQuestionsByQuiz} from '../../../api/quizQuestions'
 import {device} from '../../../../theme/device'
+import {useGetQuizQuestionUserAnswersByQuiz} from '../../../api/quizQuestionUserAnswers'
 
 const Quiz = ({quiz, lecture}: {quiz: IQuiz; lecture: Lecture}) => {
   const [questionsFinished, setQuestionsFinished] = useState<QuestionId[]>([])
@@ -32,6 +33,9 @@ const Quiz = ({quiz, lecture}: {quiz: IQuiz; lecture: Lecture}) => {
   }
 
   const quizQuestionsByQuiz = useGetQuizQuestionsByQuiz(quiz.id)
+  const quizQuestionUserAnswersByQuiz = useGetQuizQuestionUserAnswersByQuiz(
+    quiz.id,
+  )
 
   return (
     <WrapperFlex direction="column">
@@ -61,18 +65,29 @@ const Quiz = ({quiz, lecture}: {quiz: IQuiz; lecture: Lecture}) => {
               </Flex>
 
               <Flex direction="column" gap="60px">
-                {quizQuestions.map((q) => {
-                  return (
-                    <QuizQuestion
-                      key={q.id}
-                      question={q}
-                      questionNumber={quiz.questionIds.length}
-                      onQuestionFinished={(isAnsweredCorrectly: boolean) =>
-                        setQuestionFinished(q.id, isAnsweredCorrectly)
-                      }
-                    />
-                  )
-                })}
+                <QueryGuard {...quizQuestionUserAnswersByQuiz}>
+                  {(quizQuesionUserAnswers) => {
+                    return (
+                      <>
+                        {quizQuestions.map((q) => {
+                          return (
+                            <QuizQuestion
+                              key={q.id}
+                              question={q}
+                              questionNumber={quiz.questionIds.length}
+                              previouslySelectedAnswers={quizQuesionUserAnswers}
+                              onQuestionFinished={(
+                                isAnsweredCorrectly: boolean,
+                              ) =>
+                                setQuestionFinished(q.id, isAnsweredCorrectly)
+                              }
+                            />
+                          )
+                        })}
+                      </>
+                    )
+                  }}
+                </QueryGuard>
 
                 {questionsFinished.length === quiz.questionIds.length && (
                   <Heading variant="h4">{quiz.finishedMessage}</Heading>

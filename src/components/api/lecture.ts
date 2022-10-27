@@ -19,5 +19,8 @@ const fetchLecture = async (lectureId: number) => {
 }
 
 export const useGetLecture = (lectureId: number) => {
-  return useQuery(queryKeys.get(lectureId), () => fetchLecture(lectureId))
+  return useQuery(queryKeys.get(lectureId), () => fetchLecture(lectureId), {
+    cacheTime: 60 * 60 * 1000,
+    staleTime: 30 * 60 * 1000,
+  })
 }
