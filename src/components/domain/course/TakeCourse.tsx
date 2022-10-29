@@ -219,6 +219,15 @@ const Sidebar = styled.div<{mobileOpen: boolean}>`
   z-index: 1;
   border-bottom: solid 1px ${(props) => props.theme.accentColor};
 
+  ::-webkit-scrollbar {
+    width: 1px;
+  }
+
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 1px ${(props) => props.theme.accentColor};
+    box-shadow: inset 0 0 1px ${(props) => props.theme.accentColor};
+  }
+
   @media ${device.M} {
     width: 250px;
   }
