@@ -97,6 +97,15 @@ const NavBar = () => {
             <Text>Feedback</Text>
           </NextLink>
           {user && <LogoutText onClick={logout}>Odhlásiť</LogoutText>}
+          {mobileNavbarOpen && (
+            <CloseMobileMenuFlexWrapper
+              gap="12px"
+              onClick={() => setMobileNavbarOpen(!mobileNavbarOpen)}
+            >
+              <CloseMenuIcon />
+              <Text>Zavrieť</Text>
+            </CloseMobileMenuFlexWrapper>
+          )}
         </MobileMenuItems>
       </MobileMenuFlex>
     </WrapperFlex>
@@ -219,6 +228,19 @@ const LogoWrapper = styled.div`
 const LogoutText = styled(Text)`
   &:hover {
     cursor: pointer;
+    opacity: 0.7;
+  }
+`
+
+const CloseMobileMenuFlexWrapper = styled(Flex)`
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
   }
 `
 
