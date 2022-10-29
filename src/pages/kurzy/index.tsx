@@ -1,5 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
+import styled from 'styled-components'
 import {NextPage} from 'next'
 import Flex from '../../components/core/Flex'
 import Heading from '../../components/core/Heading'
@@ -13,6 +14,7 @@ import {useAuth} from '../../AuthUserContext'
 import {useGetCourses} from '../../components/api/courses'
 import {QueryGuard} from '../../QueryGuard'
 import VoteNextCourse from '../../components/domain/vote/VoteNextCourse'
+import {device} from '../../theme/device'
 
 interface Props {
   courses: CourseOverview[]
@@ -81,7 +83,11 @@ const CoursesPageContent = ({courses}: Props) => {
       <>
         {shouldIncludeMyCourses(courses) && (
           <>
-            <Flex direction="column" gap="36px" alignItems="flex-start">
+            <MyCoursesFlexWrapper
+              direction="column"
+              gap="36px"
+              alignItems="flex-start"
+            >
               <Heading variant="h4" withAccentUnderline normalWeight>
                 Moje kurzy
               </Heading>
@@ -100,7 +106,7 @@ const CoursesPageContent = ({courses}: Props) => {
                 </>
               )}
               <VoteNextCourse />
-            </Flex>
+            </MyCoursesFlexWrapper>
           </>
         )}
         {!shouldIncludeMyCourses(courses) && (
@@ -126,6 +132,12 @@ const CoursesPageContent = ({courses}: Props) => {
     </PageContentWrapper>
   )
 }
+
+const MyCoursesFlexWrapper = styled(Flex)`
+  @media ${device.M} {
+    align-items: center;
+  }
+`
 
 export const getStaticProps = async () => {
   const response = await Api.noAuthFetch(Api.coursesOverviewUrl())
