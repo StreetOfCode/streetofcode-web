@@ -1,12 +1,10 @@
-import React, {useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import Button from '../../core/Button'
 import NextLink from '../../core/NextLink'
 import MarkdownView from '../../core/MarkdownView'
-import BackLink from '../../core/BackLink'
 import styled, {css} from 'styled-components'
 import Flex, {JustifyContent} from '../../core/Flex'
 import Heading from '../../core/Heading'
-import Text from '../../core/Text'
 import CourseSidebar from './CourseSidebar'
 import LectureDetail from '../lecture/LectureDetail'
 import {
@@ -21,6 +19,7 @@ import {CourseOverview} from '../../../types'
 import {QueryGuard} from '../../../QueryGuard'
 import {device} from '../../../theme/device'
 import ThemeSwitcher from '../../../theme/ThemeSwitcher'
+import BackLink from '../../core/BackLink'
 
 type Props = {
   resourcesMode: boolean
@@ -39,6 +38,26 @@ const TakeCourse = ({
   const getCourseProgressOverview = useGetCourseProgressOverview(
     Number(courseOverview.id),
   )
+  const sidebarRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClick)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClick)
+    }
+  }, [sidebarRef])
+
+  const handleClick = (event: MouseEvent) => {
+    if (
+      event.which === 1 &&
+      event.target instanceof Node &&
+      sidebarRef.current &&
+      !sidebarRef.current.contains(event.target)
+    ) {
+      setMobileSidebarOpen(false)
+    }
+  }
 
   const Lecture = () => {
     const {currentLecture, previousLectureUrl, nextLectureUrl} =
@@ -115,22 +134,29 @@ const TakeCourse = ({
   return (
     <>
       <WrapperFlex alignSelf="stretch" flex="1">
-        <Sidebar mobileOpen={mobileSidebarOpen}>
-          <Flex justifyContent="space-between" alignItems="flex-start">
-            <StyledBackLink
+        <Sidebar ref={sidebarRef} mobileOpen={mobileSidebarOpen}>
+          <DesktopTopWrapper
+            justifyContent="space-between"
+            alignItems="flex-start"
+          >
+            <BackLink
               to={`/kurzy/${courseOverview.slug}`}
               text={'Späť na kurz'}
             />
             <StyledThemeSwitcher />
-          </Flex>
-          <MobileSidebarHeaderFlex justifyContent="space-between">
-            <NextLink href={'/kurzy'}>
-              <Text size="very-small">Zobraziť všetky kurzy</Text>
-            </NextLink>
-            <MobileSidebarCloseIcon
-              onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-            />
-          </MobileSidebarHeaderFlex>
+          </DesktopTopWrapper>
+          <MobileTopWrapper direction="column" gap="16px" alignItems="stretch">
+            <Flex justifyContent="space-between" gap="8px">
+              <MobileBackLink
+                to={`/kurzy/${courseOverview.slug}`}
+                text={'Späť na kurz'}
+              />
+              <MobileSidebarCloseIcon
+                onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+              />
+            </Flex>
+            <StyledThemeSwitcher />
+          </MobileTopWrapper>
           <QueryGuard {...getCourseProgressOverview}>
             {(courseProgressOverview) => (
               <CourseSidebar
@@ -159,6 +185,20 @@ const WrapperFlex = styled(Flex)`
   position: relative;
 `
 
+const DesktopTopWrapper = styled(Flex)`
+  @media ${device.S} {
+    display: none;
+  }
+`
+
+const MobileTopWrapper = styled(Flex)`
+  display: none;
+
+  @media ${device.S} {
+    display: flex;
+  }
+`
+
 const StyledThemeSwitcher = styled(ThemeSwitcher)`
   margin-bottom: 12px;
 `
@@ -170,26 +210,44 @@ const Sidebar = styled.div<{mobileOpen: boolean}>`
   border-right: solid 1px ${(props) => props.theme.accentColor};
   flex-shrink: 0;
 
+  overflow-y: scroll;
+  max-height: 100%;
+  position: absolute;
+  z-index: 1;
+  border-bottom: solid 1px ${(props) => props.theme.accentColor};
+
   @media ${device.M} {
     width: 250px;
   }
 
   @media ${device.S} {
     display: ${(props) => (props.mobileOpen ? 'block' : 'none')};
-    position: absolute;
-    z-index: 1;
     width: 300px;
-    border-bottom: solid 1px ${(props) => props.theme.accentColor};
     background-color: ${(props) => props.theme.primaryColor};
   }
 `
 
 const Content = styled.div`
   margin: 0 auto;
-  width: 100%;
-  max-width: 1400px;
+  width: calc(100% - 300px);
+  margin-left: 300px;
   padding: 32px;
   align-self: stretch;
+
+  > * {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  @media ${device.M} {
+    width: calc(100% - 250px);
+    margin-left: 250px;
+  }
+
+  @media ${device.S} {
+    width: calc(100%);
+    margin-left: 0px;
+  }
 `
 
 const EmptyBox = styled.div`
@@ -273,27 +331,16 @@ const mobileSidebarIconStyle = css`
 
 const MobileSidebarOpenIcon = styled(AiOutlineMenu)`
   ${mobileSidebarIconStyle}
+  margin: 0;
+  margin-bottom: 8px;
 `
 
 const MobileSidebarCloseIcon = styled(AiOutlineClose)`
   ${mobileSidebarIconStyle}
 `
 
-const StyledBackLink = styled(BackLink)`
-  @media ${device.S} {
-    display: none !important;
-  }
-`
-
-const MobileSidebarHeaderFlex = styled(Flex)`
-  display: none;
-
-  @media ${device.S} {
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
-    margin-bottom: 16px;
-  }
+const MobileBackLink = styled(BackLink)`
+  margin-bottom: 0;
 `
 
 export default TakeCourse
