@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useRef, useState, useMemo} from 'react'
 import Button from '../../core/Button'
 import NextLink from '../../core/NextLink'
 import MarkdownView from '../../core/MarkdownView'
@@ -59,51 +59,54 @@ const TakeCourse = ({
     }
   }
 
-  const Lecture = () => {
-    const {currentLecture, previousLectureUrl, nextLectureUrl} =
-      getPrevAndNextUrl(courseOverview, lectureId, chapterId) ||
-      ({} as GetPrevAndNextUrlResponse)
+  const Lecture = useMemo(
+    () => () => {
+      const {currentLecture, previousLectureUrl, nextLectureUrl} =
+        getPrevAndNextUrl(courseOverview, lectureId, chapterId) ||
+        ({} as GetPrevAndNextUrlResponse)
 
-    return (
-      <>
-        <MobileSidebarOpenIcon
-          onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-        />
-        <ContentNavbarFlex justifyContent="space-between" gap="8px">
-          {previousLectureUrl ? (
-            <Box justifyContent="flex-start">
-              <NextLink href={previousLectureUrl}>
-                <ButtonPreviousLecture variant="outline">
-                  Predošlá lekcia
-                </ButtonPreviousLecture>
-                <MobileArrowLeft />
-              </NextLink>
-            </Box>
-          ) : (
-            <EmptyBox />
-          )}
+      return (
+        <>
+          <MobileSidebarOpenIcon
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+          />
+          <ContentNavbarFlex justifyContent="space-between" gap="8px">
+            {previousLectureUrl ? (
+              <Box justifyContent="flex-start">
+                <NextLink href={previousLectureUrl}>
+                  <ButtonPreviousLecture variant="outline">
+                    Predošlá lekcia
+                  </ButtonPreviousLecture>
+                  <MobileArrowLeft />
+                </NextLink>
+              </Box>
+            ) : (
+              <EmptyBox />
+            )}
 
-          <Heading variant="h4" normalWeight withAccentUnderline>
-            {currentLecture?.name}
-          </Heading>
+            <Heading variant="h4" normalWeight withAccentUnderline>
+              {currentLecture?.name}
+            </Heading>
 
-          {nextLectureUrl ? (
-            <Box justifyContent="flex-end">
-              <NextLink href={nextLectureUrl}>
-                <ButtonNextLecture variant="outline">
-                  Ďalšia lekcia
-                </ButtonNextLecture>
-                <MobileArrowRight />
-              </NextLink>
-            </Box>
-          ) : (
-            <EmptyBox />
-          )}
-        </ContentNavbarFlex>
-        <LectureDetail lectureId={Number(lectureId)} />
-      </>
-    )
-  }
+            {nextLectureUrl ? (
+              <Box justifyContent="flex-end">
+                <NextLink href={nextLectureUrl}>
+                  <ButtonNextLecture variant="outline">
+                    Ďalšia lekcia
+                  </ButtonNextLecture>
+                  <MobileArrowRight />
+                </NextLink>
+              </Box>
+            ) : (
+              <EmptyBox />
+            )}
+          </ContentNavbarFlex>
+          <LectureDetail lectureId={Number(lectureId)} />
+        </>
+      )
+    },
+    [lectureId],
+  )
 
   const Resources = () => {
     if (!courseOverview.resources) return null
