@@ -100,6 +100,7 @@ const NavBar = () => {
           {mobileNavbarOpen && (
             <CloseMobileMenuFlexWrapper
               gap="12px"
+              justifyContent="center"
               onClick={() => setMobileNavbarOpen(!mobileNavbarOpen)}
             >
               <CloseMenuIcon />
@@ -157,6 +158,10 @@ const MobileMenuItems = styled(Flex)`
   a {
     text-decoration: none;
     color: unset;
+  }
+
+  span {
+    text-align: center;
   }
 `
 
@@ -233,6 +238,9 @@ const LogoutText = styled(Text)`
 `
 
 const CloseMobileMenuFlexWrapper = styled(Flex)`
+  width: 100%;
+  margin: 0 auto;
+
   &:hover {
     cursor: pointer;
     opacity: 0.7;
