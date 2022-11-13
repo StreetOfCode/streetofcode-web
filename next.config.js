@@ -29,6 +29,26 @@ const nextConfig = {
         destination: 'https://discord.com/invite/7K4dG6Nru4',
         permanent: true,
       },
+      {
+        source: '/patreon',
+        destination: 'https://www.patreon.com/streetofcode',
+        permanent: true,
+      },
+      {
+        source: '/facebook',
+        destination: 'https://www.facebook.com/streetofcode',
+        permanent: true,
+      },
+      {
+        source: '/instagram',
+        destination: 'https://www.instagram.com/streetofcode',
+        permanent: true,
+      },
+      {
+        source: '/twitter',
+        destination: 'https://twitter.com/StreetofCode1',
+        permanent: true,
+      },
     ]
   },
   webpack(config) {
