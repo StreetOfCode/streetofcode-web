@@ -46,5 +46,10 @@ export const useTheme = () => {
     }
   })()
 
-  return {theme, themeSetting, setThemeSetting}
+  return {
+    theme,
+    isDarkTheme: theme === darkTheme,
+    themeSetting,
+    setThemeSetting,
+  }
 }
