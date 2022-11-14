@@ -77,42 +77,15 @@ const PostView = ({className, isPodcast, post}: Props) => {
  * TODO: We could possibly do this via .htaccess
  */
 const redirectLinks = (content: Maybe<string> | undefined) => {
-  if (!content) {
-    return content
-  }
+  const linksToRedirect = [
+    {originalUrl: 'https://wp.streetofcode.sk/podcast', newUrl: '/podcast'},
+    {originalUrl: 'http://wp.streetofcode.sk/podcast', newUrl: '/podcast'},
+    {originalUrl: 'https://wp.streetofcode.sk/blog', newUrl: '/clanky'},
+    {originalUrl: 'http://wp.streetofcode.sk/blog', newUrl: '/clanky'},
+  ]
 
-  for (const splitted of content.split('a href="')) {
-    if (splitted.startsWith('https://wp.streetofcode.sk/podcast/')) {
-      const link = splitted.substring(0, splitted.indexOf('/"'))
-      const updatedLink = link.replace('https://wp.streetofcode.sk', '')
-      content = content.replace(link, updatedLink)
-      continue
-    }
-
-    if (splitted.startsWith('http://wp.streetofcode.sk/podcast/')) {
-      const link = splitted.substring(0, splitted.indexOf('/"'))
-      const updatedLink = link.replace('http://wp.streetofcode.sk', '')
-      content = content.replace(link, updatedLink)
-      continue
-    }
-
-    if (splitted.startsWith('https://wp.streetofcode.sk/blog/')) {
-      const link = splitted.substring(0, splitted.indexOf('/"'))
-      const updatedLink = link
-        .replace('blog', 'clanky')
-        .replace('https://wp.streetofcode.sk', '')
-      content = content.replace(link, updatedLink)
-      continue
-    }
-
-    if (splitted.startsWith('http://wp.streetofcode.sk/blog/')) {
-      const link = splitted.substring(0, splitted.indexOf('/"'))
-      const updatedLink = link
-        .replace('blog', 'clanky')
-        .replace('http://wp.streetofcode.sk', '')
-      content = content.replace(link, updatedLink)
-      continue
-    }
+  for (const {originalUrl, newUrl} of linksToRedirect) {
+    content = content?.replaceAll(originalUrl, newUrl)
   }
 
   return content
