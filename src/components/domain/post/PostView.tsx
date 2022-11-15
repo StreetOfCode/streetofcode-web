@@ -50,6 +50,9 @@ const PostView = ({className, isPodcast, post}: Props) => {
             {(domNode.children[0] as HtmlParserText).data}
           </SyntaxHighlighter>
         )
+      } else if (domNode instanceof Element && domNode.name === 'figure') {
+        domNode.attribs['style'] = 'max-width: 100%'
+        return domNode
       }
 
       return null
@@ -65,7 +68,11 @@ const PostView = ({className, isPodcast, post}: Props) => {
     >
       {post.date && <Text size="small">{formatDate(new Date(post.date))}</Text>}
       <Heading variant="h3">{post.title}</Heading>
-      {post.content && <Text size="large">{postContentElements}</Text>}
+      {post.content && (
+        <Text size="large" style={{maxWidth: '100%'}}>
+          {postContentElements}
+        </Text>
+      )}
       {!isPodcast && authorName && <Text weight="bold">{authorName}</Text>}
     </WrapperFlex>
   )
