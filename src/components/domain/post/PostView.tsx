@@ -67,12 +67,8 @@ const PostView = ({className, isPodcast, post}: Props) => {
       alignItems="flex-start"
     >
       {post.date && <Text size="small">{formatDate(new Date(post.date))}</Text>}
-      <Heading variant="h3">{post.title}</Heading>
-      {post.content && (
-        <Text size="large" style={{maxWidth: '100%'}}>
-          {postContentElements}
-        </Text>
-      )}
+      <Heading variant="h2">{post.title}</Heading>
+      {post.content && <PostContent>{postContentElements}</PostContent>}
       {!isPodcast && authorName && <Text weight="bold">{authorName}</Text>}
     </WrapperFlex>
   )
@@ -81,7 +77,6 @@ const PostView = ({className, isPodcast, post}: Props) => {
 /***
  * Redirect links to our podcasts and blogs.
  * Some links have https, some http.
- * TODO: We could possibly do this via .htaccess
  */
 const redirectLinks = (content: Maybe<string> | undefined) => {
   const linksToRedirect = [
@@ -92,14 +87,14 @@ const redirectLinks = (content: Maybe<string> | undefined) => {
   ]
 
   for (const {originalUrl, newUrl} of linksToRedirect) {
-    content = content?.replaceAll(originalUrl, newUrl)
+    content = content?.toString().replace(originalUrl, newUrl)
   }
 
   return content
 }
 
-const WrapperFlex = styled(Flex)`
-  max-width: 900px;
+const PostContent = styled.div`
+  max-width: 100%;
 
   p {
     width: 100%;
@@ -108,6 +103,15 @@ const WrapperFlex = styled(Flex)`
     audio {
       margin: 14px 0;
     }
+
+    > * {
+      max-width: 100%;
+    }
+  }
+
+  code {
+    display: inline-block;
+    overflow: scroll;
   }
 
   // youtube video
@@ -133,6 +137,10 @@ const WrapperFlex = styled(Flex)`
       height: 135px;
     }
   }
+`
+
+const WrapperFlex = styled(Flex)`
+  max-width: 900px;
 `
 
 export default PostView

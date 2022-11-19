@@ -14,9 +14,11 @@ interface Props {
 }
 
 const Header = ({post}: {post: Post}) => {
+  const title = `${post.title} | Street of Code`
+
   return (
     <Head>
-      <title>{post.title} | Street of Code</title>
+      <title>{title}</title>
       <meta
         name="description"
         content={
