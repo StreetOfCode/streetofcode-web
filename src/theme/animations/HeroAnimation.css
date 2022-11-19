@@ -1,0 +1,152 @@
+#freepik_stories-code-typing:not(.animated) .animable {
+  opacity: 0;
+}
+
+#freepik_stories-code-typing.animated #freepik--background-simple--inject-11 {
+  animation: 1s 1 forwards cubic-bezier(0.36, -0.01, 0.5, 1.38) fadeIn;
+  animation-delay: 0s;
+}
+
+#freepik_stories-code-typing.animated #freepik--Plant--inject-11 {
+  animation: 1s 1 forwards cubic-bezier(0.36, -0.01, 0.5, 1.38) zoomIn;
+  animation-delay: 0s;
+}
+
+#freepik_stories-code-typing.animated #freepik--Keyboard--inject-11 {
+  animation: 1s 1 forwards cubic-bezier(0.36, -0.01, 0.5, 1.38) slideLeft;
+  animation-delay: 0s;
+}
+
+#freepik_stories-code-typing.animated #freepik--Hands--inject-11 {
+  animation: 0.5s 1 forwards ease-in slideUp, 1.5s Infinite linear heartbeat;
+  animation-delay: 0s, 0.5s;
+}
+
+#freepik_stories-code-typing.animated #freepik--Coffee--inject-11 {
+  animation: 1s 1 forwards cubic-bezier(0.36, -0.01, 0.5, 1.38) zoomIn;
+  animation-delay: 0s;
+}
+
+#freepik_stories-code-typing.animated #freepik--Monitor--inject-11 {
+  animation: 1s 1 forwards cubic-bezier(0.36, -0.01, 0.5, 1.38) lightSpeedRight;
+  animation-delay: 0s;
+}
+
+#freepik_stories-code-typing.animated #freepik--speech-bubbles--inject-11 {
+  animation: 1s 1 forwards cubic-bezier(0.36, -0.01, 0.5, 1.38) fadeIn;
+  animation-delay: 0s;
+}
+
+#freepik_stories-code-typing.animated #freepik--Mouse--inject-11 {
+  animation: 1s 1 forwards cubic-bezier(0.36, -0.01, 0.5, 1.38) slideRight;
+  animation-delay: 0s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: inherit;
+  }
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+
+  10% {
+    transform: scale(1.1);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  60% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes lightSpeedRight {
+  from {
+    transform: translate3d(50%, 0, 0) skewX(-20deg);
+    opacity: 0;
+  }
+
+  60% {
+    transform: skewX(10deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: skewX(-2deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

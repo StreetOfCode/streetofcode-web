@@ -19,7 +19,6 @@ import {
   discordImageUrl,
   discordInviteUrl,
 } from '../components/landing-page/discord'
-import TypingAnimation from '../theme/animations/TypingAnimation'
 import {CoursesSliderWrapper} from '../components/landing-page/CoursesSlider'
 import * as Api from '../api'
 import {CourseOverview} from '../types'
@@ -28,6 +27,7 @@ import NextLink from '../components/core/NextLink'
 import {device} from '../theme/device'
 import VerticalSlider from '../components/VerticalSlider'
 import {useTheme} from '../hooks/useTheme'
+import HeroAnimation from '../theme/animations/HeroAnimation'
 
 interface Props {
   courses: CourseOverview[]
@@ -95,7 +95,7 @@ const Home: NextPage<Props> = ({courses}) => {
                 </NextLink>
               </HeroSectionTextFles>
               <AnimationWrapper>
-                <TypingAnimation />
+                <HeroAnimation />
               </AnimationWrapper>
             </HeroSection>
             <VerticalSlider innerRef={coursesRef} />
