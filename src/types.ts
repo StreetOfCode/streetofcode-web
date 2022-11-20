@@ -238,6 +238,11 @@ export interface QuizQuestion {
   type: QuizQuestionType
   answers: QuizQuestionAnswer[]
 }
+
+export interface QuizRemoveAnswersRequest {
+  lectureId: number
+}
+
 export interface NextCourseVoteOption {
   id: number
   name: string

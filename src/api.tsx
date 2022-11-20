@@ -81,6 +81,9 @@ const GET_PREVIOUS_QUESTION_ANSWER_URL = `${API_URL}/quiz/`
 export const previousAnswersByQuizIdUrl = (quizId: number) =>
   `${GET_PREVIOUS_QUESTION_ANSWER_URL}${quizId}/question/user-answer`
 
+const REMOVE_QUESTION_ANSWERS_URL = `${API_URL}/quiz/question/user-answer/`
+export const removeAnswersByQuizIdUrl = () => `${REMOVE_QUESTION_ANSWERS_URL}`
+
 const VOTE_NEXT_COURSE_URL = `${API_URL}/next-course-vote`
 export const voteNextUrl = () => `${VOTE_NEXT_COURSE_URL}`
 
@@ -107,8 +110,13 @@ export const authPost = async <T,>(url: string, body: T | null = null) => {
   return fetch(url, params)
 }
 
-export const authDelete = async (url: string) => {
-  const params = await createParams('DELETE')
+export const authDelete = async <T,>(url: string, body: T | null = null) => {
+  let params = await createParams('DELETE')
+
+  if (body) {
+    params = {...params, body: JSON.stringify(body)}
+  }
+
   return fetch(url, params)
 }
 
