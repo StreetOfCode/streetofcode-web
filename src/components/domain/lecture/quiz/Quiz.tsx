@@ -9,14 +9,14 @@ import styled from 'styled-components'
 import {useGetQuizQuestionsByQuiz} from '../../../api/quizQuestions'
 import {device} from '../../../../theme/device'
 import {useGetQuizQuestionUserAnswersByQuiz} from '../../../api/quizQuestionUserAnswers'
+import {useUpdateProgressLecture} from '../../../api/courseProgress'
 
 const Quiz = ({quiz, lecture}: {quiz: IQuiz; lecture: Lecture}) => {
   const [questionsFinished, setQuestionsFinished] = useState<QuestionId[]>([])
-
   const questionsFinishedRef = useRef(questionsFinished)
-  questionsFinishedRef.current = questionsFinished
+  const updateProgressLecture = useUpdateProgressLecture(lecture.course.id)
 
-  const setQuestionFinished = (
+  const setQuestionFinished = async (
     questionId: QuestionId,
     isAnsweredCorrectly: boolean,
   ) => {
@@ -28,7 +28,15 @@ const Quiz = ({quiz, lecture}: {quiz: IQuiz; lecture: Lecture}) => {
     }
 
     if (isAnsweredCorrectly) {
-      setQuestionsFinished([...questionsFinishedRef.current, questionId])
+      questionsFinishedRef.current = [
+        ...questionsFinishedRef.current,
+        questionId,
+      ]
+      setQuestionsFinished(questionsFinishedRef.current)
+
+      if (questionsFinishedRef.current.length === quiz.questionIds.length) {
+        await updateProgressLecture.mutateAsync(lecture.id)
+      }
     }
   }
 
@@ -81,6 +89,12 @@ const Quiz = ({quiz, lecture}: {quiz: IQuiz; lecture: Lecture}) => {
                               ) =>
                                 setQuestionFinished(q.id, isAnsweredCorrectly)
                               }
+                              onEmptyAnswers={() => {
+                                questionsFinishedRef.current = []
+                                setQuestionsFinished(
+                                  questionsFinishedRef.current,
+                                )
+                              }}
                             />
                           )
                         })}

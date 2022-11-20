@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
-import * as Api from '../../../../api'
 import Button from '../../../core/Button'
 import CheckBox from '../../../core/CheckBox'
 import Flex from '../../../core/Flex'
@@ -9,11 +8,10 @@ import {
   QuizQuestion as IQuizQuestion,
   QuizQuestionAnswer,
   QuizQuestionUserAnswer,
-  QuizQuestionUserAnswerRequest,
-  QuestionCorrectness,
 } from '../../../../types'
 import RadioGroup from '../../../core/RadioGroup'
 import {useTheme} from '../../../../hooks/useTheme'
+import {useSubmitUserAnswer} from '../../../api/quizQuestionUserAnswers'
 
 const QuizAnswer = ({quizAnswer}: {quizAnswer: QuizQuestionAnswer}) => {
   return <WrappedText>{quizAnswer.text}</WrappedText>
@@ -22,11 +20,13 @@ const QuizAnswer = ({quizAnswer}: {quizAnswer: QuizQuestionAnswer}) => {
 export const QuizQuestion = ({
   question,
   onQuestionFinished,
+  onEmptyAnswers,
   questionNumber,
   previouslySelectedAnswers,
 }: {
   question: IQuizQuestion
   onQuestionFinished: (wasAnsweredCorrectly: boolean) => void
+  onEmptyAnswers: () => void
   questionNumber: number
   previouslySelectedAnswers: QuizQuestionUserAnswer[]
 }) => {
@@ -35,8 +35,13 @@ export const QuizQuestion = ({
     null,
   )
   const {theme} = useTheme()
+  const submitUserAnswer = useSubmitUserAnswer(question.quiz.id)
 
   useEffect(() => {
+    if (previouslySelectedAnswers.length === 0) {
+      onEmptyAnswers()
+    }
+
     const savedAnswers = previouslySelectedAnswers.filter(
       (a) => a.question.id === question.id,
     )
@@ -59,7 +64,7 @@ export const QuizQuestion = ({
           return a.id
         }),
     )
-  }, [])
+  }, [previouslySelectedAnswers])
 
   const onAnswerSelected = (answer: QuizQuestionAnswer): string => {
     if (selectedAnswerIds.includes(answer.id)) {
@@ -77,15 +82,10 @@ export const QuizQuestion = ({
   }
 
   const onSubmit = async () => {
-    const response = await Api.authPost<QuizQuestionUserAnswerRequest>(
-      Api.answerQuestionUrl(),
-      {
-        questionId: question.id,
-        answerIds: selectedAnswerIds,
-      },
-    )
-
-    const correctness: QuestionCorrectness = await response.json()
+    const correctness = await submitUserAnswer.mutateAsync({
+      questionId: question.id,
+      answerIds: selectedAnswerIds,
+    })
 
     setAnsweredCorrectly(correctness.isCorrect)
     onQuestionFinished(correctness.isCorrect)

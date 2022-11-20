@@ -29,13 +29,15 @@ const LectureDetail = ({
   const shouldAutoPlayLecture = router.query.autoplay !== 'false'
 
   const handleVideoEnded = async () => {
-    if (
-      !courseProgressOverview.chapters.find((chapter) =>
-        chapter.lectures.find(
-          (lecture) => lecture.id === Number(lectureId) && lecture.viewed,
-        ),
-      )
-    ) {
+    const chapter = courseProgressOverview.chapters.find((chapter) =>
+      chapter.lectures.find((lecture) => lecture.id === Number(lectureId)),
+    )
+
+    const lecture =
+      chapter &&
+      chapter.lectures.find((lecture) => lecture.id === Number(lectureId))
+
+    if (lecture && !lecture.viewed && lecture.lectureType === 'VIDEO') {
       await updateProgressLecture.mutateAsync(Number(lectureId))
     }
   }

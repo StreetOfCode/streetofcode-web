@@ -17,6 +17,7 @@ import {
 } from '../../api/courseProgress'
 import CheckBox from '../../core/CheckBox'
 import {device} from '../../../theme/device'
+import {useRemoveUserAnswers} from '../../api/quizQuestionUserAnswers'
 
 type Props = {
   className?: string
@@ -40,6 +41,8 @@ const CourseSidebar = ({
 }: Props) => {
   const router = useRouter()
   const resetLecture = useResetLecture(Number(courseId), courseSlug)
+  const resetQuiz = useRemoveUserAnswers()
+
   const updateProgressLecture = useUpdateProgressLecture(Number(courseId))
 
   useEffect(() => {
@@ -96,6 +99,7 @@ const CourseSidebar = ({
       await updateProgressLecture.mutateAsync(lectureId)
     } else {
       await resetLecture.mutateAsync(lectureId)
+      await resetQuiz.mutateAsync(lectureId)
     }
   }
 
