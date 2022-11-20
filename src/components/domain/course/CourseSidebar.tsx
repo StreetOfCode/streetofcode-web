@@ -44,14 +44,17 @@ const CourseSidebar = ({
 
   useEffect(() => {
     const maybeUpdateProgressLecture = async () => {
-      // if lecture is not already viewed
-      if (
-        !courseProgressOverview.chapters.find((chapter) =>
-          chapter.lectures.find(
-            (lecture) => lecture.id === Number(lectureId) && lecture.viewed,
-          ),
-        )
-      ) {
+      const chapter = courseProgressOverview.chapters.find(
+        (chapter) => chapter.id === Number(chapterId),
+      )
+      const lecture =
+        chapter &&
+        chapter.lectures.find((lecture) => lecture.id === Number(lectureId))
+
+      if (lecture && !lecture.viewed && lecture.lectureType === 'TEXT') {
+        // if lecture is not already viewed and contains only TEXT
+        // (video type lecture automatically  update their progress at the end of the video)
+        // (quiz type lecture automatically update their progress when all questions are answered correctly)
         await updateProgressLecture.mutateAsync(Number(lectureId))
       }
     }

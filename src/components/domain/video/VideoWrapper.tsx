@@ -6,12 +6,23 @@ type Props = {
   className?: string
   autoplay?: boolean
   vimeoVideoId: string
+  onVideoEnded?: () => void
 }
 
-const VideoWrapper = ({className, autoplay, vimeoVideoId}: Props) => {
+const VideoWrapper = ({
+  className,
+  autoplay,
+  vimeoVideoId,
+  onVideoEnded,
+}: Props) => {
   return (
     <StyledVideoWrapper className={className}>
-      <Vimeo speed video={vimeoVideoId} autoplay={autoplay} />
+      <Vimeo
+        speed
+        video={vimeoVideoId}
+        autoplay={autoplay}
+        onEnd={onVideoEnded}
+      />
     </StyledVideoWrapper>
   )
 }

@@ -4,20 +4,41 @@ import {useGetLecture} from '../../api/lecture'
 import Flex from '../../core/Flex'
 import MarkdownView from '../../core/MarkdownView'
 import LectureComments from '../lecture-comment/LectureComments'
-import LectureQuiz from './LectureQuiz'
 import VideoWrapper from '../video/VideoWrapper'
 import {useRouter} from 'next/router'
+import {CourseProgressOverview} from '../../../types'
+import {useUpdateProgressLecture} from '../../api/courseProgress'
+import LectureQuiz from './LectureQuiz'
 
 type Props = {
+  courseId: number
   lectureId: number
+  courseProgressOverview: CourseProgressOverview
 }
 
-const LectureDetail = ({lectureId}: Props) => {
+const LectureDetail = ({
+  courseId,
+  lectureId,
+  courseProgressOverview,
+}: Props) => {
   const router = useRouter()
   const getLectureQuery = useGetLecture(lectureId)
+  const updateProgressLecture = useUpdateProgressLecture(courseId)
 
   // query param autoplay is sent from TakeCoursePage when user starts or continues course
   const shouldAutoPlayLecture = router.query.autoplay !== 'false'
+
+  const handleVideoEnded = async () => {
+    if (
+      !courseProgressOverview.chapters.find((chapter) =>
+        chapter.lectures.find(
+          (lecture) => lecture.id === Number(lectureId) && lecture.viewed,
+        ),
+      )
+    ) {
+      await updateProgressLecture.mutateAsync(Number(lectureId))
+    }
+  }
 
   return (
     <QueryGuard {...getLectureQuery}>
@@ -28,6 +49,7 @@ const LectureDetail = ({lectureId}: Props) => {
               <VideoWrapper
                 vimeoVideoId={lecture.videoUrl}
                 autoplay={shouldAutoPlayLecture}
+                onVideoEnded={handleVideoEnded}
               />
             )}
             {lecture.content && <MarkdownView children={lecture.content} />}

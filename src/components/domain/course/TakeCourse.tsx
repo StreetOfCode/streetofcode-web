@@ -15,7 +15,7 @@ import {
 } from 'react-icons/ai'
 import {getPrevAndNextUrl, GetPrevAndNextUrlResponse} from '../../../utils'
 import {useGetCourseProgressOverview} from '../../api/courseProgress'
-import {CourseOverview} from '../../../types'
+import {CourseOverview, CourseProgressOverview} from '../../../types'
 import {QueryGuard} from '../../../QueryGuard'
 import {device} from '../../../theme/device'
 import ThemeSwitcher from '../../../theme/ThemeSwitcher'
@@ -59,8 +59,34 @@ const TakeCourse = ({
     }
   }
 
-  const Lecture = useMemo(
-    () => () => {
+  const Resources = () => {
+    if (!courseOverview.resources) return null
+
+    const lectureUrl = `/kurzy/${courseOverview.slug}/kapitola/${chapterId}/lekcia/${lectureId}`
+
+    return (
+      <>
+        <ContentNavbarFlex justifyContent="space-between">
+          <Box justifyContent="flex-start">
+            <NextLink href={lectureUrl}>
+              <ButtonPreviousLecture variant="outline">
+                Späť
+              </ButtonPreviousLecture>
+              <MobileArrowLeft />
+            </NextLink>
+          </Box>
+          <Heading variant="h4" normalWeight withAccentUnderline>
+            Materiály
+          </Heading>
+          <EmptyBox />
+        </ContentNavbarFlex>
+        <MarkdownView children={courseOverview.resources} />
+      </>
+    )
+  }
+
+  const renderLecture = useMemo(
+    () => (courseProgressOverview: CourseProgressOverview) => {
       const {currentLecture, previousLectureUrl, nextLectureUrl} =
         getPrevAndNextUrl(courseOverview, lectureId, chapterId) ||
         ({} as GetPrevAndNextUrlResponse)
@@ -101,84 +127,64 @@ const TakeCourse = ({
               <EmptyBox />
             )}
           </ContentNavbarFlex>
-          <LectureDetail lectureId={Number(lectureId)} />
+          <LectureDetail
+            courseId={Number(courseOverview.id)}
+            lectureId={Number(lectureId)}
+            courseProgressOverview={courseProgressOverview}
+          />
         </>
       )
     },
     [lectureId],
   )
 
-  const Resources = () => {
-    if (!courseOverview.resources) return null
-
-    const lectureUrl = `/kurzy/${courseOverview.slug}/kapitola/${chapterId}/lekcia/${lectureId}`
-
-    return (
-      <>
-        <ContentNavbarFlex justifyContent="space-between">
-          <Box justifyContent="flex-start">
-            <NextLink href={lectureUrl}>
-              <ButtonPreviousLecture variant="outline">
-                Späť
-              </ButtonPreviousLecture>
-              <MobileArrowLeft />
-            </NextLink>
-          </Box>
-          <Heading variant="h4" normalWeight withAccentUnderline>
-            Materiály
-          </Heading>
-          <EmptyBox />
-        </ContentNavbarFlex>
-        <MarkdownView children={courseOverview.resources} />
-      </>
-    )
-  }
-
   return (
-    <>
-      <WrapperFlex alignSelf="stretch" flex="1">
-        <Sidebar ref={sidebarRef} mobileOpen={mobileSidebarOpen}>
-          <DesktopTopWrapper
-            justifyContent="space-between"
-            alignItems="flex-start"
-          >
-            <BackLink
-              to={`/kurzy/${courseOverview.slug}`}
-              text={'Späť na kurz'}
-            />
-            <StyledThemeSwitcher />
-          </DesktopTopWrapper>
-          <MobileTopWrapper direction="column" gap="16px" alignItems="stretch">
-            <Flex justifyContent="space-between" gap="8px">
-              <MobileBackLink
+    <QueryGuard {...getCourseProgressOverview}>
+      {(courseProgressOverview) => (
+        <WrapperFlex alignSelf="stretch" flex="1">
+          <Sidebar ref={sidebarRef} mobileOpen={mobileSidebarOpen}>
+            <DesktopTopWrapper
+              justifyContent="space-between"
+              alignItems="flex-start"
+            >
+              <BackLink
                 to={`/kurzy/${courseOverview.slug}`}
                 text={'Späť na kurz'}
               />
-              <MobileSidebarCloseIcon
-                onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-              />
-            </Flex>
-            <StyledThemeSwitcher />
-          </MobileTopWrapper>
-          <QueryGuard {...getCourseProgressOverview}>
-            {(courseProgressOverview) => (
-              <CourseSidebar
-                courseProgressOverview={courseProgressOverview}
-                courseId={courseOverview.id.toString()}
-                courseSlug={courseOverview.slug}
-                chapterId={chapterId}
-                lectureId={lectureId}
-                hasResources={!!courseOverview.resources}
-              />
-            )}
-          </QueryGuard>
-        </Sidebar>
-        <Content>
-          {resourcesMode && <Resources />}
-          {!resourcesMode && <Lecture />}
-        </Content>
-      </WrapperFlex>
-    </>
+              <StyledThemeSwitcher />
+            </DesktopTopWrapper>
+            <MobileTopWrapper
+              direction="column"
+              gap="16px"
+              alignItems="stretch"
+            >
+              <Flex justifyContent="space-between" gap="8px">
+                <MobileBackLink
+                  to={`/kurzy/${courseOverview.slug}`}
+                  text={'Späť na kurz'}
+                />
+                <MobileSidebarCloseIcon
+                  onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+                />
+              </Flex>
+              <StyledThemeSwitcher />
+            </MobileTopWrapper>
+            <CourseSidebar
+              courseProgressOverview={courseProgressOverview}
+              courseId={courseOverview.id.toString()}
+              courseSlug={courseOverview.slug}
+              chapterId={chapterId}
+              lectureId={lectureId}
+              hasResources={!!courseOverview.resources}
+            />
+          </Sidebar>
+          <Content>
+            {resourcesMode && <Resources />}
+            {!resourcesMode && renderLecture(courseProgressOverview)}
+          </Content>
+        </WrapperFlex>
+      )}
+    </QueryGuard>
   )
 }
 
