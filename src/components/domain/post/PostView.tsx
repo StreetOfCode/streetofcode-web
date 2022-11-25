@@ -87,7 +87,7 @@ const redirectLinks = (content: Maybe<string> | undefined) => {
   ]
 
   for (const {originalUrl, newUrl} of linksToRedirect) {
-    content = content?.toString().replace(originalUrl, newUrl)
+    content = content?.replaceAll(originalUrl, newUrl)
   }
 
   return content
@@ -114,6 +114,8 @@ const PostContent = styled.div`
   code {
     display: inline-block;
     overflow: scroll;
+    vertical-align: middle;
+    padding-bottom: 4px;
   }
 
   // youtube video

@@ -12,7 +12,6 @@ import GabrielImage from '../public/images/gabriel.jpg'
 import FirstDesignHomeImage from '../public/images/Home.jpg'
 import horiaceLanaImage from '../public/images/horiaceLana.jpg'
 import isielBySomZnovaNaVysokuImage from '../public/images/isielBySomZnovaNaVysoku.jpg'
-import IvanImage from '../public/images/ivan-final.png'
 import JakubImage from '../public/images/jakub.jpg'
 import ProjectMockupImage from '../public/images/leto-2020_EDITED.jpg'
 import macVsthinkpadImage from '../public/images/macVsthinkpad.jpg'
@@ -39,7 +38,6 @@ export const FirstDesignHome = FirstDesignHomeImage as StaticImageData
 export const horiaceLana = horiaceLanaImage as StaticImageData
 export const isielBySomZnovaNaVysoku =
   isielBySomZnovaNaVysokuImage as StaticImageData
-export const Ivan = IvanImage as StaticImageData
 export const Jakub = JakubImage as StaticImageData
 export const ProjectMockup = ProjectMockupImage as StaticImageData
 export const macVsthinkpad = macVsthinkpadImage as StaticImageData

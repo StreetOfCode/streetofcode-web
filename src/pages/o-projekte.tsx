@@ -20,7 +20,6 @@ import {
   FirstDesignTakeCoursePage,
   FirstPodcast,
   Gabriel,
-  Ivan,
   Jakub,
   ProjectMockup,
 } from '../images'
@@ -88,7 +87,7 @@ const ProjectPage: NextPage = () => {
           </Flex>
 
           <Flex direction="column" gap="16px" alignItems="flex-start">
-            <AlignedHeading variant="h4">Tím</AlignedHeading>
+            <AlignedHeading variant="h4">Zakladatelia</AlignedHeading>
             <AvatarsFlexWrapper
               justifyContent="space-between"
               gap="32px"
@@ -103,9 +102,9 @@ const ProjectPage: NextPage = () => {
                   placeholder
                 />
                 <Text size="small">
-                  <b>Jakub (29).</b> Spoluzakladeľ Street of Code. Baví ma
-                  filozofovať o programovaní a o živote. Rád pomáham začínajúcim
-                  programátorom a vytváram kurzy.
+                  <b>Jakub (29).</b> Baví ma filozofovať o programovaní a o
+                  živote. Rád pomáham začínajúcim programátorom a vytváram
+                  kurzy.
                 </Text>
               </Flex>
 
@@ -118,25 +117,9 @@ const ProjectPage: NextPage = () => {
                   placeholder
                 />
                 <Text size="small">
-                  <b>Gabriel (28).</b> Spoluzakladateľ Street of Code.
-                  Programovanie ma baví. Podobne ma baví aj odovzdávanie
-                  skúseností. Popri tom sa snažím aj dostatočne hýbať a tráviť
-                  veľa času s rozrastajúcou sa rodinou.
-                </Text>
-              </Flex>
-
-              <Flex direction="column" gap="16px">
-                <UserAvatar
-                  sizePx={200}
-                  src={Ivan}
-                  name="Ivan Hrabčák"
-                  priority
-                  placeholder
-                />
-                <Text size="small">
-                  <b>Ivan (17).</b> Stážista v Street of Code. Hrám na gitaru a
-                  milujem programovanie. Okrem programátora som vo voľnom čase
-                  aj skautom.
+                  <b>Gabriel (28).</b> Programovanie ma baví. Podobne ma baví aj
+                  odovzdávanie skúseností. Popri tom sa snažím aj dostatočne
+                  hýbať a tráviť veľa času s rozrastajúcou sa rodinou.
                 </Text>
               </Flex>
             </AvatarsFlexWrapper>
@@ -263,8 +246,10 @@ const ProjectPage: NextPage = () => {
                   (ale nie celý) sa práve pozeráš.
                 </li>
                 <li>
-                  Viedli sme krúžok na strednej škole, kde sme učili Python (tu
-                  sme spoznali Ivana).
+                  Viedli sme krúžok na strednej škole, kde sme učili Python. Tu
+                  sme spoznali Ivana, ktorý nám potom aj pomáhal vo vývoji tejto
+                  webstránky či zlepšoval discord bota. Bol naším stážistom, až
+                  pokiaľ ho nedobehli iné povinnosti.
                 </li>
                 <li>
                   Vytvorili sme {renderLink('Discord', discordInviteUrl)} kanál
