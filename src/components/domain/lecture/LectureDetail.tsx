@@ -14,12 +14,16 @@ type Props = {
   courseId: number
   lectureId: number
   courseProgressOverview: CourseProgressOverview
+  nextLectureUrl?: string
+  nextLectureName?: string
 }
 
 const LectureDetail = ({
   courseId,
   lectureId,
   courseProgressOverview,
+  nextLectureUrl,
+  nextLectureName,
 }: Props) => {
   const router = useRouter()
   const getLectureQuery = useGetLecture(lectureId)
@@ -52,6 +56,8 @@ const LectureDetail = ({
                 vimeoVideoId={lecture.videoUrl}
                 autoplay={shouldAutoPlayLecture}
                 onVideoEnded={handleVideoEnded}
+                nextLectureUrl={nextLectureUrl}
+                nextLectureName={nextLectureName}
               />
             )}
             {lecture.content && <MarkdownView children={lecture.content} />}

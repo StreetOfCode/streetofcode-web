@@ -1,12 +1,15 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import Vimeo from '@u-wave/react-vimeo'
+import NextLectureOverlay from './NextLectureOverlay'
 
 type Props = {
   className?: string
   autoplay?: boolean
   vimeoVideoId: string
   onVideoEnded?: () => void
+  nextLectureUrl?: string
+  nextLectureName?: string
 }
 
 const VideoWrapper = ({
@@ -14,15 +17,36 @@ const VideoWrapper = ({
   autoplay,
   vimeoVideoId,
   onVideoEnded,
+  nextLectureUrl,
+  nextLectureName,
 }: Props) => {
+  const [showNextLectureOverlay, setShowNextLectureOverlay] = useState(false)
+
+  const handleOnVideoEnded = () => {
+    if (onVideoEnded) {
+      onVideoEnded()
+    }
+
+    if (nextLectureUrl && nextLectureName) {
+      setShowNextLectureOverlay(true)
+    }
+  }
+
   return (
     <StyledVideoWrapper className={className}>
       <Vimeo
         speed
         video={vimeoVideoId}
         autoplay={autoplay}
-        onEnd={onVideoEnded}
+        onEnd={handleOnVideoEnded}
       />
+      {showNextLectureOverlay && nextLectureUrl && nextLectureName && (
+        <NextLectureOverlay
+          lectureTitle={nextLectureName}
+          lectureUrl={nextLectureUrl}
+          onClosed={() => setShowNextLectureOverlay(false)}
+        />
+      )}
     </StyledVideoWrapper>
   )
 }

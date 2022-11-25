@@ -86,7 +86,12 @@ const TakeCourse = ({
   }
 
   const renderLecture = (courseProgressOverview: CourseProgressOverview) => {
-    const {currentLecture, previousLectureUrl, nextLectureUrl} =
+    const {
+      currentLecture,
+      previousLectureUrl,
+      nextLectureUrl,
+      nextLectureName,
+    } =
       getPrevAndNextUrl(courseOverview, lectureId, chapterId) ||
       ({} as GetPrevAndNextUrlResponse)
 
@@ -130,6 +135,8 @@ const TakeCourse = ({
           courseId={Number(courseOverview.id)}
           lectureId={Number(lectureId)}
           courseProgressOverview={courseProgressOverview}
+          nextLectureUrl={nextLectureUrl}
+          nextLectureName={nextLectureName}
         />
       </>
     )

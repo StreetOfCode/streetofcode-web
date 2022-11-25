@@ -66,6 +66,7 @@ export interface GetPrevAndNextUrlResponse {
   currentLecture: LectureOverview | undefined
   previousLectureUrl: string | undefined
   nextLectureUrl: string | undefined
+  nextLectureName: string | undefined
 }
 
 // creates links for previous and next lecture url based on current lecture and chapter id
@@ -130,6 +131,7 @@ export const getPrevAndNextUrl = (
     currentLecture: current.lecture || undefined,
     previousLectureUrl,
     nextLectureUrl,
+    nextLectureName: next.lecture?.name,
   }
 }
 
