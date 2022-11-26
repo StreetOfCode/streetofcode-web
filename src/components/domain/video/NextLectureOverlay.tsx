@@ -47,7 +47,7 @@ const NextLectureOverlay = ({
           duration={3}
           colors={'#FFFFFF'}
           size={72}
-          // onComplete={nextLecturePush}
+          onComplete={nextLecturePush}
           strokeWidth={5}
         >
           {() => <BsPlayFill size={24} />}
