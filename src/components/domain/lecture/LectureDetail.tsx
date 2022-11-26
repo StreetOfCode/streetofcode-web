@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {QueryGuard} from '../../../QueryGuard'
 import {useGetLecture} from '../../api/lecture'
 import Flex from '../../core/Flex'
@@ -25,6 +25,7 @@ const LectureDetail = ({
   nextLectureUrl,
   nextLectureName,
 }: Props) => {
+  const [hasQuiz, setHasQuiz] = useState(false)
   const router = useRouter()
   const getLectureQuery = useGetLecture(lectureId)
   const updateProgressLecture = useUpdateProgressLecture(courseId)
@@ -58,10 +59,11 @@ const LectureDetail = ({
                 onVideoEnded={handleVideoEnded}
                 nextLectureUrl={nextLectureUrl}
                 nextLectureName={nextLectureName}
+                hasQuiz={hasQuiz}
               />
             )}
             {lecture.content && <MarkdownView children={lecture.content} />}
-            <LectureQuiz lecture={lecture} />
+            <LectureQuiz lecture={lecture} onHasQuiz={() => setHasQuiz(true)} />
             <LectureComments lectureId={lecture.id} />
           </Flex>
         )

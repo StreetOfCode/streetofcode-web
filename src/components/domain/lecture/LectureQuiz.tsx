@@ -6,9 +6,10 @@ import Quiz from './quiz/Quiz'
 
 type Props = {
   lecture: Lecture
+  onHasQuiz: () => void
 }
 
-const LectureQuiz = ({lecture}: Props) => {
+const LectureQuiz = ({lecture, onHasQuiz}: Props) => {
   const quizzesByLecture = useGetQuizzesByLecture(lecture.id)
 
   return (
@@ -17,7 +18,14 @@ const LectureQuiz = ({lecture}: Props) => {
         return (
           <>
             {quizes.map((q, i) => {
-              return <Quiz key={i} quiz={q} lecture={lecture} />
+              return (
+                <Quiz
+                  key={i}
+                  quiz={q}
+                  lecture={lecture}
+                  onHasQuiz={onHasQuiz}
+                />
+              )
             })}
           </>
         )

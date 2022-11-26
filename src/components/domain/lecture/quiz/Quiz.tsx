@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Lecture, QuestionId, Quiz as IQuiz} from '../../../../types'
 import {QuizQuestion} from './QuizQuestion'
 import {QueryGuard} from '../../../../QueryGuard'
@@ -11,10 +11,20 @@ import {device} from '../../../../theme/device'
 import {useGetQuizQuestionUserAnswersByQuiz} from '../../../api/quizQuestionUserAnswers'
 import {useUpdateProgressLecture} from '../../../api/courseProgress'
 
-const Quiz = ({quiz, lecture}: {quiz: IQuiz; lecture: Lecture}) => {
+type Props = {
+  quiz: IQuiz
+  lecture: Lecture
+  onHasQuiz: () => void
+}
+
+const Quiz = ({quiz, lecture, onHasQuiz}: Props) => {
   const [questionsFinished, setQuestionsFinished] = useState<QuestionId[]>([])
   const questionsFinishedRef = useRef(questionsFinished)
   const updateProgressLecture = useUpdateProgressLecture(lecture.course.id)
+
+  useEffect(() => {
+    onHasQuiz()
+  }, [])
 
   const setQuestionFinished = async (
     questionId: QuestionId,

@@ -11,13 +11,30 @@ type Props = {
   lectureUrl: string
   lectureTitle: string
   onClosed: () => void
+  hasQuiz: boolean
 }
 
-const NextLectureOverlay = ({lectureUrl, lectureTitle, onClosed}: Props) => {
+const NextLectureOverlay = ({
+  lectureUrl,
+  lectureTitle,
+  onClosed,
+  hasQuiz,
+}: Props) => {
   const router = useRouter()
 
   const nextLecturePush = () => {
     router.push(lectureUrl)
+  }
+
+  if (hasQuiz) {
+    return (
+      <WrapperFlex justifyContent="center" gap="12px" direction="column">
+        <Heading variant="h5">Nezabudni si spraviť kvíz</Heading>
+        <CloseText size="very-small" onClick={onClosed}>
+          Zavrieť
+        </CloseText>
+      </WrapperFlex>
+    )
   }
 
   return (
@@ -30,7 +47,7 @@ const NextLectureOverlay = ({lectureUrl, lectureTitle, onClosed}: Props) => {
           duration={3}
           colors={'#FFFFFF'}
           size={72}
-          onComplete={nextLecturePush}
+          // onComplete={nextLecturePush}
           strokeWidth={5}
         >
           {() => <BsPlayFill size={24} />}
