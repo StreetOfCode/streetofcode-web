@@ -10,6 +10,7 @@ type Props = {
   justifyContent?: JustifyContent
   alignItems?: AlignItems
   alignContent?: AlignContent
+  innerRef?: React.RefObject<HTMLDivElement>
 } & HTMLAttributes<HTMLDivElement>
 
 type Direction = 'row' | 'column'
@@ -32,6 +33,7 @@ const Flex = ({
   justifyContent,
   alignContent,
   alignItems,
+  innerRef,
   ...props
 }: Props) => {
   return (
@@ -44,6 +46,7 @@ const Flex = ({
       alignSelf={alignSelf}
       gap={gap}
       flex={flex}
+      ref={innerRef}
       {...props}
     >
       {children}
