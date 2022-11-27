@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useRef, useState} from 'react'
 import {Lecture, QuestionId, Quiz as IQuiz} from '../../../../types'
 import {QuizQuestion} from './QuizQuestion'
 import {QueryGuard} from '../../../../QueryGuard'

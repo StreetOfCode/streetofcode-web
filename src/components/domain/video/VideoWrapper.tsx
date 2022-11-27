@@ -11,7 +11,7 @@ type Props = {
   onVideoEnded?: () => void
   nextLectureUrl?: string
   nextLectureName?: string
-  hasQuiz: boolean
+  hasQuiz?: boolean
 }
 
 const VideoWrapper = ({
@@ -61,7 +61,7 @@ const VideoWrapper = ({
           lectureTitle={nextLectureName}
           lectureUrl={nextLectureUrl}
           onClosed={() => setShowNextLectureOverlay(false)}
-          hasQuiz={hasQuiz}
+          hasQuiz={hasQuiz || false}
         />
       )}
     </StyledVideoWrapper>
