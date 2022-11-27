@@ -198,3 +198,13 @@ export const numOfMinutesText = (minutesCount: number) => {
   }
   return minutesCountText
 }
+
+export function assert(
+  condition: boolean,
+  errorMessage?: string,
+): asserts condition {
+  if (!condition)
+    throw new Error(
+      `Assertion failed${errorMessage ? `: ${errorMessage}` : ''}`,
+    )
+}

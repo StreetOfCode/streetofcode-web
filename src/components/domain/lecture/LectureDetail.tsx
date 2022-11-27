@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {QueryGuard} from '../../../QueryGuard'
 import {useGetLecture} from '../../api/lecture'
 import Flex from '../../core/Flex'
@@ -9,6 +9,7 @@ import {useRouter} from 'next/router'
 import {CourseProgressOverview} from '../../../types'
 import {useUpdateProgressLecture} from '../../api/courseProgress'
 import LectureQuiz from './LectureQuiz'
+import {useGetQuizzesByLecture} from '../../api/quiz'
 
 type Props = {
   courseId: number
@@ -25,10 +26,10 @@ const LectureDetail = ({
   nextLectureUrl,
   nextLectureName,
 }: Props) => {
-  const [hasQuiz, setHasQuiz] = useState(false)
   const router = useRouter()
   const getLectureQuery = useGetLecture(lectureId)
   const updateProgressLecture = useUpdateProgressLecture(courseId)
+  const quizzesByLecture = useGetQuizzesByLecture(lectureId)
 
   // query param autoplay is sent from TakeCoursePage when user starts or continues course
   const shouldAutoPlayLecture = router.query.autoplay !== 'false'
@@ -49,25 +50,27 @@ const LectureDetail = ({
 
   return (
     <QueryGuard {...getLectureQuery}>
-      {(lecture) => {
-        return (
-          <Flex direction="column" gap="32px">
-            {lecture.videoUrl && (
-              <VideoWrapper
-                vimeoVideoId={lecture.videoUrl}
-                autoplay={shouldAutoPlayLecture}
-                onVideoEnded={handleVideoEnded}
-                nextLectureUrl={nextLectureUrl}
-                nextLectureName={nextLectureName}
-                hasQuiz={hasQuiz}
-              />
-            )}
-            {lecture.content && <MarkdownView children={lecture.content} />}
-            <LectureQuiz lecture={lecture} onHasQuiz={() => setHasQuiz(true)} />
-            <LectureComments lectureId={lecture.id} />
-          </Flex>
-        )
-      }}
+      {(lecture) => (
+        <QueryGuard {...quizzesByLecture}>
+          {(quizzes) => (
+            <Flex direction="column" gap="32px">
+              {lecture.videoUrl && (
+                <VideoWrapper
+                  vimeoVideoId={lecture.videoUrl}
+                  autoplay={shouldAutoPlayLecture}
+                  onVideoEnded={handleVideoEnded}
+                  nextLectureUrl={nextLectureUrl}
+                  nextLectureName={nextLectureName}
+                  hasQuiz={quizzes.length > 0}
+                />
+              )}
+              {lecture.content && <MarkdownView children={lecture.content} />}
+              <LectureQuiz lecture={lecture} />
+              <LectureComments lectureId={lecture.id} />
+            </Flex>
+          )}
+        </QueryGuard>
+      )}
     </QueryGuard>
   )
 }

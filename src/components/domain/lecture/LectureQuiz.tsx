@@ -6,26 +6,18 @@ import Quiz from './quiz/Quiz'
 
 type Props = {
   lecture: Lecture
-  onHasQuiz: () => void
 }
 
-const LectureQuiz = ({lecture, onHasQuiz}: Props) => {
+const LectureQuiz = ({lecture}: Props) => {
   const quizzesByLecture = useGetQuizzesByLecture(lecture.id)
 
   return (
     <QueryGuard {...quizzesByLecture}>
-      {(quizes) => {
+      {(quizzes) => {
         return (
           <>
-            {quizes.map((q, i) => {
-              return (
-                <Quiz
-                  key={i}
-                  quiz={q}
-                  lecture={lecture}
-                  onHasQuiz={onHasQuiz}
-                />
-              )
+            {quizzes.map((quiz) => {
+              return <Quiz key={quiz.id} quiz={quiz} lecture={lecture} />
             })}
           </>
         )

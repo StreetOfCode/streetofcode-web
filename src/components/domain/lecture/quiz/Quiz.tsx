@@ -14,17 +14,12 @@ import {useUpdateProgressLecture} from '../../../api/courseProgress'
 type Props = {
   quiz: IQuiz
   lecture: Lecture
-  onHasQuiz: () => void
 }
 
-const Quiz = ({quiz, lecture, onHasQuiz}: Props) => {
+const Quiz = ({quiz, lecture}: Props) => {
   const [questionsFinished, setQuestionsFinished] = useState<QuestionId[]>([])
   const questionsFinishedRef = useRef(questionsFinished)
   const updateProgressLecture = useUpdateProgressLecture(lecture.course.id)
-
-  useEffect(() => {
-    onHasQuiz()
-  }, [])
 
   const setQuestionFinished = async (
     questionId: QuestionId,

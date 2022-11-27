@@ -1,9 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import Vimeo, {TimeUpdateEvent} from '@u-wave/react-vimeo'
 import NextLectureOverlay from './NextLectureOverlay'
-
-const lastVideoStorageKey = 'lastVideo'
+import {storage} from '../../../localStorage'
 
 type Props = {
   className?: string
@@ -25,62 +24,17 @@ const VideoWrapper = ({
   hasQuiz,
 }: Props) => {
   const [showNextLectureOverlay, setShowNextLectureOverlay] = useState(false)
-  const [startVideoAt, setStartVideoAt] = useState(0)
-  const [hasEnded, setHasEnded] = useState(false)
-  const [videoReady, setVideoReady] = useState(false)
-  const [videoSecondsWatched, setVideoSecondsWatched] = useState(0)
-  const isFirstRender = useRef(true)
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      const videoInfo = localStorage.getItem(lastVideoStorageKey)
-      if (videoInfo) {
-        const {videoId, seconds} = loadVideoInfo(videoInfo)
-        if (videoId === vimeoVideoId) {
-          setStartVideoAt(Number(seconds))
-        }
-      }
-
-      isFirstRender.current = false
-      setVideoReady(true)
-    } else {
-      if (!hasEnded && videoSecondsWatched > 0) {
-        // user left lecture before video ended
-        localStorage.setItem(lastVideoStorageKey, saveVideoInfo())
-      }
-    }
-  }, [videoSecondsWatched])
-
-  useEffect(() => {
-    if (hasEnded) {
-      // clear storage key
-      localStorage.setItem(lastVideoStorageKey, '')
-    }
-  }, [hasEnded])
-
-  const loadVideoInfo = (videoInfo: string) => {
-    const [videoId, seconds] = videoInfo.split('_')
-    return {videoId, seconds}
-  }
-
-  const saveVideoInfo = () => {
-    return `${vimeoVideoId}_${videoSecondsWatched}`
-  }
 
   const handleOnVideoEnded = () => {
-    setHasEnded(true)
-
     if (onVideoEnded) {
       onVideoEnded()
     }
 
+    storage.deleteVideoWatchTime(vimeoVideoId)
+
     if (nextLectureUrl && nextLectureName) {
       setShowNextLectureOverlay(true)
     }
-  }
-
-  if (!videoReady) {
-    return <></>
   }
 
   return (
@@ -91,12 +45,14 @@ const VideoWrapper = ({
         video={vimeoVideoId}
         autoplay={autoplay}
         onEnd={handleOnVideoEnded}
-        start={startVideoAt}
+        start={storage.getVideoWatchTime(vimeoVideoId).seconds}
         onTimeUpdate={(event: TimeUpdateEvent) => {
+          const videoSecondsWatched =
+            storage.getVideoWatchTime(vimeoVideoId).seconds
           const secondsWatched = Math.floor(event.seconds)
-          if (secondsWatched > videoSecondsWatched) {
-            // update every second
-            setVideoSecondsWatched(secondsWatched)
+          const updateIntervalSeconds = 5
+          if (secondsWatched - videoSecondsWatched > updateIntervalSeconds) {
+            storage.setVideoWatchTime(vimeoVideoId, {seconds: secondsWatched})
           }
         }}
       />
