@@ -80,6 +80,7 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
           name,
           imageUrl: socUser.imageUrl,
           receiveNewsletter: socUser.receiveNewsletter,
+          subscribedFrom: 'PROFILE',
         })
       } catch (err) {
         setChangeLoading(false)
@@ -102,6 +103,7 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
         name,
         imageUrl: socUser.imageUrl,
         receiveNewsletter: true,
+        subscribedFrom: 'PROFILE',
       })
     } catch (err) {
       setChangeLoading(false)

@@ -216,6 +216,7 @@ const OnboardingPage: NextPage = () => {
         imageUrl: user.photoURL,
         receiveNewsletter,
         sendDiscordInvitation: discordInvitation,
+        subscribedFrom: 'ONBOARDING',
       })
     } catch (err) {
       setLoading(false)

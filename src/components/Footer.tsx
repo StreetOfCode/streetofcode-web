@@ -67,14 +67,14 @@ const Footer = () => {
           justifyContent="space-between"
           flex="1"
         >
-          {!user && <NewsletterForm />}
+          {!user && <NewsletterForm from="FOOTER" />}
           {user && (
             <QueryGuard {...getSocUser}>
               {(socUser) => {
                 return (
                   <>
                     {socUser && !socUser.receiveNewsletter && (
-                      <NewsletterForm user={socUser} />
+                      <NewsletterForm from="FOOTER" user={socUser} />
                     )}
                     {socUser && socUser.receiveNewsletter && <EmptyBox />}
                     {user && !socUser && <EmptyBox />}

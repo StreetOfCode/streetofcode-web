@@ -190,6 +190,7 @@ export interface SendFeedbackRequest {
 export interface AddToNewsletterRequest {
   email: string
   recaptchaToken?: string
+  subscribedFrom: SubscribedFromType
 }
 
 export type QuizId = string & {_type: 'QuizId'}
@@ -268,10 +269,18 @@ export interface AddSocUser {
   imageUrl: null | string
   receiveNewsletter: boolean
   sendDiscordInvitation: boolean
+  subscribedFrom: SubscribedFromType
 }
 
 export interface EditSocUser {
   name: string
   imageUrl: null | string
   receiveNewsletter: boolean
+  subscribedFrom: SubscribedFromType
 }
+
+export type SubscribedFromType =
+  | 'FOOTER'
+  | 'NEWSLETTER_PAGE'
+  | 'ONBOARDING'
+  | 'PROFILE'

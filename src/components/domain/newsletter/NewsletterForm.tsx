@@ -2,7 +2,11 @@ import React, {ChangeEvent, HTMLAttributes, useState} from 'react'
 import {useGoogleReCaptcha} from 'react-google-recaptcha-v3'
 import {AiOutlineSend} from 'react-icons/ai'
 import {addToNewsletter, authPost} from '../../../api'
-import {AddToNewsletterRequest, SocUser} from '../../../types'
+import {
+  AddToNewsletterRequest,
+  SocUser,
+  SubscribedFromType,
+} from '../../../types'
 import {emailRegex} from '../../../utils'
 import Button from '../../core/Button'
 import Flex from '../../core/Flex'
@@ -12,9 +16,10 @@ import TextField from '../../core/TextField'
 type Props = {
   className?: string
   user?: SocUser
+  from: SubscribedFromType
 } & HTMLAttributes<HTMLElement>
 
-const NewsletterForm = ({className, user, ...props}: Props) => {
+const NewsletterForm = ({className, user, from, ...props}: Props) => {
   const {executeRecaptcha} = useGoogleReCaptcha()
   const [newsletterEmail, setNewsletterEmail] = useState<string>(
     user?.email || '',
@@ -51,10 +56,12 @@ const NewsletterForm = ({className, user, ...props}: Props) => {
         result = await authPost<AddToNewsletterRequest>(addToNewsletter(), {
           email: newsletterEmail,
           recaptchaToken: token,
+          subscribedFrom: from,
         })
       } else {
         result = await authPost<AddToNewsletterRequest>(addToNewsletter(), {
           email: newsletterEmail,
+          subscribedFrom: from,
         })
       }
 

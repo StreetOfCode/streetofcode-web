@@ -60,10 +60,12 @@ const NewsletterPage: NextPage = () => {
         result = await authPost<AddToNewsletterRequest>(addToNewsletter(), {
           email: newsletterEmail,
           recaptchaToken: token,
+          subscribedFrom: 'NEWSLETTER_PAGE',
         })
       } else {
         result = await authPost<AddToNewsletterRequest>(addToNewsletter(), {
           email: newsletterEmail,
+          subscribedFrom: 'NEWSLETTER_PAGE',
         })
       }
 
