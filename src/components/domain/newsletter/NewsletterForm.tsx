@@ -1,3 +1,4 @@
+import {useRouter} from 'next/router'
 import React, {ChangeEvent, HTMLAttributes, useState} from 'react'
 import {useGoogleReCaptcha} from 'react-google-recaptcha-v3'
 import {AiOutlineSend} from 'react-icons/ai'
@@ -30,6 +31,7 @@ const NewsletterForm = ({className, user, from, ...props}: Props) => {
   const [newsletterUpdatedFailure, setNewsletterUpdatedFailure] =
     useState<boolean>(false)
   const [newsletterLoading, setNewsletterLoading] = useState<boolean>(false)
+  const router = useRouter()
 
   const onNewsletterChanged = (e: ChangeEvent<HTMLInputElement>) => {
     setNewsletterEmail(e.target.value)
@@ -57,6 +59,7 @@ const NewsletterForm = ({className, user, from, ...props}: Props) => {
           email: newsletterEmail,
           recaptchaToken: token,
           subscribedFrom: from,
+          fromPath: from === 'NEWSLETTER_MODAL' ? router.asPath : undefined,
         })
       } else {
         result = await authPost<AddToNewsletterRequest>(addToNewsletter(), {

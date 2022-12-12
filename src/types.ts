@@ -190,6 +190,7 @@ export interface SendFeedbackRequest {
 export interface AddToNewsletterRequest {
   email: string
   recaptchaToken?: string
+  fromPath?: string
   subscribedFrom: SubscribedFromType
 }
 
@@ -284,3 +285,4 @@ export type SubscribedFromType =
   | 'NEWSLETTER_PAGE'
   | 'ONBOARDING'
   | 'PROFILE'
+  | 'NEWSLETTER_MODAL'

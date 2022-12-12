@@ -4,6 +4,7 @@ import {assert, isRunningOnServer} from './utils'
 
 const THEME_SETTING_KEY = 'themeSetting'
 const VIDEO_WATCH_TIME_STORAGE_KEY = 'videoWatchTime'
+const NEWSLETTER_MODAL_KEY = 'newsletterModal'
 
 const getThemeSetting = () =>
   !isRunningOnServer()
@@ -12,6 +13,22 @@ const getThemeSetting = () =>
 
 const setThemeSetting = (themeSetting: ThemeSetting) =>
   !isRunningOnServer() && localStorage.setItem(THEME_SETTING_KEY, themeSetting)
+
+const hasUserSeenNewsletterModal = () => {
+  if (isRunningOnServer()) {
+    return false
+  }
+
+  return localStorage.getItem(NEWSLETTER_MODAL_KEY) != null
+}
+
+const setUserSeenNewsletterModal = () => {
+  if (isRunningOnServer()) {
+    return
+  }
+
+  localStorage.setItem(NEWSLETTER_MODAL_KEY, new Date().toString())
+}
 
 type VideoWatchTime = {
   seconds: number
@@ -84,4 +101,6 @@ export const storage = {
   getVideoWatchTime,
   setVideoWatchTime,
   deleteVideoWatchTime,
+  hasUserSeenNewsletterModal,
+  setUserSeenNewsletterModal,
 }
