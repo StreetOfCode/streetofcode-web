@@ -7,11 +7,12 @@ import Modal from './core/Modal'
 import NewsletterForm from './domain/newsletter/NewsletterForm'
 import {useRouter} from 'next/router'
 import {storage} from '../localStorage'
+import styled from 'styled-components'
 
 const SHOW_AFTER_MILLIS =
   process.env.NEXT_PUBLIC_SHOW_NEWSLETTER_POPUP_AFTER_MILLIS
 
-const NewsletterPopup = () => {
+const NewsletterModal = () => {
   const [modalOpen, setModalOpen] = useState(false)
   const {user, isLoading} = useAuth()
   const router = useRouter()
@@ -24,13 +25,19 @@ const NewsletterPopup = () => {
         !storage.hasUserSeenNewsletterModal()
       ) {
         setModalOpen(true)
-        storage.setUserSeenNewsletterModal()
+        storage.setHasUserSeenNewsletterModal()
       }
     }
 
-    if (!isLoading) {
-      setTimeout(() => maybeOpenModal(), Number(SHOW_AFTER_MILLIS))
-    }
+    if (isLoading) return
+
+    const timeout = setTimeout(
+      () => maybeOpenModal(),
+      Number(SHOW_AFTER_MILLIS),
+    )
+
+    // eslint-disable-next-line consistent-return
+    return () => clearTimeout(timeout)
   }, [isLoading])
 
   return (
@@ -52,7 +59,11 @@ const NewsletterPopup = () => {
               podnikneme. Neboj sa, nebudeme ťa spamovať a občas ta potešíme aj
               nejakou tou programátorskou radou.
             </Text>
-            <NewsletterForm from="NEWSLETTER_MODAL" />
+            <StyledNewsletterFrom from="NEWSLETTER_MODAL" removeHeading />
+            <Text color="primary" size="small" align="center">
+              Sme <b>Street of Code</b> a tvoríme kurzy, podcast, videá a články
+              najmä pre začínajúcich programátorov alebo programátorky.
+            </Text>
           </Flex>
         </Modal>
       )}
@@ -60,4 +71,9 @@ const NewsletterPopup = () => {
   )
 }
 
-export default NewsletterPopup
+const StyledNewsletterFrom = styled(NewsletterForm)`
+  width: 100%;
+  max-width: 400px;
+`
+
+export default NewsletterModal

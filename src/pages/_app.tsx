@@ -18,7 +18,7 @@ import SSRWrapper from '../components/SSRWrapper'
 import {useTheme} from '../hooks/useTheme'
 import {storage} from '../localStorage'
 import Loading from '../components/Loading'
-import NewsletterPopup from '../components/NewsletterPopup'
+import NewsletterModal from '../components/NewsletterModal'
 import '../theme/animations/HeroAnimation.css'
 import 'pure-react-carousel/dist/react-carousel.es.css'
 
@@ -80,7 +80,7 @@ function MyApp({Component, pageProps}: AppProps) {
                     ClientChildren={() => (
                       <OnboardingProtectionRoute>
                         <Component {...pageProps} />
-                        <NewsletterPopup />
+                        <NewsletterModal />
                         <Footer />
                       </OnboardingProtectionRoute>
                     )}

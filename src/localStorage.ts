@@ -22,7 +22,7 @@ const hasUserSeenNewsletterModal = () => {
   return localStorage.getItem(NEWSLETTER_MODAL_KEY) != null
 }
 
-const setUserSeenNewsletterModal = () => {
+const setHasUserSeenNewsletterModal = () => {
   if (isRunningOnServer()) {
     return
   }
@@ -102,5 +102,5 @@ export const storage = {
   setVideoWatchTime,
   deleteVideoWatchTime,
   hasUserSeenNewsletterModal,
-  setUserSeenNewsletterModal,
+  setHasUserSeenNewsletterModal,
 }

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react'
+import React, {useRef} from 'react'
 import {NextPage} from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -28,7 +28,6 @@ import {device} from '../theme/device'
 import VerticalSlider from '../components/VerticalSlider'
 import {useTheme} from '../hooks/useTheme'
 import HeroAnimation from '../theme/animations/HeroAnimation'
-import Modal from '../components/core/Modal'
 
 interface Props {
   courses: CourseOverview[]
@@ -59,18 +58,12 @@ const Header = () => {
 const Home: NextPage<Props> = ({courses}) => {
   const {theme} = useTheme()
   const coursesRef = useRef<null | HTMLDivElement>(null)
-  const [modalOpen, setModalOpen] = useState(false)
 
   const youtubeImageUrl =
     theme.type === 'LIGHT' ? youtubeDarkImageUrl : youtubeLightImageUrl
 
   return (
     <>
-      {modalOpen && (
-        <Modal onClose={() => setModalOpen(false)}>
-          <Text>Hello there</Text>
-        </Modal>
-      )}
       <Header />
       <Wrapper>
         <GradientWrapper>
@@ -84,11 +77,7 @@ const Home: NextPage<Props> = ({courses}) => {
                 alignSelf="stretch"
               >
                 <div>
-                  <Heading
-                    variant="h1"
-                    noWrap
-                    onClick={() => setModalOpen(true)}
-                  >
+                  <Heading variant="h1" noWrap>
                     Nauč sa s nami
                   </Heading>
                   <Heading variant="h1" color="accent">

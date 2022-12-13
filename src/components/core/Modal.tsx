@@ -1,9 +1,10 @@
-import React, {HTMLAttributes, useEffect, useRef} from 'react'
+import React, {HTMLAttributes} from 'react'
 import styled from 'styled-components'
 import {AiOutlineClose} from 'react-icons/ai'
 import Flex from './Flex'
 import {device} from '../../theme/device'
 import {createPortal} from 'react-dom'
+import {useKeyListener} from '../../hooks/useKeyListener'
 
 type Props = {
   className?: string
@@ -11,42 +12,17 @@ type Props = {
 } & HTMLAttributes<HTMLElement>
 
 const Modal = ({className, children, onClose}: Props) => {
-  const modalRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const closeOnEscapeKey = (e: KeyboardEvent) =>
-      e.key === 'Escape' ? onClose() : null
-    document.body.addEventListener('keydown', closeOnEscapeKey)
-
-    return () => {
-      document.body.removeEventListener('keydown', closeOnEscapeKey)
-    }
-  }, [onClose])
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        event.target instanceof Node &&
-        !modalRef.current.contains(event.target)
-      ) {
-        onClose()
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [modalRef])
+  useKeyListener('Escape', onClose)
 
   return createPortal(
-    <Background>
+    <Background onClick={() => onClose()}>
       <ContentWrapper
-        innerRef={modalRef}
         justifyContent="center"
         alignItems="center"
         className={className}
+        onClick={(e) => {
+          e.stopPropagation()
+        }}
       >
         <CloseModalIcon onClick={onClose} />
         {children}
@@ -76,7 +52,7 @@ const ContentWrapper = styled(Flex)`
   border-radius: 22px;
   padding: 24px;
   box-shadow: ${(props) => `1px 8px 20px ${props.theme.shadowColor}`};
-  max-width: 600px;
+  max-width: 650px;
 
   @media ${device.S} {
     width: 320px;

@@ -2,7 +2,9 @@ import {useRouter} from 'next/router'
 import React, {ChangeEvent, HTMLAttributes, useState} from 'react'
 import {useGoogleReCaptcha} from 'react-google-recaptcha-v3'
 import {AiOutlineSend} from 'react-icons/ai'
+import styled from 'styled-components'
 import {addToNewsletter, authPost} from '../../../api'
+import {device} from '../../../theme/device'
 import {
   AddToNewsletterRequest,
   SocUser,
@@ -17,10 +19,17 @@ import TextField from '../../core/TextField'
 type Props = {
   className?: string
   user?: SocUser
+  removeHeading?: boolean
   from: SubscribedFromType
 } & HTMLAttributes<HTMLElement>
 
-const NewsletterForm = ({className, user, from, ...props}: Props) => {
+const NewsletterForm = ({
+  className,
+  user,
+  removeHeading,
+  from,
+  ...props
+}: Props) => {
   const {executeRecaptcha} = useGoogleReCaptcha()
   const [newsletterEmail, setNewsletterEmail] = useState<string>(
     user?.email || '',
@@ -81,11 +90,13 @@ const NewsletterForm = ({className, user, from, ...props}: Props) => {
   }
 
   return (
-    <div className={className} {...props}>
+    <Wrapper className={className} {...props}>
       {!newsletterUpdatedSuccess && !newsletterUpdatedFailure && (
         <Flex direction="column" gap="12px">
-          <Text color="primary">Chcem odoberať novinky</Text>
-          <Flex gap="12px">
+          {!removeHeading && (
+            <Text color="primary">Chcem odoberať novinky</Text>
+          )}
+          <Flex gap="12px" alignSelf="stretch">
             <TextField
               text={newsletterEmail}
               onTextChanged={onNewsletterChanged}
@@ -110,8 +121,20 @@ const NewsletterForm = ({className, user, from, ...props}: Props) => {
       {newsletterUpdatedFailure && (
         <Text color="primary">Niečo sa nepodarilo, skús to prosím neskôr</Text>
       )}
-    </div>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled.div`
+  width: 340px;
+
+  @media ${device.S} {
+    width: 300px;
+  }
+
+  @media ${device.XS} {
+    width: 280px;
+  }
+`
 
 export default NewsletterForm
