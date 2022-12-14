@@ -5,6 +5,7 @@ import {assert, isRunningOnServer} from './utils'
 const THEME_SETTING_KEY = 'themeSetting'
 const VIDEO_WATCH_TIME_STORAGE_KEY = 'videoWatchTime'
 const NEWSLETTER_MODAL_KEY = 'newsletterModal'
+const NEXT_COURSE_VOTE_KEY = 'nextCourseVoted'
 
 const getThemeSetting = () =>
   !isRunningOnServer()
@@ -13,6 +14,22 @@ const getThemeSetting = () =>
 
 const setThemeSetting = (themeSetting: ThemeSetting) =>
   !isRunningOnServer() && localStorage.setItem(THEME_SETTING_KEY, themeSetting)
+
+const hasUserVotedForNextCourse = () => {
+  if (isRunningOnServer()) {
+    return ''
+  }
+
+  return localStorage.getItem(NEXT_COURSE_VOTE_KEY) != null
+}
+
+const setHasUserVotedForNextCourse = () => {
+  if (isRunningOnServer()) {
+    return
+  }
+
+  localStorage.setItem(NEXT_COURSE_VOTE_KEY, new Date().toString())
+}
 
 const hasUserSeenNewsletterModal = () => {
   if (isRunningOnServer()) {
@@ -103,4 +120,6 @@ export const storage = {
   deleteVideoWatchTime,
   hasUserSeenNewsletterModal,
   setHasUserSeenNewsletterModal,
+  hasUserVotedForNextCourse,
+  setHasUserVotedForNextCourse,
 }

@@ -10,8 +10,7 @@ import Text from '../../core/Text'
 import styled from 'styled-components'
 import {useAuth} from '../../../AuthUserContext'
 import Loading from '../../Loading'
-
-const nextCourseVotedStorageKey = 'nextCourseVoted'
+import {storage} from '../../../localStorage'
 
 type VoteStatus = 'NOT_VOTED' | 'VOTE_JUST_SUBMITTED' | 'ALREADY_VOTED'
 
@@ -19,13 +18,12 @@ const VoteNextCourse = () => {
   const [selectedNextCourses, setSelectedNextCourses] = useState<number[]>([])
   const {user, isLoading} = useAuth()
   const [voteStatus, setVoteStatus] = useState<VoteStatus>('ALREADY_VOTED')
-  const getVoteNextCourse = useGetNextCourseOptions()
+  const getVoteNextCourse = useGetNextCourseOptions(!isLoading)
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
   const {executeRecaptcha} = useGoogleReCaptcha()
 
   useEffect(() => {
-    // TODO create service for localStorage
-    if (localStorage.getItem(nextCourseVotedStorageKey) != null) {
+    if (storage.hasUserVotedForNextCourse()) {
       setVoteStatus('ALREADY_VOTED')
     } else {
       setVoteStatus('NOT_VOTED')
@@ -60,7 +58,7 @@ const VoteNextCourse = () => {
     }
 
     if (!user) {
-      localStorage.setItem(nextCourseVotedStorageKey, 'true')
+      storage.setHasUserVotedForNextCourse()
     }
 
     setSubmitLoading(false)

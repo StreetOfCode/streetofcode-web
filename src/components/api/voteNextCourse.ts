@@ -22,13 +22,14 @@ const fetchNextCourseOptions = async () => {
   return (await response.json()) as NextCourseVoteOption[]
 }
 
-export const useGetNextCourseOptions = () => {
+export const useGetNextCourseOptions = (enabled: boolean) => {
   return useQuery(
     queryKeys.getNextCourseOptions,
     () => fetchNextCourseOptions(),
     {
       cacheTime: 60 * 60 * 1000,
       staleTime: 30 * 60 * 1000,
+      enabled,
     },
   )
 }
