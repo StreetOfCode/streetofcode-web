@@ -41,6 +41,7 @@ const MarkdownView = ({children, className, ...props}: Props) => {
           />
         ),
         p: ({children}) => <Text children={children} />,
+        code: ({children}) => <Text children={children} />,
       }}
       {...props}
     />
