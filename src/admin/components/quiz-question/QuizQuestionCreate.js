@@ -3,10 +3,10 @@ import {
   Create,
   SimpleForm,
   NumberInput,
-  TextInput,
   useRedirect,
   SelectInput,
 } from 'react-admin'
+import {MarkdownInput} from '../../custom/MarkdownInput'
 
 const QuizQuestionCreate = () => {
   const redirect = useRedirect()
@@ -23,7 +23,7 @@ const QuizQuestionCreate = () => {
       <SimpleForm>
         <NumberInput disabled source="quizId" />
         <NumberInput required source="questionOrder" />
-        <TextInput multiline required source="text" />
+        <MarkdownInput required source="text" />
         <SelectInput
           required
           source="type"

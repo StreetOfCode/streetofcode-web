@@ -7,6 +7,7 @@ import {
   TextField,
   BooleanField,
 } from 'react-admin'
+import {MarkdownField} from '../../custom/MarkdownField'
 
 const QuizQuestionAnswerShow = () => {
   return (
@@ -21,7 +22,7 @@ const QuizQuestionAnswerShow = () => {
         >
           <TextField source="text" />
         </ReferenceField>
-        <TextField source="text" />
+        <MarkdownField addLabel source="text" />
         <BooleanField source="isCorrect" />
       </SimpleShowLayout>
     </Show>

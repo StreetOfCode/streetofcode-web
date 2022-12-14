@@ -12,9 +12,17 @@ import {
 import RadioGroup from '../../../core/RadioGroup'
 import {useTheme} from '../../../../hooks/useTheme'
 import {useSubmitUserAnswer} from '../../../api/quizQuestionUserAnswers'
+import MarkdownView from '../../../core/MarkdownView'
 
 const QuizAnswer = ({quizAnswer}: {quizAnswer: QuizQuestionAnswer}) => {
-  return <WrappedText>{quizAnswer.text}</WrappedText>
+  return (
+    <MarkdownView
+      children={quizAnswer.text}
+      customComponents={{
+        p: ({children}) => <Text color="inherit" children={children} />,
+      }}
+    />
+  )
 }
 
 export const QuizQuestion = ({
@@ -99,9 +107,12 @@ export const QuizQuestion = ({
       direction="column"
     >
       {wasAnsweredCorrectly}
-      <Text size="large" weight="bold">
-        {question.text}
-      </Text>
+      <MarkdownView
+        children={question.text}
+        customComponents={{
+          p: ({children}) => <Text weight="bold" children={children} />,
+        }}
+      />
       {question.type === 'SINGLE_CHOICE' && (
         <RadioGroup
           disabled={wasAnsweredCorrectly !== null}
@@ -230,10 +241,6 @@ const TryAgainButton = styled(Button)`
   color: ${(props) => props.theme.primaryColor};
   border: none;
   font-weight: bold;
-`
-
-const WrappedText = styled(Text)`
-  color: inherit;
 `
 
 const WrappedFlex = styled(Flex)<{

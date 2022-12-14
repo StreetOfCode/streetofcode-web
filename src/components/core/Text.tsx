@@ -12,7 +12,7 @@ type Props = {
 } & HTMLAttributes<HTMLElement>
 
 type Weight = 'normal' | 'bold'
-type Color = 'primary' | 'secondary' | 'accent'
+type Color = 'primary' | 'secondary' | 'accent' | 'inherit'
 type Size = 'default' | 'small' | 'very-small' | 'large'
 type Align = 'left' | 'center' | 'right'
 
@@ -59,6 +59,8 @@ export const StyledText = styled.span<{
       return props.theme.primaryColor
     } else if (props.color === 'secondary') {
       return props.theme.secondaryColor
+    } else if (props.color === 'inherit') {
+      return 'inherit'
     } else {
       return props.theme.accentColor
     }

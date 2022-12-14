@@ -15,6 +15,7 @@ import {
   Link,
   BooleanField,
 } from 'react-admin'
+import {MarkdownField} from '../../custom/MarkdownField'
 
 const QuizQuestionShow = () => {
   const CreateQuizQuestionAnswer = () => {
@@ -47,7 +48,7 @@ const QuizQuestionShow = () => {
           <TextField source="title" />
         </ReferenceField>
         <NumberField source="questionOrder" />
-        <TextField source="text" />
+        <MarkdownField addLabel source="text" />
         <TextField source="type" />
         <ReferenceManyField
           label="Quiz question answers"
