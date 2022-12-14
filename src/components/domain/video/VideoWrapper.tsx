@@ -27,6 +27,12 @@ const VideoWrapper = ({
 
   const handleOnVideoEnded = () => {
     if (onVideoEnded) {
+      if (document.fullscreenElement) {
+        // next lecture overlay is not visible in full-screen mode
+        // so we exit full-screen so user can see overlay
+        document.exitFullscreen()
+      }
+
       onVideoEnded()
     }
 
