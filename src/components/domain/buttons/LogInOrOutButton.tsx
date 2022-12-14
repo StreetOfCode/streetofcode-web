@@ -41,12 +41,12 @@ const LogInOrOutButton = () => {
                       sizePx={40}
                     />
                   </Trigger>
-                  <StyledContent sideOffset={3}>
+                  <StyledContent sideOffset={2}>
                     <Link href={'/profil'}>
                       <DropDownItem>Moje kurzy a nastavenia</DropDownItem>
                     </Link>
                     <DropDownItem onClick={logout}>Odhlásiť</DropDownItem>
-                    <DropwDownMenuArrow offset={12} />
+                    <DropwDownMenuArrow />
                   </StyledContent>
                 </DropdownMenu.Root>
               )}
@@ -75,9 +75,8 @@ const Trigger = styled(DropdownMenu.Trigger)`
 
 const StyledContent = styled(DropdownMenu.Content)`
   background-color: ${(props) => props.theme.primaryColor};
-  width: 200px;
   border-radius: 12px;
-  padding: 6px 10px;
+  padding: 12px 18px;
   border: 1px solid ${(props) => props.theme.secondaryColor};
 `
 
