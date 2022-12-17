@@ -15,9 +15,14 @@ _SyntaxHighlighter.registerLanguage('python', python)
 export type SyntaxHighlighterProps = {
   children: string | string[]
   language: string
+  customStyle?: React.CSSProperties
 }
 
-const SyntaxHighlighter = ({children, language}: SyntaxHighlighterProps) => {
+const SyntaxHighlighter = ({
+  children,
+  language,
+  customStyle,
+}: SyntaxHighlighterProps) => {
   const {isDarkTheme} = useTheme()
   return (
     <_SyntaxHighlighter
@@ -25,6 +30,7 @@ const SyntaxHighlighter = ({children, language}: SyntaxHighlighterProps) => {
       style={isDarkTheme ? vscDarkPlus : vs}
       wrapLines
       wrapLongLines
+      customStyle={customStyle}
     >
       {children}
     </_SyntaxHighlighter>

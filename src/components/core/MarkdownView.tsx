@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import {SpecialComponents} from 'react-markdown/lib/ast-to-react'
 import {NormalComponents} from 'react-markdown/lib/complex-types'
 import styled from 'styled-components'
+import SyntaxHighlighter from '../SyntaxHighlighter'
 import Heading from './Heading'
 import Text from './Text'
 
@@ -54,7 +55,13 @@ const MarkdownView = ({
             />
           ),
           p: ({children}) => <Text children={children} />,
-          code: ({children}) => <Code children={children} />,
+          code: ({className, children}) => (
+            <SyntaxHighlighter
+              language={className?.split('-')[1] || ''}
+              children={children[0] as string}
+              customStyle={{background: 'rgba(0,0,0,0)', border: 'none'}}
+            />
+          ),
           pre: ({children}) => <Pre children={children} />,
         },
         ...customComponents,
@@ -68,15 +75,6 @@ const Pre = styled.pre`
   margin: 0;
   padding: 0;
   max-width: 100%;
-`
-
-const Code = styled.code`
-  max-width: 100%;
-  color: ${(props) => props.theme.secondaryColor};
-  display: inline-block;
-  overflow: scroll;
-  vertical-align: middle;
-  padding-bottom: 16px;
 `
 
 const StyledHeading = styled(Heading)<{marginBottomPx?: number}>`
