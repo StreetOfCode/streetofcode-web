@@ -17,7 +17,6 @@ import OnboardingProtectionRoute from '../components/OnboardingProtectionRoute'
 import SSRWrapper from '../components/SSRWrapper'
 import {useTheme} from '../hooks/useTheme'
 import {storage} from '../localStorage'
-import Loading from '../components/Loading'
 import NewsletterModal from '../components/NewsletterModal'
 import '../theme/animations/HeroAnimation.css'
 import 'pure-react-carousel/dist/react-carousel.es.css'
@@ -86,11 +85,8 @@ function MyApp({Component, pageProps}: AppProps) {
                     )}
                     SSRChildren={() => (
                       <>
-                        <div style={{display: 'none'}}>
-                          <Component {...pageProps} />
-                          <Footer />
-                        </div>
-                        <Loading />
+                        <Component {...pageProps} />
+                        <Footer />
                       </>
                     )}
                   />
