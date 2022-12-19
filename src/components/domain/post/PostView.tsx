@@ -111,13 +111,6 @@ const PostContent = styled.div`
     }
   }
 
-  code {
-    display: inline-block;
-    overflow: scroll;
-    vertical-align: middle;
-    padding-bottom: 4px;
-  }
-
   // youtube video
   @media (max-width: 610px) {
     iframe {
@@ -139,6 +132,13 @@ const PostContent = styled.div`
     iframe {
       width: 240px;
       height: 135px;
+    }
+
+    code {
+      display: inline-block;
+      overflow: scroll;
+      vertical-align: middle;
+      padding-bottom: 4px;
     }
   }
 `
