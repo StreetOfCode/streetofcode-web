@@ -75,9 +75,14 @@ const NavBar = () => {
       <MobileMenuFlex open={mobileNavbarOpen}>
         <MobileMenuItems direction="column" alignItems="stretch" gap={'32px'}>
           {!user && (
-            <NextLink href={`/login/${encodeURIComponent(router.asPath)}`}>
-              <Text>Prihlásiť</Text>
-            </NextLink>
+            <>
+              <NextLink href={`/login/${encodeURIComponent(router.asPath)}`}>
+                <Text>Prihlásiť</Text>
+              </NextLink>
+              <NextLink styleIfActive href="/kurzy">
+                <Text>Kurzy</Text>
+              </NextLink>
+            </>
           )}
           {user && (
             <NextLink styleIfActive href="/profil">
