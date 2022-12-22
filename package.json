@@ -47,9 +47,7 @@
     "react-query": "^3.39.1",
     "react-syntax-highlighter": "^15.5.0",
     "sharp": "^0.31.1",
-    "styled-components": "^5.3.5",
-    "loader-utils": "^2.0.4",
-    "decode-uri-component": "^0.2.1"
+    "styled-components": "^5.3.5"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.2.1",
