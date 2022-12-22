@@ -13,6 +13,12 @@ jobs:
       - name: Set up yarn
         run: yarn
 
+      - name: Run yarn audit
+        run: yarn audit
+
+      - name: Run tsc
+        run: yarn tsc --noEmit
+
       - name: Run lint
         run: yarn lint
 
