@@ -70,7 +70,9 @@
   "resolutions": {
     "styled-components": "^5",
     "@typescript-eslint/eslint-plugin": "^5",
-    "@typescript-eslint/parser": "^5"
+    "@typescript-eslint/parser": "^5",
+    "loader-utils": "^2.0.3",
+    "decode-uri-component": "^0.2.1"
   },
   "eslintConfig": {
     "extends": "next/core-web-vitals"
