@@ -29,8 +29,8 @@ export const CoursesSliderWrapper = ({className, courses}: Props) => {
   if (user) {
     return (
       <QueryGuard {...getCoursesQuery}>
-        {(courses: CourseOverview[]) => {
-          return <CoursesSlider className={className} courses={courses} />
+        {(_courses: CourseOverview[]) => {
+          return <CoursesSlider className={className} courses={_courses} />
         }}
       </QueryGuard>
     )

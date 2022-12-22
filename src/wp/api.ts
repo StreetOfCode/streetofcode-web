@@ -1,6 +1,17 @@
+import {useQuery} from 'react-query'
 import {Post} from './types'
 
 const API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL
+
+const P = 'wpApi'
+
+export const queryKeys = {
+  get: (categoryName: string, limit: number) => [
+    P,
+    categoryName,
+    limit.toString(),
+  ],
+}
 
 async function fetchAPI(query: string, variables?: object) {
   const headers = {'Content-Type': 'application/json'}
@@ -21,12 +32,15 @@ async function fetchAPI(query: string, variables?: object) {
   return json.data
 }
 
-export async function getAllPosts(categoryName: string): Promise<Post[]> {
+export async function getAllPosts(
+  categoryName: string,
+  limit = 1000,
+): Promise<Post[]> {
   const data = await fetchAPI(
     `
     query AllPosts {
       posts(
-        first: 1000,
+        first: ${limit},
         where: {
           orderby: { field: DATE, order: DESC },
           categoryName: "${categoryName}"
@@ -65,6 +79,12 @@ export async function getAllPosts(categoryName: string): Promise<Post[]> {
   )
 
   return data?.posts?.nodes
+}
+
+export function useGetAllPosts(categoryName: string, limit = 1000) {
+  return useQuery(queryKeys.get(categoryName, limit), () =>
+    getAllPosts(categoryName, limit),
+  )
 }
 
 export async function getAllPostsWithSlug(

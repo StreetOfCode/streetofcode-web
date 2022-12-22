@@ -1,4 +1,5 @@
 export const PAGINATION_BY = 9
+export const COUNT_IN_SLIDER = 6
 export const CATEGORY_NAME = 'Podcast'
 export const EMPTY_PODCAST_IMAGE_PLACEHOLDER_URL =
   'http://wp.streetofcode.sk/wp-content/uploads/2020/12/PodcastImage.jpg'

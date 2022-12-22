@@ -28,9 +28,16 @@ import {device} from '../theme/device'
 import VerticalSlider from '../components/VerticalSlider'
 import {useTheme} from '../hooks/useTheme'
 import HeroAnimation from '../theme/animations/HeroAnimation'
+import {Post} from '../wp/types'
+import {getAllPosts} from '../wp/api'
+import {
+  CATEGORY_NAME as PODCAST_CATEGORY_NAME,
+  COUNT_IN_SLIDER as PODCAST_COUNT_IN_SLIDER,
+} from '../components/domain/post/podcast/podcast-constants'
 
 interface Props {
   courses: CourseOverview[]
+  podcasts: Post[]
 }
 
 const Header = () => {
@@ -55,7 +62,7 @@ const Header = () => {
   )
 }
 
-const Home: NextPage<Props> = ({courses}) => {
+const Home: NextPage<Props> = ({courses, podcasts}) => {
   const {theme} = useTheme()
   const coursesRef = useRef<null | HTMLDivElement>(null)
 
@@ -138,7 +145,7 @@ const Home: NextPage<Props> = ({courses}) => {
                 podcast
               </Heading>
             </div>
-            <PodcastsSlider />
+            <PodcastsSlider podcasts={podcasts} />
             <PodcastSocialsFlex
               justifyContent="center"
               gap="64px"
@@ -433,8 +440,13 @@ export const getStaticProps = async () => {
 
   const courses = (await response.json()) as CourseOverview[]
 
+  const podcasts = await getAllPosts(
+    PODCAST_CATEGORY_NAME,
+    PODCAST_COUNT_IN_SLIDER,
+  )
+
   return {
-    props: {courses}, // will be passed to the page component as props
+    props: {courses, podcasts}, // will be passed to the page component as props
   }
 }
 

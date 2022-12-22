@@ -4,12 +4,20 @@ import Image from 'next/image'
 import Flex from '../core/Flex'
 import Heading from '../core/Heading'
 import Slider, {SliderTemplateProps} from '../Slider'
-import {podcasts} from './podcasts'
 import {device} from '../../theme/device'
 import {Slide} from 'pure-react-carousel'
+import {useGetAllPosts} from '../../wp/api'
+import {Post} from '../../wp/types'
+import {useAuth} from '../../AuthUserContext'
+import {QueryGuard} from '../../QueryGuard'
+import {
+  CATEGORY_NAME,
+  COUNT_IN_SLIDER,
+} from '../domain/post/podcast/podcast-constants'
 
 type Props = {
   className?: string
+  podcasts: Post[]
 } & HTMLAttributes<HTMLElement>
 
 const XL_SIZE_WIDTH = 300
@@ -19,29 +27,46 @@ const S_SIZE_WIDTH = 260
 const WIDTH_BUFFER = 48
 const HEIGHT_BUFFER = 64
 
+const PodcastSliderWrapper = ({className, podcasts}: Props) => {
+  const {user} = useAuth()
+  const getPodcastsQuery = useGetAllPosts(CATEGORY_NAME, COUNT_IN_SLIDER)
+
+  if (user) {
+    return (
+      <QueryGuard {...getPodcastsQuery}>
+        {(_podcasts) => {
+          return <PodcastsSlider className={className} podcasts={_podcasts} />
+        }}
+      </QueryGuard>
+    )
+  } else {
+    return <PodcastsSlider className={className} podcasts={podcasts} />
+  }
+}
+
 const PodcastsSliderTemplate = ({
   className,
   displayItemsCount,
   slideWidth,
   slideHeight,
-}: SliderTemplateProps) => {
+  podcasts,
+}: SliderTemplateProps & Props) => {
   return (
     <Slider
       className={className}
       items={podcasts}
       showItemsCount={displayItemsCount}
       slideWidth={slideWidth}
-      startAtMiddle
       slideHeight={slideHeight}
-      itemLayout={(podcast, i) => {
+      itemLayout={(post, i) => {
         return (
           <StyledSlide index={i} key={i}>
             <Flex direction="column" gap="16px">
-              <Heading variant="h3">{podcast.title}</Heading>
-              <ImageWrapper href={podcast.podcastUrl}>
+              <Heading variant="h3">{post.title?.split('–')[0]}</Heading>
+              <ImageWrapper href={`podcast/${post.slug || ''}`}>
                 <StyledImage
-                  src={podcast.image}
-                  alt={podcast.name}
+                  src={post.featuredImage?.node?.sourceUrl || ''}
+                  alt={post.title || ''}
                   layout="fill"
                   priority
                 />
@@ -54,29 +79,33 @@ const PodcastsSliderTemplate = ({
   )
 }
 
-const PodcastsSlider = ({className}: Props) => {
+const PodcastsSlider = ({className, podcasts}: Props) => {
   return (
     <>
       <XLPodcastsSlider
         className={className}
+        podcasts={podcasts}
         displayItemsCount={3}
         slideWidth={XL_SIZE_WIDTH + WIDTH_BUFFER * 1.5}
         slideHeight={XL_SIZE_WIDTH + HEIGHT_BUFFER * 1.5}
       />
       <LPodcastsSlider
         className={className}
+        podcasts={podcasts}
         displayItemsCount={2}
         slideWidth={L_SIZE_WIDTH + WIDTH_BUFFER * 1.5}
         slideHeight={L_SIZE_WIDTH + HEIGHT_BUFFER * 1.5}
       />
       <MPodcastsSlider
         className={className}
+        podcasts={podcasts}
         displayItemsCount={2}
         slideWidth={M_SIZE_WIDTH + WIDTH_BUFFER}
         slideHeight={M_SIZE_WIDTH + HEIGHT_BUFFER}
       />
       <SPodcastsSlider
         className={className}
+        podcasts={podcasts}
         displayItemsCount={1}
         slideWidth={S_SIZE_WIDTH + WIDTH_BUFFER}
         slideHeight={S_SIZE_WIDTH + HEIGHT_BUFFER}
@@ -164,4 +193,4 @@ const StyledImage = styled(Image)`
   border-radius: 20px;
 `
 
-export default PodcastsSlider
+export default PodcastSliderWrapper

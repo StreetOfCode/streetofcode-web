@@ -2,12 +2,6 @@ import {StaticImageData} from 'next/image'
 import akoSaNaucisFrontendImage from '../public/images/akoSaNaucisFrontend.jpg'
 import FirstDesignCourseDetailImage from '../public/images/Course-Detail.jpg'
 import cssBatleSBoksimImage from '../public/images/cssBattleSBoksim.jpg'
-import podcastEp82Image from '../public/images/ep82-landing-1.jpg'
-import podcastEp83Image from '../public/images/ep83-landing-1.jpg'
-import podcastEp85Image from '../public/images/ep85-landing-1.jpg'
-import podcastEp86Image from '../public/images/ep86-landing-1.jpg'
-import podcastEp87Image from '../public/images/ep87-landing-1.jpg'
-import podcastEp91Image from '../public/images/ep91-landing-1.jpg'
 import GabrielImage from '../public/images/gabriel.jpg'
 import FirstDesignHomeImage from '../public/images/Home.jpg'
 import horiaceLanaImage from '../public/images/horiaceLana.jpg'
@@ -27,12 +21,6 @@ export const akoSaNaucisFrontend = akoSaNaucisFrontendImage as StaticImageData
 export const FirstDesignCourseDetail =
   FirstDesignCourseDetailImage as StaticImageData
 export const cssBatleSBoksim = cssBatleSBoksimImage as StaticImageData
-export const podcastEp82 = podcastEp82Image as StaticImageData
-export const podcastEp83 = podcastEp83Image as StaticImageData
-export const podcastEp85 = podcastEp85Image as StaticImageData
-export const podcastEp86 = podcastEp86Image as StaticImageData
-export const podcastEp87 = podcastEp87Image as StaticImageData
-export const podcastEp91 = podcastEp91Image as StaticImageData
 export const Gabriel = GabrielImage as StaticImageData
 export const FirstDesignHome = FirstDesignHomeImage as StaticImageData
 export const horiaceLana = horiaceLanaImage as StaticImageData
