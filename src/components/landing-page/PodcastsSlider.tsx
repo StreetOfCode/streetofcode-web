@@ -163,7 +163,7 @@ const StyledSlide = styled(Slide)`
 const ImageWrapper = styled.a`
   position: relative;
   border-radius: 22px;
-  border: ${(props) => `2px solid ${props.theme.accentColor} !important`};
+  border: 2px solid var(--color-accent) !important;
 
   width: ${XL_SIZE_WIDTH}px;
   aspect-ratio: 1;
@@ -173,7 +173,7 @@ const ImageWrapper = styled.a`
   &:hover {
     transform: scale(1.1);
     transition: 250ms ease-in-out;
-    box-shadow: ${(props) => `1px 8px 20px ${props.theme.shadowColor}`};
+    box-shadow: 1px 8px 20px var(--color-shadow);
   }
 
   @media ${device.M} {

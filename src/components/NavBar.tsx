@@ -130,7 +130,7 @@ const WrapperFlex = styled(Flex)<{mobileNavbarOpen: boolean}>`
 
   @media ${device.M} {
     background-color: ${(props) =>
-      props.mobileNavbarOpen && props.theme.primaryColor};
+      props.mobileNavbarOpen && 'var(--color-primary)'};
     width: ${(props) => props.mobileNavbarOpen && '100vw'};
   }
 
@@ -183,7 +183,7 @@ const menuIconStyle = css`
     display: block;
   }
 
-  color: ${(props) => props.theme.secondaryColor};
+  color: var(--color-secondary);
 `
 
 const OpenMenuIcon = styled(AiOutlineMenu)`
@@ -221,7 +221,7 @@ const MobileMenuFlex = styled(Flex)<{open: boolean}>`
     height: 100vh;
     left: 0;
     z-index: 1;
-    background-color: ${(props) => props.theme.primaryColor};
+    background-color: var(--color-primary);
   }
 `
 const LogoWrapper = styled.div`
@@ -256,10 +256,10 @@ const CloseMobileMenuFlexWrapper = styled(Flex)`
     height: 18px;
   }
 `
-
 const LogoImage = styled(Image)`
-  filter: ${(props) =>
-    props.theme.type === 'LIGHT' ? 'unset' : 'invert(100%)'};
+  [theme-type='DARK'] & {
+    filter: invert(100%);
+  }
 `
 
 export default NavBar

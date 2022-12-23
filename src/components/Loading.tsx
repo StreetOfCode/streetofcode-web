@@ -16,7 +16,7 @@ const WrapperFlex = styled(Flex)`
   flex: 1;
 
   .MuiCircularProgress-colorPrimary {
-    color: ${(props) => props.theme.accentColor};
+    color: var(--color-accent);
   }
 `
 

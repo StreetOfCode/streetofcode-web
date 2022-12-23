@@ -67,7 +67,7 @@ const Wrapper = styled.div<{disabled?: boolean}>`
 `
 
 const IconStyle = css`
-  color: ${(props) => props.theme.accentColor};
+  color: var(--color-accent);
   width: 20px;
   height: 20px;
 

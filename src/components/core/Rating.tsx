@@ -32,7 +32,7 @@ const Rating = ({
 }
 
 const FilledStar = styled(StarIcon)`
-  color: ${(props) => props.theme.accentColor} !important;
+  color: var(--color-accent) !important;
 `
 
 const EmptyStar = styled(StarIcon)`

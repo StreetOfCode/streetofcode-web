@@ -103,14 +103,14 @@ const WrapperFlex = styled(Flex)`
   width: 360px;
   height: 520px;
   padding: 1em 0.5em;
-  border: ${(props) => props.theme.accentColor} 2px solid;
+  border: var(--color-accent) 2px solid;
   border-radius: 22px;
   transition: 250ms ease-in-out;
 
   &:hover {
     transform: scale(1.1);
     transition: 250ms ease-in-out;
-    box-shadow: ${(props) => `1px 8px 20px ${props.theme.shadowColor}`};
+    box-shadow: 1px 8px 20px var(--color-shadow);
   }
 
   @media ${device.L} {

@@ -21,7 +21,7 @@ const StyledA = styled.a`
   text-align: left;
   font-size: 14px;
   text-decoration: none;
-  color: ${(props) => props.theme.secondaryColor};
+  color: var(--color-secondary);
   margin-bottom: 32px;
 
   &:hover {

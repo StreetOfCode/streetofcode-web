@@ -31,7 +31,7 @@ const Slider = styled.div`
   width: 30px !important;
   height: 70px !important;
   border-radius: 22px;
-  border: ${(props) => `4px solid ${props.theme.accentColor}`};
+  border: 4px solid var(--color-accent);
 
   :hover {
     cursor: pointer;
@@ -44,7 +44,7 @@ const Slider = styled.div`
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background-color: ${(props) => props.theme.accentColor};
+    background-color: var(--color-accent);
     top: 43px;
     left: 2px;
 

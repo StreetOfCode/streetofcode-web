@@ -273,8 +273,11 @@ const Wrapper = styled.div`
 `
 
 const GradientWrapper = styled.div`
-  background: ${(props) =>
-    `linear-gradient(150deg, ${props.theme.accentColor}, ${props.theme.primaryColor} 35%)`};
+  background: linear-gradient(
+    150deg,
+    var(--color-accent),
+    var(--color-primary) 35%
+  );
   margin-bottom: 2em;
 `
 
@@ -426,7 +429,7 @@ const UsImage = styled.div`
 
 const StyledImage = styled(Image)`
   border-radius: 22px;
-  border: ${(props) => `2px solid ${props.theme.accentColor} !important`};
+  border: 2px solid var(--color-accent) !important;
 `
 
 const AboutUsContentWrapper = styled(Flex)`

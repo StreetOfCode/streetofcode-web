@@ -55,14 +55,10 @@ export const StyledText = styled.span<{
   line-height: 1.5;
 
   color: ${(props) => {
-    if (props.color === 'primary') {
-      return props.theme.primaryColor
-    } else if (props.color === 'secondary') {
-      return props.theme.secondaryColor
-    } else if (props.color === 'inherit') {
+    if (props.color === 'inherit') {
       return 'inherit'
     } else {
-      return props.theme.accentColor
+      return `var(--color-${props.color})`
     }
   }};
 
@@ -87,9 +83,7 @@ export const StyledText = styled.span<{
   }};
 
   border-bottom: ${(props) =>
-    props.withAccentUnderline
-      ? `2px solid ${props.theme.accentColor}`
-      : 'unset'};
+    props.withAccentUnderline ? `2px solid var(--color-accent)` : 'unset'};
 `
 
 export default Text

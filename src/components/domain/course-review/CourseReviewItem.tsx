@@ -92,7 +92,7 @@ const ReviewField = styled.div`
   width: 100%;
   padding: 12px;
   border-radius: 12px;
-  border: 1px solid ${(props) => props.theme.accentColor};
+  border: 1px solid var(--color-accent);
 `
 
 export default CourseReviewItem

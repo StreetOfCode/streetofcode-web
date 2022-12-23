@@ -236,7 +236,7 @@ const LectureTypeIcon = styled.span`
 const Header = styled(Accordion.Header)`
   margin: 0;
   padding: 0 4px 4px 4px;
-  border-bottom: 2px solid ${(props) => props.theme.accentColor};
+  border-bottom: 2px solid var(--color-accent);
 
   &:hover {
     cursor: pointer;
@@ -294,12 +294,12 @@ const AccordionContentWrapper = styled(Flex)<{selected?: boolean}>`
 
   svg {
     color: ${(props) =>
-      props.selected ? props.theme.accentColor : props.theme.secondaryColor};
+      props.selected ? 'var(--color-accent)' : 'var(--color-secondary)'};
   }
 
   ${StyledText} {
     color: ${(props) =>
-      props.selected ? props.theme.accentColor : props.theme.secondaryColor};
+      props.selected ? 'var(--color-accent)' : 'var(--color-secondary)'};
   }
 `
 
@@ -315,7 +315,7 @@ const AccordionChevron = styled(BiChevronDown)`
 
   flex-shrink: 0;
 
-  color: ${(props) => props.theme.secondaryColor};
+  color: var(--color-secondary);
 `
 
 const ResourcesWrapper = styled(Flex)`
@@ -325,7 +325,7 @@ const ResourcesWrapper = styled(Flex)`
   }
 `
 const ResourcesIcon = styled(CgNotes)`
-  color: ${(props) => props.theme.secondaryColor};
+  color: var(--color-secondary);
 `
 
 export default CourseSidebar

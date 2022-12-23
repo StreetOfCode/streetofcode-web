@@ -90,7 +90,7 @@ const iconStyle = css`
   align-self: center;
   width: 40px;
   height: 40px;
-  color: ${(props) => props.theme.accentColor};
+  color: var(--color-accent);
 
   @media ${device.S} {
     width: 24px;

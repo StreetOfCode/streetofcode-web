@@ -76,7 +76,7 @@ const iconStyle = (props: {
   width: ${props.size || '18px'};
   aspect-ratio: 1;
   flex-shrink: 0;
-  color: ${props.theme.accentColor};
+  color: var(--color-accent);
   ${
     !props.disabled
       ? `
@@ -108,7 +108,7 @@ const UncheckedIcon = styled(MdCheckBoxOutlineBlank)<{
 const Label = styled(Text)<{labelColor?: string}>`
   display: inline;
   color: ${(props) =>
-    props.labelColor ? props.labelColor : props.theme.secondaryColor};
+    props.labelColor ? props.labelColor : 'var(--color-secondary)'};
 `
 
 export default CheckBox

@@ -113,8 +113,8 @@ const VoteNextCourse = () => {
 }
 
 const CourseOptionButton = styled(Button)<{selected: boolean}>`
-  border-color: ${(props) => props.selected && props.theme.accentColor};
-  color: ${(props) => props.selected && props.theme.accentColor};
+  border-color: ${(props) => props.selected && 'var(--color-accent)'};
+  color: ${(props) => props.selected && 'var(--color-accent)'};
 
   transition: 100ms ease-in-out;
 

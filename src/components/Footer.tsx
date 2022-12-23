@@ -175,7 +175,7 @@ const Footer = () => {
 }
 
 const Background = styled.div`
-  background-color: ${(props) => props.theme.footerBackgroundColor};
+  background-color: var(--color-footer-background);
 `
 
 const EmptyBox = styled.div`
@@ -225,7 +225,7 @@ const NavigationFlex = styled(Flex)`
 `
 
 const SocialIconLink = styled.a`
-  color: ${(props) => props.theme.primaryColor};
+  color: var(--color-primary);
 
   &:hover {
     opacity: 80%;
@@ -240,8 +240,9 @@ const LogoWrapper = styled.div`
 `
 
 const LogoImage = styled(Image)`
-  filter: ${(props) =>
-    props.theme.type === 'LIGHT' ? 'invert(100%)' : 'unset'};
+  [theme-type='LIGHT'] & {
+    filter: invert(100%);
+  }
 `
 
 export default Footer

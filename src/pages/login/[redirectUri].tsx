@@ -115,8 +115,8 @@ const iconStyle = css`
 
 const GoogleButton = styled(Button)`
   background-color: #dd4b39;
-  color: ${(props) => props.theme.primaryColor};
-  border: 1px solid ${(props) => props.theme.secondaryColor};
+  color: var(--color-primary);
+  border: 1px solid var(--color-secondary);
 
   svg {
     ${iconStyle}
@@ -125,9 +125,8 @@ const GoogleButton = styled(Button)`
 
 const GithubButton = styled(Button)`
   background-color: #444444;
-  color: ${(props) => props.theme.primaryColor};
-  border: 1px solid ${(props) => props.theme.secondaryColor};
-
+  color: var(--color-primary);
+  border: 1px solid var(--color-secondary);
   svg {
     ${iconStyle}
   }
@@ -149,8 +148,9 @@ const LogoWrapper = styled.div`
   width: 200px;
 `
 const LogoImage = styled(Image)`
-  filter: ${(props) =>
-    props.theme.type === 'LIGHT' ? 'unset' : 'invert(100%)'};
+  [theme-type='DARK'] & {
+    filter: invert(100%);
+  }
 `
 
 export default LoginPage

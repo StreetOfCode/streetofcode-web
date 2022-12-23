@@ -1,11 +1,10 @@
 import {useContext, useEffect, useState} from 'react'
 import {storage} from '../localStorage'
-import {darkTheme, lightTheme} from '../theme/theme'
+import {darkTheme, lightTheme, ThemeType} from '../theme/theme'
 import ThemeSettingContext from '../theme/ThemeSettingContext'
+import {ThemeSetting} from '../types'
 
 export const THEME_SETTING_KEY = 'themeSetting'
-
-export type ThemeSetting = 'LIGHT' | 'DARK' | 'AUTO'
 
 const useThemeDetector = () => {
   const getCurrentTheme = () =>
@@ -27,24 +26,46 @@ const useThemeDetector = () => {
   return isDarkTheme
 }
 
+const updateCSSThemeVariables = (theme: ThemeType) => {
+  document.body.setAttribute('theme-type', theme.type)
+
+  const root = document.documentElement
+  root.style.setProperty('--color-primary', theme.primaryColor)
+  root.style.setProperty('--color-secondary', theme.secondaryColor)
+  root.style.setProperty('--color-accent', theme.accentColor)
+  root.style.setProperty('--color-grey', theme.greyColor)
+  root.style.setProperty('--color-danger', theme.dangerColor)
+  root.style.setProperty('--color-success', theme.successColor)
+  root.style.setProperty(
+    '--color-footer-background',
+    theme.footerBackgroundColor,
+  )
+  root.style.setProperty('--color-shadow', theme.shadowColor)
+}
+
+const determineTheme = (
+  setting: ThemeSetting,
+  isDarkTheme: boolean,
+): ThemeType => {
+  if (setting === 'LIGHT') {
+    return lightTheme
+  } else if (setting === 'DARK') {
+    return darkTheme
+  } else {
+    return isDarkTheme ? darkTheme : lightTheme
+  }
+}
+
 export const useTheme = () => {
   const {themeSetting, setThemeSetting} = useContext(ThemeSettingContext)
+  const isDarkTheme = useThemeDetector()
 
   useEffect(() => {
     storage.setThemeSetting(themeSetting)
+    updateCSSThemeVariables(determineTheme(themeSetting, isDarkTheme))
   }, [themeSetting])
 
-  const isDarkTheme = useThemeDetector()
-
-  const theme = (function () {
-    if (themeSetting === 'LIGHT') {
-      return lightTheme
-    } else if (themeSetting === 'DARK') {
-      return darkTheme
-    } else {
-      return isDarkTheme ? darkTheme : lightTheme
-    }
-  })()
+  const theme = determineTheme(themeSetting, isDarkTheme)
 
   return {
     theme,

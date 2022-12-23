@@ -19,26 +19,26 @@ type Props = {
 type Variant = 'accent' | 'default' | 'outline' | 'danger'
 type Size = 'small' | 'default' | 'large' | 'very-large'
 
-const variantStyleValues = (theme: ThemeType) => ({
+const variantStyleValues = () => ({
   accent: {
     color: 'white', // this is by design so it doesn't change when themes switch
-    backgroundColor: theme.accentColor,
-    border: `2px solid ${theme.accentColor}`,
+    backgroundColor: 'var(--color-accent)',
+    border: `2px solid var(--color-accent)`,
   },
   default: {
-    color: theme.secondaryColor,
-    backgroundColor: theme.primaryColor,
-    border: `2px solid ${theme.secondaryColor}`,
+    color: 'var(--color-secondary)',
+    backgroundColor: 'var(--color-primary)',
+    border: `2px solid var(--color-secondary)`,
   },
   outline: {
-    color: theme.secondaryColor,
-    backgroundColor: theme.primaryColor,
-    border: `2px solid ${theme.accentColor}`,
+    color: 'var(--color-secondary)',
+    backgroundColor: 'var(--color-primary)',
+    border: `2px solid var(--color-accent)`,
   },
   danger: {
-    color: theme.primaryColor,
-    backgroundColor: theme.dangerColor,
-    border: `2px solid ${theme.dangerColor}`,
+    color: 'var(--color-primary)',
+    backgroundColor: 'var(--color-danger)',
+    border: `2px solid var(--color-danger)`,
   },
 })
 
@@ -104,9 +104,9 @@ const StyledButton = styled.button<{
   disableHoverTransform?: boolean
 }>`
   background-color: ${(props) =>
-    variantStyleValues(props.theme)[props.variant].backgroundColor};
-  color: ${(props) => variantStyleValues(props.theme)[props.variant].color};
-  border: ${(props) => variantStyleValues(props.theme)[props.variant].border};
+    variantStyleValues()[props.variant].backgroundColor};
+  color: ${(props) => variantStyleValues()[props.variant].color};
+  border: ${(props) => variantStyleValues()[props.variant].border};
   padding: 0.5em 1.25em;
   border-radius: 10px;
   font-size: ${(props) => sizeStyleValues[props.size].fontSize};
@@ -130,7 +130,7 @@ const StyledButton = styled.button<{
       'transform 0.2s ease-in-out'};
     opacity: ${(props) => !props.disabled && '0.9'};
     box-shadow: ${(props) =>
-      !props.disabled && `0 0 10px 0 ${props.theme.shadowColor}`};
+      !props.disabled && `0 0 10px 0 var(--color-shadow)`};
   }
 
   svg {

@@ -70,22 +70,24 @@ const RadioContainer = styled.div<{
   ${(props) => {
     if (props.color) {
       return `background-color: ${props.color};
-              color: ${props.theme.primaryColor};`
+              color: var(--color-primary);`
     } else if (props.isChecked) {
-      return `background-color: ${props.theme.accentColor};
-              color: ${props.theme.primaryColor};
-              border: 1px solid ${props.theme.accentColor};`
+      return `background-color: var(--color-accent);
+              color: var(--color-primary);
+              border: 1px solid var(--color-accent);`
     } else {
       return `
               ${
                 !props.disabled
                   ? `:hover {
-                background-color: ${props.theme.secondaryAccentColor};
+                  transform: scale(1.02);
+                  transition: transform 0.2s ease-in-out;
+                  box-shadow: 0 0 10px 0 var(--color-shadow);
               }`
                   : ''
               }
-              color: ${props.theme.secondaryColor};
-              border: 1px solid ${props.theme.accentColor};
+              color: var(--color-secondary);
+              border: 1px solid var(--color-accent);
               `
     }
   }}
@@ -96,9 +98,7 @@ const Radio = styled.span<{
 }>`
   border: 1px solid
     ${(props) => {
-      return props.isChecked
-        ? props.theme.primaryColor
-        : props.theme.accentColor
+      return props.isChecked ? 'var(--color-primary)' : 'var(--color-accent)'
     }};
 
   width: 20px;

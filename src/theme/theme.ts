@@ -1,3 +1,7 @@
+/*
+WARNING. These colors are used in useTheme hook and are duplicated in _document.tsx as well.
+*/
+
 export type ThemeType = {
   type: 'LIGHT' | 'DARK'
   primaryColor: string // mostly background

@@ -1,9 +1,9 @@
 import {Analytics, logEvent} from 'firebase/analytics'
-import React, {HTMLAttributes, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import * as Sentry from '@sentry/react'
 import type {AppProps} from 'next/app'
 import GlobalStyles from '../globalStyles'
-import styled, {ThemeProvider} from 'styled-components'
+import styled from 'styled-components'
 import Footer from '../components/Footer'
 import {QueryClientProvider} from 'react-query'
 import queryClient from '../queryClient'
@@ -15,16 +15,10 @@ import ErrorBoundaryFallBack from '../components/domain/ErrorBoundaryFallBack'
 import ThemeSettingContext from '../theme/ThemeSettingContext'
 import OnboardingProtectionRoute from '../components/OnboardingProtectionRoute'
 import SSRWrapper from '../components/SSRWrapper'
-import {useTheme} from '../hooks/useTheme'
 import {storage} from '../localStorage'
 import NewsletterModal from '../components/NewsletterModal'
 import '../theme/animations/HeroAnimation.css'
 import 'pure-react-carousel/dist/react-carousel.es.css'
-
-const _ThemeProvider = ({children}: HTMLAttributes<HTMLElement>) => {
-  const {theme} = useTheme()
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>
-}
 
 function MyApp({Component, pageProps}: AppProps) {
   const [themeSetting, setThemeSetting] = useState(
@@ -70,30 +64,28 @@ function MyApp({Component, pageProps}: AppProps) {
         reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY || ''}
       >
         <ThemeSettingContext.Provider value={{themeSetting, setThemeSetting}}>
-          <_ThemeProvider>
-            <AuthContextProvider>
-              <RootWrapper>
-                <QueryClientProvider client={queryClient}>
-                  <GlobalStyles />
-                  <SSRWrapper
-                    ClientChildren={() => (
-                      <OnboardingProtectionRoute>
-                        <Component {...pageProps} />
-                        <NewsletterModal />
-                        <Footer />
-                      </OnboardingProtectionRoute>
-                    )}
-                    SSRChildren={() => (
-                      <>
-                        <Component {...pageProps} />
-                        <Footer />
-                      </>
-                    )}
-                  />
-                </QueryClientProvider>
-              </RootWrapper>
-            </AuthContextProvider>
-          </_ThemeProvider>
+          <AuthContextProvider>
+            <RootWrapper>
+              <QueryClientProvider client={queryClient}>
+                <GlobalStyles />
+                <SSRWrapper
+                  ClientChildren={() => (
+                    <OnboardingProtectionRoute>
+                      <Component {...pageProps} />
+                      <NewsletterModal />
+                      <Footer />
+                    </OnboardingProtectionRoute>
+                  )}
+                  SSRChildren={() => (
+                    <>
+                      <Component {...pageProps} />
+                      <Footer />
+                    </>
+                  )}
+                />
+              </QueryClientProvider>
+            </RootWrapper>
+          </AuthContextProvider>
         </ThemeSettingContext.Provider>
       </GoogleReCaptchaProvider>
     </Sentry.ErrorBoundary>

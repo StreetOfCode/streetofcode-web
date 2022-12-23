@@ -41,12 +41,70 @@ export default class MyDocument extends Document {
     }
   }
 
+  // Sets CSS theme color variables React is loaded. By default
+  // SSR can only render page with either light or dark theme. This
+  // ensures that the correct theme colors is set quickly after the page
+  // is loaded (without waiting for React). Yes, there's some duplication
+  // here but it's not worth the effort to avoid it (if it's even possible).
+
   render() {
+    const codeToRunOnClient = `
+      (function () {
+        let themeSetting = 'AUTO'
+
+        try {
+          themeSetting =
+            (typeof window !== 'undefined' &&
+              window.localStorage.getItem('themeSetting')) ||
+            'AUTO'
+          // eslint-disable-next-line no-empty
+        } catch (e) {}
+
+        const theme = (function () {
+          if (themeSetting === 'LIGHT') {
+            return themeSetting
+          } else if (themeSetting === 'DARK') {
+            return themeSetting
+          } else {
+            const isDarkTheme =
+              typeof window !== 'undefined' &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches
+            return isDarkTheme ? 'DARK' : 'LIGHT'
+          }
+        })()
+
+        document.body.setAttribute('theme-type', theme)
+        const root = document.documentElement
+
+        if (theme === 'LIGHT') {
+          root.style.setProperty('--initial-theme-type', theme)
+          root.style.setProperty('--color-primary', 'white')
+          root.style.setProperty('--color-secondary', '#212121')
+          root.style.setProperty('--color-accent', '#7E50E6')
+          root.style.setProperty('--color-grey', '#545454')
+          root.style.setProperty('--color-danger', '#CB2041')
+          root.style.setProperty('--color-success', '#4CBF6B')
+          root.style.setProperty('--color-footer-background', '#212121')
+          root.style.setProperty('--color-shadow', 'rgba(0,0,0,0.2)')
+        } else {
+          root.style.setProperty('--initial-theme-type', theme)
+          root.style.setProperty('--color-primary', '#212121')
+          root.style.setProperty('--color-secondary', '#efefef')
+          root.style.setProperty('--color-accent', '#7E50E6')
+          root.style.setProperty('--color-grey', '#545454')
+          root.style.setProperty('--color-danger', '#CB2041')
+          root.style.setProperty('--color-success', '#4CBF6B')
+          root.style.setProperty('--color-footer-background', '#efefef')
+          root.style.setProperty('--color-shadow', 'rgba(255,255,255,0.2)')
+        }
+      })()
+    `
+
     return (
       <Html>
         <Head />
         <body>
-          <script src="/setBodyBackgroundColor.js" async />
+          <script dangerouslySetInnerHTML={{__html: codeToRunOnClient}} />
           <Main />
           <NextScript />
         </body>

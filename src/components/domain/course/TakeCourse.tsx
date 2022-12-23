@@ -220,26 +220,26 @@ const Sidebar = styled.div<{mobileOpen: boolean}>`
   width: 300px;
   align-self: stretch;
   padding: 32px 16px;
-  border-right: solid 1px ${(props) => props.theme.accentColor};
+  border-right: solid 1px var(--color-accent);
   flex-shrink: 0;
 
   overflow-y: scroll;
   max-height: 100%;
   position: absolute;
   z-index: 1;
-  border-bottom: solid 1px ${(props) => props.theme.accentColor};
+  border-bottom: solid 1px var(--color-accent);
 
   ::-webkit-scrollbar {
     width: 4px;
   }
 
   ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 1px 0 1px ${(props) => props.theme.accentColor};
-    box-shadow: inset 1px 0 1px ${(props) => props.theme.accentColor};
+    -webkit-box-shadow: inset 1px 0 1px var(--color-accent);
+    box-shadow: inset 1px 0 1px var(--color-accent);
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: ${(props) => props.theme.accentColor};
+    background-color: var(--color-accent);
   }
 
   @media ${device.M} {
@@ -249,7 +249,7 @@ const Sidebar = styled.div<{mobileOpen: boolean}>`
   @media ${device.S} {
     display: ${(props) => (props.mobileOpen ? 'block' : 'none')};
     width: 300px;
-    background-color: ${(props) => props.theme.primaryColor};
+    background-color: var(--color-primary);
   }
 `
 
@@ -313,7 +313,7 @@ const MobileArrowLeft = styled(AiOutlineArrowLeft)`
     height: 22px;
   }
 
-  color: ${(props) => props.theme.secondaryColor};
+  color: var(--color-secondary);
 `
 
 const MobileArrowRight = styled(AiOutlineArrowRight)`
@@ -325,7 +325,7 @@ const MobileArrowRight = styled(AiOutlineArrowRight)`
     height: 22px;
   }
 
-  color: ${(props) => props.theme.secondaryColor};
+  color: var(--color-secondary);
 `
 
 const ButtonPreviousLecture = styled(Button)`
@@ -352,7 +352,7 @@ const mobileSidebarIconStyle = css`
     }
   }
 
-  color: ${(props) => props.theme.secondaryColor};
+  color: var(--color-secondary);
 `
 
 const MobileSidebarOpenIcon = styled(AiOutlineMenu)`

@@ -81,13 +81,13 @@ const StyledDialog = styled(Dialog)`
 `
 
 const DialogContentWrapper = styled.div`
-  background-color: ${(props) => props.theme.primaryColor};
+  background-color: var(--color-primary);
   min-width: 300px;
   min-height: 100px;
 `
 
 const DialogActionsWrapper = styled(DialogActions)`
-  background-color: ${(props) => props.theme.primaryColor};
+  background-color: var(--color-primary);
 `
 
 export default ConfirmActionDialog

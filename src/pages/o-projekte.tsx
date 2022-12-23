@@ -445,7 +445,7 @@ const StyledUL = styled.ul`
 `
 
 const BorderedImage = styled(Image)`
-  border: ${(props) => `1px solid ${props.theme.secondaryColor}`} !important;
+  border: 1px solid var(--color-secondary) !important;
   border-radius: 12px;
 `
 

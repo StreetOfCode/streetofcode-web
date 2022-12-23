@@ -1,5 +1,4 @@
 import {createGlobalStyle} from 'styled-components'
-import {ThemeType} from './theme/theme'
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -13,10 +12,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
 
-    // !important has to be used so that the background-color set in
-    // _document.tsx is overridden by the current theme color.
-    background-color: ${({theme}: {theme: ThemeType}) =>
-      theme.primaryColor} !important;
+    background-color: var(--color-primary);
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -36,11 +32,11 @@ const GlobalStyles = createGlobalStyle`
   }
 
   li {
-    color: ${(props) => props.theme.secondaryColor};
+    color: var(--color-secondary);
   }
 
   a {
-    color: ${(props) => props.theme.accentColor};
+    color: var(--color-accent);
   }
 
   .grecaptcha-badge {

@@ -239,7 +239,7 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
 const StyledEditIcon = styled(AiOutlineEdit)`
   width: 26px;
   height: 26px;
-  color: ${(props) => props.theme.accentColor};
+  color: var(--color-accent);
   &:hover {
     cursor: pointer;
   }

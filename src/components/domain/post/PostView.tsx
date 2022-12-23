@@ -96,8 +96,7 @@ const redirectLinks = (content: Maybe<string> | undefined) => {
 const PostContent = styled.div`
   max-width: 100%;
 
-  color: ${(props) => props.theme.secondaryColor};
-
+  color: var(--color-secondary);
   p {
     width: 100%;
     margin: 28px 0;

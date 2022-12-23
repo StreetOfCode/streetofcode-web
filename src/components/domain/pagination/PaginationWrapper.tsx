@@ -53,7 +53,7 @@ const StyledReactPaginage = styled(ReactPaginate).attrs({
     border-radius: 18px;
     text-align: center;
     padding: 4px 12px;
-    border: ${(props) => props.theme.secondaryColor} 1px solid;
+    border: var(--color-secondary) 1px solid;
     cursor: pointer;
   }
   li:hover a {
@@ -65,9 +65,9 @@ const StyledReactPaginage = styled(ReactPaginate).attrs({
     border-color: transparent;
   }
   li.active a {
-    background-color: ${(props) => props.theme.accentColor};
+    background-color: var(--color-accent);
     border-color: transparent;
-    color: ${(props) => props.theme.primaryColor};
+    color: var(--color-primary);
     min-width: 32px;
   }
   li.disabled a {

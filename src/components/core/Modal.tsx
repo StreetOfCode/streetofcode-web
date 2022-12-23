@@ -47,11 +47,11 @@ const ContentWrapper = styled(Flex)`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: ${(props) => props.theme.secondaryColor};
-  border: ${(props) => props.theme.accentColor} 2px solid;
+  background-color: var(--color-secondary);
+  border: var(--color-accent) 2px solid;
   border-radius: 22px;
   padding: 24px;
-  box-shadow: ${(props) => `1px 8px 20px ${props.theme.shadowColor}`};
+  box-shadow: 1px 8px 20px var(--color-shadow);
   max-width: 650px;
 
   @media ${device.S} {
@@ -71,7 +71,7 @@ const CloseModalIcon = styled(AiOutlineClose)`
   top: 10px;
   right: 10px;
 
-  color: ${(props) => props.theme.primaryColor};
+  color: var(--color-primary);
 `
 
 export default Modal

@@ -75,45 +75,31 @@ const InputBox = styled.div<{
   padding-bottom: 4px;
   border-radius: 12px;
 
-  border: ${(props) => {
-    if (props.borderColor === 'primary') {
-      return `1px solid ${props.theme.primaryColor}`
-    } else if (props.borderColor === 'secondary') {
-      return `1px solid ${props.theme.secondaryColor}`
-    } else {
-      return `1px solid ${props.theme.accentColor}`
-    }
-  }};
+  border: ${(props) => `1px solid var(--color-${props.borderColor})`};
 
   background-color: ${(props) => {
     if (!props.inputBackgroundColor) {
       return 'unset'
     }
 
-    if (props.inputBackgroundColor === 'primary') {
-      return props.theme.primaryColor
-    } else if (props.inputBackgroundColor === 'secondary') {
-      return props.theme.secondaryColor
-    } else {
-      return props.theme.accentColor
-    }
+    return `var(--color-${props.inputBackgroundColor})`
   }};
 `
 
 const ErrorMessage = styled.span`
-  color: ${(props) => props.theme.dangerColor};
+  color: var(--color-danger);
   font-size: 14px;
 `
 
 const StyledTextField = styled(MuiTextField)<{disabled?: boolean}>`
   .MuiInputBase-input {
     font-family: soleil, sans-serif;
-    color: ${(props) => props.theme.greyColor};
+    color: var(--color-grey);
   }
 
   .MuiFormHelperText-root {
     font-family: soleil, sans-serif;
-    color: ${(props) => props.theme.greyColor};
+    color: var(--color-grey);
     text-align: right;
   }
 
@@ -126,7 +112,7 @@ const StyledTextField = styled(MuiTextField)<{disabled?: boolean}>`
   }
 
   .MuiInputBase-input {
-    color: ${(props) => props.theme.secondaryColor};
+    color: var(--color-secondary);
   }
 `
 

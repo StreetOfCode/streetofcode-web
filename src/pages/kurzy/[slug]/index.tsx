@@ -298,7 +298,7 @@ const CourseInfoItem = styled.div<{clickable?: boolean}>`
   cursor: ${(props) => (props.clickable ? 'pointer' : 'unset')};
 
   svg {
-    color: ${(props) => props.theme.secondaryColor};
+    color: var(--color-secondary);
     width: 28px;
     height: 28px;
   }

@@ -360,6 +360,7 @@ const BackButton = styled(Text)`
 `
 
 const LogoImage = styled(Image)`
-  filter: ${(props) =>
-    props.theme.type === 'LIGHT' ? 'unset' : 'invert(100%)'};
+  [theme-type='DARK'] & {
+    filter: invert(100%);
+  }
 `

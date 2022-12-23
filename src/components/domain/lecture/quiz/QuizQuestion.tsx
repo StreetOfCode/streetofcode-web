@@ -230,15 +230,15 @@ export const QuizQuestion = ({
 
 const AnswerFeedbackText = styled.span`
   display: block;
-  color: ${(props) => props.theme.successColor};
+  color: var(--color-success);
   text-align: center;
 
   font-size: 16px;
 `
 
 const TryAgainButton = styled(Button)`
-  background-color: ${(props) => props.theme.dangerColor};
-  color: ${(props) => props.theme.primaryColor};
+  background-color: var(--color-danger);
+  color: var(--color-primary);
   border: none;
   font-weight: bold;
 `

@@ -137,22 +137,12 @@ const headingStyle = css<{
 }>`
   display: ${(props) => (props.inline ? 'inline' : 'block')};
 
-  color: ${(props) => {
-    if (props.color === 'primary') {
-      return props.theme.primaryColor
-    } else if (props.color === 'secondary') {
-      return props.theme.secondaryColor
-    } else {
-      return props.theme.accentColor
-    }
-  }};
+  color: ${(props) => `var(--color-${props.color})`};
 
   font-weight: ${(props) => (props.normalWeight ? 'normal' : 'bold')};
   text-align: ${(props) => props.align};
   border-bottom: ${(props) =>
-    props.withAccentUnderline
-      ? `4px solid ${props.theme.accentColor}`
-      : 'unset'};
+    props.withAccentUnderline ? `4px solid var(--color-accent)` : 'unset'};
   white-space: ${(props) => (props.noWrap ? 'nowrap' : 'unset')};
   max-width: ${(props) => props.maxWidth && props.maxWidth};
 

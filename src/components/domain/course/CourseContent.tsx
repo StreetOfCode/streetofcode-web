@@ -106,7 +106,7 @@ const AccordionRoot = styled(Accordion.Root)`
 const Header = styled(Accordion.Header)`
   margin: 0;
   padding: 0 4px 4px 4px;
-  border-bottom: 2px solid ${(props) => props.theme.accentColor};
+  border-bottom: 2px solid var(--color-accent);
 
   &:hover {
     cursor: pointer;
@@ -167,15 +167,15 @@ const AccordionContentWrapper = styled(Flex)`
 
   &:hover {
     cursor: pointer;
-    color: ${(props) => props.theme.accentColor};
+    color: var(--color-accent);
 
     ${StyledText} {
-      color: ${(props) => props.theme.accentColor};
+      color: var(--color-accent);
     }
   }
 
   svg {
-    color: ${(props) => props.theme.secondaryColor};
+    color: var(--color-secondary);
   }
 `
 
@@ -190,7 +190,7 @@ const AccordionChevron = styled(BiChevronDown)`
   }
 
   flex-shrink: 0;
-  color: ${(props) => props.theme.secondaryColor};
+  color: var(--color-secondary);
 `
 
 export default CourseContent

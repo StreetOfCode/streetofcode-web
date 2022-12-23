@@ -59,7 +59,7 @@ const BoxWrapper = styled(Box)<{size: string; accentColor?: boolean}>`
 
   .MuiCircularProgress-colorPrimary {
     color: ${(props) =>
-      props.accentColor ? props.theme.accentColor : props.theme.secondaryColor};
+      props.accentColor ? 'var(--color-accent)' : 'var(--color-secondary)'};
   }
 `
 
