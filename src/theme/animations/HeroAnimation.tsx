@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import clsx from 'clsx'
 
 type Props = {
@@ -7,7 +7,13 @@ type Props = {
 }
 
 const HeroAnimation = ({className}: Props) => {
-  const classNames = clsx('animated', className)
+  const [mounted, setMounted] = useState(false)
+  // add hidden styles to prevent double animation at first render
+  const classNames = clsx('animated', className, !mounted && 'hidden')
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <svg

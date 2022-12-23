@@ -17,7 +17,7 @@ import OnboardingProtectionRoute from '../components/OnboardingProtectionRoute'
 import SSRWrapper from '../components/SSRWrapper'
 import {storage} from '../localStorage'
 import NewsletterModal from '../components/NewsletterModal'
-import '../theme/animations/HeroAnimation.css'
+import '../theme/animations/HeroAnimation.scss'
 import 'pure-react-carousel/dist/react-carousel.es.css'
 
 function MyApp({Component, pageProps}: AppProps) {
