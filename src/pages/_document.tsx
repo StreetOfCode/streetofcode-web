@@ -33,6 +33,17 @@ export default class MyDocument extends Document {
           <>
             {initialProps.styles}
             {sheet.getStyleElement()}
+            {/* Without this website with disabled javascript would have no colors*/}
+            <style
+              dangerouslySetInnerHTML={{
+                __html: `html {
+              --color-primary: white;
+              --color-secondary: #212121;
+              --color-accent: #7E50E6;
+                }
+            `,
+              }}
+            />
           </>
         ),
       }
@@ -46,7 +57,6 @@ export default class MyDocument extends Document {
   // ensures that the correct theme colors is set quickly after the page
   // is loaded (without waiting for React). Yes, there's some duplication
   // here but it's not worth the effort to avoid it (if it's even possible).
-
   render() {
     const codeToRunOnClient = `
       (function () {
