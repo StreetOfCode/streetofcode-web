@@ -67,7 +67,6 @@ export const QuizQuestion = ({
       previouslySelectedAnswers
         .filter((a) => a.question.id === question.id)
         .map((a) => a.answer)
-        .flat()
         .map((a) => {
           return a.id
         }),
