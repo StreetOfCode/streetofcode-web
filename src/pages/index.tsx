@@ -34,6 +34,7 @@ import {
   CATEGORY_NAME as PODCAST_CATEGORY_NAME,
   COUNT_IN_SLIDER as PODCAST_COUNT_IN_SLIDER,
 } from '../components/domain/post/podcast/podcast-constants'
+import {usImage} from '../images'
 
 interface Props {
   courses: CourseOverview[]
@@ -248,7 +249,7 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
             >
               <UsImage>
                 <StyledImage
-                  src="/images/P1200649-scaled.jpg"
+                  src={usImage}
                   alt="Street of Code"
                   layout="fill"
                   priority
