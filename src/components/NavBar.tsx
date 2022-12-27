@@ -225,13 +225,32 @@ const MobileMenuFlex = styled(Flex)<{open: boolean}>`
   }
 `
 const LogoWrapper = styled.div`
-  margin-left: -24px;
   position: relative;
   aspect-ratio: 3 / 1;
   height: 60px;
 
   &:hover {
     cursor: pointer;
+  }
+
+  @media ${device.XL} {
+    margin-left: -48px;
+  }
+
+  @media ${device.L} {
+    margin-left: -48px;
+  }
+
+  @media ${device.M} {
+    margin-left: 0px;
+  }
+
+  @media ${device.S} {
+    margin-left: 0;
+  }
+
+  @media ${device.XS} {
+    margin-left: -16px;
   }
 `
 
