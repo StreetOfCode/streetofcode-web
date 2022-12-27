@@ -5,9 +5,9 @@ import {useGetCourseOverview} from '../../../components/api/courseOverview'
 import {QueryGuard} from '../../../QueryGuard'
 import {useRouter} from 'next/router'
 import {useAuth} from '../../../AuthUserContext'
-import TakeCourse from '../../../components/domain/course/TakeCourse'
 import {CourseOverview} from '../../../types'
 import Loading from '../../../components/Loading'
+import dynamic from 'next/dynamic'
 
 type Props = {
   courseSlug: string
@@ -24,6 +24,13 @@ const Header = ({course}: {course: CourseOverview}) => {
     </Head>
   )
 }
+
+const LazyTakeCourse = dynamic(
+  () => import('../../../components/domain/course/TakeCourse'),
+  {
+    ssr: false,
+  },
+)
 
 const ResourcesPage: NextPage<Props> = ({
   courseSlug,
@@ -50,7 +57,7 @@ const ResourcesPage: NextPage<Props> = ({
       {(courseOverview) => (
         <>
           <Header course={courseOverview} />
-          <TakeCourse
+          <LazyTakeCourse
             resourcesMode
             courseOverview={courseOverview}
             chapterId={chapterId}
