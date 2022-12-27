@@ -76,29 +76,30 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
         <GradientWrapper>
           <NavBar />
           <Box>
-            <HeroSection gap="64px" justifyContent="space-between">
+            <HeroSection gap="32px" justifyContent="space-between">
               <HeroSectionTextFles
                 direction="column"
-                gap="32px"
+                gap="48px"
                 alignItems="flex-start"
                 alignSelf="stretch"
               >
                 <div>
                   <Heading variant="h1" noWrap>
-                    Nauč sa s nami
+                    Naučíme ťa
                   </Heading>
                   <Heading variant="h1" color="accent">
                     programovať
                   </Heading>
                 </div>
-                <Heading variant="h4">
-                  Pomôžeme ti na tvojej ceste začínajúceho programátora či
-                  začínajúcej programátorky
-                </Heading>
                 <NextLink href={'/kurzy'}>
-                  <Button variant="accent" size="very-large" uppercase bold>
+                  <HeroActionButton
+                    variant="accent"
+                    size="very-large"
+                    uppercase
+                    bold
+                  >
                     online kurzy
-                  </Button>
+                  </HeroActionButton>
                 </NextLink>
               </HeroSectionTextFles>
               <AnimationWrapper>
@@ -340,14 +341,19 @@ const PodcastSocialsFlex = styled(Flex)`
 `
 
 const HeroSection = styled(Flex)`
-  padding-top: 3em;
-  padding-bottom: 1em;
+  padding-top: 36px;
+  padding-bottom: 12px;
+
+  @media ${device.S} {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 `
 
 const AnimationWrapper = styled.div`
   width: 100%;
   min-width: 150px;
-  padding-top: 24px;
+  margin-top: -100px;
   svg {
     overflow: visible;
   }
@@ -435,6 +441,16 @@ const StyledImage = styled(Image)`
 const AboutUsContentWrapper = styled(Flex)`
   @media ${device.M} {
     flex-direction: column;
+  }
+`
+
+const HeroActionButton = styled(Button)`
+  @media ${device.M} {
+    font-size: 20px;
+  }
+
+  @media ${device.XS} {
+    font-size: 16px;
   }
 `
 
