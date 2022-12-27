@@ -36,15 +36,14 @@ const LectureDetail = ({
 
   const handleVideoEnded = async () => {
     const chapter = courseProgressOverview.chapters.find((chapter) =>
-      chapter.lectures.find((lecture) => lecture.id === Number(lectureId)),
+      chapter.lectures.find((lecture) => lecture.id === lectureId),
     )
 
     const lecture =
-      chapter &&
-      chapter.lectures.find((lecture) => lecture.id === Number(lectureId))
+      chapter && chapter.lectures.find((lecture) => lecture.id === lectureId)
 
     if (lecture && !lecture.viewed && lecture.lectureType === 'VIDEO') {
-      await updateProgressLecture.mutateAsync(Number(lectureId))
+      await updateProgressLecture.mutateAsync(lectureId)
     }
   }
 

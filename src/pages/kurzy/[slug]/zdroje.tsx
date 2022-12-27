@@ -11,8 +11,8 @@ import Loading from '../../../components/Loading'
 
 type Props = {
   courseSlug: string
-  chapterId: string
-  lectureId: string
+  chapterId: number
+  lectureId: number
 }
 
 const Header = ({course}: {course: CourseOverview}) => {
@@ -65,8 +65,8 @@ const ResourcesPage: NextPage<Props> = ({
 // eslint-disable-next-line require-await
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const courseSlug = context?.params?.slug as string
-  const chapterId = context?.query?.chapterId as string
-  const lectureId = context?.query?.lectureId as string
+  const chapterId = Number(context?.query?.chapterId as string)
+  const lectureId = Number(context?.query?.lectureId as string)
 
   return {
     props: {
