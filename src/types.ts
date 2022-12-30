@@ -218,7 +218,7 @@ export interface QuizQuestionUserAnswer {
   id: number
   question: QuizQuestion
   isCorrect: boolean
-  answer: QuizQuestionAnswer[]
+  answer: QuizQuestionAnswer
 }
 
 export interface QuizQuestionUserAnswerRequest {

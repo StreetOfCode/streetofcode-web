@@ -72,8 +72,8 @@ export interface GetPrevAndNextUrlResponse {
 // creates links for previous and next lecture url based on current lecture and chapter id
 export const getPrevAndNextUrl = (
   courseOverview: CourseOverview,
-  lectureId?: string,
-  chapterId?: string,
+  lectureId?: number,
+  chapterId?: number,
 ): GetPrevAndNextUrlResponse | undefined => {
   if (!lectureId || !chapterId) return undefined
 
@@ -103,7 +103,7 @@ export const getPrevAndNextUrl = (
     if (next.chapter) break
 
     for (const lecture of chapter.lectures) {
-      if (Number(lectureId) === lecture.id) {
+      if (lectureId === lecture.id) {
         found = true
         current = {chapter, lecture}
       } else if (found) {

@@ -22,10 +22,10 @@ import {useRemoveUserAnswers} from '../../api/quizQuestionUserAnswers'
 type Props = {
   className?: string
   courseProgressOverview: CourseProgressOverview
-  courseId: string
+  courseId: number
   courseSlug: string
-  chapterId: string
-  lectureId: string
+  chapterId: number
+  lectureId: number
   hasResources?: boolean
 } & HTMLAttributes<HTMLElement>
 
@@ -40,25 +40,24 @@ const CourseSidebar = ({
   ...props
 }: Props) => {
   const router = useRouter()
-  const resetLecture = useResetLecture(Number(courseId), courseSlug)
+  const resetLecture = useResetLecture(courseId, courseSlug)
   const resetQuiz = useRemoveUserAnswers()
 
-  const updateProgressLecture = useUpdateProgressLecture(Number(courseId))
+  const updateProgressLecture = useUpdateProgressLecture(courseId)
 
   useEffect(() => {
     const maybeUpdateProgressLecture = async () => {
       const chapter = courseProgressOverview.chapters.find(
-        (chapter) => chapter.id === Number(chapterId),
+        (chapter) => chapter.id === chapterId,
       )
       const lecture =
-        chapter &&
-        chapter.lectures.find((lecture) => lecture.id === Number(lectureId))
+        chapter && chapter.lectures.find((lecture) => lecture.id === lectureId)
 
       if (lecture && !lecture.viewed && lecture.lectureType === 'TEXT') {
         // if lecture is not already viewed and contains only TEXT
         // (video type lecture automatically  update their progress at the end of the video)
         // (quiz type lecture automatically update their progress when all questions are answered correctly)
-        await updateProgressLecture.mutateAsync(Number(lectureId))
+        await updateProgressLecture.mutateAsync(lectureId)
       }
     }
 
@@ -142,7 +141,7 @@ const CourseSidebar = ({
         <AccordionRoot
           type="multiple"
           defaultValue={courseProgressOverview.chapters
-            .filter((chapter) => chapter.id === Number(chapterId))
+            .filter((chapter) => chapter.id === chapterId)
             .map((chapter) => chapter.id.toString())}
         >
           {courseProgressOverview.chapters.map((chapter) => (
@@ -166,8 +165,7 @@ const CourseSidebar = ({
                       handleLectureOnClick(e, chapter.id, lecture.id)
                     }
                     selected={
-                      lectureId !== undefined &&
-                      lecture.id === Number(lectureId)
+                      lectureId !== undefined && lecture.id === lectureId
                     }
                     justifyContent="space-between"
                   >

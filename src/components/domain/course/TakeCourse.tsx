@@ -24,8 +24,8 @@ import BackLink from '../../core/BackLink'
 type Props = {
   resourcesMode: boolean
   courseOverview: CourseOverview
-  chapterId: string
-  lectureId: string
+  chapterId: number
+  lectureId: number
 }
 
 const TakeCourse = ({
@@ -36,7 +36,7 @@ const TakeCourse = ({
 }: Props) => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
   const getCourseProgressOverview = useGetCourseProgressOverview(
-    Number(courseOverview.id),
+    courseOverview.id,
   )
   const sidebarRef = useRef<HTMLDivElement>(null)
 
@@ -132,8 +132,8 @@ const TakeCourse = ({
           )}
         </ContentNavbarFlex>
         <LectureDetail
-          courseId={Number(courseOverview.id)}
-          lectureId={Number(lectureId)}
+          courseId={courseOverview.id}
+          lectureId={lectureId}
           courseProgressOverview={courseProgressOverview}
           nextLectureUrl={nextLectureUrl}
           nextLectureName={nextLectureName}
@@ -175,7 +175,7 @@ const TakeCourse = ({
             </MobileTopWrapper>
             <CourseSidebar
               courseProgressOverview={courseProgressOverview}
-              courseId={courseOverview.id.toString()}
+              courseId={courseOverview.id}
               courseSlug={courseOverview.slug}
               chapterId={chapterId}
               lectureId={lectureId}

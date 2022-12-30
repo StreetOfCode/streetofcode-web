@@ -60,20 +60,20 @@ const PaginatedPostsPage: NextPage<Props> = ({
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const pageNumber = context?.params?.pageNumber as string
+  const pageNumber = Number(context?.params?.pageNumber as string)
 
   const posts = await getAllPosts(CATEGORY_NAME)
 
   const totalPages = Math.ceil(posts.length / PAGINATION_BY)
 
-  const currentPageindexStart = (Number(pageNumber) - 1) * PAGINATION_BY
+  const currentPageindexStart = pageNumber - 1 * PAGINATION_BY
   const postsInPage = posts.slice(
     currentPageindexStart,
     currentPageindexStart + PAGINATION_BY,
   )
 
   return {
-    props: {posts: postsInPage, totalPages, currentPage: Number(pageNumber)},
+    props: {posts: postsInPage, totalPages, currentPage: pageNumber},
     revalidate: 600,
   }
 }
