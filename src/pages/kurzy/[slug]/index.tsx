@@ -11,7 +11,6 @@ import Text from '../../../components/core/Text'
 import Flex from '../../../components/core/Flex'
 import BackLink from '../../../components/core/BackLink'
 import * as Utils from '../../../utils'
-import MarkdownView from '../../../components/core/MarkdownView'
 import {
   AiOutlineClockCircle,
   AiOutlineQuestionCircle,
@@ -33,6 +32,7 @@ import NextLink from '../../../components/core/NextLink'
 import Loading from '../../../components/Loading'
 import {device} from '../../../theme/device'
 import VideoWrapper from '../../../components/domain/video/VideoWrapper'
+import dynamic from 'next/dynamic'
 
 type Props = {
   slug: string
@@ -60,6 +60,13 @@ const Header = ({course}: {course: CourseOverview}) => {
     </Head>
   )
 }
+
+const LazyCourseDescription = dynamic(
+  () => import('../../../components/core/MarkdownView'),
+  {
+    ssr: false,
+  },
+)
 
 const CourseDetailPage: NextPage<Props> = ({slug, courseOverview}: Props) => {
   const {user} = useAuth()
@@ -166,7 +173,7 @@ const CourseDetailContent = ({
             {courseOverview.name}
           </Heading>
           <Text size="large">{courseOverview.shortDescription}</Text>
-          <MarkdownView children={courseOverview.longDescription} />
+          <LazyCourseDescription children={courseOverview.longDescription} />
           <Heading variant="h3" normalWeight>
             Obsah
           </Heading>
