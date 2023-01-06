@@ -1,5 +1,4 @@
 import {NextPage} from 'next'
-import Head from 'next/head'
 import React, {ChangeEvent, useState} from 'react'
 import {useGoogleReCaptcha} from 'react-google-recaptcha-v3'
 import styled from 'styled-components'
@@ -16,19 +15,11 @@ import {device} from '../theme/device'
 import {SendFeedbackRequest} from '../types'
 import {emailRegex} from '../utils'
 import {useAuth} from '../AuthUserContext'
+import Head from '../components/Head'
 
 const SUCCESSFULLY_SENT_EMAIL_TEXT =
   'Email bol úspešne poslaný, ďakujeme pekne.'
 const FAILED_SENT_EMAIL_TEXT = 'Email sa nepodarilo odoslať'
-
-const Header = () => {
-  return (
-    <Head>
-      <title>Street of Code | Feedback</title>
-      <meta name="description" content="Chceme tvoj feedback" />
-    </Head>
-  )
-}
 
 const FeedbackPage: NextPage = () => {
   const {user} = useAuth()
@@ -119,7 +110,11 @@ const FeedbackPage: NextPage = () => {
 
   return (
     <>
-      <Header />
+      <Head
+        title="Feedback | Street of Code"
+        description="Chceme tvoj feedback!"
+        url="https://streetofcode.sk/feedback"
+      />
       <NavBar />
       <PageContentWrapper>
         <WrapperFlex

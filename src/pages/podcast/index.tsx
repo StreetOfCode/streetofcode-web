@@ -1,5 +1,4 @@
 import React from 'react'
-import Head from 'next/head'
 import {NextPage} from 'next'
 import PageContentWrapper from '../../components/PageContentWrapper'
 import {getAllPosts} from '../../wp/api'
@@ -7,39 +6,15 @@ import {Post} from '../../wp/types'
 import NavBar from '../../components/NavBar'
 import {
   CATEGORY_NAME,
-  EMPTY_PODCAST_IMAGE_PLACEHOLDER_URL,
   PAGINATION_BY,
 } from '../../components/domain/post/podcast/podcast-constants'
 import {useRouter} from 'next/router'
 import PaginationWrapper from '../../components/domain/pagination/PaginationWrapper'
 import Podcasts from '../../components/domain/post/podcast/Podcasts'
+import Head from '../../components/Head'
 
 interface Props {
   posts: Post[]
-}
-
-const Header = () => {
-  return (
-    <Head>
-      <title>Podcast | Street of Code</title>
-      <meta
-        name="description"
-        content="Podcast o programovaní, softvérovom inžinierstve a niekedy aj o živote ako takom."
-      />
-      <meta property="og:locale" content="sk_SK" />
-      <meta property="og:title" content="Podcast | Street of Code" />
-      <meta property="og:type" content="website" />
-      <meta
-        property="og:description"
-        content="Podcast o programovaní, softvérovom inžinierstve a niekedy aj o živote ako takom."
-      />
-      <meta property="og:image" content={EMPTY_PODCAST_IMAGE_PLACEHOLDER_URL} />
-      <meta property="og:image:alt" content="Thumbnail podcastu" />
-      <meta property="og:site_name" content="Street of Code" />
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:site" content="@StreetofCode1" />
-    </Head>
-  )
 }
 
 const PodcastsPage: NextPage<Props> = ({posts}) => {
@@ -54,7 +29,11 @@ const PodcastsPage: NextPage<Props> = ({posts}) => {
 
   return (
     <>
-      <Header />
+      <Head
+        title="Podcast | Street of Code"
+        description="Podcast o programovaní, softvérovom inžinierstve a niekedy aj o živote ako takom."
+        url="https://streetofcode.sk/podcast"
+      />
       <NavBar />
       <PageContentWrapper>
         <Podcasts posts={firstPagePosts} />

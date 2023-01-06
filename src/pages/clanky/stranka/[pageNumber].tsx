@@ -1,5 +1,4 @@
 import React from 'react'
-import Head from 'next/head'
 import {GetStaticProps, NextPage} from 'next'
 import PageContentWrapper from '../../../components/PageContentWrapper'
 import {getAllPosts} from '../../../wp/api'
@@ -12,20 +11,12 @@ import {
 import {useRouter} from 'next/router'
 import PaginationWrapper from '../../../components/domain/pagination/PaginationWrapper'
 import BlogPosts from '../../../components/domain/post/blog/BlogPosts'
+import Head from '../../../components/Head'
 
 interface Props {
   posts: Post[]
   currentPage: number
   totalPages: number
-}
-
-const Header = () => {
-  return (
-    <Head>
-      <title>Street of Code | Články</title>
-      <meta name="description" content="Naučíme ťa programovať" />
-    </Head>
-  )
 }
 
 const PaginatedPostsPage: NextPage<Props> = ({
@@ -45,7 +36,11 @@ const PaginatedPostsPage: NextPage<Props> = ({
 
   return (
     <>
-      <Header />
+      <Head
+        title="Články | Street of Code"
+        description="Píšeme o všeličom. Tutorály, rozhovory, blogy."
+        url={`https://streetofcode.sk/clanky/stranka/${currentPage + 1}`}
+      />
       <NavBar />
       <PageContentWrapper>
         <BlogPosts posts={posts} />
