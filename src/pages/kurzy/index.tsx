@@ -1,5 +1,4 @@
 import React from 'react'
-import Head from 'next/head'
 import styled from 'styled-components'
 import {NextPage} from 'next'
 import Flex from '../../components/core/Flex'
@@ -15,36 +14,23 @@ import {useGetCourses} from '../../components/api/courses'
 import {QueryGuard} from '../../QueryGuard'
 import VoteNextCourse from '../../components/domain/vote/VoteNextCourse'
 import {device} from '../../theme/device'
+import Head from '../../components/Head'
 
 interface Props {
   courses: CourseOverview[]
 }
 
-const Header = () => {
-  return (
-    <Head>
-      <title>Kurzy | Street of Code</title>
-      <meta name="description" content="Nauč sa s nami programovať!" />
-      <meta property="og:locale" content="sk_SK" />
-      <meta property="og:title" content="Kurzy | Street of Code" />
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://www.streetofcode.sk/kurzy" />
-      <meta property="og:description" content="Nauč sa s nami programovať!" />
-      <meta
-        property="og:image"
-        content="https://wp.streetofcode.sk/wp-content/uploads/2022/10/purple-logo-small.jpg"
-      />
-      <meta property="og:image:alt" content="Logo Street of Code" />
-      <meta property="og:site_name" content="Street of Code" />
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:site" content="@StreetofCode1" />
-    </Head>
-  )
-}
-
 const CoursesPage: NextPage<Props> = ({courses}) => {
   const {user} = useAuth()
   const getCoursesQuery = useGetCourses(!!user)
+
+  const _Head = () => (
+    <Head
+      title="Kurzy | Street of Code"
+      description="Nauč sa s nami programovať!"
+      url="https://www.streetofcode.sk/kurzy"
+    />
+  )
 
   if (user) {
     return (
@@ -52,7 +38,7 @@ const CoursesPage: NextPage<Props> = ({courses}) => {
         {(courses: CourseOverview[]) => {
           return (
             <>
-              <Header />
+              <_Head />
               <NavBar />
               <CoursesPageContent courses={courses} />
             </>
@@ -63,7 +49,7 @@ const CoursesPage: NextPage<Props> = ({courses}) => {
   } else {
     return (
       <>
-        <Header />
+        <_Head />
         <NavBar />
         <CoursesPageContent courses={courses} />
       </>

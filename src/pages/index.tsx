@@ -1,6 +1,5 @@
 import React, {useRef} from 'react'
 import {NextPage} from 'next'
-import Head from 'next/head'
 import Image from 'next/image'
 import styled from 'styled-components'
 import Flex from '../components/core/Flex'
@@ -35,32 +34,11 @@ import {
   COUNT_IN_SLIDER as PODCAST_COUNT_IN_SLIDER,
 } from '../components/domain/post/podcast/podcast-constants'
 import {usImage} from '../images'
+import Head from '../components/Head'
 
 interface Props {
   courses: CourseOverview[]
   podcasts: Post[]
-}
-
-const Header = () => {
-  return (
-    <Head>
-      <title>Street of Code</title>
-      <meta name="description" content="Nauč sa s nami programovať!" />
-      <meta property="og:locale" content="sk_SK" />
-      <meta property="og:title" content="Street of Code" />
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://www.streetofcode.sk" />
-      <meta property="og:description" content="Nauč sa s nami programovať!" />
-      <meta
-        property="og:image"
-        content="https://wp.streetofcode.sk/wp-content/uploads/2022/10/purple-logo-small.jpg"
-      />
-      <meta property="og:image:alt" content="Logo Street of Code" />
-      <meta property="og:site_name" content="Street of Code" />
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:site" content="@StreetofCode1" />
-    </Head>
-  )
 }
 
 const Home: NextPage<Props> = ({courses, podcasts}) => {
@@ -72,7 +50,11 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
 
   return (
     <>
-      <Header />
+      <Head
+        title="Street of Code"
+        description="Nauč sa s nami programovať!"
+        url="https://streetofcode.sk"
+      />
       <Wrapper>
         <GradientWrapper>
           <NavBar />

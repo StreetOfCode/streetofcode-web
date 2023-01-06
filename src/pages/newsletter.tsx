@@ -1,5 +1,4 @@
 import {NextPage} from 'next'
-import Head from 'next/head'
 import React, {ChangeEvent, useState} from 'react'
 import NavBar from '../components/NavBar'
 import PageContentWrapper from '../components/PageContentWrapper'
@@ -14,15 +13,7 @@ import {emailRegex} from '../utils'
 import {useGoogleReCaptcha} from 'react-google-recaptcha-v3'
 import {addToNewsletter, authPost} from '../api'
 import {AddToNewsletterRequest} from '../types'
-
-const Header = () => {
-  return (
-    <Head>
-      <title>Street of Code | Newsletter</title>
-      <meta name="description" content="Prihlás sa do nášho newslettra" />
-    </Head>
-  )
-}
+import Head from '../components/Head'
 
 const NewsletterPage: NextPage = () => {
   const {executeRecaptcha} = useGoogleReCaptcha()
@@ -83,7 +74,11 @@ const NewsletterPage: NextPage = () => {
 
   return (
     <>
-      <Header />
+      <Head
+        title="Newsletter | Street of Code"
+        description="Prihlás sa na náš newsletter!"
+        url="https://streetofcode.sk/newsletter"
+      />
       <NavBar />
       <PageContentWrapper>
         {!newsletterSubmittedSuccess && !newsletterSubmitedFailure && (

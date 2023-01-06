@@ -1,28 +1,17 @@
 import React from 'react'
-import Head from 'next/head'
 import {GetServerSideProps, NextPage} from 'next'
 import {useGetCourseOverview} from '../../../../../../components/api/courseOverview'
 import {QueryGuard} from '../../../../../../QueryGuard'
 import {useRouter} from 'next/router'
 import {useAuth} from '../../../../../../AuthUserContext'
-import {CourseOverview} from '../../../../../../types'
 import Loading from '../../../../../../components/Loading'
 import dynamic from 'next/dynamic'
+import Head from '../../../../../../components/Head'
 
 type Props = {
   courseSlug: string
   chapterId: number
   lectureId: number
-}
-
-const Header = ({course}: {course: CourseOverview}) => {
-  return (
-    <Head>
-      <title>{course.name}</title>
-      <meta name="description" content={course.shortDescription} />
-      <meta name="robots" content="noindex" />
-    </Head>
-  )
 }
 
 const LazyTakeCourse = dynamic(
@@ -57,7 +46,13 @@ const TakeCoursePage: NextPage<Props> = ({
     <QueryGuard {...getCourseOverview}>
       {(courseOverview) => (
         <>
-          <Header course={courseOverview} />
+          <Head
+            title={courseOverview.name}
+            description={courseOverview.shortDescription}
+            url={`https://streetofcode.sk/kurzy/${courseOverview.slug}`}
+            imageUrl={courseOverview.iconUrl}
+            noIndex
+          />
           <LazyTakeCourse
             resourcesMode={false}
             courseOverview={courseOverview}

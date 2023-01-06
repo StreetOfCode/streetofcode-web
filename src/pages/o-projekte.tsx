@@ -1,5 +1,4 @@
 import React, {useRef} from 'react'
-import Head from 'next/head'
 import Image from 'next/image'
 import {NextPage} from 'next'
 import PageContentWrapper from '../components/PageContentWrapper'
@@ -23,28 +22,7 @@ import {
   Jakub,
   ProjectMockup,
 } from '../images'
-
-const Header = () => {
-  return (
-    <Head>
-      <title>O projekte | Street of Code</title>
-      <meta name="description" content="Nauč sa s nami programovať!" />
-      <meta property="og:locale" content="sk_SK" />
-      <meta property="og:title" content="O Projekte | Street of Code" />
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://www.streetofcode.sk/kurzy" />
-      <meta property="og:description" content="Nauč sa s nami programovať!" />
-      <meta
-        property="og:image"
-        content="https://wp.streetofcode.sk/wp-content/uploads/2022/10/purple-logo-small.jpg"
-      />
-      <meta property="og:image:alt" content="Logo Street of Code" />
-      <meta property="og:site_name" content="Street of Code" />
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:site" content="@StreetofCode1" />
-    </Head>
-  )
-}
+import Head from '../components/Head'
 
 // Links
 const UcimeSaOOP =
@@ -68,7 +46,11 @@ const ProjectPage: NextPage = () => {
 
   return (
     <>
-      <Header />
+      <Head
+        title="O projekte | Street of Code"
+        description="Nauč sa s nami programovať!"
+        url="https://streetofcode.sk/o-projekte"
+      />
       <NavBar />
       <StyledPagedContentWrapper>
         <Flex direction="column" gap="48px">

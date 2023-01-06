@@ -1,5 +1,4 @@
 import React from 'react'
-import Head from 'next/head'
 import Image from 'next/image'
 import {GetStaticProps, NextPage} from 'next'
 import * as Api from '../../../api'
@@ -33,32 +32,11 @@ import Loading from '../../../components/Loading'
 import {device} from '../../../theme/device'
 import VideoWrapper from '../../../components/domain/video/VideoWrapper'
 import dynamic from 'next/dynamic'
+import Head from '../../../components/Head'
 
 type Props = {
   slug: string
   courseOverview: null | CourseOverview
-}
-
-const Header = ({course}: {course: CourseOverview}) => {
-  return (
-    <Head>
-      <title>{`${course.name} | Street of Code`}</title>
-      <meta name="description" content={course.shortDescription} />
-      <meta property="og:locale" content="sk_SK" />
-      <meta property="og:title" content={`${course.name} | Street of Code`} />
-      <meta property="og:type" content="website" />
-      <meta property="og:description" content={course.shortDescription} />
-      <meta
-        property="og:url"
-        content={`https://streetofcode.sk/kurzy/${course.slug}`}
-      />
-      <meta property="og:image" content={course.iconUrl} />
-      <meta property="og:image:alt" content="Obrázok kurzu" />
-      <meta property="og:site_name" content="Street of Code" />
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:site" content="@StreetofCode1" />
-    </Head>
-  )
 }
 
 const LazyCourseDescription = dynamic(
@@ -78,7 +56,12 @@ const CourseDetailPage: NextPage<Props> = ({slug, courseOverview}: Props) => {
         {(courseOverview: CourseOverview) => {
           return (
             <>
-              <Header course={courseOverview} />
+              <Head
+                title={`${courseOverview.name} | Street of Code`}
+                description={courseOverview.shortDescription}
+                url={`https://streetofcode.sk/kurzy/${courseOverview.slug}`}
+                imageUrl={courseOverview.iconUrl}
+              />
               <NavBar />
               <CourseDetailContent courseOverview={courseOverview} />
             </>
@@ -92,7 +75,12 @@ const CourseDetailPage: NextPage<Props> = ({slug, courseOverview}: Props) => {
   } else {
     return (
       <>
-        <Header course={courseOverview} />
+        <Head
+          title={`${courseOverview.name} | Street of Code`}
+          description={courseOverview.shortDescription}
+          url={`https://streetofcode.sk/kurzy/${courseOverview.slug}`}
+          imageUrl={courseOverview.iconUrl}
+        />
         <NavBar />
         <CourseDetailContent courseOverview={courseOverview} />
       </>

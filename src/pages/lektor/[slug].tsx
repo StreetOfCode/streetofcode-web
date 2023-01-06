@@ -1,5 +1,4 @@
 import React from 'react'
-import Head from 'next/head'
 import styled from 'styled-components'
 import {AuthorOverview} from '../../types'
 import Text from '../../components/core/Text'
@@ -16,21 +15,10 @@ import {useRouter} from 'next/router'
 import NavBar from '../../components/NavBar'
 import {QueryGuard} from '../../QueryGuard'
 import {device} from '../../theme/device'
+import Head from '../../components/Head'
 
 type Props = {
   authorOverview: AuthorOverview
-}
-
-const Header = ({author}: {author: AuthorOverview}) => {
-  return (
-    <Head>
-      <title>{author.name}</title>
-      <meta
-        name="description"
-        content={`Street of Code lektor ${author.name}`}
-      />
-    </Head>
-  )
 }
 
 const AuthorPage: NextPage<Props> = ({authorOverview}: Props) => {
@@ -46,7 +34,12 @@ const AuthorPage: NextPage<Props> = ({authorOverview}: Props) => {
         {(authorOverview) => {
           return (
             <>
-              <Header author={authorOverview} />
+              <Head
+                title={`Lektor ${authorOverview.name} | Street of Code`}
+                description={`Street of Code lektor ${authorOverview.name}`}
+                url={`https://www.streetofcode.sk/lektor/${authorOverview.slug}`}
+                imageUrl={authorOverview.imageUrl}
+              />
               <NavBar />
               <AuthorPageContent authorOverview={authorOverview} />
             </>
@@ -57,7 +50,12 @@ const AuthorPage: NextPage<Props> = ({authorOverview}: Props) => {
   } else {
     return (
       <>
-        <Header author={authorOverview} />
+        <Head
+          title={`Lektor ${authorOverview.name} | Street of Code`}
+          description={`Street of Code lektor ${authorOverview.name}`}
+          url={`https://www.streetofcode.sk/lektor/${authorOverview.slug}`}
+          imageUrl={authorOverview.imageUrl}
+        />
         <NavBar />
         <AuthorPageContent authorOverview={authorOverview} />
       </>

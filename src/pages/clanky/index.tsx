@@ -1,5 +1,4 @@
 import React from 'react'
-import Head from 'next/head'
 import {NextPage} from 'next'
 import PageContentWrapper from '../../components/PageContentWrapper'
 import {getAllPosts} from '../../wp/api'
@@ -7,39 +6,15 @@ import {Post} from '../../wp/types'
 import NavBar from '../../components/NavBar'
 import {
   CATEGORY_NAME,
-  EMPTY_BLOG_IMAGE_PLACEHOLDER_URL,
   PAGINATION_BY,
 } from '../../components/domain/post/blog/clanky-constants'
 import {useRouter} from 'next/router'
 import PaginationWrapper from '../../components/domain/pagination/PaginationWrapper'
 import BlogPosts from '../../components/domain/post/blog/BlogPosts'
+import Head from '../../components/Head'
 
 interface Props {
   posts: Post[]
-}
-
-const Header = () => {
-  return (
-    <Head>
-      <title>Články | Street of Code</title>
-      <meta
-        name="description"
-        content="Píšeme o všeličom. Tutorály, rozhovory, blogy."
-      />
-      <meta property="og:locale" content="sk_SK" />
-      <meta property="og:title" content="Podcast | Street of Code" />
-      <meta property="og:type" content="website" />
-      <meta
-        property="og:description"
-        content="Píšeme o všeličom. Tutorály, rozhovory, blogy."
-      />
-      <meta property="og:image" content={EMPTY_BLOG_IMAGE_PLACEHOLDER_URL} />
-      <meta property="og:image:alt" content="Street of Code logo" />
-      <meta property="og:site_name" content="Street of Code" />
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:site" content="@StreetofCode1" />
-    </Head>
-  )
 }
 
 const PostsPage: NextPage<Props> = ({posts}) => {
@@ -54,7 +29,11 @@ const PostsPage: NextPage<Props> = ({posts}) => {
 
   return (
     <>
-      <Header />
+      <Head
+        title="Články | Street of Code"
+        description="Píšeme o všeličom. Tutorály, rozhovory, blogy."
+        url="https://streetofcode.sk/clanky"
+      />
       <NavBar />
       <PageContentWrapper>
         <BlogPosts posts={firstPagePosts} />
