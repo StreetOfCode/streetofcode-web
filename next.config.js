@@ -49,6 +49,22 @@ const nextConfig = {
         destination: 'https://twitter.com/StreetofCode1',
         permanent: true,
       },
+      {
+        source: '/youtube',
+        destination: 'https://www.youtube.com/channel/UCzt3kHgfLwGGPcTk6jP1_Cg',
+        permanent: true,
+      },
+      {
+        source: '/github',
+        destination: 'https://github.com/StreetOfCode',
+        permanent: true,
+      },
+      {
+        source: '/spotify',
+        destination:
+          'https://open.spotify.com/show/1nBhViArymuLrxuU4XkwRP?si=3w6MXuQ-SPKpffrsQd3rKg&nd=1',
+        permanent: true,
+      },
     ]
   },
   webpack(config) {
