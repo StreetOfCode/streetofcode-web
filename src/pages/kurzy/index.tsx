@@ -11,7 +11,7 @@ import PageContentWrapper from '../../components/PageContentWrapper'
 import NavBar from '../../components/NavBar'
 import {useAuth} from '../../AuthUserContext'
 import {useGetCourses} from '../../components/api/courses'
-import {QueryGuard} from '../../QueryGuard'
+import {UserAndQueryGuard} from '../../QueryGuard'
 import VoteNextCourse from '../../components/domain/vote/VoteNextCourse'
 import {device} from '../../theme/device'
 import Head from '../../components/Head'
@@ -25,37 +25,23 @@ const CoursesPage: NextPage<Props> = ({courses}) => {
   const {user} = useAuth()
   const getCoursesQuery = useGetCourses(!!user)
 
-  const _Head = () => (
-    <Head
-      title="Kurzy | Street of Code"
-      description="Nauč sa s nami programovať!"
-      url={prefixWithHost(routes.kurzy.index)}
-    />
+  return (
+    <UserAndQueryGuard user={user} fallbackData={courses} {...getCoursesQuery}>
+      {(_courses) => {
+        return (
+          <>
+            <Head
+              title="Kurzy | Street of Code"
+              description="Nauč sa s nami programovať!"
+              url={prefixWithHost(routes.kurzy.index)}
+            />
+            <NavBar />
+            <CoursesPageContent courses={_courses} />
+          </>
+        )
+      }}
+    </UserAndQueryGuard>
   )
-
-  if (user) {
-    return (
-      <QueryGuard {...getCoursesQuery}>
-        {(courses: CourseOverview[]) => {
-          return (
-            <>
-              <_Head />
-              <NavBar />
-              <CoursesPageContent courses={courses} />
-            </>
-          )
-        }}
-      </QueryGuard>
-    )
-  } else {
-    return (
-      <>
-        <_Head />
-        <NavBar />
-        <CoursesPageContent courses={courses} />
-      </>
-    )
-  }
 }
 
 const CoursesPageContent = ({courses}: Props) => {

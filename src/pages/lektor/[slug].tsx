@@ -13,7 +13,7 @@ import {useGetAuthorOverview} from '../../components/api/authorOverview'
 import PageContentWrapper from '../../components/PageContentWrapper'
 import {useRouter} from 'next/router'
 import NavBar from '../../components/NavBar'
-import {QueryGuard} from '../../QueryGuard'
+import {UserAndQueryGuard} from '../../QueryGuard'
 import {device} from '../../theme/device'
 import Head from '../../components/Head'
 import {prefixWithHost, routes} from '../../routes'
@@ -29,39 +29,28 @@ const AuthorPage: NextPage<Props> = ({authorOverview}: Props) => {
     !!user,
   )
 
-  if (user) {
-    return (
-      <QueryGuard {...getAuthorOverviewQuery}>
-        {(authorOverview) => {
-          return (
-            <>
-              <Head
-                title={`Lektor ${authorOverview.name} | Street of Code`}
-                description={`Street of Code lektor ${authorOverview.name}`}
-                url={prefixWithHost(routes.lektor.slug(authorOverview.slug))}
-                imageUrl={authorOverview.imageUrl}
-              />
-              <NavBar />
-              <AuthorPageContent authorOverview={authorOverview} />
-            </>
-          )
-        }}
-      </QueryGuard>
-    )
-  } else {
-    return (
-      <>
-        <Head
-          title={`Lektor ${authorOverview.name} | Street of Code`}
-          description={`Street of Code lektor ${authorOverview.name}`}
-          url={prefixWithHost(routes.lektor.slug(authorOverview.slug))}
-          imageUrl={authorOverview.imageUrl}
-        />
-        <NavBar />
-        <AuthorPageContent authorOverview={authorOverview} />
-      </>
-    )
-  }
+  return (
+    <UserAndQueryGuard
+      user={user}
+      fallbackData={authorOverview}
+      {...getAuthorOverviewQuery}
+    >
+      {(_authorOverview) => {
+        return (
+          <>
+            <Head
+              title={`Lektor ${_authorOverview.name} | Street of Code`}
+              description={`Street of Code lektor ${_authorOverview.name}`}
+              url={prefixWithHost(routes.lektor.slug(_authorOverview.slug))}
+              imageUrl={_authorOverview.imageUrl}
+            />
+            <NavBar />
+            <AuthorPageContent authorOverview={_authorOverview} />
+          </>
+        )
+      }}
+    </UserAndQueryGuard>
+  )
 }
 
 const AuthorPageContent = ({
