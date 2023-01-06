@@ -8,7 +8,7 @@ import BackLink from '../../components/core/BackLink'
 import PostView from '../../components/domain/post/PostView'
 import {EMPTY_PODCAST_IMAGE_PLACEHOLDER_URL} from '../../components/domain/post/podcast/podcast-constants'
 import Head from '../../components/Head'
-import {routes} from '../../routes'
+import {prefixWithHost, routes} from '../../routes'
 
 interface Props {
   post: Post
@@ -23,7 +23,7 @@ const SinglePostPage: NextPage<Props> = ({post}) => {
           post.excerpt?.replace('<p>', '').replace('</p>', '') ||
           'Toto je epizódka podcastu, ktorá nemá poriadny popis. Ups, pardón, doplníme.'
         }
-        url={post.uri || ''}
+        url={prefixWithHost(routes.podcast.slug(post.slug || ''))}
         imageUrl={
           post.featuredImage?.node?.sourceUrl ||
           EMPTY_PODCAST_IMAGE_PLACEHOLDER_URL
