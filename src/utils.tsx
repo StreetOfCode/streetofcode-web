@@ -1,6 +1,7 @@
 import React from 'react'
 import {AiOutlinePlayCircle, AiOutlineQuestionCircle} from 'react-icons/ai'
 import {CgNotes} from 'react-icons/cg'
+import {routes} from './routes'
 import {
   ChapterOverview,
   CourseOverview,
@@ -49,7 +50,7 @@ export const getTakeCourseUrl = (course: CourseOverview) => {
   const lectureId =
     course.userProgressMetadata?.nextLectureId ??
     course.chapters[0].lectures[0].id
-  return `/kurzy/${course.slug}/kapitola/${chapterId}/lekcia/${lectureId}`
+  return routes.kurzy.lekcia(course.slug, chapterId, lectureId)
 }
 
 export const getLectureTypeIcon = (lectureType: LectureType) => {
@@ -119,12 +120,20 @@ export const getPrevAndNextUrl = (
 
   let previousLectureUrl
   if (previous.chapter != null && previous.lecture != null) {
-    previousLectureUrl = `/kurzy/${courseOverview.slug}/kapitola/${previous.chapter?.id}/lekcia/${previous.lecture?.id}`
+    previousLectureUrl = routes.kurzy.lekcia(
+      courseOverview.slug,
+      previous.chapter.id,
+      previous.lecture.id,
+    )
   }
 
   let nextLectureUrl
   if (next.chapter != null && next.lecture != null) {
-    nextLectureUrl = `/kurzy/${courseOverview.slug}/kapitola/${next.chapter?.id}/lekcia/${next.lecture?.id}`
+    nextLectureUrl = routes.kurzy.lekcia(
+      courseOverview.slug,
+      next.chapter.id,
+      next.lecture.id,
+    )
   }
 
   return {
