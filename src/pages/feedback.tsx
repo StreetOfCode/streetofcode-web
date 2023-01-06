@@ -16,6 +16,7 @@ import {SendFeedbackRequest} from '../types'
 import {emailRegex} from '../utils'
 import {useAuth} from '../AuthUserContext'
 import Head from '../components/Head'
+import {prefixWithHost, routes} from '../routes'
 
 const SUCCESSFULLY_SENT_EMAIL_TEXT =
   'Email bol úspešne poslaný, ďakujeme pekne.'
@@ -113,7 +114,7 @@ const FeedbackPage: NextPage = () => {
       <Head
         title="Feedback | Street of Code"
         description="Chceme tvoj feedback!"
-        url="https://streetofcode.sk/feedback"
+        url={prefixWithHost(routes.feedback)}
       />
       <NavBar />
       <PageContentWrapper>

@@ -16,6 +16,7 @@ import NavBar from '../../components/NavBar'
 import {QueryGuard} from '../../QueryGuard'
 import {device} from '../../theme/device'
 import Head from '../../components/Head'
+import {prefixWithHost, routes} from '../../routes'
 
 type Props = {
   authorOverview: AuthorOverview
@@ -37,7 +38,7 @@ const AuthorPage: NextPage<Props> = ({authorOverview}: Props) => {
               <Head
                 title={`Lektor ${authorOverview.name} | Street of Code`}
                 description={`Street of Code lektor ${authorOverview.name}`}
-                url={`https://www.streetofcode.sk/lektor/${authorOverview.slug}`}
+                url={prefixWithHost(routes.lektor.slug(authorOverview.slug))}
                 imageUrl={authorOverview.imageUrl}
               />
               <NavBar />
@@ -53,7 +54,7 @@ const AuthorPage: NextPage<Props> = ({authorOverview}: Props) => {
         <Head
           title={`Lektor ${authorOverview.name} | Street of Code`}
           description={`Street of Code lektor ${authorOverview.name}`}
-          url={`https://www.streetofcode.sk/lektor/${authorOverview.slug}`}
+          url={prefixWithHost(routes.lektor.slug(authorOverview.slug))}
           imageUrl={authorOverview.imageUrl}
         />
         <NavBar />

@@ -14,6 +14,7 @@ import {useGoogleReCaptcha} from 'react-google-recaptcha-v3'
 import {addToNewsletter, authPost} from '../api'
 import {AddToNewsletterRequest} from '../types'
 import Head from '../components/Head'
+import {prefixWithHost, routes} from '../routes'
 
 const NewsletterPage: NextPage = () => {
   const {executeRecaptcha} = useGoogleReCaptcha()
@@ -77,7 +78,7 @@ const NewsletterPage: NextPage = () => {
       <Head
         title="Newsletter | Street of Code"
         description="Prihlás sa na náš newsletter!"
-        url="https://streetofcode.sk/newsletter"
+        url={prefixWithHost(routes.newsletter)}
       />
       <NavBar />
       <PageContentWrapper>

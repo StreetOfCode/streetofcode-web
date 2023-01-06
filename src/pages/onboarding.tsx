@@ -13,6 +13,7 @@ import Text from '../components/core/Text'
 import TextField from '../components/core/TextField'
 import UserAvatar from '../components/domain/user/UserAvatar'
 import Loading from '../components/Loading'
+import {routes} from '../routes'
 import {device} from '../theme/device'
 
 const TOTAL_STEPS = 3
@@ -203,7 +204,7 @@ const OnboardingPage: NextPage = () => {
 
   if (!router.query || !router.query.from) {
     // if user visits onboarding page by manually writing url then he will be redirected to landing page
-    router.push('/')
+    router.push(routes.root)
   }
 
   const handleFinishOnboarding = async (discordInvitation: boolean) => {
@@ -224,7 +225,7 @@ const OnboardingPage: NextPage = () => {
       if (router.query && router.query.from) {
         router.replace(router.query.from as string)
       } else {
-        router.replace('/')
+        router.replace(routes.root)
       }
     }
   }

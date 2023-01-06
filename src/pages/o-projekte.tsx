@@ -23,6 +23,7 @@ import {
   ProjectMockup,
 } from '../images'
 import Head from '../components/Head'
+import {prefixWithHost, routes} from '../routes'
 
 // Links
 const UcimeSaOOP =
@@ -49,7 +50,7 @@ const ProjectPage: NextPage = () => {
       <Head
         title="O projekte | Street of Code"
         description="Nauč sa s nami programovať!"
-        url="https://streetofcode.sk/o-projekte"
+        url={prefixWithHost(routes.oProjekte)}
       />
       <NavBar />
       <StyledPagedContentWrapper>

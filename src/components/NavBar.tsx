@@ -11,6 +11,7 @@ import {device} from '../theme/device'
 import {useAuth} from '../AuthUserContext'
 import ThemeSwitcher from '../theme/ThemeSwitcher'
 import {socLogo} from '../images'
+import {routes} from '../routes'
 
 const NavBar = () => {
   const [mobileNavbarOpen, setMobileNavbarOpen] = useState(false)
@@ -46,7 +47,7 @@ const NavBar = () => {
           layout="fill"
           alt="Logo"
           src={socLogo}
-          onClick={() => router.push('/')}
+          onClick={() => router.push(routes.root)}
           priority
         />
       </LogoWrapper>
@@ -54,19 +55,19 @@ const NavBar = () => {
       <MenuFlex>
         <MenuItems justifyContent="center" gap={'48px'}>
           <ThemeSwitcher />
-          <NextLink styleIfActive href="/kurzy">
+          <NextLink styleIfActive href={routes.kurzy.index}>
             <MenuItemText>kurzy</MenuItemText>
           </NextLink>
-          <NextLink styleIfActive href="/podcast">
+          <NextLink styleIfActive href={routes.podcast.index}>
             <MenuItemText>podcast</MenuItemText>
           </NextLink>
-          <NextLink styleIfActive href="/clanky">
+          <NextLink styleIfActive href={routes.clanky.index}>
             <MenuItemText>články</MenuItemText>
           </NextLink>
-          <NextLink styleIfActive href="/o-projekte">
+          <NextLink styleIfActive href={routes.oProjekte}>
             <MenuItemText>o projekte</MenuItemText>
           </NextLink>
-          <NextLink styleIfActive href="/feedback">
+          <NextLink styleIfActive href={routes.feedback}>
             <MenuItemText>feedback</MenuItemText>
           </NextLink>
         </MenuItems>
@@ -76,29 +77,33 @@ const NavBar = () => {
         <MobileMenuItems direction="column" alignItems="stretch" gap={'32px'}>
           {!user && (
             <>
-              <NextLink href={`/login/${encodeURIComponent(router.asPath)}`}>
+              <NextLink
+                href={routes.login.redirectUri(
+                  encodeURIComponent(router.asPath),
+                )}
+              >
                 <Text>Prihlásiť</Text>
               </NextLink>
-              <NextLink styleIfActive href="/kurzy">
+              <NextLink styleIfActive href={routes.kurzy.index}>
                 <Text>Kurzy</Text>
               </NextLink>
             </>
           )}
           {user && (
-            <NextLink styleIfActive href="/profil">
+            <NextLink styleIfActive href={routes.profil}>
               <Text>Moje kurzy a nastavenia</Text>
             </NextLink>
           )}
-          <NextLink styleIfActive href="/podcast">
+          <NextLink styleIfActive href={routes.podcast.index}>
             <Text>Podcast</Text>
           </NextLink>
-          <NextLink styleIfActive href="/clanky">
+          <NextLink styleIfActive href={routes.clanky.index}>
             <Text>Články</Text>
           </NextLink>
-          <NextLink styleIfActive href="/o-projekte">
+          <NextLink styleIfActive href={routes.oProjekte}>
             <Text>O projekte</Text>
           </NextLink>
-          <NextLink styleIfActive href="/feedback">
+          <NextLink styleIfActive href={routes.feedback}>
             <Text>Feedback</Text>
           </NextLink>
           {user && <LogoutText onClick={logout}>Odhlásiť</LogoutText>}

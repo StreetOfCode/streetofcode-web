@@ -12,6 +12,7 @@ import {useRouter} from 'next/router'
 import PaginationWrapper from '../../../components/domain/pagination/PaginationWrapper'
 import Podcasts from '../../../components/domain/post/podcast/Podcasts'
 import Head from '../../../components/Head'
+import {prefixWithHost, routes} from '../../../routes'
 
 interface Props {
   posts: Post[]
@@ -28,9 +29,9 @@ const PaginatedPostsPage: NextPage<Props> = ({
 
   const handlePageClick = (pageNumber: number) => {
     if (pageNumber === 0) {
-      router.push('/podcast')
+      router.push(routes.podcast.index)
     } else {
-      router.push(`/podcast/stranka/${pageNumber + 1}`)
+      router.push(routes.podcast.stranka(pageNumber + 1))
     }
   }
 
@@ -39,7 +40,7 @@ const PaginatedPostsPage: NextPage<Props> = ({
       <Head
         title="Podcast | Street of Code"
         description="Podcast o programovaní, softvérovom inžinierstve a niekedy aj o živote ako takom."
-        url={`https://streetofcode.sk/podcast/stranka/${currentPage + 1}`}
+        url={prefixWithHost(routes.podcast.stranka(currentPage + 1))}
       />
       <NavBar />
       <PageContentWrapper>

@@ -8,6 +8,7 @@ import BackLink from '../../components/core/BackLink'
 import PostView from '../../components/domain/post/PostView'
 import {EMPTY_BLOG_IMAGE_PLACEHOLDER_URL} from '../../components/domain/post/blog/clanky-constants'
 import Head from '../../components/Head'
+import {routes} from '../../routes'
 
 interface Props {
   post: Post
@@ -30,7 +31,7 @@ const SinglePostPage: NextPage<Props> = ({post}) => {
       />
       <NavBar />
       <PageContentWrapper>
-        <BackLink to={'/clanky'} text={'Späť na články'} />
+        <BackLink to={routes.clanky.index} text={'Späť na články'} />
         <PostView post={post} />
       </PageContentWrapper>
     </>

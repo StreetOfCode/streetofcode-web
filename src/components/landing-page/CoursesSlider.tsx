@@ -3,6 +3,7 @@ import React, {HTMLAttributes} from 'react'
 import styled from 'styled-components'
 import {useAuth} from '../../AuthUserContext'
 import {QueryGuard} from '../../QueryGuard'
+import {routes} from '../../routes'
 import {device} from '../../theme/device'
 import {CourseOverview} from '../../types'
 import {useGetCourses} from '../api/courses'
@@ -56,7 +57,7 @@ const CoursesSliderTemplate = ({
       itemLayout={(course, i) => {
         return (
           <StyledSlide index={i} key={i}>
-            <NextLink href={`/kurzy/${course.slug}`}>
+            <NextLink href={routes.kurzy.slug(course.slug)}>
               <StyledCourseCard course={course} />
             </NextLink>
           </StyledSlide>

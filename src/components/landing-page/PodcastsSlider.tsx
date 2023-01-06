@@ -14,6 +14,7 @@ import {
   CATEGORY_NAME,
   COUNT_IN_SLIDER,
 } from '../domain/post/podcast/podcast-constants'
+import {routes} from '../../routes'
 
 type Props = {
   className?: string
@@ -63,7 +64,7 @@ const PodcastsSliderTemplate = ({
           <StyledSlide index={i} key={i}>
             <Flex direction="column" gap="16px">
               <Heading variant="h3">{post.title?.split('–')[0]}</Heading>
-              <ImageWrapper href={`podcast/${post.slug || ''}`}>
+              <ImageWrapper href={routes.podcast.slug(post.slug || '')}>
                 <StyledImage
                   src={post.featuredImage?.node?.sourceUrl || ''}
                   alt={post.title || ''}

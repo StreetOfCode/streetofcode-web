@@ -5,6 +5,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {useAuth} from '../../../AuthUserContext'
 import {QueryGuard} from '../../../QueryGuard'
+import {routes} from '../../../routes'
 import {SocUser} from '../../../types'
 import {useGetUser} from '../../api/user'
 import Button from '../../core/Button'
@@ -27,7 +28,11 @@ const LogInOrOutButton = () => {
           return (
             <>
               {(!user || !socUser) && (
-                <NextLink href={`/login/${encodeURIComponent(router.asPath)}`}>
+                <NextLink
+                  href={routes.login.redirectUri(
+                    encodeURIComponent(router.asPath),
+                  )}
+                >
                   <Button>Prihlásiť</Button>
                 </NextLink>
               )}
@@ -42,7 +47,7 @@ const LogInOrOutButton = () => {
                     />
                   </Trigger>
                   <StyledContent sideOffset={2}>
-                    <Link href={'/profil'}>
+                    <Link href={routes.profil}>
                       <DropDownItem>Moje kurzy a nastavenia</DropDownItem>
                     </Link>
                     <DropDownItem onClick={logout}>Odhlásiť</DropDownItem>

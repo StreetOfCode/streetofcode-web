@@ -1,9 +1,13 @@
 import {useRouter} from 'next/router'
 import React from 'react'
 import {useAuth} from '../AuthUserContext'
+import {routes} from '../routes'
 import {useGetUser} from './api/user'
 
-const routesThatDontNeedOnBoardingProtection = ['/login', '/onboarding']
+const routesThatDontNeedOnBoardingProtection = [
+  routes.login.index,
+  routes.onboarding,
+]
 
 const OnboardingProtectionRoute = ({children}: {children: React.ReactNode}) => {
   const {user} = useAuth()
@@ -17,7 +21,7 @@ const OnboardingProtectionRoute = ({children}: {children: React.ReactNode}) => {
     !routesThatDontNeedOnBoardingProtection.includes(router.pathname)
   ) {
     router.replace({
-      pathname: '/onboarding',
+      pathname: routes.onboarding,
       query: {from: location.pathname},
     })
     return <></>

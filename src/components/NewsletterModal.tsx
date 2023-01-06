@@ -8,6 +8,7 @@ import NewsletterForm from './domain/newsletter/NewsletterForm'
 import {useRouter} from 'next/router'
 import {storage} from '../localStorage'
 import styled from 'styled-components'
+import {routes} from '../routes'
 
 const SHOW_AFTER_MILLIS =
   process.env.NEXT_PUBLIC_SHOW_NEWSLETTER_POPUP_AFTER_MILLIS
@@ -20,7 +21,7 @@ const NewsletterModal = () => {
   useEffect(() => {
     const maybeOpenModal = () => {
       if (
-        router.asPath !== '/' &&
+        router.asPath !== routes.root &&
         !user &&
         !storage.hasUserSeenNewsletterModal()
       ) {
