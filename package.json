@@ -73,7 +73,8 @@
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "loader-utils": "^2.0.3",
-    "decode-uri-component": "^0.2.1"
+    "decode-uri-component": "^0.2.1",
+    "json5": "2.2.3"
   },
   "eslintConfig": {
     "extends": "next/core-web-vitals"
