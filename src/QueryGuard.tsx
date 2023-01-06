@@ -1,4 +1,5 @@
 import React from 'react'
+import {User} from 'firebase/auth'
 import Text from './components/core/Text'
 import Loading from './components/Loading'
 
@@ -28,4 +29,30 @@ export function QueryGuard<T>({
     return typeof children === 'function' ? children(data) : children
   }
   return isLoading || isIdle ? <Loading /> : null
+}
+
+type UserAndQueryGuardProps<T> = QueryGuardProps<T> & {
+  user: User | null
+  fallbackData: T
+}
+
+// Use if user authentication is required and SSR is used to fetch the data. The helper
+// allows you to pass in `fallBack` data (mostly data fetched on the server). If user
+// isn't defined, it returns the fallback data otherwise the query is handled normally
+// via `QueryGuard`.
+export function UserAndQueryGuard<T>({
+  user,
+  fallbackData,
+  children,
+  ...rest
+}: UserAndQueryGuardProps<T>) {
+  if (!user) {
+    if (isDefined(fallbackData)) {
+      return typeof children === 'function' ? children(fallbackData) : children
+    } else {
+      throw new Error('Should not happen')
+    }
+  }
+
+  return <QueryGuard {...{...rest, children}} />
 }

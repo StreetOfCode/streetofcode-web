@@ -24,7 +24,7 @@ import CourseContent from '../../../components/domain/course/CourseContent'
 import PageContentWrapper from '../../../components/PageContentWrapper'
 import NavBar from '../../../components/NavBar'
 import {useAuth} from '../../../AuthUserContext'
-import {QueryGuard} from '../../../QueryGuard'
+import {UserAndQueryGuard} from '../../../QueryGuard'
 import {useGetCourseOverview} from '../../../components/api/courseOverview'
 import CourseReviews from '../../../components/domain/course-review/CourseReviews'
 import NextLink from '../../../components/core/NextLink'
@@ -51,42 +51,33 @@ const CourseDetailPage: NextPage<Props> = ({slug, courseOverview}: Props) => {
   const {user} = useAuth()
   const getCourseOverview = useGetCourseOverview(slug, !!user)
 
-  if (user) {
-    return (
-      <QueryGuard {...getCourseOverview}>
-        {(courseOverview: CourseOverview) => {
-          return (
-            <>
-              <Head
-                title={`${courseOverview.name} | Street of Code`}
-                description={courseOverview.shortDescription}
-                url={prefixWithHost(routes.kurzy.slug(courseOverview.slug))}
-                imageUrl={courseOverview.iconUrl}
-              />
-              <NavBar />
-              <CourseDetailContent courseOverview={courseOverview} />
-            </>
-          )
-        }}
-      </QueryGuard>
-    )
-  } else if (!courseOverview) {
-    // this can happen when unathorized (not admin) user tries to access course which is not public
-    return <h1>Pre tento kurz nemáš dostatočné oprávnenie</h1>
-  } else {
-    return (
-      <>
-        <Head
-          title={`${courseOverview.name} | Street of Code`}
-          description={courseOverview.shortDescription}
-          url={prefixWithHost(routes.kurzy.slug(courseOverview.slug))}
-          imageUrl={courseOverview.iconUrl}
-        />
-        <NavBar />
-        <CourseDetailContent courseOverview={courseOverview} />
-      </>
-    )
-  }
+  return (
+    <UserAndQueryGuard
+      user={user}
+      fallbackData={courseOverview}
+      {...getCourseOverview}
+    >
+      {(_courseOverview) => {
+        if (!_courseOverview) {
+          // this can happen when unathorized (not admin) user tries to access course which is not public
+          return <h1>Pre tento kurz nemáš dostatočné oprávnenie</h1>
+        }
+
+        return (
+          <>
+            <Head
+              title={`${_courseOverview.name} | Street of Code`}
+              description={_courseOverview.shortDescription}
+              url={prefixWithHost(routes.kurzy.slug(_courseOverview.slug))}
+              imageUrl={_courseOverview.iconUrl}
+            />
+            <NavBar />
+            <CourseDetailContent courseOverview={_courseOverview} />
+          </>
+        )
+      }}
+    </UserAndQueryGuard>
+  )
 }
 
 const CourseDetailContent = ({
