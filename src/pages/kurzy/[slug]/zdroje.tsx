@@ -7,6 +7,7 @@ import {useAuth} from '../../../AuthUserContext'
 import Loading from '../../../components/Loading'
 import dynamic from 'next/dynamic'
 import Head from '../../../components/Head'
+import {prefixWithHost, routes} from '../../../routes'
 
 type Props = {
   courseSlug: string
@@ -37,7 +38,7 @@ const ResourcesPage: NextPage<Props> = ({
   if (!user) {
     // this page can be seen only by logged in users
     router.replace({
-      pathname: `/login/${encodeURIComponent(location.pathname)}`,
+      pathname: routes.login.redirectUri(encodeURIComponent(location.pathname)),
     })
   }
 
@@ -48,7 +49,7 @@ const ResourcesPage: NextPage<Props> = ({
           <Head
             title={courseOverview.name}
             description={courseOverview.shortDescription}
-            url={`https://streetofcode.sk/kurzy/${courseOverview.slug}/zdroje`}
+            url={prefixWithHost(routes.kurzy.zdroje(courseOverview.slug))}
             imageUrl={courseOverview.iconUrl}
             noIndex
           />

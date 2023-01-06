@@ -19,6 +19,7 @@ import PageContentWrapper from '../components/PageContentWrapper'
 import NavBar from '../components/NavBar'
 import {device} from '../theme/device'
 import {isRunningOnServer} from '../utils'
+import {routes} from '../routes'
 
 const ProfilePage: NextPage = () => {
   const getSocUser = useGetUser(true)
@@ -29,7 +30,7 @@ const ProfilePage: NextPage = () => {
     if (isRunningOnServer()) return <></>
     // this page can be seen only by logged in users
     router.replace({
-      pathname: `/login/${encodeURIComponent(router.pathname)}`,
+      pathname: routes.login.redirectUri(encodeURIComponent(router.pathname)),
     })
   }
 

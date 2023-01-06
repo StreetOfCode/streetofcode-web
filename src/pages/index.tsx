@@ -35,6 +35,7 @@ import {
 } from '../components/domain/post/podcast/podcast-constants'
 import {usImage} from '../images'
 import Head from '../components/Head'
+import {routes} from '../routes'
 
 interface Props {
   courses: CourseOverview[]
@@ -53,7 +54,7 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
       <Head
         title="Street of Code"
         description="Nauč sa s nami programovať!"
-        url="https://streetofcode.sk"
+        url={routes.host}
       />
       <Wrapper>
         <GradientWrapper>
@@ -74,7 +75,7 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
                     programovať
                   </Heading>
                 </div>
-                <NextLink href={'/kurzy'}>
+                <NextLink href={routes.kurzy.index}>
                   <HeroActionButton
                     variant="accent"
                     size="very-large"
@@ -103,7 +104,7 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
                 </Heading>
               </div>
               <CoursesSliderWrapper courses={courses} />
-              <NextLink href={'/kurzy'} alignSelf="center">
+              <NextLink href={routes.kurzy.index} alignSelf="center">
                 <AllCoursesText
                   color="accent"
                   uppercase

@@ -6,6 +6,7 @@ import Heading from '../../../core/Heading'
 import Text from '../../../core/Text'
 import GridWrapper from '../GridWrapper'
 import PostPreviewCard from '../PostPreviewCard'
+import {routes} from '../../../../routes'
 
 type Props = {
   posts: Post[]
@@ -31,7 +32,7 @@ const Podcasts = ({posts}: Props) => {
       </Flex>
       <GridWrapper>
         {posts?.map((post, i) => (
-          <NextLink key={i} href={`/podcast/${post.slug}`}>
+          <NextLink key={i} href={routes.podcast.slug(post.slug || '')}>
             <PostPreviewCard isPodcast post={post} />
           </NextLink>
         ))}

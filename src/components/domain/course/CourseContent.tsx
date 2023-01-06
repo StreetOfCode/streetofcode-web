@@ -9,6 +9,7 @@ import * as Utils from '../../../utils'
 import {useRouter} from 'next/router'
 import {BiChevronDown} from 'react-icons/bi'
 import {device} from '../../../theme/device'
+import {routes} from '../../../routes'
 
 type Props = {
   className?: string
@@ -37,9 +38,7 @@ const CourseContent = ({className, course, ...props}: Props) => {
     e.preventDefault()
     e.stopPropagation()
 
-    router.push(
-      `/kurzy/${course.slug}/kapitola/${chapterId}/lekcia/${lectureId}`,
-    )
+    router.push(routes.kurzy.lekcia(course.slug, chapterId, lectureId))
   }
 
   return (

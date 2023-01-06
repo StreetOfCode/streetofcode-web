@@ -15,6 +15,7 @@ import {QueryGuard} from '../../QueryGuard'
 import VoteNextCourse from '../../components/domain/vote/VoteNextCourse'
 import {device} from '../../theme/device'
 import Head from '../../components/Head'
+import {prefixWithHost, routes} from '../../routes'
 
 interface Props {
   courses: CourseOverview[]
@@ -28,7 +29,7 @@ const CoursesPage: NextPage<Props> = ({courses}) => {
     <Head
       title="Kurzy | Street of Code"
       description="Nauč sa s nami programovať!"
-      url="https://www.streetofcode.sk/kurzy"
+      url={prefixWithHost(routes.kurzy.index)}
     />
   )
 

@@ -19,6 +19,7 @@ import {useAuth} from '../AuthUserContext'
 import {useGetUser} from './api/user'
 import {QueryGuard} from '../QueryGuard'
 import NewsletterForm from './domain/newsletter/NewsletterForm'
+import {routes} from '../routes'
 
 const Footer = () => {
   const router = useRouter()
@@ -45,7 +46,7 @@ const Footer = () => {
               alt="Logo"
               src="/soc_logo.png"
               layout="fill"
-              onClick={() => router.push('/')}
+              onClick={() => router.push(routes.root)}
             />
           </LogoWrapper>
           <div>
@@ -88,52 +89,28 @@ const Footer = () => {
               Copyright © {getCurrentYear()} Street of Code
             </Text>
             <Flex gap="8px">
-              <SocialIconLink
-                href="https://github.com/StreetOfCode"
-                target="_blank"
-              >
+              <SocialIconLink href={routes.github} target="_blank">
                 <AiFillGithub size={iconSize} />
               </SocialIconLink>
-              <SocialIconLink
-                href="https://twitter.com/StreetofCode1"
-                target="_blank"
-              >
+              <SocialIconLink href={routes.twitter} target="_blank">
                 <AiFillTwitterCircle size={iconSize} />
               </SocialIconLink>
-              <SocialIconLink
-                href="https://www.facebook.com/streetofcode/"
-                target="_blank"
-              >
+              <SocialIconLink href={routes.facebook} target="_blank">
                 <AiFillFacebook size={iconSize} />
               </SocialIconLink>
-              <SocialIconLink
-                href="https://open.spotify.com/show/1nBhViArymuLrxuU4XkwRP?si=3w6MXuQ-SPKpffrsQd3rKg&nd=1"
-                target="_blank"
-              >
+              <SocialIconLink href={routes.spotify} target="_blank">
                 <FaSpotify size={iconSize} />
               </SocialIconLink>
-              <SocialIconLink
-                href="https://www.patreon.com/streetofcode"
-                target="_blank"
-              >
+              <SocialIconLink href={routes.patreon} target="_blank">
                 <SiPatreon size={iconSize} />
               </SocialIconLink>
-              <SocialIconLink
-                href="https://discord.com/invite/7K4dG6Nru4"
-                target="_blank"
-              >
+              <SocialIconLink href={routes.discord} target="_blank">
                 <FaDiscord size={iconSize} />
               </SocialIconLink>
-              <SocialIconLink
-                href="https://www.instagram.com/streetofcode/"
-                target="_blank"
-              >
+              <SocialIconLink href={routes.instagram} target="_blank">
                 <AiFillInstagram size={iconSize} />
               </SocialIconLink>
-              <SocialIconLink
-                href="https://www.youtube.com/channel/UCzt3kHgfLwGGPcTk6jP1_Cg"
-                target="_blank"
-              >
+              <SocialIconLink href={routes.youtube} target="_blank">
                 <AiFillYoutube size={iconSize} />
               </SocialIconLink>
             </Flex>
@@ -142,27 +119,27 @@ const Footer = () => {
 
         <NavigationFlex justifyContent="flex-end" flex="1">
           <Flex direction="column" gap={'24px'} alignItems="stretch">
-            <NextLink href="/kurzy">
+            <NextLink href={routes.kurzy.index}>
               <Text color="primary" uppercase>
                 kurzy
               </Text>
             </NextLink>
-            <NextLink href="/clanky">
+            <NextLink href={routes.clanky.index}>
               <Text color="primary" uppercase>
                 články
               </Text>
             </NextLink>
-            <NextLink href="/o-projekte">
+            <NextLink href={routes.oProjekte}>
               <Text color="primary" uppercase>
                 O projekte
               </Text>
             </NextLink>
-            <NextLink href="/podcast">
+            <NextLink href={routes.podcast.index}>
               <Text color="primary" uppercase>
                 podcast
               </Text>
             </NextLink>
-            <NextLink href="/feedback">
+            <NextLink href={routes.feedback}>
               <Text color="primary" uppercase>
                 feedback
               </Text>

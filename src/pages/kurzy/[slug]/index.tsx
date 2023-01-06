@@ -33,6 +33,7 @@ import {device} from '../../../theme/device'
 import VideoWrapper from '../../../components/domain/video/VideoWrapper'
 import dynamic from 'next/dynamic'
 import Head from '../../../components/Head'
+import {prefixWithHost, routes} from '../../../routes'
 
 type Props = {
   slug: string
@@ -59,7 +60,7 @@ const CourseDetailPage: NextPage<Props> = ({slug, courseOverview}: Props) => {
               <Head
                 title={`${courseOverview.name} | Street of Code`}
                 description={courseOverview.shortDescription}
-                url={`https://streetofcode.sk/kurzy/${courseOverview.slug}`}
+                url={prefixWithHost(routes.kurzy.slug(courseOverview.slug))}
                 imageUrl={courseOverview.iconUrl}
               />
               <NavBar />
@@ -78,7 +79,7 @@ const CourseDetailPage: NextPage<Props> = ({slug, courseOverview}: Props) => {
         <Head
           title={`${courseOverview.name} | Street of Code`}
           description={courseOverview.shortDescription}
-          url={`https://streetofcode.sk/kurzy/${courseOverview.slug}`}
+          url={prefixWithHost(routes.kurzy.slug(courseOverview.slug))}
           imageUrl={courseOverview.iconUrl}
         />
         <NavBar />
@@ -126,7 +127,7 @@ const CourseDetailContent = ({
   }
 
   const handleAuthorClicked = (authorSlug: string) => {
-    router.push(`/lektor/${authorSlug}`)
+    router.push(routes.lektor.slug(authorSlug))
   }
 
   const renderThubmnailOrTrailer = (): React.ReactNode => {
@@ -149,7 +150,7 @@ const CourseDetailContent = ({
   }
   return (
     <PageContentWrapper>
-      <BackLink to={'/kurzy'} text={'Späť na kurzy'} />
+      <BackLink to={routes.kurzy.index} text={'Späť na kurzy'} />
       <WrapperFlex justifyContent="space-between" gap="24px">
         <CourseDetailsFlex
           direction="column"
@@ -186,7 +187,9 @@ const CourseDetailContent = ({
           )}
           {!isLoading && !user && (
             <NextLink
-              href={`/login/${encodeURIComponent(location.pathname)}`}
+              href={routes.login.redirectUri(
+                encodeURIComponent(location.pathname),
+              )}
               alignSelf="stretch"
             >
               <StyledButton variant="accent">

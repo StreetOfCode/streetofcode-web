@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import {routes} from '../../../routes'
 import {device} from '../../../theme/device'
 import {CourseOverview} from '../../../types'
 import * as Utils from '../../../utils'
@@ -18,7 +19,7 @@ const Courses = ({
       {courses.map((c) => {
         const link = shouldLinkToTakeCourse
           ? Utils.getTakeCourseUrl(c)
-          : `/kurzy/${c.slug}`
+          : routes.kurzy.slug(c.slug)
         return (
           <NextLink key={c.id} href={link}>
             <CourseCard course={c} />

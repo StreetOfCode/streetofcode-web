@@ -18,6 +18,7 @@ import {
 import CheckBox from '../../core/CheckBox'
 import {device} from '../../../theme/device'
 import {useRemoveUserAnswers} from '../../api/quizQuestionUserAnswers'
+import {routes} from '../../../routes'
 
 type Props = {
   className?: string
@@ -85,9 +86,7 @@ const CourseSidebar = ({
     e.preventDefault()
     e.stopPropagation()
 
-    router.push(
-      `/kurzy/${courseSlug}/kapitola/${chapterId}/lekcia/${lectureId}`,
-    )
+    router.push(routes.kurzy.lekcia(courseSlug, chapterId, lectureId))
   }
 
   const handleLectureCheckboxOnClick = async (
@@ -125,7 +124,7 @@ const CourseSidebar = ({
           {hasResources && (
             <NextLink
               href={{
-                pathname: `/kurzy/${courseSlug}/zdroje`,
+                pathname: routes.kurzy.zdroje(courseSlug),
                 query: {chapterId, lectureId},
               }}
               alignSelf="center"

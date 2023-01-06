@@ -8,6 +8,7 @@ import BackLink from '../../components/core/BackLink'
 import PostView from '../../components/domain/post/PostView'
 import {EMPTY_PODCAST_IMAGE_PLACEHOLDER_URL} from '../../components/domain/post/podcast/podcast-constants'
 import Head from '../../components/Head'
+import {routes} from '../../routes'
 
 interface Props {
   post: Post
@@ -30,7 +31,7 @@ const SinglePostPage: NextPage<Props> = ({post}) => {
       />
       <NavBar />
       <PageContentWrapper>
-        <BackLink to={'/podcast'} text={'Späť na podcast'} />
+        <BackLink to={routes.podcast.index} text={'Späť na podcast'} />
         <PostView post={post} isPodcast />
       </PageContentWrapper>
     </>

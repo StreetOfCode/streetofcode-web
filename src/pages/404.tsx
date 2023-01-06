@@ -5,6 +5,7 @@ import Flex from '../components/core/Flex'
 import NavBar from '../components/NavBar'
 import Heading from '../components/core/Heading'
 import NextLink from '../components/core/NextLink'
+import {routes} from '../routes'
 
 const NotFoundPage: NextPage = () => {
   return (
@@ -13,7 +14,7 @@ const NotFoundPage: NextPage = () => {
       <PageContentWrapper>
         <Flex direction="column" justifyContent="center" gap="48px">
           <Heading variant="h3">Stránka nebola nájdená</Heading>
-          <NextLink href="/">
+          <NextLink href={routes.root}>
             <Heading variant="h4" withAccentUnderline>
               Prejsť na hlavnú stránku
             </Heading>

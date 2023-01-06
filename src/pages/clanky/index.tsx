@@ -12,6 +12,7 @@ import {useRouter} from 'next/router'
 import PaginationWrapper from '../../components/domain/pagination/PaginationWrapper'
 import BlogPosts from '../../components/domain/post/blog/BlogPosts'
 import Head from '../../components/Head'
+import {prefixWithHost, routes} from '../../routes'
 
 interface Props {
   posts: Post[]
@@ -22,7 +23,7 @@ const PostsPage: NextPage<Props> = ({posts}) => {
   const firstPagePosts = posts.slice(0, PAGINATION_BY)
 
   const handlePageClick = (pageNumber: number) => {
-    router.push(`/clanky/stranka/${pageNumber + 1}`)
+    router.push(routes.clanky.stranka(pageNumber + 1))
   }
 
   const numberOfPossiblePages = Math.ceil(posts.length / PAGINATION_BY)
@@ -32,7 +33,7 @@ const PostsPage: NextPage<Props> = ({posts}) => {
       <Head
         title="Články | Street of Code"
         description="Píšeme o všeličom. Tutorály, rozhovory, blogy."
-        url="https://streetofcode.sk/clanky"
+        url={prefixWithHost(routes.clanky.index)}
       />
       <NavBar />
       <PageContentWrapper>
