@@ -20,6 +20,7 @@ import {QueryGuard} from '../../../QueryGuard'
 import {device} from '../../../theme/device'
 import ThemeSwitcher from '../../../theme/ThemeSwitcher'
 import BackLink from '../../core/BackLink'
+import {routes} from '../../../routes'
 
 type Props = {
   resourcesMode: boolean
@@ -62,7 +63,11 @@ const TakeCourse = ({
   const Resources = () => {
     if (!courseOverview.resources) return null
 
-    const lectureUrl = `/kurzy/${courseOverview.slug}/kapitola/${chapterId}/lekcia/${lectureId}`
+    const lectureUrl = routes.kurzy.lekcia(
+      courseOverview.slug,
+      chapterId,
+      lectureId,
+    )
 
     return (
       <>
@@ -152,7 +157,7 @@ const TakeCourse = ({
               alignItems="flex-start"
             >
               <BackLink
-                to={`/kurzy/${courseOverview.slug}`}
+                to={routes.kurzy.slug(courseOverview.slug)}
                 text={'Späť na kurz'}
               />
               <StyledThemeSwitcher />
@@ -164,7 +169,7 @@ const TakeCourse = ({
             >
               <Flex justifyContent="space-between" gap="8px">
                 <MobileBackLink
-                  to={`/kurzy/${courseOverview.slug}`}
+                  to={routes.kurzy.slug(courseOverview.slug)}
                   text={'Späť na kurz'}
                 />
                 <MobileSidebarCloseIcon

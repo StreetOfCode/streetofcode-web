@@ -8,6 +8,7 @@ import Heading from '../../core/Heading'
 import {formatDate} from '../../../utils'
 import {device} from '../../../theme/device'
 import SyntaxHighlighter from '../../SyntaxHighlighter'
+import {routes} from '../../../routes'
 
 type Props = {
   className?: string
@@ -80,10 +81,22 @@ const PostView = ({className, isPodcast, post}: Props) => {
  */
 const redirectLinks = (content: Maybe<string> | undefined) => {
   const linksToRedirect = [
-    {originalUrl: 'https://wp.streetofcode.sk/podcast', newUrl: '/podcast'},
-    {originalUrl: 'http://wp.streetofcode.sk/podcast', newUrl: '/podcast'},
-    {originalUrl: 'https://wp.streetofcode.sk/blog', newUrl: '/clanky'},
-    {originalUrl: 'http://wp.streetofcode.sk/blog', newUrl: '/clanky'},
+    {
+      originalUrl: 'https://wp.streetofcode.sk/podcast',
+      newUrl: routes.podcast.index,
+    },
+    {
+      originalUrl: 'http://wp.streetofcode.sk/podcast',
+      newUrl: routes.podcast.index,
+    },
+    {
+      originalUrl: 'https://wp.streetofcode.sk/blog',
+      newUrl: routes.clanky.index,
+    },
+    {
+      originalUrl: 'http://wp.streetofcode.sk/blog',
+      newUrl: routes.clanky.index,
+    },
   ]
 
   for (const {originalUrl, newUrl} of linksToRedirect) {
