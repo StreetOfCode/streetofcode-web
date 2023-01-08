@@ -33,24 +33,26 @@ export function QueryGuard<T>({
 
 type UserAndQueryGuardProps<T> = QueryGuardProps<T> & {
   user: User | null
-  fallbackData: T
+  fallbackData: T | null
+  fallbackComponent?: JSX.Element
 }
 
 // Use if user authentication is required and SSR is used to fetch the data. The helper
-// allows you to pass in `fallBack` data (mostly data fetched on the server). If user
-// isn't defined, it returns the fallback data otherwise the query is handled normally
-// via `QueryGuard`.
+// allows you to pass in `fallBack` data (mostly data fetched on the server) and `fallbackComponent`.
+// If user isn't defined, it returns the fallback data if it's defined and the fallback component
+// if `fallbackData` isn't defined. Otherwise the query is handled normally via `QueryGuard`.
 export function UserAndQueryGuard<T>({
   user,
   fallbackData,
+  fallbackComponent,
   children,
   ...rest
 }: UserAndQueryGuardProps<T>) {
   if (!user) {
-    if (isDefined(fallbackData)) {
+    if (isDefined(fallbackData) && fallbackData != null) {
       return typeof children === 'function' ? children(fallbackData) : children
     } else {
-      throw new Error('Should not happen')
+      return fallbackComponent || null
     }
   }
 
