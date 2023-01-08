@@ -75,7 +75,7 @@
     "@typescript-eslint/parser": "^5",
     "loader-utils": "^2.0.3",
     "decode-uri-component": "^0.2.1",
-    "json5": "2.2.3"
+    "tsconfig-paths/json5": "1.0.2"
   },
   "eslintConfig": {
     "extends": "next/core-web-vitals"
