@@ -6,13 +6,14 @@ import {Post} from '../../wp/types'
 import NavBar from '../../components/NavBar'
 import {
   CATEGORY_NAME,
-  PAGINATION_BY,
+  ITEMS_PER_PAGE,
 } from '../../components/domain/post/blog/clanky-constants'
 import {useRouter} from 'next/router'
 import PaginationWrapper from '../../components/domain/pagination/PaginationWrapper'
 import BlogPosts from '../../components/domain/post/blog/BlogPosts'
 import Head from '../../components/Head'
 import {prefixWithHost, routes} from '../../routes'
+import {getTotalNumberOfPages} from '../../paginationUtils'
 
 interface Props {
   posts: Post[]
@@ -20,13 +21,16 @@ interface Props {
 
 const PostsPage: NextPage<Props> = ({posts}) => {
   const router = useRouter()
-  const firstPagePosts = posts.slice(0, PAGINATION_BY)
+  const firstPagePosts = posts.slice(0, ITEMS_PER_PAGE)
 
   const handlePageClick = (pageNumber: number) => {
     router.push(routes.clanky.stranka(pageNumber + 1))
   }
 
-  const numberOfPossiblePages = Math.ceil(posts.length / PAGINATION_BY)
+  const numberOfPossiblePages = getTotalNumberOfPages(
+    posts.length,
+    ITEMS_PER_PAGE,
+  )
 
   return (
     <>

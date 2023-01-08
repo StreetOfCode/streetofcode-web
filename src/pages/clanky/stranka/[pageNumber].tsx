@@ -6,13 +6,14 @@ import {Post} from '../../../wp/types'
 import NavBar from '../../../components/NavBar'
 import {
   CATEGORY_NAME,
-  PAGINATION_BY,
+  ITEMS_PER_PAGE,
 } from '../../../components/domain/post/blog/clanky-constants'
 import {useRouter} from 'next/router'
 import PaginationWrapper from '../../../components/domain/pagination/PaginationWrapper'
 import BlogPosts from '../../../components/domain/post/blog/BlogPosts'
 import Head from '../../../components/Head'
 import {prefixWithHost, routes} from '../../../routes'
+import {getPagePaths, getCurrentPageItems} from '../../../paginationUtils'
 
 interface Props {
   posts: Post[]
@@ -56,20 +57,18 @@ const PaginatedPostsPage: NextPage<Props> = ({
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const pageNumber = Number(context?.params?.pageNumber as string)
+  const currentPage = Number(context?.params?.pageNumber as string)
 
   const posts = await getAllPosts(CATEGORY_NAME)
 
-  const totalPages = Math.ceil(posts.length / PAGINATION_BY)
-
-  const currentPageindexStart = (pageNumber - 1) * PAGINATION_BY
-  const postsInPage = posts.slice(
-    currentPageindexStart,
-    currentPageindexStart + PAGINATION_BY,
+  const {pageItems, totalPages} = getCurrentPageItems(
+    posts,
+    currentPage,
+    ITEMS_PER_PAGE,
   )
 
   return {
-    props: {posts: postsInPage, totalPages, currentPage: pageNumber},
+    props: {posts: pageItems, totalPages, currentPage},
     revalidate: 600,
   }
 }
@@ -77,17 +76,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export const getStaticPaths = async () => {
   const allPosts = await getAllPosts(CATEGORY_NAME)
 
-  const totalPages = Math.ceil(allPosts.length / PAGINATION_BY)
-
-  const possiblePaths = []
-  for (let i = 1; i < totalPages; i++) {
-    // start from the second page
-    possiblePaths.push(i + 1)
-  }
-
-  const paths = possiblePaths.map((pageNumber) => ({
-    params: {pageNumber: pageNumber.toString()},
-  }))
+  const paths = getPagePaths(allPosts.length, ITEMS_PER_PAGE)
 
   return {
     paths,
