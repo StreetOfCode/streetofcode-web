@@ -55,14 +55,14 @@ const CourseDetailPage: NextPage<Props> = ({slug, courseOverview}: Props) => {
     <UserAndQueryGuard
       user={user}
       fallbackData={courseOverview}
+      fallbackComponent={
+        <Heading variant="h1">
+          Pre tento kurz nemáš dostatočné oprávnenie
+        </Heading>
+      }
       {...getCourseOverview}
     >
       {(_courseOverview) => {
-        if (!_courseOverview) {
-          // this can happen when unathorized (not admin) user tries to access course which is not public
-          return <h1>Pre tento kurz nemáš dostatočné oprávnenie</h1>
-        }
-
         return (
           <>
             <Head
