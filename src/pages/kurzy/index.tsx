@@ -115,10 +115,10 @@ const MyCoursesFlexWrapper = styled(Flex)`
 export const getStaticProps = async () => {
   const response = await Api.noAuthFetch(Api.coursesOverviewUrl())
 
-  const courses = (await response.json()) as CourseOverview[]
+  const courses = (response.ok ? await response.json() : []) as CourseOverview[]
 
   return {
-    props: {courses}, // will be passed to the page component as props
+    props: {courses},
   }
 }
 

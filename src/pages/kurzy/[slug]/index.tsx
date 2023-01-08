@@ -324,21 +324,16 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context?.params?.slug as string
   const response = await Api.noAuthFetch(Api.courseOverviewUrl(slug))
 
-  if (!response.ok) {
-    return {
-      props: {slug, courseOverview: null},
-    }
-  } else {
-    const courseOverview = (await response.json()) as CourseOverview
-    return {
-      props: {slug, courseOverview},
-    }
-  }
+  const courseOverview = response.ok
+    ? ((await response.json()) as CourseOverview)
+    : null
+
+  return {props: {slug, courseOverview}}
 }
 
 export const getStaticPaths = async () => {
   const response = await Api.noAuthFetch(Api.courseSlugsUrl())
-  const slugs = (await response.json()) as string[]
+  const slugs = (response.ok ? await response.json() : []) as string[]
 
   const paths = slugs.map((slug) => ({params: {slug}}))
 
