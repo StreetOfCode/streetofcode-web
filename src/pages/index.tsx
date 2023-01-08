@@ -441,7 +441,7 @@ const HeroActionButton = styled(Button)`
 export const getStaticProps = async () => {
   const response = await Api.noAuthFetch(Api.coursesOverviewUrl())
 
-  const courses = (await response.json()) as CourseOverview[]
+  const courses = (response.ok ? await response.json() : []) as CourseOverview[]
 
   const podcasts = await getAllPosts(
     PODCAST_CATEGORY_NAME,
@@ -449,7 +449,7 @@ export const getStaticProps = async () => {
   )
 
   return {
-    props: {courses, podcasts}, // will be passed to the page component as props
+    props: {courses, podcasts},
   }
 }
 

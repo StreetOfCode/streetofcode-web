@@ -19,20 +19,21 @@ import Head from '../../components/Head'
 import {prefixWithHost, routes} from '../../routes'
 
 type Props = {
-  authorOverview: AuthorOverview
+  slug: string
+  authorOverview: AuthorOverview | null
 }
 
-const AuthorPage: NextPage<Props> = ({authorOverview}: Props) => {
+const AuthorPage: NextPage<Props> = ({slug, authorOverview}: Props) => {
   const {user} = useAuth()
-  const getAuthorOverviewQuery = useGetAuthorOverview(
-    authorOverview.slug,
-    !!user,
-  )
+  const getAuthorOverviewQuery = useGetAuthorOverview(slug, !!user)
 
   return (
     <UserAndQueryGuard
       user={user}
       fallbackData={authorOverview}
+      fallbackComponent={
+        <Heading variant="h1">Lektora sa nepodarilo načítať.</Heading>
+      }
       {...getAuthorOverviewQuery}
     >
       {(_authorOverview) => {
@@ -128,17 +129,19 @@ export const getStaticProps: GetStaticProps = async (
   const slug = context?.params?.slug as string
   const response = await Api.noAuthFetch(Api.authorOverviewUrl(slug))
 
-  const authorOverview = (await response.json()) as AuthorOverview
+  const authorOverview = response.ok
+    ? ((await response.json()) as AuthorOverview)
+    : null
 
   return {
-    props: {authorOverview}, // will be passed to the page component as props
+    props: {slug, authorOverview},
   }
 }
 
 export const getStaticPaths = async () => {
   const response = await Api.noAuthFetch(Api.authorSlugssUrl())
 
-  const ids = (await response.json()) as string[]
+  const ids = (response.ok ? await response.json() : []) as string[]
 
   const paths = ids.map((slug) => ({params: {slug}}))
 
