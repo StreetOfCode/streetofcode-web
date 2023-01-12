@@ -1,34 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+_Poznámka: README-čka v repozitároch sa väčšinou píšu po anglicky, ale keďže chceme, aby toto repo slúžilo aj na edukačné účely, píšeme README v slovenčine. Ak ti to vadí, prepáč, skús nas pochopiť. 🙈 Ak ťa to teší, nemáš začo. 😉_
 
-## Getting Started
+V tomto repozitári nájdeš frontend k našej fantastickej stránke [streetofcode.sk](https://streetofcode.sk). Backend nájdeš [tu](https://github.com/StreetOfCode/streetofcode-web-api).
 
-First, run the development server:
+## Technológie
 
-```bash
-npm run dev
-# or
+- Jazyk: Typescript
+- Framework: [React](https://reactjs.org/)
+- Framework nad frameworkom: [Next.js](https://nextjs.org/)
+- Štýli: [Styled components](https://styled-components.com/)
+- Komponenty: Väčšina sú [vlastné komponenty](src/components/core), trochu [Material UI](https://mui.com/)
+- Monitoring: [Sentry](https://sentry.io/)
+- Autentifikácia používateľov (login): [Firebase Authentication](https://firebase.google.com/docs/auth)
+- Admin sekca: [React Admin](https://marmelab.com/react-admin/)
+- Blog "engine": Wordpress, dáta ťaháme pomocou [WPGraphQL](https://www.wpgraphql.com/)
+- Testy: nemáme 🤷🙈
+- IDE: My používame [VS Code](https://code.visualstudio.com/) a snáď ti v ňom všetko bude fungovať, keď si nainštaluješ recommended extensions
+- Formátovanie a lintovanie: [Prettier](https://prettier.io/) + [eslint](https://eslint.org/)
+- CI: [GitHub Actions](https://github.com/features/actions)
+- Deployment: [Railway.app](https://railway.app?referralCode=z8Ptaa) via GitHub hooks (referral link)
+
+## Štruktúra projektu
+
+Next.js nám viac menej nadiktoval celú štruktúru projektu. Čiže hlavná časť sú `src/_app.tsx` a potom `src/pages`. V `src/components` sa nachádzajú všetky naše komponenty, z ktorých vyskladávame stránku. V `src/components/core` sú základné komponenty, ktoré sú akokeby náhrada Material UI. V `src/hooks` máme zadefinovaných zopár vlasných hookov, ktoré využívame.
+
+## Ako si to môžeš spustiť?
+
+Vytvor si kópiu `.env.template` súboru:
+
+```
+cp .env.template .env
+```
+
+Na začiatok nemusíš ani nič upravovať a všetko by malo byť ok.
+
+Nainicializuj yarn:
+
+```
+yarn
+```
+
+_Poznámka: Pred tým ako spustíš frontend, musíš mať spustený aj backend._
+
+A spusti projekt:
+
+```
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To by malo byť všetko. Teraz sa v browseri môžeš navigovať na `localhost:3000` a mala by sa ti načítať naša stránka s nejakými dummy kurzami.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Ak chceš niečo iba rýchlo zmeniť, aby si videl/a, že to vieš editovať, tak kľudne uprav napr. [texty v hero section](/src/pages/index.tsx#L72) alebo [si zmeň accent color v src/theme/theme.ts](src/theme/theme.ts#L21).
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Ak náhodou chceš niečo nakódiť (Contributing)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Proste vytvor pull request. Ideálne v pull requeste aj popíš, čo daná zmena má robiť a prečo by sme ju mali chcieť. Za každú pomoc budeme radi, ale tiež ber prosím na vedomie, že nie každý PR musíme akceptovať.
 
-## Learn More
+## Ak si našiel alebo našla nejaký problém
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Buď nám napíš cez [feedback formulár](https://streetofcode.sk/feedback), na [Discord](https://streetofcode.sk/discord), na mail (info@streetofcode.sk) alebo vytvor issue na GitHub-e.
