@@ -147,6 +147,17 @@ const Footer = () => {
           </Flex>
         </NavigationFlex>
       </WrapperFlex>
+      <GitHubLinkWrapper>
+        <Text align="center">
+          Kód tejto stránky si vieš pozrieť na našom{' '}
+          <a
+            href="https://github.com/streetofcode/streetofcode-web"
+            target="_blank"
+          >
+            <GitHubLink color="accent">GitHub-e</GitHubLink>
+          </a>
+        </Text>
+      </GitHubLinkWrapper>
     </Background>
   )
 }
@@ -177,6 +188,16 @@ const WrapperFlex = styled(Flex)`
     align-items: center;
     gap: 32px;
   }
+`
+
+const GitHubLinkWrapper = styled(Flex)`
+  justify-content: center;
+  padding: 6px 0;
+  background-color: var(--color-primary);
+`
+
+const GitHubLink = styled(Text)`
+  display: inline;
 `
 
 const LogoWithAddressFlex = styled(Flex)`
