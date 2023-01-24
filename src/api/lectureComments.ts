@@ -1,11 +1,11 @@
 import {useMutation, useQuery} from 'react-query'
-import * as Api from '../../api'
-import queryClient from '../../queryClient'
+import * as Api from '../api'
+import queryClient from '../queryClient'
 import {
   LectureComment,
   LectureCommentAddRequest,
   LectureCommentEditRequest,
-} from '../../types'
+} from '../types'
 
 const P = 'lectureComments'
 

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {useGetNextCourseOptions} from '../../api/voteNextCourse'
+import {useGetNextCourseOptions} from '../../../api/voteNextCourse'
 import {useGoogleReCaptcha} from 'react-google-recaptcha-v3'
 import {QueryGuard} from '../../../QueryGuard'
 import {VoteNextCoursesRequest} from '../../../types'

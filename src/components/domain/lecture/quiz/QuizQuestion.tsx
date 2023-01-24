@@ -11,7 +11,7 @@ import {
 } from '../../../../types'
 import RadioGroup from '../../../core/RadioGroup'
 import {useTheme} from '../../../../hooks/useTheme'
-import {useSubmitUserAnswer} from '../../../api/quizQuestionUserAnswers'
+import {useSubmitUserAnswer} from '../../../../api/quizQuestionUserAnswers'
 import MarkdownView from '../../../core/MarkdownView'
 
 const QuizAnswer = ({quizAnswer}: {quizAnswer: QuizQuestionAnswer}) => {

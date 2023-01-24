@@ -1,6 +1,6 @@
 import {useQuery} from 'react-query'
-import * as Api from '../../api'
-import {AuthorOverview} from '../../types'
+import * as Api from '../api'
+import {AuthorOverview} from '../types'
 
 const P = 'authorOverview'
 

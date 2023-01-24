@@ -1,6 +1,6 @@
 import React from 'react'
 import {GetServerSideProps, NextPage} from 'next'
-import {useGetCourseOverview} from '../../../components/api/courseOverview'
+import {useGetCourseOverview} from '../../../api/courseOverview'
 import {QueryGuard} from '../../../QueryGuard'
 import {useRouter} from 'next/router'
 import {useAuth} from '../../../AuthUserContext'

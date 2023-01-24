@@ -1,6 +1,6 @@
 import {useQuery} from 'react-query'
-import * as Api from '../../api'
-import {NextCourseVoteOption} from '../../types'
+import * as Api from '../api'
+import {NextCourseVoteOption} from '../types'
 
 const P = 'voteNextCourse'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import {useEditCourseReview} from '../../api/courseReviews'
+import {useEditCourseReview} from '../../../api/courseReviews'
 import {CourseReview} from '../../../types'
 import EditableCourseReview from './EditableCourseReview'
 

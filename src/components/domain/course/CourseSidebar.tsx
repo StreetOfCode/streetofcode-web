@@ -14,10 +14,10 @@ import NextLink from '../../core/NextLink'
 import {
   useResetLecture,
   useUpdateProgressLecture,
-} from '../../api/courseProgress'
+} from '../../../api/courseProgress'
 import CheckBox from '../../core/CheckBox'
 import {device} from '../../../theme/device'
-import {useRemoveUserAnswers} from '../../api/quizQuestionUserAnswers'
+import {useRemoveUserAnswers} from '../../../api/quizQuestionUserAnswers'
 import {routes} from '../../../routes'
 
 type Props = {
