@@ -1,6 +1,6 @@
 import {useQuery} from 'react-query'
-import * as Api from '../../api'
-import {QuizQuestion} from '../../types'
+import * as Api from '../api'
+import {QuizQuestion} from '../types'
 
 const P = 'quizQuestions'
 

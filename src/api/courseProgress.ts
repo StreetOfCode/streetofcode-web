@@ -1,7 +1,7 @@
 import {useMutation, useQuery} from 'react-query'
-import * as Api from '../../api'
-import queryClient from '../../queryClient'
-import {CourseProgressOverview} from '../../types'
+import * as Api from '../api'
+import queryClient from '../queryClient'
+import {CourseProgressOverview} from '../types'
 import {queryKeys as courseQueryKeys} from './courses'
 import {queryKeys as courseOverviewQueryKeys} from './courseOverview'
 

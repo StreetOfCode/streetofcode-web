@@ -1,11 +1,11 @@
 import {useMutation, useQuery} from 'react-query'
-import * as Api from '../../api'
-import queryClient from '../../queryClient'
+import * as Api from '../api'
+import queryClient from '../queryClient'
 import {
   CourseReview,
   CourseReviewAddRequest,
   CourseReviewEditRequest,
-} from '../../types'
+} from '../types'
 import {queryKeys as courseReviewOverviewsQueryKeys} from './courseReviewOverviews'
 import {queryKeys as courseQueryKeys} from './courses'
 import {queryKeys as courseOverviewKeys} from './courseOverview'

@@ -14,7 +14,7 @@ import {
   AiOutlineClose,
 } from 'react-icons/ai'
 import {getPrevAndNextUrl, GetPrevAndNextUrlResponse} from '../../../utils'
-import {useGetCourseProgressOverview} from '../../api/courseProgress'
+import {useGetCourseProgressOverview} from '../../../api/courseProgress'
 import {CourseOverview, CourseProgressOverview} from '../../../types'
 import {QueryGuard} from '../../../QueryGuard'
 import {device} from '../../../theme/device'

@@ -1,15 +1,15 @@
 import React from 'react'
 import {QueryGuard} from '../../../QueryGuard'
-import {useGetLecture} from '../../api/lecture'
+import {useGetLecture} from '../../../api/lecture'
 import Flex from '../../core/Flex'
 import MarkdownView from '../../core/MarkdownView'
 import LectureComments from '../lecture-comment/LectureComments'
 import VideoWrapper from '../video/VideoWrapper'
 import {useRouter} from 'next/router'
 import {CourseProgressOverview} from '../../../types'
-import {useUpdateProgressLecture} from '../../api/courseProgress'
+import {useUpdateProgressLecture} from '../../../api/courseProgress'
 import LectureQuiz from './LectureQuiz'
-import {useGetQuizzesByLecture} from '../../api/quiz'
+import {useGetQuizzesByLecture} from '../../../api/quiz'
 
 type Props = {
   courseId: number

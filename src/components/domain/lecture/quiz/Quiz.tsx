@@ -6,10 +6,10 @@ import Heading from '../../../core/Heading'
 import Flex from '../../../core/Flex'
 import Text from '../../../core/Text'
 import styled from 'styled-components'
-import {useGetQuizQuestionsByQuiz} from '../../../api/quizQuestions'
+import {useGetQuizQuestionsByQuiz} from '../../../../api/quizQuestions'
 import {device} from '../../../../theme/device'
-import {useGetQuizQuestionUserAnswersByQuiz} from '../../../api/quizQuestionUserAnswers'
-import {useUpdateProgressLecture} from '../../../api/courseProgress'
+import {useGetQuizQuestionUserAnswersByQuiz} from '../../../../api/quizQuestionUserAnswers'
+import {useUpdateProgressLecture} from '../../../../api/courseProgress'
 
 type Props = {
   quiz: IQuiz

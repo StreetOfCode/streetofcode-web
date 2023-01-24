@@ -1,5 +1,5 @@
 import React from 'react'
-import {useAddLectureComment} from '../../api/lectureComments'
+import {useAddLectureComment} from '../../../api/lectureComments'
 import EditableLectureComment from './EditableLectureComment'
 
 type AddLectureCommentProps = {

@@ -1,7 +1,7 @@
 import {useMutation, useQuery} from 'react-query'
-import * as Api from '../../api'
-import queryClient from '../../queryClient'
-import {AddSocUser, EditSocUser, SocUser} from '../../types'
+import * as Api from '../api'
+import queryClient from '../queryClient'
+import {AddSocUser, EditSocUser, SocUser} from '../types'
 
 const P = 'user'
 

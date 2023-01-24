@@ -2,7 +2,7 @@ import {useRouter} from 'next/router'
 import React from 'react'
 import {useAuth} from '../AuthUserContext'
 import {routes} from '../routes'
-import {useGetUser} from './api/user'
+import {useGetUser} from '../api/user'
 
 const routesThatDontNeedOnBoardingProtection = [
   routes.login.index,

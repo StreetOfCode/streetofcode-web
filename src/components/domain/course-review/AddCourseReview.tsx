@@ -1,5 +1,5 @@
 import React from 'react'
-import {useAddCourseReview} from '../../api/courseReviews'
+import {useAddCourseReview} from '../../../api/courseReviews'
 import EditableCourseReview from './EditableCourseReview'
 
 type AddCourseReviewProps = {
