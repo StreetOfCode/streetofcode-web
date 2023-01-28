@@ -3,12 +3,11 @@ import parse, {Element, Text as HtmlParserText} from 'html-react-parser'
 import styled from 'styled-components'
 import {Maybe, Post} from '../../../wp/types'
 import Flex from '../../core/Flex'
-import Text from '../../core/Text'
 import Heading from '../../core/Heading'
-import {formatDate} from '../../../utils'
 import {device} from '../../../theme/device'
 import SyntaxHighlighter from '../../SyntaxHighlighter'
 import {routes} from '../../../routes'
+import AuthorAndDate from './AuthorAndDate'
 
 type Props = {
   className?: string
@@ -61,17 +60,22 @@ const PostView = ({className, isPodcast, post}: Props) => {
   })
 
   return (
-    <WrapperFlex
+    <Flex
       className={className}
       direction="column"
       gap="12px"
       alignItems="flex-start"
     >
-      {post.date && <Text size="small">{formatDate(new Date(post.date))}</Text>}
-      <Heading variant="h2">{post.title}</Heading>
+      <Heading variant="h4" normalWeight>
+        {post.title}
+      </Heading>
+      <AuthorAndDate
+        date={post.date || undefined}
+        authorName={authorName || undefined}
+        isPodcast={isPodcast}
+      />
       {post.content && <PostContent>{postContentElements}</PostContent>}
-      {!isPodcast && authorName && <Text weight="bold">{authorName}</Text>}
-    </WrapperFlex>
+    </Flex>
   )
 }
 
@@ -109,10 +113,20 @@ const redirectLinks = (content: Maybe<string> | undefined) => {
 const PostContent = styled.div`
   max-width: 100%;
 
+  line-height: 1.6em;
+  font-size: 18px;
+  font-weight: 100;
+
   color: var(--color-secondary);
+
+  p:first-of-type {
+    margin-top: 0;
+  }
+
   p {
     width: 100%;
-    margin: 28px 0;
+    margin-bottom: 30px;
+    padding: 0;
 
     audio {
       margin: 14px 0;
@@ -121,6 +135,11 @@ const PostContent = styled.div`
     > * {
       max-width: 100%;
     }
+  }
+
+  h2 {
+    margin-top: 40px;
+    margin-bottom: 10px;
   }
 
   // youtube video
@@ -153,10 +172,6 @@ const PostContent = styled.div`
       padding-bottom: 4px;
     }
   }
-`
-
-const WrapperFlex = styled(Flex)`
-  max-width: 900px;
 `
 
 export default PostView
