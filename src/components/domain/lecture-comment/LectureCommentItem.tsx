@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {useAuth} from '../../../AuthUserContext'
 import useEditItemActions from '../../../hooks/useEditItemActions'
 import {LectureComment} from '../../../types'
-import {formatDate} from '../../../utils'
+import {formatDateTime} from '../../../utils'
 import {useDeleteLectureComment} from '../../../api/lectureComments'
 import Flex from '../../core/Flex'
 import Text from '../../core/Text'
@@ -59,7 +59,9 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
           <CommentField>
             <Flex direction="column" alignItems="flex-start" gap="8px">
               <Flex justifyContent="space-between" alignSelf="stretch">
-                <Text size="very-small">{formatDate(comment.updatedAt)}</Text>
+                <Text size="very-small">
+                  {formatDateTime(comment.updatedAt)}
+                </Text>
                 <Text size="very-small">{comment.userName}</Text>
               </Flex>
               <Text>{comment.commentText}</Text>

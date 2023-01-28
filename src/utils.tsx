@@ -31,10 +31,17 @@ export const formatDurationFromSeconds = (seconds: number) => {
 }
 
 /***
- * i.e from '2007-12-03T10:15:30+01:00' => '03/12/2007, 10:15:30'
+ * i.e from '2007-12-03T10:15:30+01:00' => '3. 12. 2007, 10:15:30'
+ */
+export const formatDateTime = (date: Date) => {
+  return new Date(date).toLocaleString('sk')
+}
+
+/***
+ * i.e from '2007-12-03T10:15:30+01:00' => '3. 12. 2007'
  */
 export const formatDate = (date: Date) => {
-  return new Date(date).toLocaleString('en-GB')
+  return new Date(date).toLocaleDateString('sk')
 }
 
 export const getCourseProgressPercent = (
