@@ -4,11 +4,11 @@ import PageContentWrapper from '../../components/PageContentWrapper'
 import {getPostBySlug} from '../../wp/api'
 import {Post} from '../../wp/types'
 import NavBar from '../../components/NavBar'
-import BackLink from '../../components/core/BackLink'
 import PostView from '../../components/domain/post/PostView'
 import {EMPTY_BLOG_IMAGE_PLACEHOLDER_URL} from '../../components/domain/post/blog/clanky-constants'
 import Head from '../../components/Head'
 import {prefixWithHost, routes} from '../../routes'
+import PostContentWrapper from '../../components/PostContentWrapper'
 
 interface Props {
   post: Post
@@ -31,8 +31,9 @@ const SinglePostPage: NextPage<Props> = ({post}) => {
       />
       <NavBar />
       <PageContentWrapper>
-        <BackLink to={routes.clanky.index} text={'Späť na články'} />
-        <PostView post={post} />
+        <PostContentWrapper>
+          <PostView post={post} />
+        </PostContentWrapper>
       </PageContentWrapper>
     </>
   )
