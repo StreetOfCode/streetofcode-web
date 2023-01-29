@@ -92,18 +92,19 @@ const AuthorPageContent = ({
             </Text>
           </Flex>
         </AboutAuthorFlex>
-
-        <Flex
-          direction="column"
-          gap="32px"
-          alignSelf="flex-start"
-          alignItems="flex-start"
-        >
-          <Heading variant="h3" withAccentUnderline normalWeight>
-            {authorOverview.coursesTitle}
-          </Heading>
-          <Courses courses={authorOverview.courses} />
-        </Flex>
+        {authorOverview.courses.length > 0 && (
+          <Flex
+            direction="column"
+            gap="32px"
+            alignSelf="flex-start"
+            alignItems="flex-start"
+          >
+            <Heading variant="h3" withAccentUnderline normalWeight>
+              {authorOverview.coursesTitle}
+            </Heading>
+            <Courses courses={authorOverview.courses} />
+          </Flex>
+        )}
       </Flex>
     </PageContentWrapper>
   )
