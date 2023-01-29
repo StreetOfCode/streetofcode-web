@@ -1,15 +1,22 @@
 import {useQuery} from 'react-query'
+import {assert} from '../utils'
 import {Post} from './types'
 
 const API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL
 
-const P = 'wpApi'
+const WP_API_QUERY_KEY_PREFIX = 'wpApi'
 
 export const queryKeys = {
-  get: (categoryName: string, limit: number) => [
-    P,
+  category: (categoryName: string, limit: number) => [
+    WP_API_QUERY_KEY_PREFIX,
+    'category',
     categoryName,
     limit.toString(),
+  ],
+  author: (authorName?: string) => [
+    WP_API_QUERY_KEY_PREFIX,
+    'author',
+    authorName,
   ],
 }
 
@@ -27,6 +34,8 @@ async function fetchAPI(query: string, variables?: object) {
 
   const json = await res.json()
   if (json.errors) {
+    // eslint-disable-next-line no-console
+    console.debug('Failed to fetch graphql WP API', {json})
     throw new Error('Failed to fetch graphql WP API')
   }
   return json.data
@@ -82,7 +91,7 @@ export async function getAllPosts(
 }
 
 export function useGetAllPosts(categoryName: string, limit = 1000) {
-  return useQuery(queryKeys.get(categoryName, limit), () =>
+  return useQuery(queryKeys.category(categoryName, limit), () =>
     getAllPosts(categoryName, limit),
   )
 }
@@ -132,4 +141,54 @@ export async function getPostBySlug(slug: string): Promise<Post> {
   `)
 
   return data?.post
+}
+
+const AUTHOR_WP_ID: Record<string, number> = {
+  'Jakub Jahič': 2,
+  'Gabriel Kerekeš': 3,
+}
+
+export function useGetPostsByAuthor(authorName?: string) {
+  return useQuery(
+    queryKeys.author(authorName),
+    () => {
+      assert(!!authorName)
+      const authorId = AUTHOR_WP_ID[authorName]
+      return getBlogPostsByAuthor(authorId)
+    },
+    {enabled: !!authorName},
+  )
+}
+
+export async function getBlogPostsByAuthor(authorId: number): Promise<Post[]> {
+  const data = await fetchAPI(`
+  {
+    posts(first: 100, where: {author: ${authorId}, categoryName: "blog"}) {
+      nodes {
+        title
+        excerpt
+        slug
+        date
+        content
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
+        author {
+          node {
+            name
+            firstName
+            lastName
+            avatar {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+  `)
+
+  return data?.posts?.nodes
 }

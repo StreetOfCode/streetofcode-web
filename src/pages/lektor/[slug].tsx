@@ -13,10 +13,14 @@ import {useGetAuthorOverview} from '../../api/authorOverview'
 import PageContentWrapper from '../../components/PageContentWrapper'
 import {useRouter} from 'next/router'
 import NavBar from '../../components/NavBar'
-import {UserAndQueryGuard} from '../../QueryGuard'
+import {QueryGuard, UserAndQueryGuard} from '../../QueryGuard'
 import {device} from '../../theme/device'
 import Head from '../../components/Head'
 import {prefixWithHost, routes} from '../../routes'
+import {useGetPostsByAuthor} from '../../wp/api'
+import PostPreviewCard from '../../components/domain/post/PostPreviewCard'
+import NextLink from '../../components/core/NextLink'
+import GridWrapper from '../../components/domain/post/GridWrapper'
 
 type Props = {
   slug: string
@@ -26,7 +30,6 @@ type Props = {
 const AuthorPage: NextPage<Props> = ({slug, authorOverview}: Props) => {
   const {user} = useAuth()
   const getAuthorOverviewQuery = useGetAuthorOverview(slug, !!user)
-
   return (
     <UserAndQueryGuard
       user={user}
@@ -59,6 +62,7 @@ const AuthorPageContent = ({
 }: {
   authorOverview: AuthorOverview
 }) => {
+  const authorPostsQuery = useGetPostsByAuthor(authorOverview?.name)
   const router = useRouter()
 
   const handleGoBack = () => {
@@ -83,7 +87,7 @@ const AuthorPageContent = ({
             alignSelf="flex-start"
             alignItems="flex-start"
           >
-            <Heading variant="h2" withAccentUnderline normalWeight>
+            <Heading variant="h3" withAccentUnderline normalWeight>
               {authorOverview.name}
             </Heading>
             <StyledDescription>{authorOverview.description}</StyledDescription>
@@ -99,12 +103,38 @@ const AuthorPageContent = ({
             alignSelf="flex-start"
             alignItems="flex-start"
           >
-            <Heading variant="h3" withAccentUnderline normalWeight>
+            <Heading variant="h4" withAccentUnderline normalWeight>
               {authorOverview.coursesTitle}
             </Heading>
             <Courses courses={authorOverview.courses} />
           </Flex>
         )}
+        <QueryGuard {...authorPostsQuery}>
+          {(authorPosts) => {
+            return (
+              <Flex
+                direction="column"
+                gap="32px"
+                alignSelf="flex-start"
+                alignItems="flex-start"
+              >
+                <Heading variant="h4" withAccentUnderline normalWeight>
+                  Články
+                </Heading>
+                <GridWrapper>
+                  {authorPosts?.map((post, i) => (
+                    <NextLink
+                      key={i}
+                      href={routes.clanky.slug(post.slug || '')}
+                    >
+                      <PostPreviewCard post={post} />
+                    </NextLink>
+                  ))}
+                </GridWrapper>
+              </Flex>
+            )
+          }}
+        </QueryGuard>
       </Flex>
     </PageContentWrapper>
   )
