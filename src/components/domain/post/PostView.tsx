@@ -3,7 +3,6 @@ import parse, {Element, Text as HtmlParserText} from 'html-react-parser'
 import styled from 'styled-components'
 import {Maybe, Post} from '../../../wp/types'
 import Flex from '../../core/Flex'
-import Heading from '../../core/Heading'
 import {device} from '../../../theme/device'
 import SyntaxHighlighter from '../../SyntaxHighlighter'
 import {routes} from '../../../routes'
@@ -60,22 +59,20 @@ const PostView = ({className, isPodcast, post}: Props) => {
   })
 
   return (
-    <Flex
+    <FlexWrapper
       className={className}
       direction="column"
       gap="12px"
       alignItems="flex-start"
     >
-      <Heading variant="h4" normalWeight>
-        {post.title}
-      </Heading>
+      <StyledPostTitle>{post.title}</StyledPostTitle>
       <AuthorAndDate
         date={post.date || undefined}
         authorName={authorName || undefined}
         isPodcast={isPodcast}
       />
       {post.content && <PostContent>{postContentElements}</PostContent>}
-    </Flex>
+    </FlexWrapper>
   )
 }
 
@@ -109,6 +106,22 @@ const redirectLinks = (content: Maybe<string> | undefined) => {
 
   return content
 }
+
+const FlexWrapper = styled(Flex)`
+  width: clamp(320px, 100%, 750px);
+  margin: 0 auto;
+`
+
+// Special case when we don't want tu use our Heading component
+const StyledPostTitle = styled.h1`
+  font-size: 42px;
+  font-weight: bold;
+  color: var(--color-secondary);
+
+  @media ${device.S} {
+    font-size: 32px;
+  }
+`
 
 const PostContent = styled.div`
   max-width: 100%;

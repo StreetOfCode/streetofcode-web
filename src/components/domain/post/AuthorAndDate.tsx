@@ -8,6 +8,7 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import {routes} from '../../../routes'
 import {socLamp} from '../../../images'
+import Flex from '../../core/Flex'
 
 const AUTHOR_SLUG: Record<string, string> = {
   'Jakub Jahič': 'jakub-jahic',
@@ -17,15 +18,15 @@ const AUTHOR_SLUG: Record<string, string> = {
 const PodcastAuthorAndDate = ({date}: {date?: string}) => {
   return (
     <Link href={routes.root}>
-      <Wrapper>
+      <FlexWrapper alignItems="center" gap="8px">
         <Avatar altName="Street of Code logo" src={socLamp} sizePx={38} />
-        <NameAndDateWrapper>
+        <NameAndDateFlexWrapper direction="column">
           <Text size="small">Street of Code</Text>
           {date && (
             <DateText size="small">{formatDate(new Date(date))}</DateText>
           )}
-        </NameAndDateWrapper>
-      </Wrapper>
+        </NameAndDateFlexWrapper>
+      </FlexWrapper>
     </Link>
   )
 }
@@ -45,19 +46,19 @@ const ArticleAuthorAndDate = ({
       {(authorOverview) => {
         return (
           <Link href={routes.lektor.slug(authorSlug)}>
-            <Wrapper>
+            <FlexWrapper alignItems="center" gap="8px">
               <Avatar
                 altName={authorOverview.name}
                 src={authorOverview.imageUrl}
                 sizePx={38}
               />
-              <NameAndDateWrapper>
+              <NameAndDateFlexWrapper direction="column">
                 {authorName && <Text size="small">{authorOverview.name}</Text>}
                 {date && (
                   <DateText size="small">{formatDate(new Date(date))}</DateText>
                 )}
-              </NameAndDateWrapper>
-            </Wrapper>
+              </NameAndDateFlexWrapper>
+            </FlexWrapper>
           </Link>
         )
       }}
@@ -79,10 +80,7 @@ const AuthorAndDate = ({
   return <ArticleAuthorAndDate date={date} authorName={authorName} />
 }
 
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
+const FlexWrapper = styled(Flex)`
   border-radius: 20px;
   padding: 10px;
 
@@ -96,10 +94,9 @@ const Wrapper = styled.div`
   }
 `
 
-const NameAndDateWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 4;
+const NameAndDateFlexWrapper = styled(Flex)`
+  padding: 4px;
+  align-items: flex-start;
 `
 
 const DateText = styled(Text)`

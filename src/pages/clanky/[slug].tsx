@@ -8,7 +8,6 @@ import PostView from '../../components/domain/post/PostView'
 import {EMPTY_BLOG_IMAGE_PLACEHOLDER_URL} from '../../components/domain/post/blog/clanky-constants'
 import Head from '../../components/Head'
 import {prefixWithHost, routes} from '../../routes'
-import PostContentWrapper from '../../components/PostContentWrapper'
 
 interface Props {
   post: Post
@@ -31,9 +30,7 @@ const SinglePostPage: NextPage<Props> = ({post}) => {
       />
       <NavBar />
       <PageContentWrapper>
-        <PostContentWrapper>
-          <PostView post={post} />
-        </PostContentWrapper>
+        <PostView post={post} />
       </PageContentWrapper>
     </>
   )
