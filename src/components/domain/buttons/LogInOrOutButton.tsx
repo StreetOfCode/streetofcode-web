@@ -81,7 +81,7 @@ const Trigger = styled(DropdownMenu.Trigger)`
 const StyledContent = styled(DropdownMenu.Content)`
   background-color: var(--color-primary);
   border-radius: 12px;
-  padding: 12px 18px;
+  padding: 12px 15px;
   border: 1px solid var(--color-secondary);
 `
 
@@ -90,6 +90,7 @@ const DropDownItem = styled(DropdownMenu.Item)`
   all: unset;
   white-space: nowrap;
   color: var(--color-secondary);
+  margin: 12px 0;
 
   &:focus,
   &:hover {
