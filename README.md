@@ -5,9 +5,8 @@ V tomto repozitári nájdeš frontend k našej fantastickej stránke [streetofco
 ## Technológie
 
 - Jazyk: Typescript
-- Framework: [React](https://reactjs.org/)
-- Framework nad frameworkom: [Next.js](https://nextjs.org/)
-- Štýli: [Styled components](https://styled-components.com/)
+- Framework: [Next.js](https://nextjs.org/) a teda [React](https://reactjs.org/)
+- Štýly: [Styled components](https://styled-components.com/)
 - Komponenty: Väčšina sú [vlastné komponenty](src/components/core), trochu [Material UI](https://mui.com/)
 - Monitoring: [Sentry](https://sentry.io/)
 - Autentifikácia používateľov (login): [Firebase Authentication](https://firebase.google.com/docs/auth)
