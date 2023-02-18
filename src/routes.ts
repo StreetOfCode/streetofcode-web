@@ -47,6 +47,7 @@ const patreon = '/patreon'
 const discord = '/discord'
 const instagram = '/instagram'
 const youtube = '/youtube'
+const dvePercenta = '2-percenta'
 
 export const routes = {
   host,
@@ -58,6 +59,7 @@ export const routes = {
   login,
   lektor,
   feedback,
+  dvePercenta,
   newsletter,
   oProjekte,
   onboarding,
