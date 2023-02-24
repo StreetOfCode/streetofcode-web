@@ -43,7 +43,7 @@ const EditableCourseReview = ({
       <TextField
         text={text}
         onTextChanged={onTextChanged}
-        maxLength={360}
+        maxLength={500}
         label="Sem napíš svoje hodnotenie"
         itemBefore={
           <Rating

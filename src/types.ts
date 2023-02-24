@@ -286,3 +286,23 @@ export type SubscribedFromType =
   | 'ONBOARDING'
   | 'PROFILE'
   | 'NEWSLETTER_MODAL'
+
+export interface PostComment {
+  id: number
+  postId: string
+  postTitle: string
+  userId?: string
+  userName?: string
+  imageUrl?: string
+  commentText: string
+  updatedAt: Date
+}
+
+export interface PostCommentEditRequest {
+  commentText: string
+}
+
+export interface PostCommentAddRequest {
+  postTitle: string
+  commentText: string
+}

@@ -7,6 +7,7 @@ import {device} from '../../../theme/device'
 import SyntaxHighlighter from '../../SyntaxHighlighter'
 import {routes} from '../../../routes'
 import AuthorAndDate from './AuthorAndDate'
+import PostComments from '../post-comment/PostComments'
 
 type Props = {
   className?: string
@@ -72,6 +73,7 @@ const PostView = ({className, isPodcast, post}: Props) => {
         isPodcast={isPodcast}
       />
       {post.content && <PostContent>{postContentElements}</PostContent>}
+      <PostComments postId={post.id} postTitle={post.title || 'empty'} />
     </FlexWrapper>
   )
 }
