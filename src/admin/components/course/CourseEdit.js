@@ -33,6 +33,7 @@ const transform = (data) => ({
   thumbnailUrl: data.thumbnailUrl,
   iconUrl: data.iconUrl,
   status: data.status,
+  courseOrder: data.courseOrder,
 })
 
 const CourseEdit = () => {
@@ -58,6 +59,7 @@ const CourseEdit = () => {
         </ReferenceInput>
         <TextInput required source="name" />
         <TextInput required source="slug" />
+        <NumberInput required source="courseOrder" />
         <TextInput required source="shortDescription" />
         <MarkdownInput source="longDescription" />
         <MarkdownInput source="resources" />

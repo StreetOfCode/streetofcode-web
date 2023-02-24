@@ -8,6 +8,7 @@ import {
   ShowButton,
   TextField,
   DeleteWithConfirmButton,
+  NumberField,
 } from 'react-admin'
 
 const CourseList = () => {
@@ -23,6 +24,7 @@ const CourseList = () => {
           <TextField source="name" />
         </ReferenceField>
         <TextField source="slug" />
+        <NumberField source="courseOrder" />
         <TextField source="status" />
         <TextField source="shortDescription" />
         <ReferenceField label="Author" source="author.id" reference="author">

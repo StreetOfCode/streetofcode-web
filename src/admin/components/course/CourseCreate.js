@@ -5,6 +5,7 @@ import {
   TextInput,
   SelectInput,
   ReferenceInput,
+  NumberInput,
 } from 'react-admin'
 import {MarkdownInput} from '../../custom/MarkdownInput'
 
@@ -30,6 +31,7 @@ const CourseCreate = () => {
         </ReferenceInput>
         <TextInput required source="name" />
         <TextInput required source="slug" />
+        <NumberInput required source="courseOrder" />
         <TextInput required source="shortDescription" />
         <MarkdownInput source="longDescription" />
         <MarkdownInput source="resources" />

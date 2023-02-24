@@ -56,6 +56,7 @@ const CourseShow = () => {
         </ReferenceField>
         <TextField source="name" />
         <TextField source="slug" />
+        <NumberField source="courseOrder" />
         <TextField source="shortDescription" />
         <MarkdownField addLabel source="longDescription" />
         <MarkdownField addLabel source="resources" />

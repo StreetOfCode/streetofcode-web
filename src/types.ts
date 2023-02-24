@@ -58,6 +58,7 @@ export interface LectureComment {
 
 export interface CourseOverview {
   id: number
+  courseOrder: number
   name: string
   slug: string
   shortDescription: string
