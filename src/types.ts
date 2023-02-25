@@ -53,6 +53,7 @@ export interface LectureComment {
   userName: string
   imageUrl?: string
   commentText: string
+  createdAt: Date
   updatedAt: Date
 }
 
@@ -295,6 +296,7 @@ export interface PostComment {
   userName?: string
   imageUrl?: string
   commentText: string
+  createdAt: Date
   updatedAt: Date
 }
 

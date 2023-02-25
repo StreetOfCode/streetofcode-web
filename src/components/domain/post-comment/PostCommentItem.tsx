@@ -3,13 +3,14 @@ import styled from 'styled-components'
 import {useAuth} from '../../../AuthUserContext'
 import useEditItemActions from '../../../hooks/useEditItemActions'
 import {PostComment} from '../../../types'
-import {formatDateTime} from '../../../utils'
+import {formatDate, formatDateTime} from '../../../utils'
 import {useDeletePostComment} from '../../../api/postComments'
 import Flex from '../../core/Flex'
 import Text from '../../core/Text'
 import Loading from '../../Loading'
 import UserAvatar from '../user/UserAvatar'
 import EditPostComment from './EditPostComment'
+import {device} from '../../../theme/device'
 
 type PostCommentItemProps = {
   postId: string
@@ -55,10 +56,25 @@ const PostCommentItem = ({postId, comment}: PostCommentItemProps) => {
         {!isEditing && (
           <CommentField>
             <Flex direction="column" alignItems="flex-start" gap="8px">
-              <Flex justifyContent="space-between" alignSelf="stretch">
-                <Text size="very-small">
-                  {formatDateTime(comment.updatedAt)}
-                </Text>
+              <Flex
+                justifyContent="space-between"
+                alignSelf="stretch"
+                alignItems="flex-start"
+              >
+                <CommentTimeWrapper
+                  gap="6px"
+                  alignItems="flex-start"
+                  justifyContent="flex-start"
+                >
+                  <Text size="very-small">
+                    {formatDateTime(comment.createdAt)}
+                  </Text>
+                  {comment.updatedAt > comment.createdAt && (
+                    <Text size="very-small">
+                      (upravené {formatDate(comment.updatedAt)})
+                    </Text>
+                  )}
+                </CommentTimeWrapper>
                 <Text size="very-small">{comment.userName || 'Anonym'}</Text>
               </Flex>
               <Text>{comment.commentText}</Text>
@@ -91,6 +107,13 @@ const CommentField = styled.div`
   padding: 12px;
   border-radius: 12px;
   border: 1px solid var(--color-accent);
+`
+
+const CommentTimeWrapper = styled(Flex)`
+  @media ${device.S} {
+    flex-direction: column;
+    gap: 2px;
+  }
 `
 
 export default PostCommentItem

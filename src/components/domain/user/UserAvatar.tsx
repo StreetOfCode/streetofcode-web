@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import {createAvatarName} from '../../../utils'
 import Avatar from '../../core/Avatar'
 import Flex from '../../core/Flex'
+import Text from '../../core/Text'
 
 type Props = {
   className?: string
@@ -43,7 +44,7 @@ const UserAvatar = ({
         justifyContent="center"
         sizePx={sizePx}
       >
-        {createAvatarName(name)}
+        <Text>{createAvatarName(name)}</Text>
       </InitialsAvatar>
     )
   }

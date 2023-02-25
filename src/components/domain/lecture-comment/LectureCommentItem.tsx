@@ -3,13 +3,14 @@ import styled from 'styled-components'
 import {useAuth} from '../../../AuthUserContext'
 import useEditItemActions from '../../../hooks/useEditItemActions'
 import {LectureComment} from '../../../types'
-import {formatDateTime} from '../../../utils'
+import {formatDate, formatDateTime} from '../../../utils'
 import {useDeleteLectureComment} from '../../../api/lectureComments'
 import Flex from '../../core/Flex'
 import Text from '../../core/Text'
 import Loading from '../../Loading'
 import UserAvatar from '../user/UserAvatar'
 import EditLectureComment from './EditLectureComment'
+import {device} from '../../../theme/device'
 
 type LectureCommentItemProps = {
   lectureId: number
@@ -59,9 +60,20 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
           <CommentField>
             <Flex direction="column" alignItems="flex-start" gap="8px">
               <Flex justifyContent="space-between" alignSelf="stretch">
-                <Text size="very-small">
-                  {formatDateTime(comment.updatedAt)}
-                </Text>
+                <CommentTimeWrapper
+                  gap="6px"
+                  alignItems="flex-start"
+                  justifyContent="flex-start"
+                >
+                  <Text size="very-small">
+                    {formatDateTime(comment.createdAt)}
+                  </Text>
+                  {comment.updatedAt > comment.createdAt && (
+                    <Text size="very-small">
+                      (upravené {formatDate(comment.updatedAt)})
+                    </Text>
+                  )}
+                </CommentTimeWrapper>
                 <Text size="very-small">{comment.userName}</Text>
               </Flex>
               <Text>{comment.commentText}</Text>
@@ -94,6 +106,12 @@ const CommentField = styled.div`
   padding: 12px;
   border-radius: 12px;
   border: 1px solid var(--color-accent);
+`
+const CommentTimeWrapper = styled(Flex)`
+  @media ${device.S} {
+    flex-direction: column;
+    gap: 2px;
+  }
 `
 
 export default LectureCommentItem
