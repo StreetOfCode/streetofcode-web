@@ -14,9 +14,14 @@ import Loading from '../../Loading'
 type CourseReviewItemProps = {
   review: CourseReview
   courseSlug: string
+  allowUpdating?: boolean
 }
 
-const CourseReviewItem = ({review, courseSlug}: CourseReviewItemProps) => {
+const CourseReviewItem = ({
+  review,
+  courseSlug,
+  allowUpdating,
+}: CourseReviewItemProps) => {
   const {userId, isLoading} = useAuth()
 
   const deleteCourseReviewMutation = useDeleteCourseReview(
@@ -29,7 +34,7 @@ const CourseReviewItem = ({review, courseSlug}: CourseReviewItemProps) => {
     await deleteCourseReviewMutation.mutateAsync()
   }
 
-  const isUpdatingAllowed = review.userId === userId
+  const isUpdatingAllowed = allowUpdating && review.userId === userId
 
   const [isEditing, onEdited, onEditCancelled, EditItemActions] =
     useEditItemActions({

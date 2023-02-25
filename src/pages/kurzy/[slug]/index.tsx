@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import Image from 'next/image'
 import {GetStaticProps, NextPage} from 'next'
 import * as Api from '../../../api'
@@ -34,6 +34,7 @@ import VideoWrapper from '../../../components/domain/video/VideoWrapper'
 import dynamic from 'next/dynamic'
 import Head from '../../../components/Head'
 import {prefixWithHost, routes} from '../../../routes'
+import SidebarCourseReviews from '../../../components/domain/course-review/SidebarCourseReviews'
 
 type Props = {
   slug: string
@@ -86,10 +87,18 @@ const CourseDetailContent = ({
   courseOverview: CourseOverview
 }) => {
   const {user, isLoading} = useAuth()
-
+  const courseReviewsRef = useRef<null | HTMLDivElement>(null)
   const router = useRouter()
 
   if (!courseOverview.thumbnailUrl && !courseOverview.trailerUrl) return null
+
+  const handleCourseReviewsRefClick = () => {
+    if (courseReviewsRef.current) {
+      courseReviewsRef.current.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  }
 
   let lecturesCount = 0
   let url = ''
@@ -158,7 +167,10 @@ const CourseDetailContent = ({
             Obsah
           </Heading>
           <CourseContent course={courseOverview} />
-          <CourseReviews courseOverview={courseOverview} />
+          <CourseReviews
+            courseOverview={courseOverview}
+            innerRef={courseReviewsRef}
+          />
         </CourseDetailsFlex>
 
         <CardFlex direction="column" gap="12px" alignSelf="flex-start">
@@ -226,7 +238,7 @@ const CourseDetailContent = ({
               alignSelf="flex-start"
               gap="12px"
             >
-              <CourseInfoItem>
+              <CourseInfoItem clickable onClick={handleCourseReviewsRefClick}>
                 <Rating
                   readOnly
                   value={courseOverview.reviewsOverview.averageRating}
@@ -257,6 +269,16 @@ const CourseDetailContent = ({
               )}
             </Flex>
           </Flex>
+          <StyledSidebarCourseReviews courseOverview={courseOverview} />
+          {courseOverview.reviewsOverview.numberOfReviews > 0 && (
+            <AllReviewsText
+              color="accent"
+              withAccentUnderline
+              onClick={handleCourseReviewsRefClick}
+            >
+              Zobraziť všetky hodnotenia
+            </AllReviewsText>
+          )}
         </CardFlex>
       </WrapperFlex>
     </PageContentWrapper>
@@ -318,6 +340,28 @@ const CardImageWrapper = styled.div`
   width: 100%;
   max-width: 100%;
   aspect-ratio: 16 / 9;
+`
+const StyledSidebarCourseReviews = styled(SidebarCourseReviews)`
+  margin-top: 24px;
+  margin-bottom: 8px;
+
+  @media ${device.S} {
+    display: none;
+  }
+`
+
+const AllReviewsText = styled(Text)`
+  transition: transform 0.2s ease-in-out;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: transform 0.2s ease-in-out;
+    opacity: 0.8;
+  }
+
+  @media ${device.S} {
+    display: none;
+  }
 `
 
 export const getStaticProps: GetStaticProps = async (context) => {
