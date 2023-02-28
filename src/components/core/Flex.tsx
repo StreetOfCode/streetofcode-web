@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 type Props = {
   className?: string
+  innerRef?: React.MutableRefObject<null | HTMLDivElement>
   alignSelf?: AlignItems
   gap?: string
   flex?: string
@@ -25,6 +26,7 @@ type AlignContent = 'normal' | 'center' | 'space-between' | 'space-around'
 const Flex = ({
   children,
   className,
+  innerRef,
   alignSelf,
   gap,
   flex,
@@ -44,6 +46,7 @@ const Flex = ({
       alignSelf={alignSelf}
       gap={gap}
       flex={flex}
+      ref={innerRef}
       {...props}
     >
       {children}

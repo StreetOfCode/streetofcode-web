@@ -15,9 +15,10 @@ import {CourseOverview} from '../../../types'
 
 interface CourseReviewsProps {
   courseOverview: CourseOverview
+  innerRef?: React.MutableRefObject<null | HTMLDivElement>
 }
 
-const CourseReviews = ({courseOverview}: CourseReviewsProps) => {
+const CourseReviews = ({courseOverview, innerRef}: CourseReviewsProps) => {
   const {userId, isLoading} = useAuth()
 
   const courseId = courseOverview.id
@@ -36,7 +37,12 @@ const CourseReviews = ({courseOverview}: CourseReviewsProps) => {
   if (isLoading) return <Loading />
 
   return (
-    <WrapperFlex direction="column" gap="32px" alignSelf="flex-start">
+    <WrapperFlex
+      innerRef={innerRef}
+      direction="column"
+      gap="32px"
+      alignSelf="flex-start"
+    >
       <QueryGuard {...getCourseReviewsOverviewQuery}>
         {(courseReviewsOverview) => (
           <Flex alignSelf="flex-start" gap="32px">
@@ -67,6 +73,7 @@ const CourseReviews = ({courseOverview}: CourseReviewsProps) => {
                 key={courseReview.id}
                 review={courseReview}
                 courseSlug={courseSlug}
+                allowUpdating
               />
             ))}
           </Flex>
