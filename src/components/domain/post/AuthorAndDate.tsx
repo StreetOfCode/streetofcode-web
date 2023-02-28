@@ -17,7 +17,7 @@ const AUTHOR_SLUG: Record<string, string> = {
 
 const PodcastAuthorAndDate = ({date}: {date?: string}) => {
   return (
-    <Link href={routes.root}>
+    <Link href={routes.root} passHref>
       <FlexWrapper alignItems="center" gap="8px">
         <Avatar altName="Street of Code logo" src={socLamp} sizePx={38} />
         <NameAndDateFlexWrapper direction="column">
@@ -45,7 +45,7 @@ const ArticleAuthorAndDate = ({
     <QueryGuard {...getAuthorOverviewQuery}>
       {(authorOverview) => {
         return (
-          <Link href={routes.lektor.slug(authorSlug)}>
+          <Link href={routes.lektor.slug(authorSlug)} passHref>
             <FlexWrapper alignItems="center" gap="8px">
               <Avatar
                 altName={authorOverview.name}
