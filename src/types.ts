@@ -53,6 +53,7 @@ export interface LectureComment {
   userName: string
   imageUrl?: string
   commentText: string
+  createdAt: Date
   updatedAt: Date
 }
 
@@ -287,3 +288,24 @@ export type SubscribedFromType =
   | 'ONBOARDING'
   | 'PROFILE'
   | 'NEWSLETTER_MODAL'
+
+export interface PostComment {
+  id: number
+  postId: string
+  postTitle: string
+  userId?: string
+  userName?: string
+  imageUrl?: string
+  commentText: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface PostCommentEditRequest {
+  commentText: string
+}
+
+export interface PostCommentAddRequest {
+  postTitle: string
+  commentText: string
+}

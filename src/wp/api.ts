@@ -116,6 +116,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
   const data = await fetchAPI(`
     {
       post(id: "${slug}", idType: SLUG) {
+        id
         title
         excerpt
         slug

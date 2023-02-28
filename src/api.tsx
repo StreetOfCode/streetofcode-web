@@ -46,6 +46,14 @@ const LECTURE_COMMENT_URL = `${API_URL}/lecture/`
 export const lectureCommentUrl = (lectureId: number, commentId: number) =>
   `${LECTURE_COMMENT_URL}${lectureId}/comment/${commentId}`
 
+const POST_COMMENTS_URL = `${API_URL}/post/`
+export const postCommentsUrl = (postId: string) =>
+  `${POST_COMMENTS_URL}${postId}/comment`
+
+const POST_COMMENT_URL = `${API_URL}/post/`
+export const postCommentUrl = (postId: string, commentId: number) =>
+  `${POST_COMMENT_URL}${postId}/comment/${commentId}`
+
 const UPDATE_PROGRESS_LECTURE_URL = `${API_URL}/progress/update/`
 export const updateProgressLectureUrl = (lectureId: number) =>
   `${UPDATE_PROGRESS_LECTURE_URL}${lectureId}`

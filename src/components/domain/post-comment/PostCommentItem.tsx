@@ -2,34 +2,31 @@ import React from 'react'
 import styled from 'styled-components'
 import {useAuth} from '../../../AuthUserContext'
 import useEditItemActions from '../../../hooks/useEditItemActions'
-import {LectureComment} from '../../../types'
-import {formatDate, formatDateTime} from '../../../utils'
-import {useDeleteLectureComment} from '../../../api/lectureComments'
+import {PostComment} from '../../../types'
+import {formatDate, formatDateTime, subtractDates} from '../../../utils'
+import {useDeletePostComment} from '../../../api/postComments'
 import Flex from '../../core/Flex'
 import Text from '../../core/Text'
 import Loading from '../../Loading'
 import UserAvatar from '../user/UserAvatar'
-import EditLectureComment from './EditLectureComment'
+import EditPostComment from './EditPostComment'
 import {device} from '../../../theme/device'
 
-type LectureCommentItemProps = {
-  lectureId: number
-  comment: LectureComment
+type PostCommentItemProps = {
+  postId: string
+  comment: PostComment
 }
 
-const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
+const PostCommentItem = ({postId, comment}: PostCommentItemProps) => {
   const {userId, isLoading} = useAuth()
 
-  const deleteLectureCommentMutation = useDeleteLectureComment(
-    comment.id,
-    lectureId,
-  )
+  const deletePostCommentMutation = useDeletePostComment(comment.id, postId)
 
   const onDelete = async () => {
-    await deleteLectureCommentMutation.mutateAsync()
+    await deletePostCommentMutation.mutateAsync()
   }
 
-  const isUpdatingAllowed = comment.userId === userId
+  const isUpdatingAllowed = userId != null && comment.userId === userId
 
   const [isEditing, onEdited, onEditCancelled, EditItemActions] =
     useEditItemActions({
@@ -51,7 +48,7 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
         >
           <UserAvatar
             src={comment.imageUrl}
-            name={comment.userName}
+            name={comment.userName || 'Anonym'}
             sizePx={42}
           />
           <EditItemActions />
@@ -59,30 +56,35 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
         {!isEditing && (
           <CommentField>
             <Flex direction="column" alignItems="flex-start" gap="8px">
-              <Flex justifyContent="space-between" alignSelf="stretch">
+              <Flex
+                justifyContent="space-between"
+                alignSelf="stretch"
+                alignItems="flex-start"
+              >
+                <Text size="very-small">{comment.userName || 'Anonym'}</Text>
                 <CommentTimeWrapper
                   gap="6px"
-                  alignItems="flex-start"
+                  alignItems="center"
                   justifyContent="flex-start"
                 >
                   <Text size="very-small">
                     {formatDateTime(comment.createdAt)}
                   </Text>
-                  {comment.updatedAt > comment.createdAt && (
-                    <Text size="very-small">
-                      (upravené {formatDate(comment.updatedAt)})
+                  {subtractDates(comment.updatedAt, comment.createdAt) >
+                    500 && (
+                    <Text size="very-small" color="secondary">
+                      (upravené)
                     </Text>
                   )}
                 </CommentTimeWrapper>
-                <Text size="very-small">{comment.userName}</Text>
               </Flex>
               <Text>{comment.commentText}</Text>
             </Flex>
           </CommentField>
         )}
         {isEditing && (
-          <EditLectureComment
-            lectureId={lectureId}
+          <EditPostComment
+            postId={postId}
             comment={comment}
             onCommentEdited={onEdited}
             onCancelled={onEditCancelled}
@@ -107,11 +109,12 @@ const CommentField = styled.div`
   border-radius: 12px;
   border: 1px solid var(--color-accent);
 `
+
 const CommentTimeWrapper = styled(Flex)`
-  @media ${device.S} {
+  @media ${device.XS} {
     flex-direction: column;
     gap: 2px;
   }
 `
 
-export default LectureCommentItem
+export default PostCommentItem

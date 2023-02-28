@@ -33,15 +33,19 @@ export const formatDurationFromSeconds = (seconds: number) => {
 /***
  * i.e from '2007-12-03T10:15:30+01:00' => '3. 12. 2007, 10:15:30'
  */
-export const formatDateTime = (date: Date) => {
+export const formatDateTime = (date: Date | string) => {
   return new Date(date).toLocaleString('sk')
 }
 
 /***
  * i.e from '2007-12-03T10:15:30+01:00' => '3. 12. 2007'
  */
-export const formatDate = (date: Date) => {
+export const formatDate = (date: Date | string) => {
   return new Date(date).toLocaleDateString('sk')
+}
+
+export const subtractDates = (d1: Date | string, d2: Date | string) => {
+  return new Date(d1).getTime() - new Date(d2).getTime()
 }
 
 export const getCourseProgressPercent = (

@@ -1,23 +1,26 @@
 import React, {ChangeEvent, useState} from 'react'
 import styled from 'styled-components'
+import {useAuth} from '../../../AuthUserContext'
 import Button from '../../core/Button'
 import Flex from '../../core/Flex'
+import Text from '../../core/Text'
 import TextField from '../../core/TextField'
 import Loading from '../../Loading'
 
-type EditableLectureCommentProps = {
-  /* Props for existing lecture comment */
+type EditablePostCommentProps = {
+  /* Props for existing post comment */
   initialText?: string
   onEditCancelled?: () => void
 
   onSubmit: (text: string) => Promise<void>
 }
 
-const EditableLectureComment = ({
+const EditablePostComment = ({
   initialText,
   onEditCancelled,
   onSubmit,
-}: EditableLectureCommentProps) => {
+}: EditablePostCommentProps) => {
+  const {userId} = useAuth()
   const [text, setText] = useState<string>(initialText || '')
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -43,16 +46,26 @@ const EditableLectureComment = ({
       />
       {isLoading && <Loading />}
       {!isLoading && (
-        <Flex alignItems="flex-end" gap="12px" alignSelf="flex-start">
-          <SubmitButton
-            disabled={text.trim().length === 0}
-            variant="accent"
-            onClick={handleOnSubmit}
-          >
-            {initialText && 'Upraviť komentár'}
-            {!initialText && 'Pridať komentár'}
-          </SubmitButton>
-          {onEditCancelled && <Button onClick={onEditCancelled}>Zrušiť</Button>}
+        <Flex direction="column" gap="6px">
+          <Flex alignItems="flex-end" gap="12px" alignSelf="flex-start">
+            <SubmitButton
+              disabled={text.trim().length === 0}
+              variant="accent"
+              onClick={handleOnSubmit}
+            >
+              {initialText && 'Upraviť komentár'}
+              {!initialText && 'Pridať komentár'}
+            </SubmitButton>
+            {onEditCancelled && (
+              <Button onClick={onEditCancelled}>Zrušiť</Button>
+            )}
+          </Flex>
+          {!userId && (
+            <Text size="small">
+              Komentár píšeš anonymne. Po odoslaní ho nebudeš môcť upraviť ani
+              zmazať.
+            </Text>
+          )}
         </Flex>
       )}
     </WrapperFlex>
@@ -67,4 +80,4 @@ const SubmitButton = styled(Button)`
   margin-top: 12px;
 `
 
-export default EditableLectureComment
+export default EditablePostComment
