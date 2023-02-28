@@ -64,6 +64,7 @@ const AdminApp = ({user, logout}) => {
           dataProvider={dataProvider}
           logoutButton={LogoutButton}
           loginPage={LoginPage}
+          basename="admin"
         >
           <Resource
             name="course"

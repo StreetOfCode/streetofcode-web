@@ -1,9 +1,11 @@
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import Slide from '@material-ui/core/Slide'
+import {
+  DialogTitle,
+  Dialog,
+  Slide,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from '@mui/material'
 import {TransitionProps} from '@mui/material/transitions'
 import React from 'react'
 import styled from 'styled-components'
@@ -32,7 +34,7 @@ const ConfirmActionDialog = ({
 }) => {
   const Transition = React.forwardRef(
     (
-      props: TransitionProps & {children?: React.ReactElement},
+      props: TransitionProps & {children: React.ReactElement},
       ref: React.Ref<unknown>,
     ) => {
       return <Slide direction="up" ref={ref} {...props} />

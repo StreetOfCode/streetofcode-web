@@ -1,6 +1,5 @@
 import React, {ChangeEvent, HTMLAttributes, useRef} from 'react'
-import MuiTextField from '@material-ui/core/TextField'
-
+import MuiTextField from '@mui/material/TextField'
 import styled from 'styled-components'
 
 type Props = {
@@ -92,9 +91,15 @@ const ErrorMessage = styled.span`
 `
 
 const StyledTextField = styled(MuiTextField)<{disabled?: boolean}>`
-  .MuiInputBase-input {
+  .MuiInputBase-root {
+    padding: 0;
     font-family: soleil, sans-serif;
-    color: var(--color-grey);
+    color: var(--color-secondary);
+    margin-top: 6px;
+
+    .MuiOutlinedInput-notchedOutline {
+      border: none;
+    }
   }
 
   .MuiFormHelperText-root {
@@ -109,10 +114,6 @@ const StyledTextField = styled(MuiTextField)<{disabled?: boolean}>`
 
   .MuiInput-underline::after {
     all: unset;
-  }
-
-  .MuiInputBase-input {
-    color: var(--color-secondary);
   }
 `
 

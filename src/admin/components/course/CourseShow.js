@@ -1,17 +1,16 @@
 import React from 'react'
-import Button from '@material-ui/core/Button'
 import {MarkdownField} from '../../custom/MarkdownField'
-
 import {
   Datagrid,
   DateField,
   NumberField,
-  Link,
   ReferenceField,
   ReferenceManyField,
   Show,
   ShowButton,
   EditButton,
+  Button,
+  Link,
   SimpleShowLayout,
   TextField,
   useRecordContext,
