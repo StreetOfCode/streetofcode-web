@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {useAuth} from '../../../AuthUserContext'
 import useEditItemActions from '../../../hooks/useEditItemActions'
 import {PostComment} from '../../../types'
-import {formatDate, formatDateTime} from '../../../utils'
+import {formatDate, formatDateTime, subtractDates} from '../../../utils'
 import {useDeletePostComment} from '../../../api/postComments'
 import Flex from '../../core/Flex'
 import Text from '../../core/Text'
@@ -61,21 +61,22 @@ const PostCommentItem = ({postId, comment}: PostCommentItemProps) => {
                 alignSelf="stretch"
                 alignItems="flex-start"
               >
+                <Text size="very-small">{comment.userName || 'Anonym'}</Text>
                 <CommentTimeWrapper
                   gap="6px"
-                  alignItems="flex-start"
+                  alignItems="center"
                   justifyContent="flex-start"
                 >
                   <Text size="very-small">
                     {formatDateTime(comment.createdAt)}
                   </Text>
-                  {comment.updatedAt > comment.createdAt && (
-                    <Text size="very-small">
-                      (upravené {formatDate(comment.updatedAt)})
+                  {subtractDates(comment.updatedAt, comment.createdAt) >
+                    500 && (
+                    <Text size="very-small" color="secondary">
+                      (upravené)
                     </Text>
                   )}
                 </CommentTimeWrapper>
-                <Text size="very-small">{comment.userName || 'Anonym'}</Text>
               </Flex>
               <Text>{comment.commentText}</Text>
             </Flex>
@@ -110,7 +111,7 @@ const CommentField = styled.div`
 `
 
 const CommentTimeWrapper = styled(Flex)`
-  @media ${device.S} {
+  @media ${device.XS} {
     flex-direction: column;
     gap: 2px;
   }

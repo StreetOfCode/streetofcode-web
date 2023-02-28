@@ -296,8 +296,8 @@ export interface PostComment {
   userName?: string
   imageUrl?: string
   commentText: string
-  createdAt: Date
-  updatedAt: Date
+  createdAt: string
+  updatedAt: string
 }
 
 export interface PostCommentEditRequest {
