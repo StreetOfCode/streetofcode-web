@@ -78,7 +78,7 @@ const PostCommentItem = ({postId, comment}: PostCommentItemProps) => {
                   )}
                 </CommentTimeWrapper>
               </Flex>
-              <Text>{comment.commentText}</Text>
+              <StyledCommentText>{comment.commentText}</StyledCommentText>
             </Flex>
           </CommentField>
         )}
@@ -115,6 +115,10 @@ const CommentTimeWrapper = styled(Flex)`
     flex-direction: column;
     gap: 2px;
   }
+`
+
+const StyledCommentText = styled(Text)`
+  overflow-wrap: anywhere;
 `
 
 export default PostCommentItem
