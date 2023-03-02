@@ -112,7 +112,9 @@ export default class MyDocument extends Document {
 
     return (
       <Html>
-        <Head />
+        <Head>
+          <link rel="stylesheet" href="https://use.typekit.net/vve8dub.css" />
+        </Head>
         <body>
           <script dangerouslySetInnerHTML={{__html: codeToRunOnClient}} />
           <Main />
