@@ -8,6 +8,8 @@ import akoSaNaucisFrontend from '../../../public/images/akoSaNaucisFrontend.jpg'
 import uvahyRefaktorovanie from '../../../public/images/uvahyRefaktorovanie.jpg'
 import pohybHadika from '../../../public/images/pohybHadika.jpg'
 import horiaceLana from '../../../public/images/horiaceLana.jpg'
+import coJeToNodeJs from '../../../public/images/coJeToNodeJs.jpg'
+import pythonBackendInterview from '../../../public/images/pythonBackendInterview.jpg'
 
 type Video = {
   name: string
@@ -26,9 +28,15 @@ export const youtubeUrl =
 export const videos: Video[] = [
   {
     name: 'CSS Battle s Bokšim (senior FE developer)',
-    imageUrl: '/images/cssBattleSBoksim.jpg',
-    youtubeUrl: 'https://www.youtube.com/watch?v=jbrWtQ_UzGw&t=1s',
+    imageUrl: '/images/pythonBackendInterview.jpg',
+    youtubeUrl: 'https://www.youtube.com/watch?v=jbrWtQ_UzGw',
     image: cssBatleSBoksim,
+  },
+  {
+    name: 'Python pohovorová úloha',
+    imageUrl: '/images/cssBattleSBoksim.jpg',
+    youtubeUrl: 'https://www.youtube.com/watch?v=s0KoATbm2Ds',
+    image: pythonBackendInterview,
   },
   {
     name: 'Programuj so mnou | 60 minút | Lo-Fi',
@@ -49,16 +57,22 @@ export const videos: Video[] = [
     image: piskvorkyC,
   },
   {
-    name: 'Macbook vs Thinkpad | porovnanie notebookov za 1900€',
-    imageUrl: '/images/macVsthinkpad.jpg',
-    youtubeUrl: 'https://www.youtube.com/watch?v=Jj-55jH5Uys',
-    image: macVsthinkpad,
-  },
-  {
     name: 'Takto sa naučíš Frontend',
     imageUrl: '/images/akoSaNaucisFrontend.jpg',
     youtubeUrl: 'https://www.youtube.com/watch?v=IxS5OSoz6b8',
     image: akoSaNaucisFrontend,
+  },
+  {
+    name: 'Čo je to Node.js?',
+    imageUrl: '/images/coJeToNodeJs.jpg',
+    youtubeUrl: 'https://www.youtube.com/watch?v=1xIKJ2kLTPg',
+    image: coJeToNodeJs,
+  },
+  {
+    name: 'Macbook vs Thinkpad | porovnanie notebookov za 1900€',
+    imageUrl: '/images/macVsthinkpad.jpg',
+    youtubeUrl: 'https://www.youtube.com/watch?v=Jj-55jH5Uys',
+    image: macVsthinkpad,
   },
   {
     name: 'Úvahy programátora - Refaktorovanie',
