@@ -150,6 +150,7 @@ const XSVideoSlider = styled(VideoSliderTemplate)`
 
 const StyledSlide = styled(Slide)`
   margin-top: 24px;
+  margin-bottom: 8px;
 `
 const ImageWrapper = styled.a`
   position: relative;
