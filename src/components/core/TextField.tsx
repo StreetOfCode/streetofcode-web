@@ -95,7 +95,7 @@ const StyledTextField = styled(MuiTextField)<{disabled?: boolean}>`
     padding: 0;
     font-family: soleil, sans-serif;
     color: var(--color-secondary);
-    margin-top: 6px;
+    margin: 4px 0;
 
     .MuiOutlinedInput-notchedOutline {
       border: none;
