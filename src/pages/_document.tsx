@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-css-tags */
 import React from 'react'
 import Document, {
   DocumentContext,
@@ -113,7 +114,7 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link rel="stylesheet" href="https://use.typekit.net/vve8dub.css" />
+          <link rel="stylesheet" href="/fonts/soleil.css" />
         </Head>
         <body>
           <script dangerouslySetInnerHTML={{__html: codeToRunOnClient}} />

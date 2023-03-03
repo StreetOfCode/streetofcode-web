@@ -6,7 +6,7 @@ const GlobalStyles = createGlobalStyle`
     flex-direction: column;
     min-height: 100vh;
 
-    font-family: soleil, 'Lato', sans-serif;
+    font-family: 'Soleil', 'Lato', sans-serif;
     font-style: normal;
 
     margin: 0;
