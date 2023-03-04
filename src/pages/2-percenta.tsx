@@ -44,7 +44,7 @@ const TwoPercentPage: NextPage = () => {
             </Flex>
           </Flex>
           <Text align="center">
-            Tvoj príspevok použijeme najmä pokrytie našich nákladov. Medzi
+            Tvoj príspevok použijeme najmä na pokrytie našich nákladov. Medzi
             náklady rátame hosting tejto webstránky, hosting videí (Vimeo), a
             taktiež licenciu za Adobe softvéry.
           </Text>
