@@ -75,6 +75,12 @@ export async function getAllPosts(
               }
             }
           }
+          tags {
+            nodes {
+              id
+              name
+            }
+          }
         }
       }
     }
@@ -94,22 +100,6 @@ export function useGetAllPosts(categoryName: string, limit = 1000) {
   return useQuery(queryKeys.category(categoryName, limit), () =>
     getAllPosts(categoryName, limit),
   )
-}
-
-export async function getAllPostsWithSlug(
-  categoryName: string,
-): Promise<Post[]> {
-  const data = await fetchAPI(`
-    {
-      posts(first: 1000, where: {categoryName: "${categoryName}"}) {
-        nodes {
-          slug
-        }
-      }
-    }
-  `)
-
-  return data?.posts?.nodes
 }
 
 export async function getPostBySlug(slug: string): Promise<Post> {
@@ -137,6 +127,12 @@ export async function getPostBySlug(slug: string): Promise<Post> {
             }
           }
         }
+        tags {
+          nodes {
+            id
+            name
+          }
+        }
       }
     }
   `)
@@ -161,7 +157,7 @@ export function useGetPostsByAuthor(authorName?: string) {
   )
 }
 
-export async function getBlogPostsByAuthor(authorId: number): Promise<Post[]> {
+async function getBlogPostsByAuthor(authorId: number): Promise<Post[]> {
   const data = await fetchAPI(`
   {
     posts(first: 100, where: {author: ${authorId}, categoryName: "blog"}) {
