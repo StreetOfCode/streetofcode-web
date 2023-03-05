@@ -8,6 +8,7 @@ import SyntaxHighlighter from '../../SyntaxHighlighter'
 import {routes} from '../../../routes'
 import AuthorAndDate from './AuthorAndDate'
 import PostComments from '../post-comment/PostComments'
+import Tag from '../buttons/Tag'
 
 type Props = {
   className?: string
@@ -72,6 +73,21 @@ const PostView = ({className, isPodcast, post}: Props) => {
         authorName={authorName || undefined}
         isPodcast={isPodcast}
       />
+      <TagsFlex justifyContent="center" gap="12px">
+        {post.tags?.nodes?.map(
+          (tag, i) =>
+            tag?.name && (
+              <Tag
+                key={i}
+                tag={tag?.name}
+                handleOnSelected={() => {
+                  return
+                }}
+                selected={false}
+              />
+            ),
+        )}
+      </TagsFlex>
       {post.content && <PostContent>{postContentElements}</PostContent>}
       <PostComments postId={post.id} postTitle={post.title || 'empty'} />
     </FlexWrapper>
@@ -123,6 +139,11 @@ const StyledPostTitle = styled.h1`
   @media ${device.S} {
     font-size: 32px;
   }
+`
+
+const TagsFlex = styled(Flex)`
+  flex-wrap: wrap;
+  margin: 12px 0;
 `
 
 const PostContent = styled.div`
