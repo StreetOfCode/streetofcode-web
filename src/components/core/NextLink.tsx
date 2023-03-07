@@ -10,6 +10,7 @@ type Props = {
   href: string | UrlObject
   alignSelf?: AlignItems
   styleIfActive?: boolean // used in NavBar
+  blankTarget?: boolean
 } & HTMLAttributes<HTMLElement>
 
 const NextLink = ({
@@ -18,6 +19,7 @@ const NextLink = ({
   alignSelf,
   styleIfActive,
   children,
+  blankTarget,
   ...props
 }: Props) => {
   const router = useRouter()
@@ -29,6 +31,7 @@ const NextLink = ({
         className={className}
         alignSelf={alignSelf}
         active={styleIfActive && isActive}
+        target={blankTarget ? '_blank' : undefined}
       >
         {children}
       </StyledA>

@@ -17,7 +17,7 @@ type Props = {
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
 type Variant = 'accent' | 'default' | 'outline' | 'danger'
-type Size = 'small' | 'default' | 'large' | 'very-large'
+export type Size = 'small' | 'default' | 'large' | 'very-large'
 
 const variantStyleValues = () => ({
   accent: {

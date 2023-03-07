@@ -43,7 +43,7 @@ const BlogPosts = ({posts}: Props) => {
           <Tag
             key={i}
             tag={tag}
-            handleOnSelected={setSelectedTag}
+            handleOnClick={setSelectedTag}
             selected={tag === selectedTag}
           />
         ))}
