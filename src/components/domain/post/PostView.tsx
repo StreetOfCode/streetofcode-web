@@ -9,6 +9,8 @@ import {routes} from '../../../routes'
 import AuthorAndDate from './AuthorAndDate'
 import PostComments from '../post-comment/PostComments'
 import Tag from '../buttons/Tag'
+import {convertTagToUrlParam} from '../../../utils'
+import NextLink from '../../core/NextLink'
 
 type Props = {
   className?: string
@@ -68,26 +70,29 @@ const PostView = ({className, isPodcast, post}: Props) => {
       alignItems="flex-start"
     >
       <StyledPostTitle>{post.title}</StyledPostTitle>
-      <AuthorAndDate
-        date={post.date || undefined}
-        authorName={authorName || undefined}
-        isPodcast={isPodcast}
-      />
-      <TagsFlex justifyContent="center" gap="12px">
-        {post.tags?.nodes?.map(
-          (tag, i) =>
-            tag?.name && (
-              <Tag
-                key={i}
-                tag={tag?.name}
-                handleOnSelected={() => {
-                  return
-                }}
-                selected={false}
-              />
-            ),
-        )}
-      </TagsFlex>
+      <AuthorAndTagsWrapper gap="16px">
+        <AuthorAndDateWrapper>
+          <AuthorAndDate
+            date={post.date || undefined}
+            authorName={authorName || undefined}
+            isPodcast={isPodcast}
+          />
+        </AuthorAndDateWrapper>
+        <TagsFlex justifyContent="center" gap="8px">
+          {post.tags?.nodes?.map(
+            (tag, i) =>
+              tag?.name && (
+                <NextLink
+                  key={i}
+                  href={routes.clanky.tag(convertTagToUrlParam(tag.name))}
+                  blankTarget
+                >
+                  <Tag size="small" tag={tag?.name} selected={false} />
+                </NextLink>
+              ),
+          )}
+        </TagsFlex>
+      </AuthorAndTagsWrapper>
       {post.content && <PostContent>{postContentElements}</PostContent>}
       <PostComments postId={post.id} postTitle={post.title || 'empty'} />
     </FlexWrapper>
@@ -125,9 +130,21 @@ const redirectLinks = (content: Maybe<string> | undefined) => {
   return content
 }
 
+const AuthorAndTagsWrapper = styled(Flex)`
+  @media ${device.S} {
+    align-self: left;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+`
+
 const FlexWrapper = styled(Flex)`
   width: clamp(320px, 100%, 750px);
   margin: 0 auto;
+`
+
+const AuthorAndDateWrapper = styled.div`
+  flex-shrink: 0;
 `
 
 // Special case when we don't want tu use our Heading component
@@ -143,7 +160,7 @@ const StyledPostTitle = styled.h1`
 
 const TagsFlex = styled(Flex)`
   flex-wrap: wrap;
-  margin: 12px 0;
+  padding: 8px 0;
 `
 
 const PostContent = styled.div`

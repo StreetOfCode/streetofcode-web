@@ -157,6 +157,48 @@ export function useGetPostsByAuthor(authorName?: string) {
   )
 }
 
+export async function getPostsByTag(
+  tagName: string,
+  categoryName: string,
+): Promise<Post[]> {
+  const data = await fetchAPI(`
+  {
+    posts(first: 100, where: {tag: "${tagName}", categoryName: "${categoryName}"}) {
+      nodes {
+        title
+        excerpt
+        slug
+        date
+        content
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
+        author {
+          node {
+            name
+            firstName
+            lastName
+            avatar {
+              url
+            }
+          }
+        }
+        tags {
+          nodes {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+  `)
+
+  return data?.posts?.nodes
+}
+
 async function getBlogPostsByAuthor(authorId: number): Promise<Post[]> {
   const data = await fetchAPI(`
   {
@@ -180,6 +222,12 @@ async function getBlogPostsByAuthor(authorId: number): Promise<Post[]> {
             avatar {
               url
             }
+          }
+        }
+        tags {
+          nodes {
+            id
+            name
           }
         }
       }

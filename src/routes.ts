@@ -5,8 +5,8 @@ const admin = '/admin'
 
 const clanky = {
   index: '/clanky',
-  stranka: (pageNumber: number) => `/clanky/stranka/${pageNumber}`,
   slug: (slug: string) => `/clanky/${slug}`,
+  tag: (tag: string) => `/clanky/tag/${tag}`,
 }
 
 const podcast = {

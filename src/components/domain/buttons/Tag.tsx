@@ -1,21 +1,37 @@
 import React, {HTMLAttributes} from 'react'
 import styled from 'styled-components'
-import Button from '../../core/Button'
+import Button, {Size} from '../../core/Button'
 
 type Props = {
   className?: string
   tag: string
-  handleOnSelected: (tag: string) => void
+  handleOnClick?: (tag: string) => void
   selected?: boolean
+  size?: Size
 } & HTMLAttributes<HTMLElement>
 
-const Tag = ({className, selected, handleOnSelected, tag, ...props}: Props) => {
+const Tag = ({
+  className,
+  selected,
+  handleOnClick,
+  tag,
+  size,
+  ...props
+}: Props) => {
   return (
     <TagButton
       className={className}
-      onClick={() => handleOnSelected(tag)}
+      onClick={(e: React.MouseEvent) => {
+        if (handleOnClick) {
+          e.stopPropagation()
+          e.preventDefault()
+
+          handleOnClick(tag)
+        }
+      }}
       selected={selected}
       noWrap
+      size={size}
       {...props}
     >
       {tag}

@@ -281,3 +281,23 @@ export function getTopNTags(
 
   return result
 }
+
+// i.e from 'vysoká škola' -> 'vysoka-skola'
+export function convertTagToUrlParam(tag: string): string {
+  const hey = tag
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replaceAll(' ', '-')
+  return hey
+}
+
+// i.e from 'vysoka-skola' -> 'vysoká škola'
+export function getTagFromUrlParam(tagParam: string, post: Post): string {
+  const tag = post.tags?.nodes?.find(
+    (tag) => tag?.name && convertTagToUrlParam(tag?.name) === tagParam,
+  )?.name
+
+  assert(!!tag, 'Článok nemá požadovaný tag')
+
+  return tag
+}
