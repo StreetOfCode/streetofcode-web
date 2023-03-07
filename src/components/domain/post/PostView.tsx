@@ -11,17 +11,21 @@ import PostComments from '../post-comment/PostComments'
 import Tag from '../buttons/Tag'
 import {convertTagToUrlParam} from '../../../utils'
 import NextLink from '../../core/NextLink'
+import Heading from '../../core/Heading'
+import GridWrapper from './GridWrapper'
+import RecommendedPostPreview from './RecommendedPostPreview'
 
 type Props = {
   className?: string
   isPodcast?: boolean
   post: Post
+  recommendedPosts: Post[]
 }
 
 /***
  * Works with blog posts and podcasts.
  */
-const PostView = ({className, isPodcast, post}: Props) => {
+const PostView = ({className, isPodcast, post, recommendedPosts}: Props) => {
   const authorName = post.author
     ? post.author.node?.firstName && post.author.node.lastName
       ? `${post.author.node.firstName} ${post.author.node.lastName}`
@@ -95,6 +99,18 @@ const PostView = ({className, isPodcast, post}: Props) => {
       </AuthorAndTagsWrapper>
       {post.content && <PostContent>{postContentElements}</PostContent>}
       <PostComments postId={post.id} postTitle={post.title || 'empty'} />
+      {recommendedPosts.length > 0 && (
+        <>
+          <Heading variant="h4">Čítaj ďalej</Heading>
+          <RecommendedPostsWrapper>
+            {recommendedPosts.map((post, i) => (
+              <NextLink key={i} href={routes.clanky.slug(post.slug || '')}>
+                <RecommendedPostPreview post={post} />
+              </NextLink>
+            ))}
+          </RecommendedPostsWrapper>
+        </>
+      )}
     </FlexWrapper>
   )
 }
@@ -224,6 +240,24 @@ const PostContent = styled.div`
       vertical-align: middle;
       padding-bottom: 4px;
     }
+  }
+`
+
+const RecommendedPostsWrapper = styled(GridWrapper)`
+  @media ${device.L} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media ${device.M} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media ${device.S} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media ${device.XS} {
+    grid-template-columns: repeat(1, 1fr);
   }
 `
 
