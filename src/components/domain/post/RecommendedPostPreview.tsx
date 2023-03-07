@@ -22,7 +22,7 @@ type Props = {
  * Works with blog posts and podcasts.
  * Featured image should work with any aspect-ratio.
  */
-const PostPreviewCard = ({post, isPodcast}: Props) => {
+const RecommendedPostPreview = ({post, isPodcast}: Props) => {
   const featuredImage = post.featuredImage?.node
   const authorName = post.author
     ? post.author.node?.firstName && post.author.node.lastName
@@ -33,17 +33,9 @@ const PostPreviewCard = ({post, isPodcast}: Props) => {
   return (
     <WrapperFlex direction="column" justifyContent="space-between">
       <Flex direction="column" gap="18px">
-        <Flex direction="column" gap="8px">
-          <FixedSizedHeading variant="h6" align="center" normalWeight>
-            {post.title}
-          </FixedSizedHeading>
-          {post.excerpt && (
-            <Excerpt
-              align="center"
-              dangerouslySetInnerHTML={{__html: post.excerpt}}
-            />
-          )}
-        </Flex>
+        <FixedSizedHeading variant="h6" align="center" normalWeight>
+          {post.title}
+        </FixedSizedHeading>
         {featuredImage && featuredImage.sourceUrl && (
           <ImageWrapper>
             <Image
@@ -96,36 +88,28 @@ const PostPreviewCard = ({post, isPodcast}: Props) => {
 }
 
 const FixedSizedHeading = styled(Heading)`
-  height: 3.2em;
+  height: 2.6em;
+  // show max 2 lines
+  overflow-y: hidden;
 `
 
 const WrapperFlex = styled(Flex)`
-  width: 360px;
-  height: 520px;
-  padding: 1em 0.5em;
+  width: 250px;
+  height: 300px;
+  padding: 12px 8px;
   border: var(--color-accent) 2px solid;
   border-radius: 22px;
   transition: 250ms ease-in-out;
 
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
     transition: 250ms ease-in-out;
     box-shadow: 1px 8px 20px var(--color-shadow);
   }
 
-  @media ${device.L} {
-    width: 345px;
-    height: 500px;
-  }
-
   @media ${device.S} {
-    width: 330px;
-    height: 480px;
-  }
-
-  @media ${device.XS} {
-    width: 300px;
-    height: 420px;
+    width: 200px;
+    height: 260px;
   }
 `
 
@@ -133,30 +117,20 @@ const PaddedFlex = styled(Flex)`
   padding: 0 4px;
 `
 
-const Excerpt = styled(Text)`
-  text-overflow: ellipsis;
-  overflow: hidden;
-  line-height: 1.2;
-  height: 4.6em;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-`
-
 const ImageWrapper = styled.div`
   position: relative;
   // images will adapt to this size while preserving their aspect-ratio
-  width: 260px;
-  height: 260px;
+  width: 150px;
+  height: 150px;
 
   img {
     object-position: left;
   }
 
-  @media ${device.XS} {
-    width: 200px;
-    height: 200px;
+  @media ${device.S} {
+    width: 120px;
+    height: 120px;
   }
 `
 
-export default PostPreviewCard
+export default RecommendedPostPreview

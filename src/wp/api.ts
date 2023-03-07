@@ -160,11 +160,13 @@ export function useGetPostsByAuthor(authorName?: string) {
 export async function getPostsByTag(
   tagName: string,
   categoryName: string,
+  limit = 1000,
 ): Promise<Post[]> {
   const data = await fetchAPI(`
   {
-    posts(first: 100, where: {tag: "${tagName}", categoryName: "${categoryName}"}) {
+    posts(first: ${limit}, where: {tag: "${tagName}", categoryName: "${categoryName}"}) {
       nodes {
+        id
         title
         excerpt
         slug

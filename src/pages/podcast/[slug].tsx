@@ -30,7 +30,7 @@ const SinglePostPage: NextPage<Props> = ({post}) => {
       />
       <NavBar />
       <PageContentWrapper>
-        <PostView post={post} isPodcast />
+        <PostView post={post} isPodcast recommendedPosts={[]} />
       </PageContentWrapper>
     </>
   )
