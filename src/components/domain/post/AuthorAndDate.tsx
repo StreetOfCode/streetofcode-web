@@ -4,11 +4,11 @@ import {formatDate} from '../../../utils'
 import {useGetAuthorOverview} from '../../../api/authorOverview'
 import {QueryGuard} from '../../../QueryGuard'
 import Avatar from '../../core/Avatar'
-import Link from 'next/link'
 import styled from 'styled-components'
 import {routes} from '../../../routes'
 import {socLamp} from '../../../images'
 import Flex from '../../core/Flex'
+import {useRouter} from 'next/router'
 
 const AUTHOR_SLUG: Record<string, string> = {
   'Jakub Jahič': 'jakub-jahic',
@@ -16,18 +16,23 @@ const AUTHOR_SLUG: Record<string, string> = {
 }
 
 const PodcastAuthorAndDate = ({date}: {date?: string}) => {
+  const router = useRouter()
+
+  const handleOnClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    router.push(routes.root)
+  }
+
   return (
-    <Link href={routes.root} passHref>
-      <FlexWrapper alignItems="center" gap="8px">
-        <Avatar altName="Street of Code logo" src={socLamp} sizePx={38} />
-        <NameAndDateFlexWrapper direction="column">
-          <Text size="small">Street of Code</Text>
-          {date && (
-            <DateText size="small">{formatDate(new Date(date))}</DateText>
-          )}
-        </NameAndDateFlexWrapper>
-      </FlexWrapper>
-    </Link>
+    <FlexWrapper alignItems="center" gap="8px" onClick={handleOnClick}>
+      <Avatar altName="Street of Code logo" src={socLamp} sizePx={38} />
+      <NameAndDateFlexWrapper direction="column">
+        <Text size="small">Street of Code</Text>
+        {date && <DateText size="small">{formatDate(new Date(date))}</DateText>}
+      </NameAndDateFlexWrapper>
+    </FlexWrapper>
   )
 }
 
@@ -38,28 +43,34 @@ const ArticleAuthorAndDate = ({
   date?: string
   authorName?: string
 }) => {
+  const router = useRouter()
   const authorSlug = authorName ? AUTHOR_SLUG[authorName] : ''
   const getAuthorOverviewQuery = useGetAuthorOverview(authorSlug)
+
+  const handleOnClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    router.push(routes.lektor.slug(authorSlug))
+  }
 
   return (
     <QueryGuard {...getAuthorOverviewQuery}>
       {(authorOverview) => {
         return (
-          <Link href={routes.lektor.slug(authorSlug)} passHref>
-            <FlexWrapper alignItems="center" gap="8px">
-              <Avatar
-                altName={authorOverview.name}
-                src={authorOverview.imageUrl}
-                sizePx={38}
-              />
-              <NameAndDateFlexWrapper direction="column">
-                {authorName && <Text size="small">{authorOverview.name}</Text>}
-                {date && (
-                  <DateText size="small">{formatDate(new Date(date))}</DateText>
-                )}
-              </NameAndDateFlexWrapper>
-            </FlexWrapper>
-          </Link>
+          <FlexWrapper alignItems="center" gap="8px" onClick={handleOnClick}>
+            <Avatar
+              altName={authorOverview.name}
+              src={authorOverview.imageUrl}
+              sizePx={38}
+            />
+            <NameAndDateFlexWrapper direction="column">
+              {authorName && <Text size="small">{authorOverview.name}</Text>}
+              {date && (
+                <DateText size="small">{formatDate(new Date(date))}</DateText>
+              )}
+            </NameAndDateFlexWrapper>
+          </FlexWrapper>
         )
       }}
     </QueryGuard>
