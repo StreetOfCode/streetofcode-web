@@ -36,6 +36,14 @@ import {
 import {usImage} from '../images'
 import Head from '../components/Head'
 import {routes} from '../routes'
+import CourseReviewItem from '../components/domain/course-review/CourseReviewItem'
+import {
+  informatika101Link,
+  pavolReview,
+  springBootKotlinLink,
+  theodorReview,
+} from '../testimonials'
+import {HiOutlineArrowNarrowRight, HiSparkles} from 'react-icons/hi'
 
 interface Props {
   courses: CourseOverview[]
@@ -93,7 +101,7 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
             <VerticalSlider innerRef={coursesRef} />
           </Box>
           <Box ref={coursesRef}>
-            <Flex direction="column" gap="48px" alignItems="flex-start">
+            <Flex direction="column" gap="24px" alignItems="flex-start">
               <div>
                 <Heading inline variant="h3">
                   Pozri si naše
@@ -118,6 +126,45 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
             </Flex>
           </Box>
         </GradientWrapper>
+        <Box>
+          <Flex direction="column" gap="48px" alignItems="flex-start">
+            <div>
+              <Heading inline variant="h3">
+                Na našich kurzoch si dávame {}
+              </Heading>
+              <Flex gap="8px" style={{display: 'inline-block'}}>
+                <Heading inline variant="h3" color="accent">
+                  extra
+                </Heading>
+                <SparksIcon />
+              </Flex>
+              <Heading inline variant="h3">
+                {' '}
+                záležať
+              </Heading>
+            </div>
+            <TestimonialsFlexWrapper
+              gap="32px"
+              alignItems="flex-start"
+              justifyContent="flex-end"
+            >
+              <Flex direction="column" gap="16px">
+                <Testimonial review={pavolReview} courseSlug={''} />
+                <Flex gap="8px" alignSelf="flex-start">
+                  <TestimonialArrowIcon />
+                  {informatika101Link}
+                </Flex>
+              </Flex>
+              <Flex direction="column" gap="16px">
+                <Testimonial review={theodorReview} courseSlug={''} />
+                <Flex gap="8px" alignSelf="flex-start">
+                  <TestimonialArrowIcon />
+                  {springBootKotlinLink}
+                </Flex>
+              </Flex>
+            </TestimonialsFlexWrapper>
+          </Flex>
+        </Box>
         <Box>
           <Flex direction="column" gap="48px" alignItems="flex-start">
             <div>
@@ -435,6 +482,39 @@ const HeroActionButton = styled(Button)`
 
   @media ${device.XS} {
     font-size: 16px;
+  }
+`
+
+const TestimonialsFlexWrapper = styled(Flex)`
+  @media ${device.M} {
+    flex-direction: column;
+    align-self: center;
+  }
+`
+
+const Testimonial = styled(CourseReviewItem)`
+  min-width: 300px;
+  max-width: 450px;
+`
+
+const TestimonialArrowIcon = styled(HiOutlineArrowNarrowRight)`
+  width: 24px;
+  height: 24px;
+  margin-left: 72px;
+`
+
+const SparksIcon = styled(HiSparkles)`
+  width: 24px;
+  height: 24px;
+  transform: rotate(180deg);
+  margin-left: 4px;
+  margin-bottom: 16px;
+  margin-right: -4px;
+  color: var(--color-accent);
+
+  @media ${device.S} {
+    width: 20px;
+    height: 20px;
   }
 `
 

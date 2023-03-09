@@ -12,12 +12,14 @@ import UserAvatar from '../user/UserAvatar'
 import Loading from '../../Loading'
 
 type CourseReviewItemProps = {
+  className?: string
   review: CourseReview
   courseSlug: string
   allowUpdating?: boolean
 }
 
 const CourseReviewItem = ({
+  className,
   review,
   courseSlug,
   allowUpdating,
@@ -46,7 +48,7 @@ const CourseReviewItem = ({
   if (isLoading) return <Loading />
 
   return (
-    <ReviewItem>
+    <ReviewItem className={className}>
       <Flex gap="12px" alignSelf="stretch">
         <LeftColumn
           direction="column"
@@ -55,7 +57,7 @@ const CourseReviewItem = ({
           justifyContent="center"
         >
           <UserAvatar
-            src={review.imageUrl}
+            src={review.imageUrl || review.staticImage}
             name={review.userName}
             sizePx={42}
           />

@@ -17,6 +17,8 @@ import ThumbnailImage from '../public/images/Thumbnail.jpg'
 import uvahyRefaktorovanieImage from '../public/images/uvahyRefaktorovanie.jpg'
 import socLogoImage from '../public/images/soc_logo.png'
 import usImageImage from '../public/images/usImage.png'
+import pavolImage from '../public/images/pavol.jpg'
+import theodorImage from '../public/images/theodor.jpg'
 import socLampImage from '../public/favicon.ico'
 
 export const akoSaNaucisFrontend = akoSaNaucisFrontendImage as StaticImageData
@@ -41,3 +43,5 @@ export const uvahyRefaktorovanie = uvahyRefaktorovanieImage as StaticImageData
 export const socLogo = socLogoImage as StaticImageData
 export const usImage = usImageImage as StaticImageData
 export const socLamp = socLampImage as StaticImageData
+export const pavol = pavolImage as StaticImageData
+export const theodor = theodorImage as StaticImageData

@@ -1,3 +1,5 @@
+import {StaticImageData} from 'next/image'
+
 export type ThemeSetting = 'NOT-SET' | 'LIGHT' | 'DARK' | 'AUTO'
 
 export interface Difficulty {
@@ -145,6 +147,7 @@ export interface CourseReview {
   text?: string
   userName: string
   imageUrl?: string
+  staticImage?: StaticImageData
 }
 
 export interface CourseReviewsOverview {
