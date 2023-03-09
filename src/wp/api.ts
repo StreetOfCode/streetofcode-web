@@ -41,71 +41,7 @@ async function fetchAPI(query: string, variables?: object) {
   return json.data
 }
 
-export async function getAllPosts(
-  categoryName: string,
-  limit = 1000,
-): Promise<Post[]> {
-  const data = await fetchAPI(
-    `
-    query AllPosts {
-      posts(
-        first: ${limit},
-        where: {
-          orderby: { field: DATE, order: DESC },
-          categoryName: "${categoryName}"
-        }
-      ) {
-        nodes {
-          title
-          excerpt
-          slug
-          date
-          featuredImage {
-            node {
-              sourceUrl
-            }
-          }
-          author {
-            node {
-              name
-              firstName
-              lastName
-              avatar {
-                url
-              }
-            }
-          }
-          tags {
-            nodes {
-              id
-              name
-            }
-          }
-        }
-      }
-    }
-  `,
-    {
-      variables: {
-        onlyEnabled: true,
-        preview: false,
-      },
-    },
-  )
-
-  return data?.posts?.nodes
-}
-
-export function useGetAllPosts(categoryName: string, limit = 1000) {
-  return useQuery(queryKeys.category(categoryName, limit), () =>
-    getAllPosts(categoryName, limit),
-  )
-}
-
-export async function getPostBySlug(slug: string): Promise<Post> {
-  const data = await fetchAPI(`
-    {
-      post(id: "${slug}", idType: SLUG) {
+const POST_SCHEMA_BASE = `
         id
         title
         excerpt
@@ -133,6 +69,50 @@ export async function getPostBySlug(slug: string): Promise<Post> {
             name
           }
         }
+`
+
+export async function getAllPosts(
+  categoryName: string,
+  limit = 1000,
+): Promise<Post[]> {
+  const data = await fetchAPI(
+    `
+    query AllPosts {
+      posts(
+        first: ${limit},
+        where: {
+          orderby: { field: DATE, order: DESC },
+          categoryName: "${categoryName}"
+        }
+      ) {
+        nodes {
+          ${POST_SCHEMA_BASE}
+        }
+      }
+    }
+  `,
+    {
+      variables: {
+        onlyEnabled: true,
+        preview: false,
+      },
+    },
+  )
+
+  return data?.posts?.nodes
+}
+
+export function useGetAllPosts(categoryName: string, limit = 1000) {
+  return useQuery(queryKeys.category(categoryName, limit), () =>
+    getAllPosts(categoryName, limit),
+  )
+}
+
+export async function getPostBySlug(slug: string): Promise<Post> {
+  const data = await fetchAPI(`
+    {
+      post(id: "${slug}", idType: SLUG) {
+        ${POST_SCHEMA_BASE}
       }
     }
   `)
@@ -166,33 +146,7 @@ export async function getPostsByTag(
   {
     posts(first: ${limit}, where: {tag: "${tagName}", categoryName: "${categoryName}"}) {
       nodes {
-        id
-        title
-        excerpt
-        slug
-        date
-        content
-        featuredImage {
-          node {
-            sourceUrl
-          }
-        }
-        author {
-          node {
-            name
-            firstName
-            lastName
-            avatar {
-              url
-            }
-          }
-        }
-        tags {
-          nodes {
-            id
-            name
-          }
-        }
+        ${POST_SCHEMA_BASE}
       }
     }
   }
@@ -206,32 +160,7 @@ async function getBlogPostsByAuthor(authorId: number): Promise<Post[]> {
   {
     posts(first: 100, where: {author: ${authorId}, categoryName: "blog"}) {
       nodes {
-        title
-        excerpt
-        slug
-        date
-        content
-        featuredImage {
-          node {
-            sourceUrl
-          }
-        }
-        author {
-          node {
-            name
-            firstName
-            lastName
-            avatar {
-              url
-            }
-          }
-        }
-        tags {
-          nodes {
-            id
-            name
-          }
-        }
+        ${POST_SCHEMA_BASE}
       }
     }
   }
