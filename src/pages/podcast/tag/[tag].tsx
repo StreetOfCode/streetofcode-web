@@ -4,29 +4,29 @@ import PageContentWrapper from '../../../components/PageContentWrapper'
 import {getPostsByTag} from '../../../wp/api'
 import {Post} from '../../../wp/types'
 import NavBar from '../../../components/NavBar'
-import {CATEGORY_NAME} from '../../../components/domain/post/blog/clanky-constants'
 import Head from '../../../components/Head'
 import {prefixWithHost, routes} from '../../../routes'
 import PostTags from '../../../components/domain/post/PostTags'
-import {Tag} from '../../../types'
+import {CATEGORY_NAME} from '../../../components/domain/post/podcast/podcast-constants'
 import {convertTagToUrlParam} from '../../../components/domain/post/postUtils'
+import {Tag} from '../../../types'
 
 interface Props {
   tag: Tag
   posts: Post[]
 }
 
-const PostsByTagPage: NextPage<Props> = ({tag, posts}) => {
+const PodcastsByTagPage: NextPage<Props> = ({tag, posts}) => {
   return (
     <>
       <Head
-        title="Články | Street of Code"
+        title="Podcasty | Street of Code"
         description={tag.raw}
         url={prefixWithHost(routes.clanky.tag(tag.urlEconded))}
       />
       <NavBar />
       <PageContentWrapper>
-        <PostTags tag={tag} posts={posts} />
+        <PostTags tag={tag} posts={posts} podcastTags />
       </PageContentWrapper>
     </>
   )
@@ -46,4 +46,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
-export default PostsByTagPage
+export default PodcastsByTagPage

@@ -11,8 +11,8 @@ const clanky = {
 
 const podcast = {
   index: '/podcast',
-  stranka: (pageNumber: number) => `/podcast/stranka/${pageNumber}`,
   slug: (slug: string) => `/podcast/${slug}`,
+  tag: (tag: string) => `/podcast/tag/${tag}`,
 }
 
 const kurzy = {
