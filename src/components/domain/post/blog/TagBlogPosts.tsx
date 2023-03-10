@@ -6,7 +6,7 @@ import Heading from '../../../core/Heading'
 import GridWrapper from '../GridWrapper'
 import PostPreviewCard from '../PostPreviewCard'
 import {routes} from '../../../../routes'
-import {getTagFromUrlParam} from '../../../../utils'
+import {getTagFromUrlParam} from '../postUtils'
 
 type Props = {
   tag: string
