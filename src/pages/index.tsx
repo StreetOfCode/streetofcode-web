@@ -1,7 +1,7 @@
 import React, {useRef} from 'react'
 import {NextPage} from 'next'
 import Image from 'next/image'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import Flex from '../components/core/Flex'
 import Text from '../components/core/Text'
 import Heading from '../components/core/Heading'
@@ -43,7 +43,12 @@ import {
   springBootKotlinLink,
   theodorReview,
 } from '../testimonials'
-import {HiOutlineArrowNarrowRight, HiSparkles} from 'react-icons/hi'
+import {
+  HiOutlineArrowNarrowRight,
+  HiSparkles,
+  HiMicrophone,
+  HiVideoCamera,
+} from 'react-icons/hi'
 
 interface Props {
   courses: CourseOverview[]
@@ -132,12 +137,12 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
               <Heading inline variant="h3">
                 Na našich kurzoch si dávame {}
               </Heading>
-              <Flex gap="8px" style={{display: 'inline-block'}}>
+              <HeadingWithIconFlex>
                 <Heading inline variant="h3" color="accent">
                   extra
                 </Heading>
                 <SparksIcon />
-              </Flex>
+              </HeadingWithIconFlex>
               <Heading inline variant="h3">
                 {' '}
                 záležať
@@ -170,12 +175,14 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
             <div>
               <Heading inline variant="h3">
                 Po ceste do školy, do práce alebo pri upratovaní si môžeš pustiť
-                náš
+                náš {}
               </Heading>
-              <Heading inline variant="h3" color="accent">
-                {' '}
-                podcast
-              </Heading>
+              <HeadingWithIconFlex>
+                <Heading inline variant="h3" color="accent">
+                  podcast
+                </Heading>
+                <MicrophoneIcon />
+              </HeadingWithIconFlex>
             </div>
             <PodcastsSlider podcasts={podcasts} />
             <PodcastSocialsFlex
@@ -209,12 +216,14 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
             <div>
               <Heading inline variant="h3">
                 Keď ti popri tom všetkom raste ešte zostane čas, tak si môžeš
-                pozrieť naše
+                pozrieť naše {}
               </Heading>
-              <Heading inline variant="h3" color="accent">
-                {' '}
-                videá
-              </Heading>
+              <HeadingWithIconFlex>
+                <Heading inline variant="h3" color="accent">
+                  videá
+                </Heading>
+                <VideoCameraIcon />
+              </HeadingWithIconFlex>
             </div>
             <VideosSlider />
             <ProviderLink
@@ -503,19 +512,36 @@ const TestimonialArrowIcon = styled(HiOutlineArrowNarrowRight)`
   margin-left: 72px;
 `
 
-const SparksIcon = styled(HiSparkles)`
-  width: 24px;
-  height: 24px;
-  transform: rotate(180deg);
-  margin-left: 4px;
+const headingIconStyle = css`
+  width: 32px;
+  height: 32px;
+  margin-left: 2px;
   margin-bottom: 16px;
-  margin-right: -4px;
+  margin-right: -6px;
   color: var(--color-accent);
 
   @media ${device.S} {
     width: 20px;
     height: 20px;
   }
+`
+
+const SparksIcon = styled(HiSparkles)`
+  ${headingIconStyle}
+  transform: rotate(180deg);
+`
+
+const MicrophoneIcon = styled(HiMicrophone)`
+  ${headingIconStyle}
+`
+
+const VideoCameraIcon = styled(HiVideoCamera)`
+  ${headingIconStyle}
+`
+
+const HeadingWithIconFlex = styled(Flex)`
+  gap: 8px;
+  display: inline-block;
 `
 
 export const getStaticProps = async () => {
