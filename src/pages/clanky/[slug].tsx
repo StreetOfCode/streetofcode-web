@@ -8,7 +8,7 @@ import PostView from '../../components/domain/post/PostView'
 import {
   CATEGORY_NAME,
   EMPTY_BLOG_IMAGE_PLACEHOLDER_URL,
-  RECOMMENDED_POSTS_NUMBER,
+  RECOMMENDED_POSTS_COUNT,
 } from '../../components/domain/post/blog/clanky-constants'
 import Head from '../../components/Head'
 import {prefixWithHost, routes} from '../../routes'
@@ -48,7 +48,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const post = await getPostBySlug(slug)
   const recommendedPosts = await getRecommendedPosts(
     post,
-    RECOMMENDED_POSTS_NUMBER,
+    RECOMMENDED_POSTS_COUNT,
     CATEGORY_NAME,
   )
 

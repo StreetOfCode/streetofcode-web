@@ -312,3 +312,8 @@ export interface PostCommentAddRequest {
   postTitle: string
   commentText: string
 }
+
+export interface Tag {
+  raw: string
+  urlEconded: string
+}

@@ -1,4 +1,3 @@
-import {assert} from '../../../utils'
 import {getPostsByTag} from '../../../wp/api'
 import {Post} from '../../../wp/types'
 
@@ -62,20 +61,6 @@ export function convertTagToUrlParam(tag: string): string {
     .replace(/[\u0300-\u036f]/g, '')
     .replaceAll(' ', '-')
   return hey
-}
-
-// i.e from 'vysoka-skola' -> 'vysoká škola'
-export function getTagFromUrlParam(tagParam: string, post: Post): string {
-  const tag = post.tags?.nodes?.find(
-    (tag) => tag?.name && convertTagToUrlParam(tag?.name) === tagParam,
-  )?.name
-
-  assert(
-    tag != null,
-    'Post passed into this function must have the corresponding tag',
-  )
-
-  return tag
 }
 
 function getRandomPosts(posts: Post[], n: number): Post[] {

@@ -10,6 +10,7 @@ import PostPreviewCard from '../PostPreviewCard'
 import {routes} from '../../../../routes'
 import PostTag from '../../buttons/PostTag'
 import {createMapOfPostsByTag, getTopNTags} from '../postUtils'
+import {TOP_TAGS_COUNT} from './clanky-constants'
 
 type Props = {
   posts: Post[]
@@ -20,7 +21,7 @@ const ALL_TAG = 'všetky'
 const BlogPosts = ({posts}: Props) => {
   const [selectedTag, setSelectedTag] = useState(ALL_TAG)
   const postsByTag = createMapOfPostsByTag(posts)
-  const topTags = [ALL_TAG, ...getTopNTags(postsByTag, 8)]
+  const topTags = [ALL_TAG, ...getTopNTags(postsByTag, TOP_TAGS_COUNT)]
 
   return (
     <Flex direction="column" gap="36px">

@@ -88,7 +88,11 @@ const PostView = ({className, isPodcast, post, recommendedPosts}: Props) => {
               tag?.name && (
                 <NextLink
                   key={i}
-                  href={routes.clanky.tag(convertTagToUrlParam(tag.name))}
+                  href={
+                    isPodcast
+                      ? routes.podcast.tag(convertTagToUrlParam(tag.name))
+                      : routes.clanky.tag(convertTagToUrlParam(tag.name))
+                  }
                   blankTarget
                 >
                   <PostTag size="small" tag={tag?.name} selected={false} />
@@ -101,11 +105,18 @@ const PostView = ({className, isPodcast, post, recommendedPosts}: Props) => {
       <PostComments postId={post.id} postTitle={post.title || 'empty'} />
       {recommendedPosts.length > 0 && (
         <>
-          <Heading variant="h4">Čítaj ďalej</Heading>
+          <Heading variant="h4">Mohlo by ťa zaujímať</Heading>
           <RecommendedPostsWrapper>
             {recommendedPosts.map((post, i) => (
-              <NextLink key={i} href={routes.clanky.slug(post.slug || '')}>
-                <RecommendedPostPreview post={post} />
+              <NextLink
+                key={i}
+                href={
+                  isPodcast
+                    ? routes.podcast.slug(post.slug || '')
+                    : routes.clanky.slug(post.slug || '')
+                }
+              >
+                <RecommendedPostPreview post={post} isPodcast={isPodcast} />
               </NextLink>
             ))}
           </RecommendedPostsWrapper>
