@@ -8,12 +8,12 @@ import SyntaxHighlighter from '../../SyntaxHighlighter'
 import {routes} from '../../../routes'
 import AuthorAndDate from './AuthorAndDate'
 import PostComments from '../post-comment/PostComments'
-import Tag from '../buttons/Tag'
-import {convertTagToUrlParam} from '../../../utils'
+import PostTag from '../buttons/PostTag'
 import NextLink from '../../core/NextLink'
 import Heading from '../../core/Heading'
 import GridWrapper from './GridWrapper'
 import RecommendedPostPreview from './RecommendedPostPreview'
+import {convertTagToUrlParam} from './postUtils'
 
 type Props = {
   className?: string
@@ -91,7 +91,7 @@ const PostView = ({className, isPodcast, post, recommendedPosts}: Props) => {
                   href={routes.clanky.tag(convertTagToUrlParam(tag.name))}
                   blankTarget
                 >
-                  <Tag size="small" tag={tag?.name} selected={false} />
+                  <PostTag size="small" tag={tag?.name} selected={false} />
                 </NextLink>
               ),
           )}

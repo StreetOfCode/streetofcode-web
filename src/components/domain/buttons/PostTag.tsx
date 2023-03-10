@@ -10,7 +10,7 @@ type Props = {
   size?: Size
 } & HTMLAttributes<HTMLElement>
 
-const Tag = ({
+const PostTag = ({
   className,
   selected,
   handleOnClick,
@@ -42,6 +42,7 @@ const Tag = ({
 const TagButton = styled(Button)<{selected?: boolean}>`
   border-color: ${(props) => props.selected && 'var(--color-accent)'};
   color: ${(props) => props.selected && 'var(--color-accent)'};
+  opacity: ${(props) => props.size === 'small' && '0.6'};
 
   transition: 100ms ease-in-out;
 
@@ -51,4 +52,4 @@ const TagButton = styled(Button)<{selected?: boolean}>`
   }
 `
 
-export default Tag
+export default PostTag

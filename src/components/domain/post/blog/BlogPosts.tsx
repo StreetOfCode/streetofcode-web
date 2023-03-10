@@ -8,8 +8,8 @@ import Text from '../../../core/Text'
 import GridWrapper from '../GridWrapper'
 import PostPreviewCard from '../PostPreviewCard'
 import {routes} from '../../../../routes'
-import {getPostsByTag, getTopNTags} from '../../../../utils'
-import Tag from '../../buttons/Tag'
+import PostTag from '../../buttons/PostTag'
+import {createMapOfPostsByTag, getTopNTags} from '../postUtils'
 
 type Props = {
   posts: Post[]
@@ -19,7 +19,7 @@ const ALL_TAG = 'všetky'
 
 const BlogPosts = ({posts}: Props) => {
   const [selectedTag, setSelectedTag] = useState(ALL_TAG)
-  const postsByTag = getPostsByTag(posts)
+  const postsByTag = createMapOfPostsByTag(posts)
   const topTags = [ALL_TAG, ...getTopNTags(postsByTag, 8)]
 
   return (
@@ -40,7 +40,7 @@ const BlogPosts = ({posts}: Props) => {
       </Flex>
       <TagsFlex justifyContent="center" gap="12px">
         {topTags.map((tag, i) => (
-          <Tag
+          <PostTag
             key={i}
             tag={tag}
             handleOnClick={setSelectedTag}

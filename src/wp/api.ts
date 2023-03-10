@@ -140,7 +140,7 @@ export function useGetPostsByAuthor(authorName?: string) {
 export async function getPostsByTag(
   tagName: string,
   categoryName: string,
-  limit = 1000,
+  limit = 100,
 ): Promise<Post[]> {
   const data = await fetchAPI(`
   {
