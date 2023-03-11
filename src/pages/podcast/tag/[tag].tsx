@@ -36,13 +36,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const tagParam = context?.params?.tag as string
 
   const posts = await getPostsByTag(tagParam, CATEGORY_NAME)
-
-  const rawTag = posts[0].tags?.nodes?.find(
-    (tag) => tag?.name && convertTagToUrlParam(tag?.name) === tagParam,
-  )?.name
+  let rawTag
+  if (posts.length > 0) {
+    rawTag = posts[0].tags?.nodes?.find(
+      (tag) => tag?.name && convertTagToUrlParam(tag?.name) === tagParam,
+    )?.name
+  }
 
   return {
-    props: {posts, tag: {encodedTag: tagParam, raw: rawTag}},
+    props: {posts, tag: {encodedTag: tagParam, raw: rawTag || ''}},
   }
 }
 

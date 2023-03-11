@@ -509,7 +509,7 @@ const SparksIcon = styled(HiSparkles)`
   transform: rotate(180deg);
   margin-left: 4px;
   margin-bottom: 16px;
-  margin-right: -4px;
+  margin-right: -6px;
   color: var(--color-accent);
 
   @media ${device.S} {

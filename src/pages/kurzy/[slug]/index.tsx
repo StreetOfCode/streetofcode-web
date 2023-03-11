@@ -57,9 +57,21 @@ const CourseDetailPage: NextPage<Props> = ({slug, courseOverview}: Props) => {
       user={user}
       fallbackData={courseOverview}
       fallbackComponent={
-        <Heading variant="h1">
-          Pre tento kurz nemáš dostatočné oprávnenie
-        </Heading>
+        <>
+          <NavBar />
+          <PageContentWrapper>
+            <Flex direction="column" justifyContent="center" gap="48px">
+              <Heading variant="h3" align="center">
+                Pre tento kurz nemáš dostatočné oprávnenie
+              </Heading>
+              <NextLink href={routes.root}>
+                <Heading variant="h4" withAccentUnderline>
+                  Prejsť na hlavnú stránku
+                </Heading>
+              </NextLink>
+            </Flex>
+          </PageContentWrapper>
+        </>
       }
       {...getCourseOverview}
     >

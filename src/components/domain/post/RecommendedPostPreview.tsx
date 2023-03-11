@@ -88,7 +88,7 @@ const RecommendedPostPreview = ({post, isPodcast}: Props) => {
 }
 
 const FixedSizedHeading = styled(Heading)`
-  height: 2.6em;
+  height: 3em;
   // show max 2 lines
   overflow-y: hidden;
 `

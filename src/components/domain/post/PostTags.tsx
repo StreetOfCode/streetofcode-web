@@ -16,7 +16,22 @@ type Props = {
 
 const PostTags = ({tag, posts, podcastTags}: Props) => {
   if (posts.length === 0) {
-    return <></>
+    return (
+      <>
+        <Flex direction="column" justifyContent="center" gap="48px">
+          <Heading variant="h3" align="center">
+            Nenašli sa žiadne články
+          </Heading>
+          <NextLink
+            href={podcastTags ? routes.podcast.index : routes.clanky.index}
+          >
+            <Heading variant="h4" withAccentUnderline>
+              Zobraziť vsetky {podcastTags ? 'podcasty' : 'články'}
+            </Heading>
+          </NextLink>
+        </Flex>
+      </>
+    )
   }
 
   return (

@@ -151,7 +151,7 @@ const redirectLinks = (content: Maybe<string> | undefined) => {
   ]
 
   for (const {originalUrl, newUrl} of linksToRedirect) {
-    content = content?.replaceAll(originalUrl, newUrl)
+    content = content?.split(originalUrl).join(newUrl)
   }
 
   return content
@@ -264,10 +264,6 @@ const RecommendedPostsWrapper = styled(GridWrapper)`
   }
 
   @media ${device.S} {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media ${device.XS} {
     grid-template-columns: repeat(1, 1fr);
   }
 `

@@ -56,11 +56,11 @@ export function getTopNTags(
 // Removed diacritics and whitespaces
 // i.e from 'vysoká škola' -> 'vysoka-skola'
 export function convertTagToUrlParam(tag: string): string {
-  const hey = tag
+  const tagParam = tag
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
-    .replaceAll(' ', '-')
-  return hey
+    .replace(/\s/g, '-')
+  return tagParam
 }
 
 function getRandomPosts(posts: Post[], n: number): Post[] {
