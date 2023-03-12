@@ -41,7 +41,7 @@ async function fetchAPI(query: string, variables?: object) {
   return json.data
 }
 
-const POST_SCHEMA_BASE = `
+const FULL_POST_SCHEMA_BASE = `
         id
         title
         excerpt
@@ -70,7 +70,35 @@ const POST_SCHEMA_BASE = `
           }
         }
 `
-
+// has no content
+const PREVIEW_POST_SCHEMA_BASE = `
+        id
+        title
+        excerpt
+        slug
+        date
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
+        author {
+          node {
+            name
+            firstName
+            lastName
+            avatar {
+              url
+            }
+          }
+        }
+        tags {
+          nodes {
+            id
+            name
+          }
+        }
+`
 export async function getAllPosts(
   categoryName: string,
   limit = 1000,
@@ -86,7 +114,7 @@ export async function getAllPosts(
         }
       ) {
         nodes {
-          ${POST_SCHEMA_BASE}
+          ${PREVIEW_POST_SCHEMA_BASE}
         }
       }
     }
@@ -112,7 +140,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
   const data = await fetchAPI(`
     {
       post(id: "${slug}", idType: SLUG) {
-        ${POST_SCHEMA_BASE}
+        ${FULL_POST_SCHEMA_BASE}
       }
     }
   `)
@@ -146,7 +174,7 @@ export async function getPostsByTag(
   {
     posts(first: ${limit}, where: {tag: "${tagName}", categoryName: "${categoryName}"}) {
       nodes {
-        ${POST_SCHEMA_BASE}
+        ${PREVIEW_POST_SCHEMA_BASE}
       }
     }
   }
@@ -160,7 +188,7 @@ async function getBlogPostsByAuthor(authorId: number): Promise<Post[]> {
   {
     posts(first: 100, where: {author: ${authorId}, categoryName: "blog"}) {
       nodes {
-        ${POST_SCHEMA_BASE}
+        ${PREVIEW_POST_SCHEMA_BASE}
       }
     }
   }
