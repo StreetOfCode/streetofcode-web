@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import Image from 'next/image'
 import styled, {css} from 'styled-components'
 import * as Auth from '../../auth'
@@ -17,27 +17,30 @@ import PageContentWrapper from '../../components/PageContentWrapper'
 import {device} from '../../theme/device'
 
 const LoginPage: NextPage = () => {
-  const {user, isLoading, logout} = useAuth()
-  const [differentCredentialsError, setDifferentCredentialError] =
-    useState(false)
+  const {user, isLoading, logout, error, setError} = useAuth()
   const router = useRouter()
 
   useEffect(() => {
     Auth.getRedirectResults().catch((err) => {
-      if (err instanceof FirebaseError) {
-        const firebaseError = err as FirebaseError
-        if (
-          firebaseError.code === 'auth/account-exists-with-different-credential'
-        ) {
-          setDifferentCredentialError(true)
-        }
-      }
+      setError(err)
     })
   }, [])
 
   if (user && router?.query?.redirectUri) {
     router.push(decodeURIComponent(router.query.redirectUri as string))
   }
+
+  const differentCredentialsError = (function () {
+    if (error instanceof FirebaseError) {
+      const firebaseError = error as FirebaseError
+      if (
+        firebaseError.code === 'auth/account-exists-with-different-credential'
+      ) {
+        return true
+      }
+    }
+    return false
+  })()
 
   return (
     <PageContentWrapper>

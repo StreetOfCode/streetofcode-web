@@ -13,6 +13,11 @@ const AuthContext = createContext<UseAuthResult>({
   userId: null,
   isLoading: true,
   logout,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setError: (_: Error | null) => {
+    return
+  },
+  error: null,
 })
 
 interface UseAuthResult {
@@ -20,6 +25,8 @@ interface UseAuthResult {
   userId: string | null
   isLoading: boolean
   logout: () => void
+  setError: (error: Error | null) => void
+  error: Error | null
 }
 
 export const AuthContextProvider = ({
@@ -29,6 +36,7 @@ export const AuthContextProvider = ({
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [user, setUser] = useState<User | null>(Auth.getUser())
+  const [error, setError] = useState<Error | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -48,7 +56,14 @@ export const AuthContextProvider = ({
     await Auth.signOut().then(() => router.replace('/'))
   }
 
-  const useAuthResult = {user, userId: user?.uid || null, isLoading, logout}
+  const useAuthResult = {
+    user,
+    userId: user?.uid || null,
+    isLoading,
+    logout,
+    error,
+    setError,
+  }
 
   return (
     <AuthContext.Provider value={useAuthResult}>
