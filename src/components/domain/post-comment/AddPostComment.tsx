@@ -4,16 +4,16 @@ import EditablePostComment from './EditablePostComment'
 
 type AddPostCommentProps = {
   postId: string
-  postTitle: string
+  postSlug: string
 }
 
-const AddPostComment = ({postId, postTitle}: AddPostCommentProps) => {
+const AddPostComment = ({postId, postSlug}: AddPostCommentProps) => {
   const addPostCommentMutation = useAddPostComment(postId)
 
   const addPostComment = async (commentText: string) => {
     await addPostCommentMutation.mutateAsync({
       commentText,
-      postTitle,
+      postSlug,
     })
   }
 

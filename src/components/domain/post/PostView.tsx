@@ -102,7 +102,7 @@ const PostView = ({className, isPodcast, post, recommendedPosts}: Props) => {
         </TagsFlex>
       </AuthorAndTagsWrapper>
       {post.content && <PostContent>{postContentElements}</PostContent>}
-      <PostComments postId={post.id} postTitle={post.title || 'empty'} />
+      <PostComments postId={post.id} postSlug={post.slug || 'empty'} />
       {recommendedPosts.length > 0 && (
         <>
           <Heading variant="h4">Mohlo by ťa zaujímať</Heading>

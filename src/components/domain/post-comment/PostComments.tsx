@@ -14,10 +14,10 @@ import {device} from '../../../theme/device'
 
 type PostCommentsProps = {
   postId: string
-  postTitle: string
+  postSlug: string
 }
 
-const PostComments = ({postId, postTitle}: PostCommentsProps) => {
+const PostComments = ({postId, postSlug}: PostCommentsProps) => {
   const {isLoading} = useAuth()
 
   const usePostComments = useGetPostComments(postId)
@@ -30,7 +30,7 @@ const PostComments = ({postId, postTitle}: PostCommentsProps) => {
         return (
           <PostCommentsContent
             postId={postId}
-            postTitle={postTitle}
+            postSlug={postSlug}
             postComments={postComments}
           />
         )
@@ -41,11 +41,11 @@ const PostComments = ({postId, postTitle}: PostCommentsProps) => {
 
 const PostCommentsContent = ({
   postId,
-  postTitle,
+  postSlug,
   postComments,
 }: {
   postId: string
-  postTitle: string
+  postSlug: string
   postComments: PostComment[]
 }) => {
   return (
@@ -56,7 +56,7 @@ const PostCommentsContent = ({
         </Heading>
         <Text>({postComments.length})</Text>
       </Flex>
-      <AddPostComment postId={postId} postTitle={postTitle} />
+      <AddPostComment postId={postId} postSlug={postSlug} />
       <Flex direction="column" gap="16px" alignSelf="stretch">
         {postComments.map((postComment) => (
           <PostCommentItem

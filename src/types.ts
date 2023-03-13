@@ -295,7 +295,7 @@ export type SubscribedFromType =
 export interface PostComment {
   id: number
   postId: string
-  postTitle: string
+  postSlug: string
   userId?: string
   userName?: string
   imageUrl?: string
@@ -309,7 +309,7 @@ export interface PostCommentEditRequest {
 }
 
 export interface PostCommentAddRequest {
-  postTitle: string
+  postSlug: string
   commentText: string
 }
 
