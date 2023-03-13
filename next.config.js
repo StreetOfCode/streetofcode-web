@@ -17,6 +17,20 @@ const nextConfig = {
       'avatars.githubusercontent.com',
     ],
   },
+  rewrites: () => {
+    return [
+      {
+        source: '/__/auth/handler',
+        destination:
+          '/__/auth/handler.html',
+      },
+      {
+        source: '/__/auth/iframe',
+        destination:
+          '/__/auth/iframe.html',
+      },
+    ]
+  },
   redirects: () => {
     return [
       {
