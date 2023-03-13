@@ -46,11 +46,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const slug = context?.params?.slug as string
 
   const post = await getPostBySlug(slug)
-  const recommendedPosts = await getRecommendedPosts(
-    post,
-    RECOMMENDED_PODCASTS_COUNT,
-    CATEGORY_NAME,
-  )
+  let recommendedPosts: Post[] = []
+  if (post != null) {
+    recommendedPosts = await getRecommendedPosts(
+      post,
+      RECOMMENDED_PODCASTS_COUNT,
+      CATEGORY_NAME,
+    )
+  }
 
   if (post === null) {
     return {

@@ -501,6 +501,7 @@ const TestimonialArrowIcon = styled(HiOutlineArrowNarrowRight)`
   width: 24px;
   height: 24px;
   margin-left: 72px;
+  color: var(--color-secondary);
 `
 
 const SparksIcon = styled(HiSparkles)`
