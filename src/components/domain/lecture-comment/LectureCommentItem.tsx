@@ -6,6 +6,7 @@ import {LectureComment} from '../../../types'
 import {formatDate, formatDateTime} from '../../../utils'
 import {useDeleteLectureComment} from '../../../api/lectureComments'
 import Flex from '../../core/Flex'
+import MarkdownView from '../../core/MarkdownView'
 import Text from '../../core/Text'
 import Loading from '../../Loading'
 import UserAvatar from '../user/UserAvatar'
@@ -76,7 +77,7 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
                 </CommentTimeWrapper>
                 <Text size="very-small">{comment.userName}</Text>
               </Flex>
-              <StyledCommentText>{comment.commentText}</StyledCommentText>
+              <MarkdownView children={comment.commentText} />
             </Flex>
           </CommentField>
         )}
@@ -112,9 +113,6 @@ const CommentTimeWrapper = styled(Flex)`
     flex-direction: column;
     gap: 2px;
   }
-`
-const StyledCommentText = styled(Text)`
-  overflow-wrap: anywhere;
 `
 
 export default LectureCommentItem
