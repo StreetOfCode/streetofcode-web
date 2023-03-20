@@ -36,7 +36,10 @@ const Head = ({
       <meta property="og:image" content={imageUrl || DEFAULT_LOGO_IMAGE_URL} />
       <meta property="og:image:alt" content={imageAlt || title} />
 
-      <meta name="google-site-verification" content="FB24EUCOSSYhz39LdPTSNW4Yebc0El71AV7luRQcQQc" />
+      <meta
+        name="google-site-verification"
+        content="FB24EUCOSSYhz39LdPTSNW4Yebc0El71AV7luRQcQQc"
+      />
       {noIndex && <meta name="robots" content="noindex" />}
     </_NextHead>
   )

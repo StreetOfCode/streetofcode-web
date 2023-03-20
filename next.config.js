@@ -21,13 +21,11 @@ const nextConfig = {
     return [
       {
         source: '/__/auth/handler',
-        destination:
-          '/__/auth/handler.html',
+        destination: '/__/auth/handler.html',
       },
       {
         source: '/__/auth/iframe',
-        destination:
-          '/__/auth/iframe.html',
+        destination: '/__/auth/iframe.html',
       },
     ]
   },
