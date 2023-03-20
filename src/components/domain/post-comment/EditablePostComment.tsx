@@ -1,8 +1,11 @@
 import React, {ChangeEvent, useState} from 'react'
-import styled from 'styled-components'
+import {AiOutlineEdit} from 'react-icons/ai'
+import {MdOutlinePreview} from 'react-icons/md'
+import styled, {css} from 'styled-components'
 import {useAuth} from '../../../AuthUserContext'
 import Button from '../../core/Button'
 import Flex from '../../core/Flex'
+import MarkdownView from '../../core/MarkdownView'
 import Text from '../../core/Text'
 import TextField from '../../core/TextField'
 import Loading from '../../Loading'
@@ -22,6 +25,7 @@ const EditablePostComment = ({
 }: EditablePostCommentProps) => {
   const {userId} = useAuth()
   const [text, setText] = useState<string>(initialText || '')
+  const [isInPreview, setIsInPreview] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const onTextChanged = (e: ChangeEvent<HTMLInputElement>) => {
@@ -36,14 +40,48 @@ const EditablePostComment = ({
     })
   }
 
+  const togglePreview = (): void => {
+    setIsInPreview(!isInPreview)
+  }
+
+  const containsMarkdown =
+    text.includes('`') ||
+    text.includes('#') ||
+    text.includes('[') ||
+    text.includes(']') ||
+    text.includes(`'`)
+
   return (
     <WrapperFlex direction="column" alignItems="flex-start" alignSelf="stretch">
-      <TextField
-        text={text}
-        onTextChanged={onTextChanged}
-        maxLength={750}
-        label="Sem napíš svoj komentár"
-      />
+      {!isInPreview && (
+        <TextField
+          itemBefore={
+            containsMarkdown && (
+              <PreviewIconFlex justifyContent="flex-end">
+                <StyledPreviewIcon
+                  onClick={() => togglePreview()}
+                  title="Zobraziť preview"
+                />
+              </PreviewIconFlex>
+            )
+          }
+          text={text}
+          onTextChanged={onTextChanged}
+          maxLength={750}
+          label="Sem napíš svoj komentár"
+        />
+      )}
+      {isInPreview && (
+        <CommentField>
+          <PreviewIconFlex justifyContent="flex-end">
+            <StyledEditIcon
+              onClick={() => togglePreview()}
+              title="Naspäť na editovanie"
+            />
+          </PreviewIconFlex>
+          <MarkdownView children={text} />
+        </CommentField>
+      )}
       {isLoading && <Loading />}
       {!isLoading && (
         <Flex direction="column" gap="6px">
@@ -78,6 +116,35 @@ const WrapperFlex = styled(Flex)`
 
 const SubmitButton = styled(Button)`
   margin-top: 12px;
+`
+
+const CommentField = styled.div`
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--color-accent);
+`
+
+const PreviewIconFlex = styled(Flex)`
+  width: 100%;
+`
+
+const IconStyle = css`
+  color: var(--color-accent);
+  width: 20px;
+  height: 20px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`
+
+const StyledPreviewIcon = styled(MdOutlinePreview)`
+  ${IconStyle}
+`
+
+const StyledEditIcon = styled(AiOutlineEdit)`
+  ${IconStyle}
 `
 
 export default EditablePostComment

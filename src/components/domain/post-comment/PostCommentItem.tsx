@@ -6,6 +6,7 @@ import {PostComment} from '../../../types'
 import {formatDateTime, subtractDates} from '../../../utils'
 import {useDeletePostComment} from '../../../api/postComments'
 import Flex from '../../core/Flex'
+import MarkdownView from '../../core/MarkdownView'
 import Text from '../../core/Text'
 import Loading from '../../Loading'
 import UserAvatar from '../user/UserAvatar'
@@ -78,7 +79,7 @@ const PostCommentItem = ({postId, comment}: PostCommentItemProps) => {
                   )}
                 </CommentTimeWrapper>
               </Flex>
-              <StyledCommentText>{comment.commentText}</StyledCommentText>
+              <MarkdownView children={comment.commentText} />
             </Flex>
           </CommentField>
         )}
@@ -115,10 +116,6 @@ const CommentTimeWrapper = styled(Flex)`
     flex-direction: column;
     gap: 2px;
   }
-`
-
-const StyledCommentText = styled(Text)`
-  overflow-wrap: anywhere;
 `
 
 export default PostCommentItem
