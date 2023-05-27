@@ -109,16 +109,11 @@ const CourseCard = ({
         </CourseInfoItemsWrapper>
         <Flex
           direction="column"
-          alignItems="flex-start"
-          alignSelf="flex-end"
+          alignItems="flex-end"
+          justifyContent="space-between"
+          alignSelf="stretch"
           gap="12px"
         >
-          {progressValuePercent && (
-            <CircullarProgressWithLabel
-              value={progressValuePercent}
-              accentColor
-            />
-          )}
           <CourseInfoItem>
             <Avatar
               altName={course.author?.name}
@@ -127,6 +122,17 @@ const CourseCard = ({
             />
             <Text size="small">{course.author?.name}</Text>
           </CourseInfoItem>
+          {progressValuePercent && (
+            <CircullarProgressWithLabel
+              value={progressValuePercent}
+              accentColor
+            />
+          )}
+          {!progressValuePercent && (
+            <Text uppercase color="accent" weight="bold">
+              zadarmo
+            </Text>
+          )}
         </Flex>
       </Flex>
     </WrapperFlex>

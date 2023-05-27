@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import Image from 'next/image'
 import {GetStaticProps, NextPage} from 'next'
 import * as Api from '../../../api'
@@ -101,6 +101,28 @@ const CourseDetailContent = ({
   const {user, isLoading} = useAuth()
   const courseReviewsRef = useRef<null | HTMLDivElement>(null)
   const router = useRouter()
+  const [sidebarReviewsVisible, setSidebarReviewsVisible] = useState(true)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (courseReviewsRef.current) {
+        if (
+          window.scrollY + window.innerHeight >=
+          courseReviewsRef.current.offsetTop
+        ) {
+          setSidebarReviewsVisible(false)
+        } else {
+          setSidebarReviewsVisible(true)
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [courseReviewsRef])
 
   if (!courseOverview.thumbnailUrl && !courseOverview.trailerUrl) return null
 
@@ -246,29 +268,36 @@ const CourseDetailContent = ({
             </Flex>
             <Flex
               direction="column"
-              alignItems="flex-start"
-              alignSelf="flex-start"
+              alignItems="flex-end"
+              alignSelf="stretch"
+              justifyContent="space-between"
               gap="12px"
             >
-              <CourseInfoItem clickable onClick={handleCourseReviewsRefClick}>
-                <Rating
-                  readOnly
-                  value={courseOverview.reviewsOverview.averageRating}
-                />
-                <Text>({courseOverview.reviewsOverview.numberOfReviews})</Text>
-              </CourseInfoItem>
-              <CourseInfoItem
-                clickable
-                onClick={() => handleAuthorClicked(courseOverview.author.slug)}
-              >
-                <Avatar
-                  altName={courseOverview.author.name}
-                  src={courseOverview.author.imageUrl}
-                  sizePx={28}
-                  priority
-                />
-                <Text>{courseOverview.author.name}</Text>
-              </CourseInfoItem>
+              <Flex direction="column" gap="12px" alignItems="flex-end">
+                <CourseInfoItem clickable onClick={handleCourseReviewsRefClick}>
+                  <Rating
+                    readOnly
+                    value={courseOverview.reviewsOverview.averageRating}
+                  />
+                  <Text>
+                    ({courseOverview.reviewsOverview.numberOfReviews})
+                  </Text>
+                </CourseInfoItem>
+                <CourseInfoItem
+                  clickable
+                  onClick={() =>
+                    handleAuthorClicked(courseOverview.author.slug)
+                  }
+                >
+                  <Avatar
+                    altName={courseOverview.author.name}
+                    src={courseOverview.author.imageUrl}
+                    sizePx={28}
+                    priority
+                  />
+                  <Text>{courseOverview.author.name}</Text>
+                </CourseInfoItem>
+              </Flex>
               {progressValuePercent && (
                 <CourseInfoItem>
                   <CircullarProgressWithLabel
@@ -279,18 +308,26 @@ const CourseDetailContent = ({
                   <Text>{progressValuePercent}% dokončených</Text>
                 </CourseInfoItem>
               )}
+              {!progressValuePercent && (
+                <Text uppercase color="accent" weight="bold">
+                  zadarmo
+                </Text>
+              )}
             </Flex>
           </Flex>
-          <StyledSidebarCourseReviews courseOverview={courseOverview} />
-          {courseOverview.reviewsOverview.numberOfReviews > 0 && (
-            <AllReviewsText
-              color="accent"
-              withAccentUnderline
-              onClick={handleCourseReviewsRefClick}
-            >
-              Zobraziť všetky hodnotenia
-            </AllReviewsText>
+          {sidebarReviewsVisible && (
+            <StyledSidebarCourseReviews courseOverview={courseOverview} />
           )}
+          {sidebarReviewsVisible &&
+            courseOverview.reviewsOverview.numberOfReviews > 0 && (
+              <AllReviewsText
+                color="accent"
+                withAccentUnderline
+                onClick={handleCourseReviewsRefClick}
+              >
+                Zobraziť všetky hodnotenia
+              </AllReviewsText>
+            )}
         </CardFlex>
       </WrapperFlex>
     </PageContentWrapper>
