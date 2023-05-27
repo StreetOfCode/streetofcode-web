@@ -136,11 +136,12 @@ const PaddedFlex = styled(Flex)`
 const Excerpt = styled(Text)`
   text-overflow: ellipsis;
   overflow: hidden;
-  line-height: 1.2;
-  height: 4.6em;
+  line-height: 1.4;
+  height: 5.2em;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  opacity: 0.85;
 `
 
 const ImageWrapper = styled.div`
@@ -148,6 +149,10 @@ const ImageWrapper = styled.div`
   // images will adapt to this size while preserving their aspect-ratio
   width: 260px;
   height: 260px;
+
+  [theme-type='DARK'] & {
+    filter: brightness(0.9);
+  }
 
   img {
     object-position: left;
