@@ -8,7 +8,6 @@ import Flex from '../components/core/Flex'
 import Heading from '../components/core/Heading'
 import Text from '../components/core/Text'
 import TextField from '../components/core/TextField'
-import {discordInviteUrl} from '../components/landing-page/discord'
 import NavBar from '../components/NavBar'
 import PageContentWrapper from '../components/PageContentWrapper'
 import {device} from '../theme/device'
@@ -103,7 +102,7 @@ const FeedbackPage: NextPage = () => {
 
   const renderDiscordLink = (text: string) => {
     return (
-      <StyledLink href={discordInviteUrl} target="blank">
+      <StyledLink href={routes.discord} target="blank">
         {text}
       </StyledLink>
     )

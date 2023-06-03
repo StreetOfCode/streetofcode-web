@@ -7,17 +7,13 @@ import Text from '../components/core/Text'
 import Heading from '../components/core/Heading'
 import Button from '../components/core/Button'
 import NavBar from '../components/NavBar'
-import {spotifyImageUrl, spotifyUrl} from '../components/landing-page/podcasts'
+import {spotifyImageUrl} from '../components/landing-page/podcasts'
 import {
   youtubeLightImageUrl,
   youtubeDarkImageUrl,
-  youtubeUrl,
 } from '../components/landing-page/videos'
 import VideosSlider from '../components/landing-page/VideosSlider'
-import {
-  discordImageUrl,
-  discordInviteUrl,
-} from '../components/landing-page/discord'
+import {discordImageUrl} from '../components/landing-page/discord'
 import {CoursesSliderWrapper} from '../components/landing-page/CoursesSlider'
 import * as Api from '../api'
 import {CourseOverview} from '../types'
@@ -183,7 +179,7 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
               gap="64px"
               alignSelf="center"
             >
-              <ProviderLink href={spotifyUrl} target="blank">
+              <ProviderLink href={routes.spotify} target="_blank">
                 <Image
                   src={spotifyImageUrl}
                   alt="Street of Code podcast"
@@ -192,7 +188,7 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
                   priority
                 />
               </ProviderLink>
-              <ProviderLink href={youtubeUrl} target="blank">
+              <ProviderLink href={routes.youtube} target="_blank">
                 <Image
                   src={youtubeImageUrl}
                   alt="Street of Code video"
@@ -218,8 +214,8 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
             </div>
             <VideosSlider />
             <ProviderLink
-              href={youtubeUrl}
-              target="blank"
+              href={routes.youtube}
+              target="_blank"
               style={{alignSelf: 'center'}}
             >
               <Image
@@ -244,7 +240,7 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
                 Discorde
               </Heading>
               <div>
-                <a href={discordInviteUrl} target="blank">
+                <a href={routes.discord} target="_blank">
                   <DiscordButton variant="accent" size="large">
                     Pridaj sa!
                   </DiscordButton>

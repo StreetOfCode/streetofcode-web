@@ -40,7 +40,7 @@ const nextConfig = {
       },
       {
         source: '/discord',
-        destination: 'https://discord.com/invite/7K4dG6Nru4',
+        destination: 'https://discord.com/invite/PaFKszqU6J',
         permanent: true,
       },
       {
@@ -65,7 +65,7 @@ const nextConfig = {
       },
       {
         source: '/youtube',
-        destination: 'https://www.youtube.com/channel/UCzt3kHgfLwGGPcTk6jP1_Cg',
+        destination: 'https://www.youtube.com/@streetofcode',
         permanent: true,
       },
       {

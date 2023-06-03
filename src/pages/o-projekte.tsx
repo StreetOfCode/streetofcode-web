@@ -9,9 +9,6 @@ import Text from '../components/core/Text'
 import styled from 'styled-components'
 import UserAvatar from '../components/domain/user/UserAvatar'
 import {device} from '../theme/device'
-import {spotifyUrl} from '../components/landing-page/podcasts'
-import {youtubeUrl} from '../components/landing-page/videos'
-import {discordInviteUrl} from '../components/landing-page/discord'
 import VerticalSlider from '../components/VerticalSlider'
 import {
   FirstDesignCourseDetail,
@@ -39,7 +36,7 @@ const ProjectPage: NextPage = () => {
 
   const renderLink = (text: string, src: string) => {
     return (
-      <StyledLink href={src} target="blank">
+      <StyledLink href={src} target="_blank">
         {text}
       </StyledLink>
     )
@@ -181,9 +178,9 @@ const ProjectPage: NextPage = () => {
             <Text>
               Epizódy sme nahrávali každé dva týždne. Dĺžka a kvalita sa
               (dúfajme) stále zvyšovala. Vytvorili sme Wordpress stránku a
-              podcast sme uploadovali na {renderLink('Spotify', spotifyUrl)}.
-              Neskôr sme si založili {renderLink('YouTube', youtubeUrl)} kanál,
-              kam sme tiež epizódy uploadovali.
+              podcast sme uploadovali na {renderLink('Spotify', routes.spotify)}
+              . Neskôr sme si založili {renderLink('YouTube', routes.youtube)}{' '}
+              kanál, kam sme tiež epizódy uploadovali.
             </Text>
             <Text>
               V prvom roku sme sa snažili písať aj články. Dokonca naše prvé
@@ -235,8 +232,8 @@ const ProjectPage: NextPage = () => {
                   pokiaľ ho nedobehli iné povinnosti.
                 </li>
                 <li>
-                  Vytvorili sme {renderLink('Discord', discordInviteUrl)} kanál
-                  a začali vytvárať komunitu.
+                  Vytvorili sme {renderLink('Discord', routes.discord)} kanál a
+                  začali vytvárať komunitu.
                 </li>
               </StyledUL>
             </Text>
