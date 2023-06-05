@@ -13,6 +13,7 @@ type Props = {
   disabled?: boolean
   borderColor?: Color
   inputBackgroundColor?: Color
+  maxRows?: number
 } & HTMLAttributes<HTMLElement>
 
 type Color = 'primary' | 'secondary' | 'accent'
@@ -28,6 +29,7 @@ const TextField = ({
   disabled,
   borderColor,
   inputBackgroundColor,
+  maxRows,
   ...props
 }: Props) => {
   const inputRef = useRef<HTMLDivElement>()
@@ -49,7 +51,7 @@ const TextField = ({
         onChange={onTextChanged}
         multiline
         minRows={1}
-        maxRows={6}
+        maxRows={maxRows || 6}
         fullWidth
         disabled={disabled}
         inputProps={{
