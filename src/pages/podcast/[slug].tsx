@@ -43,6 +43,13 @@ const SinglePostPage: NextPage<Props> = ({post, recommendedPosts}) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  // Page is cached and fresh for 10 minutes.
+  // After that, it's stale for 12 hours and will be regenerated in the background.
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=600, stale-while-revalidate=43200',
+  )
+
   const slug = context?.params?.slug as string
 
   const post = await getPostBySlug(slug)
