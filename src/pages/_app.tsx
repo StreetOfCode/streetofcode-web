@@ -17,9 +17,11 @@ import OnboardingProtectionRoute from '../components/OnboardingProtectionRoute'
 import SSRWrapper from '../components/SSRWrapper'
 import {storage} from '../localStorage'
 import NewsletterModal from '../components/NewsletterModal'
+import NextNProgress from 'nextjs-progressbar'
+import {routes} from '../routes'
+import {lightTheme} from '../theme/theme'
 import '../theme/animations/HeroAnimation.scss'
 import 'pure-react-carousel/dist/react-carousel.es.css'
-import {routes} from '../routes'
 
 function MyApp({Component, pageProps}: AppProps) {
   const [themeSetting, setThemeSetting] = useState(
@@ -69,6 +71,7 @@ function MyApp({Component, pageProps}: AppProps) {
             <RootWrapper>
               <QueryClientProvider client={queryClient}>
                 <GlobalStyles />
+                <NextNProgress color={lightTheme.accentColor} />
                 <SSRWrapper
                   ClientChildren={() => (
                     <OnboardingProtectionRoute>

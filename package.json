@@ -32,6 +32,7 @@
     "html-react-parser": "^3.0.4",
     "next": "12.3.1",
     "next-remove-imports": "^1.0.6",
+    "nextjs-progressbar": "^0.0.16",
     "pure-react-carousel": "^1.29.0",
     "ra-data-simple-rest": "^4.8.1",
     "react": "18.2.0",
