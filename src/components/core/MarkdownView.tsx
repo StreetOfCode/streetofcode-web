@@ -86,7 +86,6 @@ const StyledMarkdown = styled(ReactMarkdown)`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  overflow: auto;
 
   ul {
     margin: 0;

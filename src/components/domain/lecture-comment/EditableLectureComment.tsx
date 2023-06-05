@@ -1,12 +1,12 @@
 import React, {ChangeEvent, useState} from 'react'
-import {AiOutlineEdit} from 'react-icons/ai'
-import {MdOutlinePreview} from 'react-icons/md'
 import styled, {css} from 'styled-components'
 import Button from '../../core/Button'
 import Flex from '../../core/Flex'
 import MarkdownView from '../../core/MarkdownView'
 import TextField from '../../core/TextField'
 import Loading from '../../Loading'
+import {BiToggleLeft, BiToggleRight} from 'react-icons/bi'
+import Text from '../../core/Text'
 
 type EditableLectureCommentProps = {
   /* Props for existing lecture comment */
@@ -34,6 +34,7 @@ const EditableLectureComment = ({
     await onSubmit(text).then(() => {
       setIsLoading(false)
       setText('')
+      setIsInPreview(false)
     })
   }
 
@@ -41,41 +42,34 @@ const EditableLectureComment = ({
     setIsInPreview(!isInPreview)
   }
 
-  const containsMarkdown =
-    text.includes('`') ||
-    text.includes('#') ||
-    text.includes('[') ||
-    text.includes(']') ||
-    text.includes(`'`)
+  const MarkdownPreview = () => {
+    return (
+      <MarkdownPreviewFlex justifyContent="flex-end">
+        <PreviewWrapper gap="8px" alignItems="center" onClick={togglePreview}>
+          <Text size="small" color="accent">
+            Markdown preview
+          </Text>
+          {isInPreview ? <StyledToggleRightIcon /> : <StyledToggleLeftIcon />}
+        </PreviewWrapper>
+      </MarkdownPreviewFlex>
+    )
+  }
 
   return (
     <WrapperFlex direction="column" alignItems="flex-start" alignSelf="stretch">
       {!isInPreview && (
         <TextField
-          itemBefore={
-            containsMarkdown && (
-              <PreviewIconFlex justifyContent="flex-end">
-                <StyledPreviewIcon
-                  onClick={() => togglePreview()}
-                  title="Zobraziť preview"
-                />
-              </PreviewIconFlex>
-            )
-          }
+          itemBefore={text.length > 0 && <MarkdownPreview />}
           text={text}
           onTextChanged={onTextChanged}
           maxLength={750}
+          maxRows={100}
           label="Sem napíš svoj komentár"
         />
       )}
       {isInPreview && (
         <CommentField>
-          <PreviewIconFlex justifyContent="flex-end">
-            <StyledEditIcon
-              onClick={() => togglePreview()}
-              title="Naspäť na editovanie"
-            />
-          </PreviewIconFlex>
+          <MarkdownPreview />
           <MarkdownView children={text} />
         </CommentField>
       )}
@@ -112,25 +106,32 @@ const CommentField = styled.div`
   border: 1px solid var(--color-accent);
 `
 
-const PreviewIconFlex = styled(Flex)`
+const MarkdownPreviewFlex = styled(Flex)`
+  padding-right: 12px;
   width: 100%;
+`
+
+const PreviewWrapper = styled(Flex)`
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 const IconStyle = css`
   color: var(--color-accent);
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
 
   &:hover {
     cursor: pointer;
   }
 `
 
-const StyledPreviewIcon = styled(MdOutlinePreview)`
+const StyledToggleLeftIcon = styled(BiToggleLeft)`
   ${IconStyle}
 `
 
-const StyledEditIcon = styled(AiOutlineEdit)`
+const StyledToggleRightIcon = styled(BiToggleRight)`
   ${IconStyle}
 `
 
