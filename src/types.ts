@@ -49,15 +49,17 @@ export interface Lecture {
   updatedAt: Date
 }
 
-export interface LectureComment {
+export interface Comment {
   id: number
-  userId: string
-  userName: string
+  userId?: string
+  userName?: string
   imageUrl?: string
   commentText: string
   createdAt: Date
   updatedAt: Date
 }
+
+export type LectureComment = Comment
 
 export interface CourseOverview {
   id: number
@@ -166,13 +168,17 @@ export interface CourseReviewEditRequest {
   text?: string
 }
 
-export interface LectureCommentEditRequest {
+export interface CommentEditRequest {
   commentText: string
 }
 
-export interface LectureCommentAddRequest {
+export type LectureCommentEditRequest = CommentEditRequest
+
+export interface CommentAddRequest {
   commentText: string
 }
+
+export type LectureCommentAddRequest = CommentAddRequest
 
 export interface AuthorOverview {
   id: number
@@ -292,25 +298,16 @@ export type SubscribedFromType =
   | 'PROFILE'
   | 'NEWSLETTER_MODAL'
 
-export interface PostComment {
+export interface PostComment extends Comment {
   id: number
   postId: string
   postSlug: string
-  userId?: string
-  userName?: string
-  imageUrl?: string
-  commentText: string
-  createdAt: string
-  updatedAt: string
 }
 
-export interface PostCommentEditRequest {
-  commentText: string
-}
+export type PostCommentEditRequest = CommentEditRequest
 
-export interface PostCommentAddRequest {
+export interface PostCommentAddRequest extends CommentAddRequest {
   postSlug: string
-  commentText: string
 }
 
 export interface Tag {

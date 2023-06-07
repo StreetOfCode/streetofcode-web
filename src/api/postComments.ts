@@ -2,6 +2,7 @@ import {useMutation, useQuery} from 'react-query'
 import * as Api from '../api'
 import queryClient from '../queryClient'
 import {
+  CommentAddRequest,
   PostComment,
   PostCommentAddRequest,
   PostCommentEditRequest,
@@ -74,10 +75,11 @@ export const useGetPostComments = (postId: string) => {
   return useQuery(queryKeys.get(postId), () => fetchPostComments(postId))
 }
 
-export const useAddPostComment = (postId: string) => {
+export const useAddPostComment = (postId: string, postSlug: string) => {
   return useMutation(
     mutationKeys.add,
-    (addRequest: PostCommentAddRequest) => addPostComment(postId, addRequest),
+    (addRequest: CommentAddRequest) =>
+      addPostComment(postId, {...addRequest, postSlug}),
     {
       onSuccess: () =>
         Promise.all(
@@ -92,11 +94,7 @@ export const useAddPostComment = (postId: string) => {
 export const useEditPostComment = (commentId: number, postId: string) => {
   return useMutation(
     mutationKeys.edit(commentId),
-    ({
-      postCommentEditRequest,
-    }: {
-      postCommentEditRequest: PostCommentEditRequest
-    }) => {
+    (postCommentEditRequest: PostCommentEditRequest) => {
       return editPostComment(commentId, postId, postCommentEditRequest)
     },
     {

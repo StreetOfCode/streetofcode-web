@@ -1,41 +1,38 @@
 import React, {ChangeEvent, useState} from 'react'
 import styled, {css} from 'styled-components'
-import {useAuth} from '../../../AuthUserContext'
 import Button from '../../core/Button'
 import Flex from '../../core/Flex'
 import MarkdownView from '../../core/MarkdownView'
-import Text from '../../core/Text'
 import TextField from '../../core/TextField'
 import Loading from '../../Loading'
 import {BiToggleLeft, BiToggleRight} from 'react-icons/bi'
+import Text from '../../core/Text'
+import {Comment} from '../../../types'
 
-type EditablePostCommentProps = {
-  /* Props for existing post comment */
+type EditableCommentProps = {
   initialText?: string
   onEditCancelled?: () => void
-
-  onSubmit: (text: string) => Promise<void>
+  onSubmit: ({commentText}: {commentText: string}) => Promise<Comment>
 }
 
-const EditablePostComment = ({
+const EditableComment = ({
   initialText,
   onEditCancelled,
   onSubmit,
-}: EditablePostCommentProps) => {
-  const {userId} = useAuth()
-  const [text, setText] = useState<string>(initialText || '')
+}: EditableCommentProps) => {
+  const [commentText, setCommentText] = useState<string>(initialText || '')
   const [isInPreview, setIsInPreview] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const onTextChanged = (e: ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value)
+    setCommentText(e.target.value)
   }
 
   const handleOnSubmit = async () => {
     setIsLoading(true)
-    await onSubmit(text).then(() => {
+    await onSubmit({commentText}).then(() => {
       setIsLoading(false)
-      setText('')
+      setCommentText('')
       setIsInPreview(false)
     })
   }
@@ -61,8 +58,8 @@ const EditablePostComment = ({
     <WrapperFlex direction="column" alignItems="flex-start" alignSelf="stretch">
       {!isInPreview && (
         <TextField
-          itemBefore={text.length > 0 && <MarkdownPreview />}
-          text={text}
+          itemBefore={commentText.length > 0 && <MarkdownPreview />}
+          text={commentText}
           onTextChanged={onTextChanged}
           maxLength={750}
           maxRows={100}
@@ -72,31 +69,21 @@ const EditablePostComment = ({
       {isInPreview && (
         <CommentField>
           <MarkdownPreview />
-          <MarkdownView children={text} />
+          <MarkdownView children={commentText} />
         </CommentField>
       )}
       {isLoading && <Loading />}
       {!isLoading && (
-        <Flex direction="column" gap="6px">
-          <Flex alignItems="flex-end" gap="12px" alignSelf="flex-start">
-            <SubmitButton
-              disabled={text.trim().length === 0}
-              variant="accent"
-              onClick={handleOnSubmit}
-            >
-              {initialText && 'Upraviť komentár'}
-              {!initialText && 'Pridať komentár'}
-            </SubmitButton>
-            {onEditCancelled && (
-              <Button onClick={onEditCancelled}>Zrušiť</Button>
-            )}
-          </Flex>
-          {!userId && (
-            <Text size="small">
-              Komentár píšeš anonymne. Po odoslaní ho nebudeš môcť upraviť ani
-              zmazať.
-            </Text>
-          )}
+        <Flex alignItems="flex-end" gap="12px" alignSelf="flex-start">
+          <SubmitButton
+            disabled={commentText.trim().length === 0}
+            variant="accent"
+            onClick={handleOnSubmit}
+          >
+            {initialText && 'Upraviť komentár'}
+            {!initialText && 'Pridať komentár'}
+          </SubmitButton>
+          {onEditCancelled && <Button onClick={onEditCancelled}>Zrušiť</Button>}
         </Flex>
       )}
     </WrapperFlex>
@@ -147,4 +134,4 @@ const StyledToggleRightIcon = styled(BiToggleRight)`
   ${IconStyle}
 `
 
-export default EditablePostComment
+export default EditableComment

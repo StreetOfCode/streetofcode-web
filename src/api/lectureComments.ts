@@ -94,20 +94,21 @@ export const useAddLectureComment = (lectureId: number) => {
   )
 }
 
-export const useEditLectureComment = (commentId: number, lectureId: number) => {
+export const useEditLectureComment = (commentId: number, lectureId: string) => {
+  const _lectureId = Number(lectureId)
   return useMutation(
     mutationKeys.edit(commentId),
-    ({
-      lectureCommentEditRequest,
-    }: {
-      lectureCommentEditRequest: LectureCommentEditRequest
-    }) => {
-      return editLectureComment(commentId, lectureId, lectureCommentEditRequest)
+    (lectureCommentEditRequest: LectureCommentEditRequest) => {
+      return editLectureComment(
+        commentId,
+        Number(_lectureId),
+        lectureCommentEditRequest,
+      )
     },
     {
       onSuccess: () => {
         return Promise.all(
-          [queryKeys.get(lectureId)].map((key) =>
+          [queryKeys.get(_lectureId)].map((key) =>
             queryClient.invalidateQueries(key),
           ),
         )
@@ -118,17 +119,18 @@ export const useEditLectureComment = (commentId: number, lectureId: number) => {
 
 export const useDeleteLectureComment = (
   commentId: number,
-  lectureId: number,
+  lectureId: string,
 ) => {
+  const _lectureId = Number(lectureId)
   return useMutation(
     mutationKeys.delete(commentId),
     () => {
-      return deleteLectureComment(commentId, lectureId)
+      return deleteLectureComment(commentId, _lectureId)
     },
     {
       onSuccess: () => {
         return Promise.all(
-          [queryKeys.get(lectureId)].map((key) =>
+          [queryKeys.get(_lectureId)].map((key) =>
             queryClient.invalidateQueries(key),
           ),
         )

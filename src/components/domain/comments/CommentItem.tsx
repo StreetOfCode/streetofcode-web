@@ -2,39 +2,45 @@ import React from 'react'
 import styled from 'styled-components'
 import {useAuth} from '../../../AuthUserContext'
 import useEditItemActions from '../../../hooks/useEditItemActions'
-import {LectureComment} from '../../../types'
+import {Comment, CommentEditRequest} from '../../../types'
 import {formatDate, formatDateTime} from '../../../utils'
-import {useDeleteLectureComment} from '../../../api/lectureComments'
 import Flex from '../../core/Flex'
 import MarkdownView from '../../core/MarkdownView'
 import Text from '../../core/Text'
 import Loading from '../../Loading'
 import UserAvatar from '../user/UserAvatar'
-import EditLectureComment from './EditLectureComment'
 import {device} from '../../../theme/device'
+import {UseMutationResult} from 'react-query'
+import EditableComment from './EditableComment'
 
-type LectureCommentItemProps = {
-  lectureId: number
-  comment: LectureComment
+type CommentItemProps = {
+  entityId: string
+  comment: Comment
+  useEditMutation: (
+    commentId: number,
+    entityId: string,
+  ) => UseMutationResult<Comment, unknown, CommentEditRequest, unknown>
+  useDeleteMutation: (
+    commentId: number,
+    entityId: string,
+  ) => UseMutationResult<void, unknown, void, unknown>
 }
 
-const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
+const CommentItem = ({
+  entityId,
+  comment,
+  useEditMutation,
+  useDeleteMutation,
+}: CommentItemProps) => {
   const {userId, isLoading} = useAuth()
-
-  const deleteLectureCommentMutation = useDeleteLectureComment(
-    comment.id,
-    lectureId,
-  )
-
-  const onDelete = async () => {
-    await deleteLectureCommentMutation.mutateAsync()
-  }
+  const editMutation = useEditMutation(comment.id, entityId)
+  const deleteMutation = useDeleteMutation(comment.id, entityId)
 
   const isUpdatingAllowed = comment.userId === userId
 
   const [isEditing, onEdited, onEditCancelled, EditItemActions] =
     useEditItemActions({
-      deleteAction: onDelete,
+      deleteAction: () => deleteMutation.mutateAsync(),
       dialogTitle: 'Zmazať komentár?',
       disabled: !isUpdatingAllowed,
     })
@@ -42,7 +48,7 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
   if (isLoading) return <Loading />
 
   return (
-    <CommentItem>
+    <CommentItemWrapper>
       <Flex gap="12px" alignSelf="stretch">
         <LeftColumn
           direction="column"
@@ -52,7 +58,7 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
         >
           <UserAvatar
             src={comment.imageUrl}
-            name={comment.userName}
+            name={comment.userName || 'Anonym'}
             sizePx={42}
           />
           <EditItemActions />
@@ -82,19 +88,22 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
           </CommentField>
         )}
         {isEditing && (
-          <EditLectureComment
-            lectureId={lectureId}
-            comment={comment}
-            onCommentEdited={onEdited}
-            onCancelled={onEditCancelled}
+          <EditableComment
+            initialText={comment.commentText}
+            onEditCancelled={onEditCancelled}
+            onSubmit={async ({commentText}: {commentText: string}) => {
+              const comment = await editMutation.mutateAsync({commentText})
+              onEdited()
+              return comment
+            }}
           />
         )}
       </Flex>
-    </CommentItem>
+    </CommentItemWrapper>
   )
 }
 
-const CommentItem = styled.div`
+const CommentItemWrapper = styled.div`
   align-self: stretch;
 `
 
@@ -115,4 +124,4 @@ const CommentTimeWrapper = styled(Flex)`
   }
 `
 
-export default LectureCommentItem
+export default CommentItem
