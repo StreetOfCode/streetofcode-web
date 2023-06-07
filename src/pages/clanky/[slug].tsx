@@ -1,7 +1,7 @@
 import React from 'react'
-import {GetServerSideProps, NextPage} from 'next'
+import {GetStaticProps, NextPage} from 'next'
 import PageContentWrapper from '../../components/PageContentWrapper'
-import {getPostBySlug} from '../../wp/api'
+import {getAllPosts, getPostBySlug} from '../../wp/api'
 import {Post} from '../../wp/types'
 import NavBar from '../../components/NavBar'
 import PostView from '../../components/domain/post/PostView'
@@ -42,14 +42,7 @@ const SinglePostPage: NextPage<Props> = ({post, recommendedPosts}) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  // Page is cached and fresh for 10 minutes.
-  // After that, it's stale for 12 hours and will be regenerated in the background.
-  context.res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=600, stale-while-revalidate=43200',
-  )
-
+export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context?.params?.slug as string
 
   const post = await getPostBySlug(slug)
@@ -73,6 +66,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         recommendedPosts,
       },
     }
+  }
+}
+
+export const getStaticPaths = async () => {
+  const posts = await getAllPosts(CATEGORY_NAME)
+  const slugs = posts.map((post) => post.slug)
+
+  const paths = slugs.map((slug) => ({params: {slug}}))
+
+  return {
+    paths,
+    fallback: 'blocking',
   }
 }
 
