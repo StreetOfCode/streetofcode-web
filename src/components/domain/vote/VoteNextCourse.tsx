@@ -82,8 +82,7 @@ const VoteNextCourse = () => {
           nextCourseOptions.length > 0 ? (
             <Flex direction="column" gap="22px" alignSelf="center">
               <Text align="center">
-                Keď chceš, aby sme spravili dáky kurz, tak zahlasuj a možno (ale
-                len možno) budeš vypočutý/á!
+                Aký kurz by si chcel/a, aby sme spravili ako ďalší?
               </Text>
               <CourseOptionsFlexWrapper gap="12px">
                 {nextCourseOptions.map((courseOption) => (

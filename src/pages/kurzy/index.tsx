@@ -94,9 +94,15 @@ const CoursesPageContent = ({courses}: Props) => {
                 </Heading>
               </div>
               <Text align="center" size="large">
-                Vyber si z našich kurzov
+                Vyber si z svoj kurz programovania
               </Text>
               <Courses courses={courses} />
+              <Text align="center" size="large">
+                Chceš sa naučiť vyvíjať softvér? Ak hľadáš online kurz
+                programovania, si tu správne. Zameriavame sa na programovanie
+                pre úplných začiatočníkov aj pre pokročilých. Vyber si svoj kurz
+                IT a začni ešte dnes.
+              </Text>
               <VoteNextCourse />
             </Flex>
           </>
