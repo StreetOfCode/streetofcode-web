@@ -9,21 +9,21 @@ export const THEME_SETTING_KEY = 'themeSetting'
 const useThemeDetector = () => {
   const getCurrentTheme = () =>
     typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-color-scheme: dark)')?.matches
+    window.matchMedia('(prefers-color-scheme: light)')?.matches
 
-  const [isDarkTheme, setIsDarkTheme] = useState(getCurrentTheme())
+  const [isLightTheme, setIsLightTheme] = useState(getCurrentTheme())
 
   const mqListener = (e: MediaQueryListEvent) => {
-    setIsDarkTheme(e.matches)
+    setIsLightTheme(e.matches)
   }
 
   useEffect(() => {
-    const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)')
-    darkThemeMq?.addEventListener('change', mqListener)
-    return () => darkThemeMq?.removeEventListener('change', mqListener)
+    const lightThemeMq = window.matchMedia('(prefers-color-scheme: light)')
+    lightThemeMq?.addEventListener('change', mqListener)
+    return () => lightThemeMq?.removeEventListener('change', mqListener)
   }, [])
 
-  return isDarkTheme
+  return isLightTheme
 }
 
 const updateCSSThemeVariables = (theme: ThemeType) => {
@@ -45,31 +45,31 @@ const updateCSSThemeVariables = (theme: ThemeType) => {
 
 const determineTheme = (
   setting: ThemeSetting,
-  isDarkTheme: boolean,
+  isLightTheme: boolean,
 ): ThemeType => {
   if (setting === 'LIGHT') {
     return lightTheme
   } else if (setting === 'DARK') {
     return darkTheme
   } else {
-    return isDarkTheme ? darkTheme : lightTheme
+    return isLightTheme ? lightTheme : darkTheme
   }
 }
 
 export const useTheme = () => {
   const {themeSetting, setThemeSetting} = useContext(ThemeSettingContext)
-  const isDarkTheme = useThemeDetector()
+  const isLightTheme = useThemeDetector()
 
   useEffect(() => {
     storage.setThemeSetting(themeSetting)
-    updateCSSThemeVariables(determineTheme(themeSetting, isDarkTheme))
+    updateCSSThemeVariables(determineTheme(themeSetting, isLightTheme))
   }, [themeSetting])
 
-  const theme = determineTheme(themeSetting, isDarkTheme)
+  const theme = determineTheme(themeSetting, isLightTheme)
 
   return {
     theme,
-    isDarkTheme: theme === darkTheme,
+    isLightTheme: theme === lightTheme,
     themeSetting,
     setThemeSetting,
   }

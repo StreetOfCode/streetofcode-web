@@ -76,10 +76,10 @@ export default class MyDocument extends Document {
           } else if (themeSetting === 'DARK') {
             return themeSetting
           } else {
-            const isDarkTheme =
+            const isLightTheme =
               typeof window !== 'undefined' &&
-              window.matchMedia('(prefers-color-scheme: dark)').matches
-            return isDarkTheme ? 'DARK' : 'LIGHT'
+              window.matchMedia('(prefers-color-scheme: light)').matches
+            return isLightTheme ? 'LIGHT' : 'DARK'
           }
         })()
 

@@ -23,11 +23,11 @@ const SyntaxHighlighter = ({
   language,
   customStyle,
 }: SyntaxHighlighterProps) => {
-  const {isDarkTheme} = useTheme()
+  const {isLightTheme} = useTheme()
   return (
     <_SyntaxHighlighter
       language={language}
-      style={isDarkTheme ? vscDarkPlus : vs}
+      style={isLightTheme ? vs : vscDarkPlus}
       wrapLines
       wrapLongLines
       customStyle={customStyle}
