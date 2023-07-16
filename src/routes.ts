@@ -40,7 +40,6 @@ const onboarding = '/onboarding'
 const profil = '/profil'
 
 const github = '/github'
-const twitter = '/twitter'
 const facebook = '/facebook'
 const spotify = '/spotify'
 const patreon = '/patreon'
@@ -66,7 +65,6 @@ export const routes = {
   profil,
 
   github,
-  twitter,
   facebook,
   spotify,
   patreon,

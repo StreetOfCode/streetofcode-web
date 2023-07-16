@@ -5,7 +5,6 @@ import {
   AiFillFacebook,
   AiFillGithub,
   AiFillInstagram,
-  AiFillTwitterCircle,
   AiFillYoutube,
 } from 'react-icons/ai'
 import {FaDiscord, FaSpotify} from 'react-icons/fa'
@@ -91,9 +90,6 @@ const Footer = () => {
             <Flex gap="8px">
               <SocialIconLink href={routes.github} target="_blank">
                 <AiFillGithub size={iconSize} />
-              </SocialIconLink>
-              <SocialIconLink href={routes.twitter} target="_blank">
-                <AiFillTwitterCircle size={iconSize} />
               </SocialIconLink>
               <SocialIconLink href={routes.facebook} target="_blank">
                 <AiFillFacebook size={iconSize} />
