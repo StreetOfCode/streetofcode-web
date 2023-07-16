@@ -1,6 +1,6 @@
 import {Analytics, logEvent} from 'firebase/analytics'
 import React, {useEffect, useState} from 'react'
-import * as Sentry from '@sentry/react'
+import * as Sentry from '@sentry/nextjs'
 import type {AppProps} from 'next/app'
 import GlobalStyles from '../globalStyles'
 import styled from 'styled-components'

@@ -22,16 +22,14 @@
     "@mui/styles": "^5.11.11",
     "@radix-ui/react-accordion": "^0.1.6",
     "@radix-ui/react-dropdown-menu": "^0.1.6",
-    "@sentry/nextjs": "^7.8.1",
-    "@sentry/node": "^7.8.1",
-    "@sentry/react": "^7.8.1",
+    "@sentry/nextjs": "^7.58.1",
     "@u-wave/react-vimeo": "^0.9.8",
     "@uiw/react-md-editor": "3.6.0",
     "clsx": "^1.2.1",
     "firebase": "^9.9.0",
     "html-react-parser": "^3.0.4",
     "next": "12.3.1",
-    "next-remove-imports": "^1.0.6",
+    "next-remove-imports": "^1.0.11",
     "nextjs-progressbar": "^0.0.16",
     "pure-react-carousel": "^1.29.0",
     "ra-data-simple-rest": "^4.8.1",
@@ -73,7 +71,8 @@
     "@typescript-eslint/parser": "^5",
     "loader-utils": "^2.0.3",
     "decode-uri-component": "^0.2.1",
-    "tsconfig-paths/json5": "1.0.2"
+    "tsconfig-paths/json5": "1.0.2",
+    "protobufjs": "^7.2.4"
   },
   "eslintConfig": {
     "extends": "next/core-web-vitals"
