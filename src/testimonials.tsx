@@ -1,9 +1,9 @@
 import React from 'react'
-import Heading from './components/core/Heading'
 import NextLink from './components/core/NextLink'
 import {theodor, pavol} from './images'
 import {routes} from './routes'
 import {CourseReview} from './types'
+import Text from './components/core/Text'
 
 const theodorReviewText = `Sice už jsem zkušený programátor, ale na učení se jazyka Kotlin a celkově jeho nasazení v BE,
 je tento kurz naprosto skvělý.
@@ -12,17 +12,17 @@ Hlavně konečně kurz nahrávaný i ve vysoké kvalitě a se super komentářem
 
 export const springBootKotlinLink = (
   <NextLink styleIfActive href={routes.kurzy.slug('spring-boot-kotlin')}>
-    <Heading variant="h6" normalWeight withAccentUnderline>
+    <Text size="large" withAccentUnderline>
       Spring Boot - Kotlin
-    </Heading>
+    </Text>
   </NextLink>
 )
 
 export const informatika101Link = (
   <NextLink styleIfActive href={routes.kurzy.slug('informatika-101')}>
-    <Heading variant="h6" normalWeight withAccentUnderline>
+    <Text size="large" withAccentUnderline>
       Informatika 101
-    </Heading>
+    </Text>
   </NextLink>
 )
 

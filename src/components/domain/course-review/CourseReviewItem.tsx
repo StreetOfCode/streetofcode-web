@@ -48,6 +48,33 @@ const CourseReviewItem = ({
   if (isLoading) return <Loading />
 
   return (
+    <CourseReviewContainer
+      className={className}
+      review={review}
+      courseSlug={courseSlug}
+      isEditing={isEditing}
+      onEdited={onEdited}
+      onEditCancelled={onEditCancelled}
+      EditItemActions={EditItemActions}
+    />
+  )
+}
+
+export const CourseReviewContainer = ({
+  className,
+  review,
+  courseSlug,
+  isEditing,
+  onEdited,
+  onEditCancelled,
+  EditItemActions,
+}: CourseReviewItemProps & {
+  isEditing: boolean
+  onEdited: () => void
+  onEditCancelled: () => void
+  EditItemActions: React.FC
+}) => {
+  return (
     <ReviewItem className={className}>
       <Flex gap="12px" alignSelf="stretch">
         <LeftColumn

@@ -29,17 +29,8 @@ import {
   CATEGORY_NAME as PODCAST_CATEGORY_NAME,
   COUNT_IN_SLIDER as PODCAST_COUNT_IN_SLIDER,
 } from '../components/domain/post/podcast/podcast-constants'
-import {usImage} from '../images'
 import Head from '../components/Head'
 import {routes} from '../routes'
-import CourseReviewItem from '../components/domain/course-review/CourseReviewItem'
-import {
-  informatika101Link,
-  pavolReview,
-  springBootKotlinLink,
-  theodorReview,
-} from '../testimonials'
-import {HiOutlineArrowNarrowRight, HiSparkles} from 'react-icons/hi'
 
 interface Props {
   courses: CourseOverview[]
@@ -73,7 +64,7 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
               >
                 <div>
                   <Heading variant="h1" noWrap>
-                    Naučíme ťa
+                    Nauč sa s nami
                   </Heading>
                   <Heading variant="h1" color="accent">
                     programovať
@@ -100,11 +91,15 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
             <Flex direction="column" gap="24px" alignItems="flex-start">
               <div>
                 <Heading inline variant="h3">
-                  Pozri si naše
+                  Objav
                 </Heading>
                 <Heading inline variant="h3" color="accent">
                   {' '}
-                  kurzy
+                  IT kurzy
+                </Heading>
+                <Heading inline variant="h3">
+                  {' '}
+                  Street of Code
                 </Heading>
               </div>
               <CoursesSliderWrapper courses={courses} />
@@ -126,51 +121,15 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
           <Flex direction="column" gap="48px" alignItems="flex-start">
             <div>
               <Heading inline variant="h3">
-                Na našich kurzoch si dávame {}
-              </Heading>
-              <Flex gap="8px" style={{display: 'inline-block'}}>
-                <Heading inline variant="h3" color="accent">
-                  extra
-                </Heading>
-                <SparksIcon />
-              </Flex>
-              <Heading inline variant="h3">
-                {' '}
-                záležať
-              </Heading>
-            </div>
-            <TestimonialsFlexWrapper
-              gap="32px"
-              alignItems="flex-start"
-              justifyContent="flex-end"
-            >
-              <Flex direction="column" gap="16px">
-                <Testimonial review={pavolReview} courseSlug={''} />
-                <Flex gap="8px" alignSelf="flex-start">
-                  <TestimonialArrowIcon />
-                  {informatika101Link}
-                </Flex>
-              </Flex>
-              <Flex direction="column" gap="16px">
-                <Testimonial review={theodorReview} courseSlug={''} />
-                <Flex gap="8px" alignSelf="flex-start">
-                  <TestimonialArrowIcon />
-                  {springBootKotlinLink}
-                </Flex>
-              </Flex>
-            </TestimonialsFlexWrapper>
-          </Flex>
-        </Box>
-        <Box>
-          <Flex direction="column" gap="48px" alignItems="flex-start">
-            <div>
-              <Heading inline variant="h3">
-                Po ceste do školy, do práce alebo pri upratovaní si môžeš pustiť
-                náš
+                Počúvaj Street of Code
               </Heading>
               <Heading inline variant="h3" color="accent">
                 {' '}
                 podcast
+              </Heading>
+              <Heading inline variant="h3">
+                {' '}
+                a ostaň v obraze
               </Heading>
             </div>
             <PodcastsSlider podcasts={podcasts} />
@@ -204,8 +163,7 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
           <Flex direction="column" gap="48px" alignItems="flex-start">
             <div>
               <Heading inline variant="h3">
-                Keď ti popri tom všetkom raste ešte zostane čas, tak si môžeš
-                pozrieť naše
+                A ak sa ti stále máli, hoď očkom na naše YouTube
               </Heading>
               <Heading inline variant="h3" color="accent">
                 {' '}
@@ -232,8 +190,8 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
           <Flex justifyContent="space-between" gap="32px">
             <div>
               <Heading variant="h3" inline>
-                Ak sa na niečom zasekneš, alebo budeš potrebovať pomoc, tak ju
-                možno nájdeš na našom
+                Ak sa na niečom zasekneš alebo potrebuješ programátorskú radu,
+                skús to na našom
               </Heading>
               <Heading variant="h3" color="accent" inline>
                 {' '}
@@ -242,7 +200,7 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
               <div>
                 <a href={routes.discord} target="_blank">
                   <DiscordButton variant="accent" size="large">
-                    Pridaj sa!
+                    Pridať sa
                   </DiscordButton>
                 </a>
               </div>
@@ -255,39 +213,6 @@ const Home: NextPage<Props> = ({courses, podcasts}) => {
                 priority
               />
             </DiscordImage>
-          </Flex>
-        </Box>
-        <Box>
-          <Flex direction="column" gap="32px" alignItems="flex-start">
-            <div>
-              <Heading variant="h3" inline>
-                A kto sme vlastne
-              </Heading>
-              <Heading variant="h3" color="accent" inline>
-                {' '}
-                my?
-              </Heading>
-            </div>
-            <AboutUsContentWrapper
-              gap="32px"
-              justifyContent="space-between"
-              alignItems="flex-start"
-            >
-              <UsImage>
-                <StyledImage
-                  src={usImage}
-                  alt="Street of Code"
-                  layout="fill"
-                  priority
-                />
-              </UsImage>
-              <Heading variant="h5" normalWeight>
-                Sme dvaja kamaráti, full-time programátori, ktorí sa rozhodli,
-                že by chceli robiť okrem práce aj niečo navyše. Niečo, čo by
-                potenciálne mohlo aj pomôcť iným ľudom. Preto sme sa rozhodli
-                vytvoriť Street of Code.
-              </Heading>
-            </AboutUsContentWrapper>
           </Flex>
         </Box>
       </Wrapper>
@@ -433,42 +358,9 @@ const DiscordImage = styled.div`
   }
 `
 
-const UsImage = styled.div`
-  position: relative;
-  flex-shrink: 0;
-
-  width: 400px;
-  aspect-ratio: 4 / 3;
-
-  transition: 250ms ease-in-out;
-
-  &:hover {
-    transform: scale(1.1);
-    transition: 250ms ease-in-out;
-  }
-
-  @media ${device.M} {
-    width: 300px;
-  }
-
-  @media ${device.S} {
-    &:hover {
-      transform: unset;
-      transition: unset;
-      box-shadow: unset;
-    }
-  }
-`
-
 const StyledImage = styled(Image)`
   border-radius: 22px;
   border: 2px solid var(--color-accent) !important;
-`
-
-const AboutUsContentWrapper = styled(Flex)`
-  @media ${device.M} {
-    flex-direction: column;
-  }
 `
 
 const HeroActionButton = styled(Button)`
@@ -478,40 +370,6 @@ const HeroActionButton = styled(Button)`
 
   @media ${device.XS} {
     font-size: 16px;
-  }
-`
-
-const TestimonialsFlexWrapper = styled(Flex)`
-  @media ${device.M} {
-    flex-direction: column;
-    align-self: center;
-  }
-`
-
-const Testimonial = styled(CourseReviewItem)`
-  min-width: 300px;
-  max-width: 450px;
-`
-
-const TestimonialArrowIcon = styled(HiOutlineArrowNarrowRight)`
-  width: 24px;
-  height: 24px;
-  margin-left: 72px;
-  color: var(--color-secondary);
-`
-
-const SparksIcon = styled(HiSparkles)`
-  width: 24px;
-  height: 24px;
-  transform: rotate(180deg);
-  margin-left: 4px;
-  margin-bottom: 16px;
-  margin-right: -6px;
-  color: var(--color-accent);
-
-  @media ${device.S} {
-    width: 20px;
-    height: 20px;
   }
 `
 
