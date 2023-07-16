@@ -57,12 +57,26 @@ const CourseCard = ({
       justifyContent="space-between"
       className={className}
     >
+      <Flex justifyContent="space-between" alignSelf="stretch">
+        <PriceTag>
+          <Text uppercase weight="bold" color="primary">
+            ZADARMO
+          </Text>
+        </PriceTag>
+        <RatingWrapper
+          readOnly
+          value={course.reviewsOverview.averageRating}
+          customSize="28px"
+        />
+      </Flex>
       <Flex direction="column" gap="24px">
         <Flex direction="column" gap="8px">
-          <Heading variant="h5" align="center" normalWeight>
+          <Heading variant="h5" align="center" color="accent" uppercase>
             {course.name}
           </Heading>
-          <Text align="center">{course.shortDescription}</Text>
+          <Text align="center" size="small">
+            {course.shortDescription}
+          </Text>
         </Flex>
         <Flex direction="column" gap="12px">
           <CourseIconImageWrapper>
@@ -73,7 +87,6 @@ const CourseCard = ({
               priority
             />
           </CourseIconImageWrapper>
-          <Rating readOnly value={course.reviewsOverview.averageRating} />
         </Flex>
       </Flex>
 
@@ -86,93 +99,114 @@ const CourseCard = ({
         >
           <CourseInfoItem>
             <DifficultyIcon difficultyLevel={course.difficulty.skillLevel} />
-            <Text size="small">{course.difficulty?.name}</Text>
+            <Text size="very-small">{course.difficulty?.name}</Text>
           </CourseInfoItem>
           <CourseInfoItem>
             <AiOutlineClockCircle />
-            <Text size="small">{courseDuration}</Text>
+            <Text size="very-small">{courseDuration}</Text>
           </CourseInfoItem>
+        </CourseInfoItemsWrapper>
+        <CourseInfoItemsWrapper
+          direction="column"
+          alignItems="flex-start"
+          alignSelf="flex-start"
+          gap="12px"
+        >
           <CourseInfoItem>
             <AiOutlineVideoCamera />
-            <Text size="small">
+            <Text size="very-small">
               {lecturesCount} {numOfLecturesText(lecturesCount)}
             </Text>
           </CourseInfoItem>
           {quizzesCount > 0 && (
             <CourseInfoItem>
               <AiOutlineQuestionCircle />
-              <Text size="small">
+              <Text size="very-small">
                 {quizzesCount} {numOfQuizzesText(quizzesCount)}
               </Text>
             </CourseInfoItem>
           )}
         </CourseInfoItemsWrapper>
-        <Flex
-          direction="column"
-          alignItems="flex-end"
-          justifyContent="space-between"
-          alignSelf="stretch"
-          gap="12px"
-        >
-          <CourseInfoItem>
-            <Avatar
-              altName={course.author?.name}
-              src={course.author?.imageUrl}
-              sizePx={25}
-            />
-            <Text size="small">{course.author?.name}</Text>
-          </CourseInfoItem>
-          {progressValuePercent && (
-            <CircullarProgressWithLabel
-              value={progressValuePercent}
-              accentColor
-            />
-          )}
-          {!progressValuePercent && (
-            <Text uppercase color="accent" weight="bold">
-              zadarmo
-            </Text>
-          )}
-        </Flex>
+      </Flex>
+      <Flex
+        direction="column"
+        alignItems="center"
+        justifyContent="space-between"
+        alignSelf="stretch"
+        gap="12px"
+      >
+        <CourseInfoItem authorItem>
+          <Avatar
+            altName={course.author?.name}
+            src={course.author?.imageUrl}
+            sizePx={25}
+          />
+          <Text size="very-small">{course.author?.name}</Text>
+        </CourseInfoItem>
+        {progressValuePercent && (
+          <ProgressWrapper value={progressValuePercent} accentColor />
+        )}
       </Flex>
     </WrapperFlex>
   )
 }
 
-const WrapperFlex = styled(Flex)`
-  width: 300px;
-  aspect-ratio: 1 / 1.5;
-
-  padding: 1em 0.5em;
-  border: var(--color-accent) 2px solid;
-  border-radius: 22px;
-  transition: 250ms ease-in-out;
-
-  &:hover {
-    transform: scale(1.1);
-    transition: 250ms ease-in-out;
-    box-shadow: 1px 8px 20px var(--color-shadow);
-  }
+const PriceTag = styled.div`
+  padding: 4px 12px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  background-color: var(--color-accent);
+  margin-left: -28px;
 
   @media ${device.S} {
-    width: 250px;
-    aspect-ratio: 1 / 1.6;
-
-    &:hover {
-      transform: unset;
-      transition: unset;
-      box-shadow: unset;
+    margin-left: -22px;
+  }
+`
+const RatingWrapper = styled(Rating)`
+  @media ${device.S} {
+    svg {
+      width: 22px;
+      height: 22px;
     }
   }
 `
 
+const WrapperFlex = styled(Flex)`
+  width: 300px;
+  aspect-ratio: 1 / 1.55;
+
+  padding: 32px 24px;
+  border-right: var(--color-accent) 4px solid;
+  border-left: var(--color-accent) 4px solid;
+  box-shadow: 0px 2px 2px var(--color-shadow), 0px -2px 2px var(--color-shadow);
+  border-radius: 16px;
+  transition: 250ms ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+    transition: 250ms ease-in-out;
+    box-shadow: 0px 4px 10px var(--color-shadow),
+      0px -4px 10px var(--color-shadow);
+  }
+
+  @media ${device.S} {
+    width: 250px;
+    padding: 26px 18px;
+    aspect-ratio: 1 / 1.65;
+  }
+`
+
+const ProgressWrapper = styled(CircullarProgressWithLabel)`
+  margin-top: 4px;
+`
+
 const CourseIconImageWrapper = styled.div`
   position: relative;
-  width: 100px;
+  width: 80px;
   aspect-ratio: 1;
 
   @media ${device.S} {
-    width: 75px;
+    width: 60px;
   }
 `
 
@@ -182,15 +216,21 @@ const CourseInfoItemsWrapper = styled(Flex)`
   }
 `
 
-const CourseInfoItem = styled.div`
+const CourseInfoItem = styled.div<{authorItem?: boolean}>`
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
 
+  * {
+    color: ${(props) =>
+      props.authorItem
+        ? 'var(--color-secondary)'
+        : 'var(--color-course-info-icon)'};
+  }
+
   svg {
-    width: 25px;
-    height: 25px;
-    color: var(--color-secondary);
+    width: 28px;
+    height: 28px;
   }
 `
 

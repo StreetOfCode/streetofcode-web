@@ -12,6 +12,7 @@ export type ThemeType = {
   successColor: string // i.e correct quiz question
   footerBackgroundColor: string
   shadowColor: string
+  courseInfoIconColor: string
 }
 
 export const lightTheme: ThemeType = {
@@ -24,6 +25,7 @@ export const lightTheme: ThemeType = {
   successColor: '#4CBF6B',
   footerBackgroundColor: '#212121',
   shadowColor: 'rgba(0,0,0,0.2)',
+  courseInfoIconColor: '#58595B',
 }
 
 export const darkTheme: ThemeType = {
@@ -36,4 +38,5 @@ export const darkTheme: ThemeType = {
   successColor: '#4CBF6B',
   footerBackgroundColor: '#efefef',
   shadowColor: 'rgba(255,255,255,0.2)',
+  courseInfoIconColor: '#BCBEC0',
 }

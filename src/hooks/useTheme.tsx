@@ -41,6 +41,7 @@ const updateCSSThemeVariables = (theme: ThemeType) => {
     theme.footerBackgroundColor,
   )
   root.style.setProperty('--color-shadow', theme.shadowColor)
+  root.style.setProperty('--color-course-info-icon', theme.courseInfoIconColor)
 }
 
 const determineTheme = (

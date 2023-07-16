@@ -7,6 +7,7 @@ import Text from '../components/core/Text'
 import styled from 'styled-components'
 
 type Props = {
+  className?: string
   value: number
   // width and height (i.e: 50px)
   size?: string
@@ -26,6 +27,7 @@ const CircullarProgressWithLabel = ({
       sx={{position: 'relative', display: 'inline-flex'}}
       size={size || '50px'}
       accentColor={accentColor}
+      className={props.className}
     >
       <StyledCircullarProgress variant="determinate" value={value} {...props} />
       <Box

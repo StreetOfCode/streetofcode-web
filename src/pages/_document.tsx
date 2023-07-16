@@ -96,6 +96,7 @@ export default class MyDocument extends Document {
           root.style.setProperty('--color-success', '#4CBF6B')
           root.style.setProperty('--color-footer-background', '#212121')
           root.style.setProperty('--color-shadow', 'rgba(0,0,0,0.2)')
+          root.style.setProperty('--color-course-info-icon', '#58595B')
         } else {
           root.style.setProperty('--initial-theme-type', theme)
           root.style.setProperty('--color-primary', '#212121')
@@ -106,6 +107,7 @@ export default class MyDocument extends Document {
           root.style.setProperty('--color-success', '#4CBF6B')
           root.style.setProperty('--color-footer-background', '#efefef')
           root.style.setProperty('--color-shadow', 'rgba(255,255,255,0.2)')
+          root.style.setProperty('--color-course-info-icon', '#BCBEC0')
         }
       })()
     `

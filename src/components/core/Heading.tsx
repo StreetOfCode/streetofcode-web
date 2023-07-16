@@ -12,6 +12,7 @@ type Props = {
   withAccentUnderline?: boolean
   noWrap?: boolean
   maxWidth?: string
+  uppercase?: boolean
 } & HTMLAttributes<HTMLElement>
 
 type Variant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
@@ -29,6 +30,7 @@ const Heading = ({
   withAccentUnderline,
   noWrap,
   maxWidth,
+  uppercase,
   ...props
 }: Props) => {
   const headingProps: Props = {
@@ -41,6 +43,7 @@ const Heading = ({
     withAccentUnderline,
     noWrap,
     maxWidth,
+    uppercase,
   }
 
   if (variant === 'h1') {
@@ -134,6 +137,7 @@ const headingStyle = css<{
   withAccentUnderline?: boolean
   noWrap?: boolean
   maxWidth?: string
+  uppercase?: boolean
 }>`
   display: ${(props) => (props.inline ? 'inline' : 'block')};
 
@@ -145,6 +149,7 @@ const headingStyle = css<{
     props.withAccentUnderline ? `4px solid var(--color-accent)` : 'unset'};
   white-space: ${(props) => (props.noWrap ? 'nowrap' : 'unset')};
   max-width: ${(props) => props.maxWidth && props.maxWidth};
+  text-transform: ${(props) => (props.uppercase ? 'uppercase' : 'unset')};
 
   @media ${device.XL} {
     font-size: ${(props) =>
