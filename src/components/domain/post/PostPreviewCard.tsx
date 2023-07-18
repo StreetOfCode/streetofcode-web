@@ -34,7 +34,7 @@ const PostPreviewCard = ({post, isPodcast}: Props) => {
     <WrapperFlex direction="column" justifyContent="space-between">
       <Flex direction="column" gap="18px">
         <Flex direction="column" gap="8px">
-          <FixedSizedHeading variant="h6" align="center" normalWeight>
+          <FixedSizedHeading variant="h6" align="center">
             {post.title}
           </FixedSizedHeading>
           {post.excerpt && (
@@ -101,31 +101,34 @@ const FixedSizedHeading = styled(Heading)`
 
 const WrapperFlex = styled(Flex)`
   width: 360px;
-  height: 520px;
-  padding: 1em 0.5em;
-  border: var(--color-accent) 2px solid;
-  border-radius: 22px;
+  height: 500px;
+  padding: 16px 24px;
+  border-right: var(--color-accent) 4px solid;
+  border-left: var(--color-accent) 4px solid;
+  box-shadow: 0px 2px 2px var(--color-shadow), 0px -2px 2px var(--color-shadow);
+  border-radius: 16px;
   transition: 250ms ease-in-out;
 
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
     transition: 250ms ease-in-out;
-    box-shadow: 1px 8px 20px var(--color-shadow);
+    box-shadow: 0px 4px 10px var(--color-shadow),
+      0px -4px 10px var(--color-shadow);
   }
 
   @media ${device.L} {
     width: 345px;
-    height: 500px;
+    height: 480px;
   }
 
   @media ${device.S} {
-    width: 330px;
-    height: 480px;
+    width: 320px;
+    height: 440px;
   }
 
   @media ${device.XS} {
     width: 300px;
-    height: 420px;
+    height: 400px;
   }
 `
 
@@ -147,8 +150,8 @@ const Excerpt = styled(Text)`
 const ImageWrapper = styled.div`
   position: relative;
   // images will adapt to this size while preserving their aspect-ratio
-  width: 260px;
-  height: 260px;
+  width: 220px;
+  height: 220px;
 
   [theme-type='DARK'] & {
     filter: brightness(0.9);
@@ -158,9 +161,14 @@ const ImageWrapper = styled.div`
     object-position: left;
   }
 
+  @media ${device.S} {
+    width: 180px;
+    height: 180px;
+  }
+
   @media ${device.XS} {
-    width: 200px;
-    height: 200px;
+    width: 160px;
+    height: 160px;
   }
 `
 
