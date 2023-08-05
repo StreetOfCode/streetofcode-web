@@ -125,10 +125,14 @@ const NewsletterForm = ({
         </Flex>
       )}
       {newsletterUpdatedSuccess && (
-        <Text color="primary">Poslali sme ti potvrdzovací email</Text>
+        <Text color="primary" align="center">
+          Poslali sme ti potvrdzovací email
+        </Text>
       )}
       {newsletterUpdatedFailure && (
-        <Text color="primary">Niečo sa nepodarilo, skús to prosím neskôr</Text>
+        <Text color="primary" align="center">
+          Niečo sa nepodarilo, skús to prosím neskôr
+        </Text>
       )}
     </Wrapper>
   )
