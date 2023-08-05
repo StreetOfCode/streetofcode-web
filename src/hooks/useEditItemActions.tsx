@@ -16,8 +16,8 @@ const useEditItemActions = ({
   const [isEditing, setIsEditing] = useState<boolean>(false)
   const [isConfirmingDelete, setIsConfirmingDelete] = useState<boolean>(false)
 
-  const onDelete = async () => {
-    await deleteAction()
+  const onDelete = () => {
+    deleteAction()
     setIsConfirmingDelete(false)
   }
 
