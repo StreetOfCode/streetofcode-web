@@ -15,6 +15,7 @@ import Button from '../../core/Button'
 import Flex from '../../core/Flex'
 import Text from '../../core/Text'
 import TextField from '../../core/TextField'
+import {GDPR_URL} from '../../../constants'
 
 type Props = {
   className?: string
@@ -94,7 +95,9 @@ const NewsletterForm = ({
       {!newsletterUpdatedSuccess && !newsletterUpdatedFailure && (
         <Flex direction="column" gap="12px">
           {!removeHeading && (
-            <Text color="primary">Chcem odoberať novinky</Text>
+            <Text color="primary" weight="bold">
+              Chcem odoberať novinky
+            </Text>
           )}
           <Flex gap="12px" alignSelf="stretch">
             <TextField
@@ -113,6 +116,12 @@ const NewsletterForm = ({
               onClick={onSubmit}
             />
           </Flex>
+          <Text size="small" color="primary" align="center">
+            Poskytnutím emailu súhlasíš s jeho spracovaním v súlade s{' '}
+            <a href={GDPR_URL} target="_blank">
+              GDPR.
+            </a>
+          </Text>
         </Flex>
       )}
       {newsletterUpdatedSuccess && (

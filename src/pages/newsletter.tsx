@@ -15,6 +15,7 @@ import {addToNewsletter, authPost} from '../api'
 import {AddToNewsletterRequest} from '../types'
 import Head from '../components/Head'
 import {prefixWithHost, routes} from '../routes'
+import {GDPR_URL} from '../constants'
 
 const NewsletterPage: NextPage = () => {
   const {executeRecaptcha} = useGoogleReCaptcha()
@@ -107,6 +108,12 @@ const NewsletterPage: NextPage = () => {
             >
               Prihlásiť sa na odber noviniek
             </Button>
+            <Text size="small">
+              Poskytnutím emailu súhlasíš s jeho spracovaním v súlade s{' '}
+              <a href={GDPR_URL} target="_blank">
+                ochranou osobných údajov.
+              </a>
+            </Text>
             <Text>
               Prihlás sa na odber našich noviniek a medzi prvými sa dozvieš o
               nových kurzoch, videách, podcastoch a všeličom ďalšom, čo
