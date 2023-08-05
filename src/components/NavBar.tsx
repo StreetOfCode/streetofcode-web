@@ -67,9 +67,6 @@ const NavBar = () => {
           <NextLink styleIfActive href={routes.oProjekte}>
             <MenuItemText>o projekte</MenuItemText>
           </NextLink>
-          <NextLink styleIfActive href={routes.feedback}>
-            <MenuItemText>feedback</MenuItemText>
-          </NextLink>
         </MenuItems>
         <LogInOrOutButton />
       </MenuFlex>
@@ -102,9 +99,6 @@ const NavBar = () => {
           </NextLink>
           <NextLink styleIfActive href={routes.oProjekte}>
             <Text>O projekte</Text>
-          </NextLink>
-          <NextLink styleIfActive href={routes.feedback}>
-            <Text>Feedback</Text>
           </NextLink>
           {user && <LogoutText onClick={logout}>Odhlásiť</LogoutText>}
           {mobileNavbarOpen && (
