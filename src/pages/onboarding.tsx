@@ -15,6 +15,7 @@ import UserAvatar from '../components/domain/user/UserAvatar'
 import Loading from '../components/Loading'
 import {routes} from '../routes'
 import {device} from '../theme/device'
+import {GDPR_URL} from '../constants'
 
 const TOTAL_STEPS = 3
 
@@ -26,7 +27,7 @@ type ConfirmNameProps = {
 }
 
 const CHECK_EMAIL_IN_SPAN_NOTICE =
-  'Prosím skontroluj, či ti email neprišiel do spamu. Ak áno, tak ho ' +
+  'Prosím skontroluj, či ti potvrdzovací email neprišiel do spamu. Ak áno, tak ho ' +
   'prosím vo svojej emailovej službe označ ako "not spam".'
 
 const ConfirmName = ({
@@ -110,9 +111,15 @@ const Newsletter = ({
         <CheckBox
           checked={newsletter}
           onToggle={(newValue) => setNewsletter(newValue)}
-          label={`Poslať potvrdzujúci email (${email})`}
-          size={'22px'}
+          label={`Chcem dostávať novinky na (${email})`}
+          size={'24px'}
         />
+        <Text>
+          Poskytnutím emailu súhlasíš s jeho spracovaním v súlade s{' '}
+          <a href={GDPR_URL} target="_blank">
+            ochranou osobných údajov
+          </a>
+        </Text>
         <Text size="very-small">{CHECK_EMAIL_IN_SPAN_NOTICE}</Text>
         <Button variant="accent" onClick={onSubmit}>
           Pokračovať
@@ -143,7 +150,7 @@ const DiscordServer = ({
   onStepForward,
   disableButtons,
 }: DiscordProps) => {
-  const [sendDiscord, setSendDiscord] = useState(true)
+  const [sendDiscord, setSendDiscord] = useState(false)
 
   const onSubmit = () => {
     if (!disableButtons) {
@@ -171,9 +178,15 @@ const DiscordServer = ({
         <CheckBox
           checked={sendDiscord}
           onToggle={(newValue) => setSendDiscord(newValue)}
-          label={`Chcem dostať pozvánku (${email})`}
-          size={'22px'}
+          label={`Chcem dostať pozvánku na (${email})`}
+          size={'24px'}
         />
+        <Text>
+          Poskytnutím emailu súhlasíš s jeho spracovaním v súlade s{' '}
+          <a href={GDPR_URL} target="_blank">
+            ochranou osobných údajov
+          </a>
+        </Text>
         <Text size="very-small">{CHECK_EMAIL_IN_SPAN_NOTICE}</Text>
         <Button disabled={disableButtons} variant="accent" onClick={onSubmit}>
           Dokončiť
@@ -194,7 +207,7 @@ const OnboardingPage: NextPage = () => {
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState<number>(0)
   const [name, setName] = useState(user?.displayName || '')
-  const [receiveNewsletter, setReceiveNewsletter] = useState(true)
+  const [receiveNewsletter, setReceiveNewsletter] = useState(false)
   const [loading, setLoading] = useState(false)
   const email = user?.email || ''
 
