@@ -19,6 +19,7 @@ import {useGetUser} from '../api/user'
 import {QueryGuard} from '../QueryGuard'
 import NewsletterForm from './domain/newsletter/NewsletterForm'
 import {routes} from '../routes'
+import {GDPR_URL, TERMS_OF_SERVICE_URL} from '../constants'
 
 const Footer = () => {
   const router = useRouter()
@@ -114,31 +115,27 @@ const Footer = () => {
         </NewsletterCopyrightAndSocials>
 
         <NavigationFlex justifyContent="flex-end" flex="1">
-          <Flex direction="column" gap={'24px'} alignItems="stretch">
+          <Flex direction="column" gap={'16px'} alignItems="stretch">
             <NextLink href={routes.kurzy.index}>
-              <Text color="primary" uppercase>
-                kurzy
-              </Text>
+              <Text color="primary">Kurzy</Text>
             </NextLink>
             <NextLink href={routes.clanky.index}>
-              <Text color="primary" uppercase>
-                články
-              </Text>
+              <Text color="primary">Články</Text>
             </NextLink>
             <NextLink href={routes.oProjekte}>
-              <Text color="primary" uppercase>
-                O projekte
-              </Text>
+              <Text color="primary">O projekte</Text>
             </NextLink>
             <NextLink href={routes.podcast.index}>
-              <Text color="primary" uppercase>
-                podcast
-              </Text>
+              <Text color="primary">Podcast</Text>
             </NextLink>
             <NextLink href={routes.feedback}>
-              <Text color="primary" uppercase>
-                feedback
-              </Text>
+              <Text color="primary">Feedback</Text>
+            </NextLink>
+            <NextLink href={TERMS_OF_SERVICE_URL} blankTarget>
+              <Text color="primary">Podmienky používania</Text>
+            </NextLink>
+            <NextLink href={GDPR_URL} blankTarget>
+              <Text color="primary">Ochrana osobných údajov</Text>
             </NextLink>
           </Flex>
         </NavigationFlex>
@@ -179,7 +176,7 @@ const WrapperFlex = styled(Flex)`
     max-width: 900px;
   }
 
-  @media ${device.S} {
+  @media ${device.M} {
     flex-direction: column;
     align-items: center;
     gap: 32px;
@@ -197,7 +194,7 @@ const GitHubLink = styled(Text)`
 `
 
 const LogoWithAddressFlex = styled(Flex)`
-  @media ${device.S} {
+  @media ${device.M} {
     flex-direction: row;
     justify-content: center;
     gap: 32px;
@@ -231,6 +228,10 @@ const LogoWrapper = styled.div`
   position: relative;
   aspect-ratio: 3 / 1;
   height: 60px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 const LogoImage = styled(Image)`
