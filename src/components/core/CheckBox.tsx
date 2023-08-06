@@ -10,7 +10,7 @@ type Props = {
   labelColor?: string
   checked: boolean
   disabled?: boolean
-  onToggle: (newValue: boolean) => void
+  onToggle?: (newValue: boolean) => void
   checkedColor?: string
   size?: string
   alignSelf?: AlignItems
@@ -29,7 +29,7 @@ const CheckBox = ({
   ...props
 }: Props) => {
   const handleClick = (e: React.MouseEvent) => {
-    if (disabled) {
+    if (disabled || !onToggle) {
       e.preventDefault()
       return
     }
@@ -51,7 +51,9 @@ const CheckBox = ({
       {checked && (
         <CheckedIcon disabled={disabled} size={size} color={checkedColor} />
       )}
-      {!checked && <UncheckedIcon disabled={disabled} size={size} />}
+      {!checked && (
+        <UncheckedIcon disabled={disabled} size={size} color={checkedColor} />
+      )}
       {label && <Label labelColor={labelColor}>{label}</Label>}
     </WrapperFlex>
   )
@@ -65,18 +67,19 @@ const WrapperFlex = styled(Flex)<{disabled?: boolean}>`
     cursor: pointer;
   }`
       : ''}
+
+  opacity: ${(props) => (props.disabled ? '0.5' : '1')};
 `
 
 const iconStyle = (props: {
   disabled?: boolean
   size?: string
-  borderColor?: string
-  theme: {accentColor: string}
+  color?: string
 }) => `
   width: ${props.size || '18px'};
   aspect-ratio: 1;
   flex-shrink: 0;
-  color: var(--color-accent);
+  color: ${props.color || ''};
   ${
     !props.disabled
       ? `
@@ -91,7 +94,6 @@ const CheckedIcon = styled(MdCheckBox)<{
   disabled?: boolean
   size?: string
   color?: string
-  borderColor?: string
 }>`
   ${(props) => iconStyle(props)}
   ${(props) => (props.color ? `color: ${props.color}` : '')}
@@ -100,7 +102,6 @@ const CheckedIcon = styled(MdCheckBox)<{
 const UncheckedIcon = styled(MdCheckBoxOutlineBlank)<{
   disabled?: boolean
   size?: string
-  borderColor?: string
 }>`
   ${(props) => iconStyle(props)}
 `
