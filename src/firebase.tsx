@@ -12,5 +12,11 @@ const firebaseConfig = {
 }
 
 export const firebase = initializeApp(firebaseConfig)
-export const analytics =
-  typeof window !== 'undefined' ? getAnalytics(firebase) : undefined
+
+export const getFirebaseAnalytics = (aggreedToCookies: boolean) => {
+  if (!aggreedToCookies || typeof window === 'undefined') {
+    return undefined
+  } else {
+    return getAnalytics(firebase)
+  }
+}

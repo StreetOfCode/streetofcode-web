@@ -9,7 +9,7 @@ import {QueryClientProvider} from 'react-query'
 import queryClient from '../queryClient'
 import {AuthContextProvider} from '../AuthUserContext'
 import {useRouter} from 'next/router'
-import {analytics} from '../firebase'
+import {getFirebaseAnalytics} from '../firebase'
 import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3'
 import ErrorBoundaryFallBack from '../components/domain/ErrorBoundaryFallBack'
 import ThemeSettingContext from '../theme/ThemeSettingContext'
@@ -20,36 +20,41 @@ import NewsletterModal from '../components/NewsletterModal'
 import NextNProgress from 'nextjs-progressbar'
 import {routes} from '../routes'
 import {lightTheme} from '../theme/theme'
+import CookieConsent from '../components/cookie-consent/CookieConsent'
+import CookieConsentContext from '../components/cookie-consent/CookieConsentContext'
 import '../theme/animations/HeroAnimation.scss'
 import 'pure-react-carousel/dist/react-carousel.es.css'
 
 function MyApp({Component, pageProps}: AppProps) {
+  const [agreedToCookies, setAggreedToCookies] = useState(false)
   const [themeSetting, setThemeSetting] = useState(
     storage.getThemeSetting() || 'NOT-SET',
   )
   const router = useRouter()
 
   useEffect(() => {
+    const analytics = getFirebaseAnalytics(agreedToCookies)
+
     if (analytics == null) {
       return () => {
         return
       }
+    } else {
+      const _logEvent = (url: string) => {
+        logEvent(analytics as Analytics, 'screen_view' as string, {
+          firebase_screen: url,
+        })
+      }
+
+      router.events.on('routeChangeComplete', _logEvent)
+
+      _logEvent(window.location.pathname)
+
+      return () => {
+        router.events.off('routeChangeComplete', _logEvent)
+      }
     }
-
-    const _logEvent = (url: string) => {
-      logEvent(analytics as Analytics, 'screen_view' as string, {
-        firebase_screen: url,
-      })
-    }
-
-    router.events.on('routeChangeComplete', _logEvent)
-
-    _logEvent(window.location.pathname)
-
-    return () => {
-      router.events.off('routeChangeComplete', _logEvent)
-    }
-  }, [router.events, analytics])
+  }, [router.events, agreedToCookies])
 
   if (router.pathname === routes.admin) {
     return (
@@ -67,29 +72,34 @@ function MyApp({Component, pageProps}: AppProps) {
         reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY || ''}
       >
         <ThemeSettingContext.Provider value={{themeSetting, setThemeSetting}}>
-          <AuthContextProvider>
-            <RootWrapper>
-              <QueryClientProvider client={queryClient}>
-                <GlobalStyles />
-                <NextNProgress color={lightTheme.accentColor} />
-                <SSRWrapper
-                  ClientChildren={() => (
-                    <OnboardingProtectionRoute>
-                      <Component {...pageProps} />
-                      <NewsletterModal />
-                      <Footer />
-                    </OnboardingProtectionRoute>
-                  )}
-                  SSRChildren={() => (
-                    <>
-                      <Component {...pageProps} />
-                      <Footer />
-                    </>
-                  )}
-                />
-              </QueryClientProvider>
-            </RootWrapper>
-          </AuthContextProvider>
+          <CookieConsentContext.Provider
+            value={{agreedToCookies, setAggreedToCookies}}
+          >
+            <AuthContextProvider>
+              <RootWrapper>
+                <QueryClientProvider client={queryClient}>
+                  <GlobalStyles />
+                  <NextNProgress color={lightTheme.accentColor} />
+                  <SSRWrapper
+                    ClientChildren={() => (
+                      <OnboardingProtectionRoute>
+                        <Component {...pageProps} />
+                        <NewsletterModal />
+                        <CookieConsent />
+                        <Footer />
+                      </OnboardingProtectionRoute>
+                    )}
+                    SSRChildren={() => (
+                      <>
+                        <Component {...pageProps} />
+                        <Footer />
+                      </>
+                    )}
+                  />
+                </QueryClientProvider>
+              </RootWrapper>
+            </AuthContextProvider>
+          </CookieConsentContext.Provider>
         </ThemeSettingContext.Provider>
       </GoogleReCaptchaProvider>
     </Sentry.ErrorBoundary>
