@@ -12,6 +12,7 @@ import CheckBox from '../core/CheckBox'
 import {useTheme} from '../../hooks/useTheme'
 
 const COOKIE_CONSENT = 'cookieConsent'
+const ONE_YEAR = 365 * 24 * 60 * 60
 
 const CookieConsent = () => {
   const [showConsent, setShowConsent] = useState(false)
@@ -35,13 +36,13 @@ const CookieConsent = () => {
 
   const denyCookie = () => {
     setShowConsent(false)
-    setCookie(COOKIE_CONSENT, 'false', {})
+    setCookie(COOKIE_CONSENT, 'false', {maxAge: ONE_YEAR})
   }
 
   const acceptCookie = () => {
     setShowConsent(false)
     setAgreedToCookies(true)
-    setCookie(COOKIE_CONSENT, 'true', {})
+    setCookie(COOKIE_CONSENT, 'true', {maxAge: ONE_YEAR})
   }
 
   if (!showConsent) {
