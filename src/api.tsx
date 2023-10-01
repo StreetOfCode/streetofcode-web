@@ -98,6 +98,11 @@ export const voteNextUrl = () => `${VOTE_NEXT_COURSE_URL}`
 const USER_URL = `${API_URL}/user`
 export const userUrl = () => `${USER_URL}`
 
+const YOUTUBE_VIDEOS_URL = `${API_URL}/youtube`
+export const youtubeVideosUrl = () => `${YOUTUBE_VIDEOS_URL}`
+
+export const youtubeVideoUrl = (id: string) => `${YOUTUBE_VIDEOS_URL}/${id}`
+
 export const authFetch = async (url: string) => {
   const params = await createParams('GET')
   return fetch(url, params)

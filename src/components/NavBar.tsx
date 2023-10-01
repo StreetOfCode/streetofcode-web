@@ -64,6 +64,9 @@ const NavBar = () => {
           <NextLink styleIfActive href={routes.clanky.index}>
             <MenuItemText>články</MenuItemText>
           </NextLink>
+          <NextLink styleIfActive href={routes.videa.index}>
+            <MenuItemText>videá</MenuItemText>
+          </NextLink>
           <NextLink styleIfActive href={routes.oProjekte}>
             <MenuItemText>o projekte</MenuItemText>
           </NextLink>
@@ -96,6 +99,9 @@ const NavBar = () => {
           </NextLink>
           <NextLink styleIfActive href={routes.clanky.index}>
             <Text>Články</Text>
+          </NextLink>
+          <NextLink styleIfActive href={routes.videa.index}>
+            <Text>Videá</Text>
           </NextLink>
           <NextLink styleIfActive href={routes.oProjekte}>
             <Text>O projekte</Text>
