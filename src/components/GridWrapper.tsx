@@ -1,6 +1,6 @@
 import React, {HTMLAttributes} from 'react'
 import styled from 'styled-components'
-import {device} from '../../../theme/device'
+import {device} from '../theme/device'
 
 type Props = {
   className?: string

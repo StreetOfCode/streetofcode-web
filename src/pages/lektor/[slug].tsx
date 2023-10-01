@@ -20,7 +20,7 @@ import {prefixWithHost, routes} from '../../routes'
 import {useGetPostsByAuthor} from '../../wp/api'
 import PostPreviewCard from '../../components/domain/post/PostPreviewCard'
 import NextLink from '../../components/core/NextLink'
-import GridWrapper from '../../components/domain/post/GridWrapper'
+import GridWrapper from '../../components/GridWrapper'
 
 type Props = {
   slug: string

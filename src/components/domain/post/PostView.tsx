@@ -11,7 +11,7 @@ import PostComments from '../post-comment/PostComments'
 import PostTag from '../buttons/PostTag'
 import NextLink from '../../core/NextLink'
 import Heading from '../../core/Heading'
-import GridWrapper from './GridWrapper'
+import GridWrapper from './../../GridWrapper'
 import RecommendedPostPreview from './RecommendedPostPreview'
 import {convertTagToUrlParam} from './postUtils'
 
