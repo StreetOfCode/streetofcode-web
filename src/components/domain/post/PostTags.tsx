@@ -5,7 +5,7 @@ import {Post} from '../../../wp/types'
 import Flex from '../../core/Flex'
 import Heading from '../../core/Heading'
 import NextLink from '../../core/NextLink'
-import GridWrapper from './GridWrapper'
+import GridWrapper from './../../GridWrapper'
 import PostPreviewCard from './PostPreviewCard'
 
 type Props = {
