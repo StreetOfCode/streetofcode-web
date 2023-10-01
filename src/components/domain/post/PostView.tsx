@@ -79,7 +79,7 @@ const PostView = ({className, isPodcast, post, recommendedPosts}: Props) => {
           <AuthorAndDate
             date={post.date || undefined}
             authorName={authorName || undefined}
-            isPodcast={isPodcast}
+            isPodcastOrVideo={isPodcast}
           />
         </AuthorAndDateWrapper>
         <TagsFlex justifyContent="center" gap="8px">
