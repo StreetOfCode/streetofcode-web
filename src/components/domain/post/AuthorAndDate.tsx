@@ -77,13 +77,13 @@ const ArticleAuthorAndDate = ({
 const AuthorAndDate = ({
   date,
   authorName,
-  isPodcast,
+  isPodcastOrVideo,
 }: {
   date?: string
   authorName?: string
-  isPodcast?: boolean
+  isPodcastOrVideo?: boolean
 }) => {
-  if (isPodcast) return <PodcastAuthorAndDate date={date} />
+  if (isPodcastOrVideo) return <PodcastAuthorAndDate date={date} />
 
   return <ArticleAuthorAndDate date={date} authorName={authorName} />
 }
