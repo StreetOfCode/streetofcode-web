@@ -15,6 +15,7 @@ const nextConfig = {
       'lh3.googleusercontent.com',
       'process.env.WORDPRESS_API_URL.match(/(http(?:s)?:\\/\\/)(.*)/)[2]',
       'avatars.githubusercontent.com',
+      'i.ytimg.com',
     ],
   },
   rewrites: () => {

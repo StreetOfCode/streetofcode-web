@@ -9,6 +9,11 @@ const clanky = {
   tag: (tag: string) => `/clanky/tag/${tag}`,
 }
 
+const videa = {
+  index: '/videa',
+  slug: (slug: string) => `/videa/${slug}`,
+}
+
 const podcast = {
   index: '/podcast',
   slug: (slug: string) => `/podcast/${slug}`,
@@ -53,6 +58,7 @@ export const routes = {
   root,
   admin,
   clanky,
+  videa,
   podcast,
   kurzy,
   login,

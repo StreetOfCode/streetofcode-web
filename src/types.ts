@@ -317,3 +317,19 @@ export interface Tag {
   raw: string
   urlEconded: string
 }
+
+export interface YouTubeVideo {
+  id: string
+  snippet: {
+    title: string
+    description: string
+    publishedAt: {
+      value: string
+    }
+    thumbnails: {
+      medium: {
+        url: string
+      }
+    }
+  }
+}
