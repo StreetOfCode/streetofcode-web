@@ -103,7 +103,14 @@ const SingleVideoPage: NextPage<Props> = ({video}) => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context?.params?.slug as string
 
-  const video = await (await fetch(youtubeVideoUrl(slug))).json()
+  const videoResponse = await fetch(youtubeVideoUrl(slug))
+  if (videoResponse.status !== 200) {
+    return {
+      notFound: true,
+    }
+  }
+
+  const video = await videoResponse.json()
 
   return {
     props: {
@@ -137,6 +144,27 @@ const AuthorAndTagsWrapper = styled(Flex)`
 const FlexWrapper = styled(Flex)`
   width: clamp(320px, 100%, 750px);
   margin: 0 auto;
+
+  @media (max-width: 610px) {
+    iframe {
+      width: 400px;
+      height: 225px;
+    }
+  }
+
+  @media (max-width: 450px) {
+    iframe {
+      width: 320px;
+      height: 180px;
+    }
+  }
+
+  @media ${device.XS} {
+    iframe {
+      width: 240px;
+      height: 135px;
+    }
+  }
 `
 
 const AuthorAndDateWrapper = styled.div`
@@ -185,37 +213,6 @@ const PostContent = styled.div`
   h2 {
     margin-top: 40px;
     margin-bottom: 10px;
-  }
-
-  // youtube video
-  @media (max-width: 610px) {
-    iframe {
-      width: 400px;
-      height: 225px;
-    }
-  }
-
-  // youtube video
-  @media (max-width: 450px) {
-    iframe {
-      width: 320px;
-      height: 180px;
-    }
-  }
-
-  // youtube video
-  @media ${device.XS} {
-    iframe {
-      width: 240px;
-      height: 135px;
-    }
-
-    code {
-      display: inline-block;
-      overflow: scroll;
-      vertical-align: middle;
-      padding-bottom: 4px;
-    }
   }
 `
 

@@ -12,10 +12,6 @@ type Props = {
   video: YouTubeVideo
 }
 
-/***
- * Works with blog posts and podcasts.
- * Featured image should work with any aspect-ratio.
- */
 const VideoPreviewCard = ({video}: Props) => {
   const featuredImage = video.snippet.thumbnails.medium.url
   const authorName = 'Street of Code'
