@@ -79,6 +79,7 @@ export interface CourseOverview {
   courseDurationMinutes: number
   reviewsOverview: CourseReviewsOverview
   userProgressMetadata: null | UserProgressMetadata
+  courseProducts: CourseProduct[]
 }
 
 export interface ChapterOverview {
@@ -109,6 +110,18 @@ export interface UserProgressMetadata {
   finishedAt: null | Date
   nextChapterId: null | number
   nextLectureId: null | number
+}
+
+export interface UserProduct {
+  priceId: string
+  boughtAt: Date
+}
+
+export interface CourseProduct {
+  productId: string
+  courseId: number
+  userProducts: UserProduct[]
+  price: number
 }
 
 export interface CourseProgressOverview {
@@ -332,4 +345,12 @@ export interface YouTubeVideo {
       }
     }
   }
+}
+
+export interface CreatePaymentIntentResponse {
+  clientSecret: string
+}
+
+export interface IsCourseOwnedByUserResponse {
+  isOwnedByUser: boolean
 }

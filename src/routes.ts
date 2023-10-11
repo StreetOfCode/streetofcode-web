@@ -38,6 +38,13 @@ const lektor = {
   slug: (slug: string) => `/lektor/${slug}`,
 }
 
+const checkout = {
+  courseProduct: (courseSlug: string, productId: string) =>
+    `/checkout/${courseSlug}/${productId}`,
+  success: (courseSlug: string, productId: string) =>
+    `/checkout/${courseSlug}/${productId}/success`,
+}
+
 const feedback = '/feedback'
 const newsletter = '/newsletter'
 const oProjekte = '/o-projekte'
@@ -69,6 +76,7 @@ export const routes = {
   oProjekte,
   onboarding,
   profil,
+  checkout,
 
   github,
   facebook,

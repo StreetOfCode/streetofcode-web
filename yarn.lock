@@ -1580,6 +1580,18 @@
     "@sentry/cli" "^1.74.6"
     webpack-sources "^2.0.0 || ^3.0.0"
 
+"@stripe/react-stripe-js@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@stripe/react-stripe-js/-/react-stripe-js-2.3.1.tgz#2b9d120238369844f35387e2de1efe2471684d51"
+  integrity sha512-vXiwcG2ZjAF4AezjP7DJ8jiwxfCWCen/X2rBhyXaKrfQ7+pwmXhsoUlKRa0eLWioY1oelOQOafauNUiwTwFHgQ==
+  dependencies:
+    prop-types "^15.7.2"
+
+"@stripe/stripe-js@^2.1.7":
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-2.1.7.tgz#9ce9be34ba7f778c626710d6a12171e364a927ba"
+  integrity sha512-oI620ARpFp5jCXfwIYMxyBJmtTFuAjSA8x3k3JgW1M6cvLmw9XgmNcGNegQWmirpozhFNflxrZEgp10og+6MSA==
+
 "@swc/helpers@0.4.11":
   version "0.4.11"
   resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.4.11.tgz#db23a376761b3d31c26502122f349a21b592c8de"

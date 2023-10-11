@@ -4,7 +4,6 @@ import {GetStaticProps, NextPage} from 'next'
 import * as Api from '../../../api'
 import {CourseOverview} from '../../../types'
 import styled from 'styled-components'
-import Button from '../../../components/core/Button'
 import Heading from '../../../components/core/Heading'
 import Text from '../../../components/core/Text'
 import Flex from '../../../components/core/Flex'
@@ -28,13 +27,14 @@ import {UserAndQueryGuard} from '../../../QueryGuard'
 import {useGetCourseOverview} from '../../../api/courseOverview'
 import CourseReviews from '../../../components/domain/course-review/CourseReviews'
 import NextLink from '../../../components/core/NextLink'
-import Loading from '../../../components/Loading'
 import {device} from '../../../theme/device'
 import VideoWrapper from '../../../components/domain/video/VideoWrapper'
 import dynamic from 'next/dynamic'
 import Head from '../../../components/Head'
 import {prefixWithHost, routes} from '../../../routes'
 import SidebarCourseReviews from '../../../components/domain/course-review/SidebarCourseReviews'
+import CourseProducts from '../../../components/domain/course/CourseProducts'
+import CourseCTAButton from '../../../components/domain/course/CourseCTAButton'
 
 type Props = {
   slug: string
@@ -201,6 +201,7 @@ const CourseDetailContent = ({
             Obsah
           </Heading>
           <CourseContent course={courseOverview} />
+          <CourseProducts course={courseOverview} />
           <CourseReviews
             courseOverview={courseOverview}
             innerRef={courseReviewsRef}
@@ -209,31 +210,12 @@ const CourseDetailContent = ({
 
         <CardFlex direction="column" gap="12px" alignSelf="flex-start">
           {renderThubmnailOrTrailer()}
-          {isLoading && <Loading />}
-          {!isLoading && user && (
-            <NextLink
-              href={{pathname: url, query: {autoplay: 'false'}}}
-              alignSelf="stretch"
-            >
-              <StyledButton variant="accent" disableHoverTransform>
-                {courseOverview.userProgressMetadata
-                  ? 'Pokračovať v kurze'
-                  : 'Spustiť kurz'}
-              </StyledButton>
-            </NextLink>
-          )}
-          {!isLoading && !user && (
-            <NextLink
-              href={routes.login.redirectUri(
-                encodeURIComponent(location.pathname),
-              )}
-              alignSelf="stretch"
-            >
-              <StyledButton variant="accent">
-                Pre spustenie kurzu sa najprv prihlás
-              </StyledButton>
-            </NextLink>
-          )}
+          <CourseCTAButton
+            user={user}
+            isLoading={isLoading}
+            continueUrl={url}
+            courseOverview={courseOverview}
+          />
           <Flex justifyContent="space-between" alignSelf="stretch">
             <Flex
               direction="column"
@@ -362,10 +344,6 @@ const CourseInfoItem = styled.div<{clickable?: boolean}>`
     width: 28px;
     height: 28px;
   }
-`
-
-const StyledButton = styled(Button)`
-  width: 100%;
 `
 
 const CardFlex = styled(Flex)`

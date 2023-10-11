@@ -8,6 +8,13 @@ export const coursesOverviewUrl = () => COURSES_OVERVIEW_URL
 const COURSE_SLUGS_URL = `${API_URL}/course/slug`
 export const courseSlugsUrl = () => COURSE_SLUGS_URL
 
+const COURSE_ALL_PRODUCTS_URL = `${API_URL}/course/all-products`
+export const courseAllProductsUrl = () => COURSE_ALL_PRODUCTS_URL
+
+const COURSE_PRODUCT_URL = `${API_URL}/course-product`
+export const isCourseOwnedByUserUrl = (courseId: number) =>
+  `${COURSE_PRODUCT_URL}/${courseId}/is-owned-by-user`
+
 const MY_COURSES_URL = `${API_URL}/course/my-courses`
 export const myCoursesUrl = () => MY_COURSES_URL
 
@@ -102,6 +109,10 @@ const YOUTUBE_VIDEOS_URL = `${API_URL}/youtube`
 export const youtubeVideosUrl = () => `${YOUTUBE_VIDEOS_URL}`
 
 export const youtubeVideoUrl = (id: string) => `${YOUTUBE_VIDEOS_URL}/${id}`
+
+const STRIPE_URL = `${API_URL}/stripe`
+export const stripeCreatePaymentIntentUrl = () =>
+  `${STRIPE_URL}/create-payment-intent`
 
 export const authFetch = async (url: string) => {
   const params = await createParams('GET')

@@ -60,7 +60,11 @@ const CourseCard = ({
       <Flex justifyContent="space-between" alignSelf="stretch">
         <PriceTag>
           <Text uppercase weight="bold" color="primary">
-            ZADARMO
+            {course.courseProducts.length > 0
+              ? `od ${Math.min(
+                  ...course.courseProducts.map((cp) => cp.price / 100),
+                )}€`
+              : 'ZADARMO'}
           </Text>
         </PriceTag>
         <RatingWrapper
