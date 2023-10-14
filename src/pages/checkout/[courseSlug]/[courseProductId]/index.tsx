@@ -27,10 +27,11 @@ import Heading from '../../../../components/core/Heading'
 import Text from '../../../../components/core/Text'
 import CourseCard from '../../../../components/domain/course/CourseCard'
 import {useTheme} from '../../../../hooks/useTheme'
-import {routes} from '../../../../routes'
+import {prefixWithHost, routes} from '../../../../routes'
 import {device} from '../../../../theme/device'
 import {CourseOverview} from '../../../../types'
 import * as Utils from '../../../../utils'
+import Head from '../../../../components/Head'
 
 type Props = {
   courseSlug: string
@@ -92,7 +93,7 @@ const useStripe = (courseSlug: string, courseProductId: string) => {
   return {message, canSubmit, handleSubmit}
 }
 
-const StripeElements = ({
+const CheckoutForm = ({
   courseSlug,
   courseProductId,
 }: {
@@ -104,6 +105,8 @@ const StripeElements = ({
     courseProductId,
   )
 
+  const [isStripeLoading, setIsStripeLoading] = useState(true)
+
   const paymentElementOptions: StripePaymentElementOptions = {
     layout: 'tabs',
   }
@@ -111,10 +114,14 @@ const StripeElements = ({
   return (
     <form onSubmit={handleSubmit}>
       <FormFlex direction="column" gap="12px">
-        <PaymentElement options={paymentElementOptions} />
+        {isStripeLoading && <Loading />}
+        <PaymentElement
+          options={paymentElementOptions}
+          onLoaderStart={() => setIsStripeLoading(false)}
+        />
         <StyledButton
           variant="accent"
-          disabled={!canSubmit}
+          disabled={!canSubmit || isStripeLoading}
           onClick={handleSubmit}
         >
           Zaplatiť
@@ -157,7 +164,7 @@ const Stripe = ({
 
         return (
           <Elements options={options} stripe={stripePromise}>
-            <StripeElements
+            <CheckoutForm
               courseSlug={courseSlug}
               courseProductId={courseProductId}
             />
@@ -201,6 +208,14 @@ const CourseCheckoutPage = ({
 
   return (
     <>
+      <Head
+        title={`Checkout | ${courseOverview.name} | Street of Code`}
+        description={`Checkout | ${courseOverview.name}`}
+        url={prefixWithHost(
+          routes.checkout.courseProduct(courseOverview.slug, courseProductId),
+        )}
+        imageUrl={courseOverview.iconUrl}
+      />
       <NavBar />
       <PageContentWrapper>
         <WrapperFlex>
