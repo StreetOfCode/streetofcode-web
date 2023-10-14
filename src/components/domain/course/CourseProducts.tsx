@@ -5,6 +5,7 @@ import {CourseOverview, CourseProduct} from '../../../types'
 import Button from '../../core/Button'
 import Flex from '../../core/Flex'
 import NextLink from '../../core/NextLink'
+import * as Utils from '../../../utils'
 
 type Props = {
   course: CourseOverview
@@ -17,15 +18,14 @@ const Informatika101CourseProducts = ({course}: Props) => {
   }
 
   const CourseProduct = ({courseProduct}: {courseProduct: CourseProduct}) => {
-    const owned =
-      course.courseProducts.find((cp) => cp.userProducts.length !== 0) != null
+    const isCourseOwnedByUser = Utils.isCourseOwnedByUser(course)
 
     return (
       <Flex direction="column" style={{padding: 20}}>
         <div>{COURSE_PRODUCT_NAMES[courseProduct.productId] || 'N/A'}</div>
         <div>{courseProduct.price / 100}€</div>
-        {owned && <div>Tento kurz už vlastníš</div>}
-        {!owned && (
+        {isCourseOwnedByUser && <div>Tento kurz už vlastníš</div>}
+        {!isCourseOwnedByUser && (
           <NextLink
             href={{
               pathname: routes.checkout.courseProduct(

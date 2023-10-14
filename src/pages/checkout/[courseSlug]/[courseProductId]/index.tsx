@@ -12,7 +12,7 @@ import {
 } from '@stripe/stripe-js'
 import {GetStaticProps} from 'next'
 import {useRouter} from 'next/router'
-import {useState} from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import {useAuth} from '../../../../AuthUserContext'
 import {QueryGuard} from '../../../../QueryGuard'
@@ -30,6 +30,7 @@ import {useTheme} from '../../../../hooks/useTheme'
 import {routes} from '../../../../routes'
 import {device} from '../../../../theme/device'
 import {CourseOverview} from '../../../../types'
+import * as Utils from '../../../../utils'
 
 type Props = {
   courseSlug: string
@@ -187,6 +188,11 @@ const CourseCheckoutPage = ({
         returnTo: routes.checkout.courseProduct(courseSlug, courseProductId),
       },
     })
+  }
+
+  if (Utils.isCourseOwnedByUser(courseOverview)) {
+    // course already owned, no need to checkout, redirect to take course
+    router.replace(Utils.getTakeCourseUrl(courseOverview))
   }
 
   const price = courseOverview.courseProducts.find(

@@ -8,6 +8,7 @@ import Loading from '../../../../../../components/Loading'
 import dynamic from 'next/dynamic'
 import Head from '../../../../../../components/Head'
 import {prefixWithHost, routes} from '../../../../../../routes'
+import * as Utils from '../../../../../../utils'
 
 type Props = {
   courseSlug: string
@@ -40,6 +41,15 @@ const TakeCoursePage: NextPage<Props> = ({
     router.replace({
       pathname: routes.login.redirectUri(encodeURIComponent(location.pathname)),
       query: {returnTo: routes.kurzy.slug(courseSlug)},
+    })
+  }
+
+  if (
+    getCourseOverview.data &&
+    !Utils.isCourseOwnedByUser(getCourseOverview.data)
+  ) {
+    router.replace({
+      pathname: routes.kurzy.slug(courseSlug),
     })
   }
 

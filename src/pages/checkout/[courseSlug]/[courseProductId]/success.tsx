@@ -1,10 +1,13 @@
 import {useRouter} from 'next/router'
-import {useEffect} from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import {useAuth} from '../../../../AuthUserContext'
 import {UserAndQueryGuard} from '../../../../QueryGuard'
 import * as Api from '../../../../api'
-import {useGetCourseOverview} from '../../../../api/courseOverview'
+import {
+  queryKeys as courseOverviewQueryKeys,
+  useGetCourseOverview,
+} from '../../../../api/courseOverview'
 import Loading from '../../../../components/Loading'
 import NavBar from '../../../../components/NavBar'
 import PageContentWrapper from '../../../../components/PageContentWrapper'
@@ -15,6 +18,7 @@ import CourseCard from '../../../../components/domain/course/CourseCard'
 import {device} from '../../../../theme/device'
 import {CourseOverview, IsCourseOwnedByUserResponse} from '../../../../types'
 import * as Utils from '../../../../utils'
+import queryClient from '../../../../queryClient'
 
 const usePeriodicUserOwnsCourseCheck = (
   courseOverview: CourseOverview | undefined,
@@ -33,6 +37,10 @@ const usePeriodicUserOwnsCourseCheck = (
           (await isOwnedByUserResponse.json()) as IsCourseOwnedByUserResponse
 
         if (isOwnedByUser) {
+          await queryClient.invalidateQueries(
+            courseOverviewQueryKeys.get(courseOverview.slug),
+          )
+
           const url = Utils.getTakeCourseUrl(courseOverview)
           router.replace({pathname: url})
         }

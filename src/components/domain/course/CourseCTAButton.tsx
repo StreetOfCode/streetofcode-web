@@ -6,6 +6,7 @@ import {CourseOverview} from '../../../types'
 import Loading from '../../Loading'
 import Button from '../../core/Button'
 import NextLink from '../../core/NextLink'
+import * as Utils from '../../../utils'
 
 type Props = {
   user: User | null
@@ -23,9 +24,7 @@ const CourseCTAButton = ({
   if (isLoading) return <Loading />
 
   const hasProducts = courseOverview.courseProducts.length !== 0
-  const ownedByUser = courseOverview.courseProducts.some(
-    (cp) => cp.userProducts.length !== 0,
-  )
+  const ownedByUser = Utils.isCourseOwnedByUser(courseOverview)
 
   if (hasProducts) {
     if (ownedByUser) {

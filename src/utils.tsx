@@ -228,3 +228,7 @@ export function assert(
       `Assertion failed${errorMessage ? `: ${errorMessage}` : ''}`,
     )
 }
+
+export const isCourseOwnedByUser = (courseOverview: CourseOverview) =>
+  courseOverview.courseProducts.length === 0 ||
+  courseOverview.courseProducts.some((cp) => cp.userProducts.length !== 0)
