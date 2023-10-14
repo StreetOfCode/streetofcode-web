@@ -75,7 +75,8 @@
     "loader-utils": "^2.0.3",
     "decode-uri-component": "^0.2.1",
     "tsconfig-paths/json5": "1.0.2",
-    "protobufjs": "^7.2.4"
+    "protobufjs": "^7.2.4",
+    "postcss": "^8.4.31"
   },
   "eslintConfig": {
     "extends": "next/core-web-vitals"
