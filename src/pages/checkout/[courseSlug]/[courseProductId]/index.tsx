@@ -11,7 +11,7 @@ import {
   loadStripe,
 } from '@stripe/stripe-js'
 import {useRouter} from 'next/router'
-import React, {useState} from 'react'
+import React, {MouseEventHandler, useState} from 'react'
 import styled from 'styled-components'
 import {useAuth} from '../../../../AuthUserContext'
 import {QueryGuard} from '../../../../QueryGuard'
@@ -47,7 +47,7 @@ const useStripe = (courseSlug: string, courseProductId: string) => {
   const [message, setMessage] = useState<string | undefined>()
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (e) => {
+  const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault()
 
     if (!stripe || !elements) {
@@ -104,7 +104,7 @@ const CheckoutForm = ({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <FormFlex direction="column" gap="12px">
         {isStripeLoading && <Loading />}
         <PaymentElement
