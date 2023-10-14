@@ -10,14 +10,14 @@ import {
   StripePaymentElementOptions,
   loadStripe,
 } from '@stripe/stripe-js'
-import {GetStaticProps} from 'next'
 import {useRouter} from 'next/router'
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import {useAuth} from '../../../../AuthUserContext'
 import {QueryGuard} from '../../../../QueryGuard'
-import * as Api from '../../../../api'
 import {useCreatePaymentIntent} from '../../../../api/checkout'
+import {useGetCourseOverview} from '../../../../api/courseOverview'
+import Head from '../../../../components/Head'
 import Loading from '../../../../components/Loading'
 import NavBar from '../../../../components/NavBar'
 import PageContentWrapper from '../../../../components/PageContentWrapper'
@@ -29,15 +29,7 @@ import CourseCard from '../../../../components/domain/course/CourseCard'
 import {useTheme} from '../../../../hooks/useTheme'
 import {prefixWithHost, routes} from '../../../../routes'
 import {device} from '../../../../theme/device'
-import {CourseOverview} from '../../../../types'
 import * as Utils from '../../../../utils'
-import Head from '../../../../components/Head'
-
-type Props = {
-  courseSlug: string
-  courseOverview: CourseOverview
-  courseProductId: string
-}
 
 // TODO STRIPE - load elsewhere?
 // TODO STRIPE - api key to env
@@ -175,13 +167,23 @@ const Stripe = ({
   )
 }
 
-const CourseCheckoutPage = ({
-  courseSlug,
-  courseOverview,
-  courseProductId,
-}: Props) => {
+const useQueryParams = () => {
+  const router = useRouter()
+  const {courseSlug, courseProductId} = router.query
+
+  Utils.assert(typeof courseSlug === 'string', 'Invalid query params')
+  Utils.assert(typeof courseProductId === 'string', 'Invalid query params')
+
+  return {courseSlug, courseProductId}
+}
+
+const CourseCheckoutPage = () => {
   const {user, isLoading} = useAuth()
   const router = useRouter()
+
+  const {courseSlug, courseProductId} = useQueryParams()
+
+  const getCourseOverview = useGetCourseOverview(courseSlug as string, true)
 
   if (isLoading) {
     return <Loading />
@@ -197,46 +199,60 @@ const CourseCheckoutPage = ({
     })
   }
 
-  if (Utils.isCourseOwnedByUser(courseOverview)) {
+  if (
+    getCourseOverview.data &&
+    Utils.isCourseOwnedByUser(getCourseOverview.data)
+  ) {
     // course already owned, no need to checkout, redirect to take course
-    router.replace(Utils.getTakeCourseUrl(courseOverview))
+    router.replace(Utils.getTakeCourseUrl(getCourseOverview.data))
   }
 
-  const price = courseOverview.courseProducts.find(
-    (cp) => cp.productId === courseProductId,
-  )?.price
-
   return (
-    <>
-      <Head
-        title={`Checkout | ${courseOverview.name} | Street of Code`}
-        description={`Checkout | ${courseOverview.name}`}
-        url={prefixWithHost(
-          routes.checkout.courseProduct(courseOverview.slug, courseProductId),
-        )}
-        imageUrl={courseOverview.iconUrl}
-      />
-      <NavBar />
-      <PageContentWrapper>
-        <WrapperFlex>
-          <Flex direction="column" alignItems="flex-start" gap="32px">
-            <div>
-              <Text size="large" weight="bold">
-                Informatika 101 - basic verzia
-              </Text>
-              <Heading variant="h4">
-                {price ? `${price / 100}€` : 'N/A'}
-              </Heading>
-            </div>
-            <Stripe courseSlug={courseSlug} courseProductId={courseProductId} />
-          </Flex>
-          <CardFlex direction="column">
-            {/* <h1>{courseOverview.name}</h1> */}
-            <CourseCard course={courseOverview} />
-          </CardFlex>
-        </WrapperFlex>
-      </PageContentWrapper>
-    </>
+    <QueryGuard {...getCourseOverview}>
+      {(courseOverview) => {
+        const price = courseOverview.courseProducts.find(
+          (cp) => cp.productId === courseProductId,
+        )?.price
+
+        return (
+          <>
+            <Head
+              title={`Checkout | ${courseOverview.name} | Street of Code`}
+              description={`Checkout | ${courseOverview.name}`}
+              url={prefixWithHost(
+                routes.checkout.courseProduct(
+                  courseOverview.slug,
+                  courseProductId,
+                ),
+              )}
+              imageUrl={courseOverview.iconUrl}
+            />
+            <NavBar />
+            <PageContentWrapper>
+              <WrapperFlex>
+                <Flex direction="column" alignItems="flex-start" gap="32px">
+                  <div>
+                    <Text size="large" weight="bold">
+                      Informatika 101 - basic verzia
+                    </Text>
+                    <Heading variant="h4">
+                      {price ? `${price / 100}€` : 'N/A'}
+                    </Heading>
+                  </div>
+                  <Stripe
+                    courseSlug={courseSlug as string}
+                    courseProductId={courseProductId as string}
+                  />
+                </Flex>
+                <CardFlex direction="column">
+                  <CourseCard course={courseOverview} />
+                </CardFlex>
+              </WrapperFlex>
+            </PageContentWrapper>
+          </>
+        )
+      }}
+    </QueryGuard>
   )
 }
 
@@ -259,43 +275,5 @@ const CardFlex = styled(Flex)`
     order: 1;
   }
 `
-
-// TODO stripe - SSR needed? probably not
-export const getStaticProps: GetStaticProps = async (context) => {
-  const courseSlug = context?.params?.courseSlug as string
-  const courseProductId = context?.params?.courseProductId as string
-
-  const response = await Api.noAuthFetch(Api.courseOverviewUrl(courseSlug))
-
-  const courseOverview = response.ok
-    ? ((await response.json()) as CourseOverview)
-    : null
-
-  return {props: {courseSlug, courseOverview, courseProductId}}
-}
-
-export const getStaticPaths = async () => {
-  // TODO stripe - Api.courseSlugsAndProductIdsUrl endpoint??
-  const response = await Api.noAuthFetch(Api.courseAllProductsUrl())
-  const {courseProducts} = (response.ok ? await response.json() : []) as {
-    courseProducts: {[s: string]: string[]}
-  }
-
-  const paths = [...Object.entries(courseProducts)]
-    .map(([slug, products]) =>
-      products.map((product) => ({
-        params: {
-          courseSlug: slug,
-          courseProductId: product,
-        },
-      })),
-    )
-    .flat()
-
-  return {
-    paths,
-    fallback: 'blocking',
-  }
-}
 
 export default CourseCheckoutPage

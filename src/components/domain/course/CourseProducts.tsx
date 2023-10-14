@@ -11,10 +11,21 @@ type Props = {
   course: CourseOverview
 }
 
-const Informatika101CourseProducts = ({course}: Props) => {
+const config = {
+  javaKurzSlug:
+    process.env.NEXT_PUBLIC_COURSE_PRODUCT_SLUG_JAVA_KURZ || 'java-kurz',
+  javaKurzProductIdBasic:
+    process.env.NEXT_PUBLIC_COURSE_PRODUCT_ID_JAVA_KURZ_BASIC ||
+    'prod_Okkl9b2kAZHqJA',
+  javaKurzProductIdPro:
+    process.env.NEXT_PUBLIC_COURSE_PRODUCT_ID_JAVAKURZ_SLUG ||
+    'prod_OkklGrYeJgDOg4',
+}
+
+const JavaKurzCourseProducts = ({course}: Props) => {
   const COURSE_PRODUCT_NAMES: Record<string, string> = {
-    prod_Okkl9b2kAZHqJA: 'Základný kurz',
-    prod_OkklGrYeJgDOg4: 'PRO',
+    [config.javaKurzProductIdBasic]: 'Základný kurz',
+    [config.javaKurzProductIdPro]: 'PRO',
   }
 
   const CourseProduct = ({courseProduct}: {courseProduct: CourseProduct}) => {
@@ -54,8 +65,8 @@ const Informatika101CourseProducts = ({course}: Props) => {
 }
 
 const CourseProducts = ({course}: Props) => {
-  if (course.slug === 'informatika-101') {
-    return <Informatika101CourseProducts course={course} />
+  if (course.slug === config.javaKurzSlug) {
+    return <JavaKurzCourseProducts course={course} />
   } else {
     return <></>
   }
