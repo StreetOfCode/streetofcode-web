@@ -112,7 +112,7 @@ export interface UserProgressMetadata {
   nextLectureId: null | number
 }
 
-export interface UserProduct {
+export interface CourseUserProduct {
   priceId: string
   boughtAt: Date
 }
@@ -120,7 +120,7 @@ export interface UserProduct {
 export interface CourseProduct {
   productId: string
   courseId: number
-  userProducts: UserProduct[]
+  courseUserProducts: CourseUserProduct[]
   price: number
 }
 
