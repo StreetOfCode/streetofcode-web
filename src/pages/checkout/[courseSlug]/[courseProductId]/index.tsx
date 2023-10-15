@@ -45,7 +45,7 @@ const useStripe = (courseSlug: string, courseProductId: string) => {
   const stripe = _useStripe()
   const elements = useElements()
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault()
@@ -54,9 +54,9 @@ const useStripe = (courseSlug: string, courseProductId: string) => {
       return
     }
 
-    setIsLoading(true)
+    setIsSubmitting(true)
 
-    await stripe.confirmPayment({
+    const {error} = await stripe.confirmPayment({
       elements,
       confirmParams: {
         return_url: `${routes.host}${routes.checkout.success(
@@ -66,12 +66,19 @@ const useStripe = (courseSlug: string, courseProductId: string) => {
       },
     })
 
-    setIsLoading(false)
+    // This point will only be reached if there is an immediate error when
+    // confirming the payment. Otherwise, your customer will be redirected to
+    // your `return_url`. For some payment methods like iDEAL, your customer will
+    // be redirected to an intermediate site first to authorize the payment, then
+    // redirected to the `return_url`.
+    if (error.type === 'card_error' || error.type === 'validation_error') {
+      setIsSubmitting(false)
+    }
   }
 
-  const canSubmit = !!stripe && !!elements && !isLoading
+  const canSubmit = !!stripe && !!elements && !isSubmitting
 
-  return {canSubmit, handleSubmit}
+  return {canSubmit, handleSubmit, isSubmitting}
 }
 
 const CheckoutForm = ({
@@ -81,7 +88,10 @@ const CheckoutForm = ({
   courseSlug: string
   courseProductId: string
 }) => {
-  const {canSubmit, handleSubmit} = useStripe(courseSlug, courseProductId)
+  const {canSubmit, handleSubmit, isSubmitting} = useStripe(
+    courseSlug,
+    courseProductId,
+  )
 
   const [isStripeLoading, setIsStripeLoading] = useState(true)
   const [areTosAccepted, setAreTosAccepted] = useState(false)
@@ -127,18 +137,22 @@ const CheckoutForm = ({
           checked={isReturnPolicyAccepted}
           onToggle={() => setIsReturnPolicyAccepted(!isReturnPolicyAccepted)}
         />
-        <StyledButton
-          variant="accent"
-          disabled={
-            !canSubmit ||
-            !areTosAccepted ||
-            !isReturnPolicyAccepted ||
-            isStripeLoading
-          }
-          onClick={handleSubmit}
-        >
-          Zaplatiť
-        </StyledButton>
+        {isSubmitting ? (
+          <Loading />
+        ) : (
+          <StyledButton
+            variant="accent"
+            disabled={
+              !canSubmit ||
+              !areTosAccepted ||
+              !isReturnPolicyAccepted ||
+              isStripeLoading
+            }
+            onClick={handleSubmit}
+          >
+            Zaplatiť
+          </StyledButton>
+        )}
       </FormFlex>
     </form>
   )
