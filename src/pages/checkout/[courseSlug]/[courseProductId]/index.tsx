@@ -34,10 +34,8 @@ import {prefixWithHost, routes} from '../../../../routes'
 import {device} from '../../../../theme/device'
 import * as Utils from '../../../../utils'
 
-// TODO STRIPE - load elsewhere?
-// TODO STRIPE - api key to env
-const stripePromise = loadStripe(
-  'pk_test_51NvKkKEBUaa48153hx7AVAjT4ktEInop7ldq1mqI8kqnt0a06AJcpJ40OiN7vuEZZ4iUdIwhVMwwflWbKgmxutjq00Ipz8ZLQb',
+const loadStripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_API_KEY || '',
   {
     locale: 'sk',
   },
@@ -169,7 +167,7 @@ const Stripe = ({
         }
 
         return (
-          <Elements options={options} stripe={stripePromise}>
+          <Elements options={options} stripe={loadStripePromise}>
             <CheckoutForm
               courseSlug={courseSlug}
               courseProductId={courseProductId}
