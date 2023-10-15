@@ -47,7 +47,6 @@ const useStripe = (courseSlug: string, courseProductId: string) => {
   const stripe = _useStripe()
   const elements = useElements()
 
-  const [message, setMessage] = useState<string | undefined>()
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (e) => {
@@ -59,7 +58,7 @@ const useStripe = (courseSlug: string, courseProductId: string) => {
 
     setIsLoading(true)
 
-    const {error} = await stripe.confirmPayment({
+    await stripe.confirmPayment({
       elements,
       confirmParams: {
         return_url: `${routes.host}${routes.checkout.success(
@@ -69,23 +68,12 @@ const useStripe = (courseSlug: string, courseProductId: string) => {
       },
     })
 
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (error.type === 'card_error' || error.type === 'validation_error') {
-      setMessage(error.message)
-    } else {
-      setMessage('Nastala neočakávaná chyba')
-    }
-
     setIsLoading(false)
   }
 
   const canSubmit = !!stripe && !!elements && !isLoading
 
-  return {message, canSubmit, handleSubmit}
+  return {canSubmit, handleSubmit}
 }
 
 const CheckoutForm = ({
@@ -95,10 +83,7 @@ const CheckoutForm = ({
   courseSlug: string
   courseProductId: string
 }) => {
-  const {message, canSubmit, handleSubmit} = useStripe(
-    courseSlug,
-    courseProductId,
-  )
+  const {canSubmit, handleSubmit} = useStripe(courseSlug, courseProductId)
 
   const [isStripeLoading, setIsStripeLoading] = useState(true)
   const [areTosAccepted, setAreTosAccepted] = useState(false)
@@ -156,7 +141,6 @@ const CheckoutForm = ({
         >
           Zaplatiť
         </StyledButton>
-        <Text>{message}</Text>
       </FormFlex>
     </form>
   )
