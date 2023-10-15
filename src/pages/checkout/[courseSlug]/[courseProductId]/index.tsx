@@ -169,12 +169,20 @@ const Stripe = ({
 
 const useQueryParams = () => {
   const router = useRouter()
-  const {courseSlug, courseProductId} = router.query
+  const {courseSlug: _courseSlug, courseProductId: _courseProductId} =
+    router.query
+
+  // on first render router.query content is empty
+  const courseSlug = _courseSlug || ''
+  const courseProductId = _courseProductId || ''
 
   Utils.assert(typeof courseSlug === 'string', 'Invalid query params')
   Utils.assert(typeof courseProductId === 'string', 'Invalid query params')
 
-  return {courseSlug, courseProductId}
+  return {
+    courseSlug,
+    courseProductId,
+  }
 }
 
 const CourseCheckoutPage = () => {
@@ -183,9 +191,9 @@ const CourseCheckoutPage = () => {
 
   const {courseSlug, courseProductId} = useQueryParams()
 
-  const getCourseOverview = useGetCourseOverview(courseSlug as string, true)
+  const getCourseOverview = useGetCourseOverview(courseSlug, !!courseSlug)
 
-  if (isLoading) {
+  if (isLoading || !courseSlug || !courseProductId) {
     return <Loading />
   }
 
