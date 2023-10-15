@@ -22,10 +22,13 @@ import Loading from '../../../../components/Loading'
 import NavBar from '../../../../components/NavBar'
 import PageContentWrapper from '../../../../components/PageContentWrapper'
 import Button from '../../../../components/core/Button'
+import CheckBox from '../../../../components/core/CheckBox'
 import Flex from '../../../../components/core/Flex'
 import Heading from '../../../../components/core/Heading'
+import NextLink from '../../../../components/core/NextLink'
 import Text from '../../../../components/core/Text'
 import CourseCard from '../../../../components/domain/course/CourseCard'
+import {TERMS_OF_SERVICE_URL} from '../../../../constants'
 import {useTheme} from '../../../../hooks/useTheme'
 import {prefixWithHost, routes} from '../../../../routes'
 import {device} from '../../../../theme/device'
@@ -98,6 +101,8 @@ const CheckoutForm = ({
   )
 
   const [isStripeLoading, setIsStripeLoading] = useState(true)
+  const [areTosAccepted, setAreTosAccepted] = useState(false)
+  const [isReturnPolicyAccepted, setIsReturnPolicyAccepted] = useState(false)
 
   const paymentElementOptions: StripePaymentElementOptions = {
     layout: 'tabs',
@@ -107,13 +112,46 @@ const CheckoutForm = ({
     <form>
       <FormFlex direction="column" gap="12px">
         {isStripeLoading && <Loading />}
-        <PaymentElement
+        <StyledPaymentElement
           options={paymentElementOptions}
           onLoaderStart={() => setIsStripeLoading(false)}
         />
+        <CheckBox
+          labelComponent={
+            <Text>
+              Súhlasím s{' '}
+              <InlineLink href={TERMS_OF_SERVICE_URL} blankTarget>
+                <Text
+                  onClick={(e) => {
+                    // stop event propagation so that click isn't picked by up Checkbox
+                    // which would toggle the checkbox instead
+                    e.stopPropagation()
+                  }}
+                  withAccentUnderline
+                >
+                  obchodnými podmienkami.
+                </Text>
+              </InlineLink>
+            </Text>
+          }
+          checked={areTosAccepted}
+          onToggle={() => setAreTosAccepted(!areTosAccepted)}
+        />
+        <CheckBox
+          label={`Odoslaním objednávky súhlasíte so začatím kurzu a potvrdzujete,
+                že ste boli poučený o tom, že týmto strácate právo odstúpiť od
+                zmluvy.`}
+          checked={isReturnPolicyAccepted}
+          onToggle={() => setIsReturnPolicyAccepted(!isReturnPolicyAccepted)}
+        />
         <StyledButton
           variant="accent"
-          disabled={!canSubmit || isStripeLoading}
+          disabled={
+            !canSubmit ||
+            !areTosAccepted ||
+            !isReturnPolicyAccepted ||
+            isStripeLoading
+          }
           onClick={handleSubmit}
         >
           Zaplatiť
@@ -123,14 +161,6 @@ const CheckoutForm = ({
     </form>
   )
 }
-
-const StyledButton = styled(Button)`
-  width: 100%;
-`
-
-const FormFlex = styled(Flex)`
-  width: 300px;
-`
 
 const Stripe = ({
   courseSlug,
@@ -238,7 +268,12 @@ const CourseCheckoutPage = () => {
             <NavBar />
             <PageContentWrapper>
               <WrapperFlex>
-                <Flex direction="column" alignItems="flex-start" gap="32px">
+                <Flex
+                  direction="column"
+                  alignItems="flex-start"
+                  gap="32px"
+                  style={{width: 400}}
+                >
                   <div>
                     <Text size="large" weight="bold">
                       Informatika 101 - basic verzia
@@ -265,6 +300,7 @@ const CourseCheckoutPage = () => {
 }
 
 const WrapperFlex = styled(Flex)`
+  align-content: center;
   justify-content: center;
   gap: 64px;
   @media ${device.S} {
@@ -275,13 +311,31 @@ const WrapperFlex = styled(Flex)`
 
 const CardFlex = styled(Flex)`
   width: 300px;
-  align-self: flex-end;
+  align-self: center;
 
   @media ${device.S} {
     align-self: center;
     width: 100%;
     order: 1;
   }
+`
+
+const InlineLink = styled(NextLink)`
+  display: inline-block;
+`
+
+const StyledButton = styled(Button)`
+  width: 100%;
+`
+
+const FormFlex = styled(Flex)`
+  gap: 16px;
+  width: 400px;
+`
+
+const StyledPaymentElement = styled(PaymentElement)`
+  width: 100%;
+  margin-bottom: 16px;
 `
 
 export default CourseCheckoutPage

@@ -3,10 +3,12 @@ import {MdCheckBoxOutlineBlank, MdCheckBox} from 'react-icons/md'
 import styled from 'styled-components'
 import Flex, {AlignItems} from './Flex'
 import Text from './Text'
+import {assert} from '../../utils'
 
 type Props = {
   className?: string
   label?: string
+  labelComponent?: React.ReactNode
   labelColor?: string
   checked: boolean
   disabled?: boolean
@@ -23,6 +25,7 @@ const CheckBox = ({
   size,
   checked,
   label,
+  labelComponent,
   labelColor,
   onToggle,
   alignSelf,
@@ -37,6 +40,15 @@ const CheckBox = ({
     e.preventDefault()
     e.stopPropagation()
     onToggle(!checked)
+  }
+
+  if (label) {
+    assert(
+      !labelComponent,
+      'Either label or labelComponent must be provided, not both.',
+    )
+  } else if (labelComponent) {
+    assert(!label, 'Either label or labelComponent must be provided, not both.')
   }
 
   return (
@@ -55,6 +67,7 @@ const CheckBox = ({
         <UncheckedIcon disabled={disabled} size={size} color={checkedColor} />
       )}
       {label && <Label labelColor={labelColor}>{label}</Label>}
+      {labelComponent}
     </WrapperFlex>
   )
 }
@@ -79,7 +92,7 @@ const iconStyle = (props: {
   width: ${props.size || '18px'};
   aspect-ratio: 1;
   flex-shrink: 0;
-  color: ${props.color || ''};
+  color: ${props.color || 'var(--color-secondary)'};
   ${
     !props.disabled
       ? `
