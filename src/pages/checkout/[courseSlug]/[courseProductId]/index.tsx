@@ -28,7 +28,7 @@ import Heading from '../../../../components/core/Heading'
 import NextLink from '../../../../components/core/NextLink'
 import Text from '../../../../components/core/Text'
 import CourseCard from '../../../../components/domain/course/CourseCard'
-import {TERMS_OF_SERVICE_URL} from '../../../../constants'
+import {TERMS_OF_SERVICE_URL, getCourseProductName} from '../../../../constants'
 import {useTheme} from '../../../../hooks/useTheme'
 import {prefixWithHost, routes} from '../../../../routes'
 import {device} from '../../../../theme/device'
@@ -258,7 +258,7 @@ const CourseCheckoutPage = () => {
                 >
                   <div>
                     <Text size="large" weight="bold">
-                      Informatika 101 - basic verzia
+                      {getCourseProductName(courseProductId)}
                     </Text>
                     <Heading variant="h4">
                       {price ? `${price / 100}€` : 'N/A'}
