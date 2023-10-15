@@ -34,7 +34,11 @@ const JavaKurzCourseProducts = ({course}: Props) => {
     return (
       <Flex direction="column" style={{padding: 20}}>
         <div>{COURSE_PRODUCT_NAMES[courseProduct.productId] || 'N/A'}</div>
-        <div>{courseProduct.price / 100}€</div>
+        <div>
+          {courseProduct.price != null
+            ? `${courseProduct.price / 100}€`
+            : 'N/A'}
+        </div>
         {isCourseOwnedByUser && <div>Tento kurz už vlastníš</div>}
         {!isCourseOwnedByUser && (
           <NextLink
@@ -46,7 +50,11 @@ const JavaKurzCourseProducts = ({course}: Props) => {
             }}
             alignSelf="stretch"
           >
-            <StyledButton variant="accent" disableHoverTransform>
+            <StyledButton
+              variant="accent"
+              disableHoverTransform
+              disabled={courseProduct.price == null}
+            >
               Kúpiť
             </StyledButton>
           </NextLink>
