@@ -43,7 +43,6 @@ const CourseSidebar = ({
   const router = useRouter()
   const resetLecture = useResetLecture(courseId, courseSlug)
   const resetQuiz = useRemoveUserAnswers()
-
   const updateProgressLecture = useUpdateProgressLecture(courseId)
 
   useEffect(() => {
@@ -54,7 +53,11 @@ const CourseSidebar = ({
       const lecture =
         chapter && chapter.lectures.find((lecture) => lecture.id === lectureId)
 
-      if (lecture && !lecture.viewed && lecture.lectureType === 'TEXT') {
+      if (courseProgressOverview.lecturesViewed === 0) {
+        // if this is the first lecture in the course
+        // start the course progress
+        await updateProgressLecture.mutateAsync(lectureId)
+      } else if (lecture && !lecture.viewed && lecture.lectureType === 'TEXT') {
         // if lecture is not already viewed and contains only TEXT
         // (video type lecture automatically  update their progress at the end of the video)
         // (quiz type lecture automatically update their progress when all questions are answered correctly)
