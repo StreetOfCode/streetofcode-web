@@ -114,6 +114,9 @@ const STRIPE_URL = `${API_URL}/stripe`
 export const stripeCreatePaymentIntentUrl = () =>
   `${STRIPE_URL}/create-payment-intent`
 
+export const stripeIsPromotionCodeValidUrl = (code: string) =>
+  `${STRIPE_URL}/check-promotion-code/${code}`
+
 export const authFetch = async (url: string) => {
   const params = await createParams('GET')
   return fetch(url, params)

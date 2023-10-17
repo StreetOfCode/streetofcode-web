@@ -33,6 +33,10 @@ import {useTheme} from '../../../../hooks/useTheme'
 import {prefixWithHost, routes} from '../../../../routes'
 import {device} from '../../../../theme/device'
 import * as Utils from '../../../../utils'
+import * as Api from '../../../../api'
+import TextField from '../../../../components/core/TextField'
+import {IsPromotionCodeValid} from '../../../../types'
+import {assert} from '../../../../utils'
 
 const loadStripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_API_KEY || '',
@@ -84,22 +88,88 @@ const useStripe = (courseSlug: string, courseProductId: string) => {
 const CheckoutForm = ({
   courseSlug,
   courseProductId,
+  fullPriceAmount,
+  discountAmount,
+  appliedPromoCode,
 }: {
   courseSlug: string
   courseProductId: string
+  fullPriceAmount: number
+  discountAmount: number
+  appliedPromoCode: string
 }) => {
+  assert(fullPriceAmount - discountAmount >= 0, 'Invalid price')
+
   const {canSubmit, handleSubmit, isSubmitting} = useStripe(
     courseSlug,
     courseProductId,
   )
-
+  const router = useRouter()
   const [isStripeLoading, setIsStripeLoading] = useState(true)
-  const [areTosAccepted, setAreTosAccepted] = useState(false)
-  const [isReturnPolicyAccepted, setIsReturnPolicyAccepted] = useState(false)
+  const [areTosAccepted, setAreTosAccepted] = useState(true)
+  const [isReturnPolicyAccepted, setIsReturnPolicyAccepted] = useState(true)
+  const [promoCode, setPromoCode] = useState(appliedPromoCode || '')
+  const [promoCodeError, setPromoCodeError] = useState<string | null>(null)
+  const [validatingPromoCode, setValidatingPromoCode] = useState(false)
 
   const paymentElementOptions: StripePaymentElementOptions = {
     layout: 'tabs',
   }
+
+  const onPromoCodeChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!validatingPromoCode) {
+      setPromoCode(e.target.value)
+      setPromoCodeError(null)
+    }
+  }
+
+  const removePromoCode = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    e.preventDefault()
+    setPromoCode('')
+    setPromoCodeError(null)
+    router.replace({
+      pathname: routes.checkout.courseProduct(courseSlug, courseProductId),
+    })
+  }
+
+  const usePromoCode = async (e: React.MouseEvent) => {
+    e.stopPropagation()
+    e.preventDefault()
+    setValidatingPromoCode(true)
+
+    const response = await Api.authFetch(
+      Api.stripeIsPromotionCodeValidUrl(promoCode),
+    )
+
+    if (!response.ok) {
+      throw Error('Nepodarilo sa overiť promo kód')
+    }
+
+    const isValidResponse = (await response.json()) as IsPromotionCodeValid
+    if (isValidResponse.isPromotionCodeValid) {
+      setValidatingPromoCode(false)
+      setPromoCodeError(null)
+
+      if (isValidResponse.validForCourseProductId?.includes(courseProductId)) {
+        router.replace({
+          pathname: routes.checkout.courseProduct(courseSlug, courseProductId),
+          query: {promoCode},
+        })
+      } else {
+        // create error message with promoCode bold
+        setPromoCodeError(
+          `Promo kód ${promoCode} nie je uplatniteľný na tento kurz`,
+        )
+      }
+    } else {
+      setValidatingPromoCode(false)
+      setPromoCode('')
+      setPromoCodeError(`Neplatný promo kód ${promoCode}`)
+    }
+  }
+
+  const amount = fullPriceAmount - discountAmount
 
   return (
     <form>
@@ -109,7 +179,40 @@ const CheckoutForm = ({
           options={paymentElementOptions}
           onLoaderStart={() => setIsStripeLoading(false)}
         />
+        <Flex justifyContent="space-between" alignSelf="stretch" gap="12px">
+          <TextField
+            label="Zľavový kód"
+            text={appliedPromoCode || promoCode}
+            onTextChanged={onPromoCodeChanged}
+            disabled={validatingPromoCode || appliedPromoCode != null}
+          />
+          <Button
+            variant="accent"
+            onClick={usePromoCode}
+            disabled={
+              appliedPromoCode != null ||
+              validatingPromoCode ||
+              promoCode.trim() === ''
+            }
+          >
+            Použiť
+          </Button>
+        </Flex>
+        {promoCodeError && <Text>{promoCodeError}</Text>}
+        {!promoCodeError && appliedPromoCode && discountAmount > 0 && (
+          <Flex justifyContent="center" gap="8px">
+            <Text>
+              Promo kód <b>{appliedPromoCode}</b> uplatnený. Zľava{' '}
+              <b>{discountAmount / 100}€</b>
+            </Text>
+            <RemovePromoCodeButton size="small" onClick={removePromoCode}>
+              Odstrániť
+            </RemovePromoCodeButton>
+          </Flex>
+        )}
+        <Heading variant="h4">{amount ? `${amount / 100}€` : 'N/A'}</Heading>
         <CheckBox
+          size="24px"
           labelComponent={
             <Text>
               Súhlasím s{' '}
@@ -131,13 +234,14 @@ const CheckoutForm = ({
           onToggle={() => setAreTosAccepted(!areTosAccepted)}
         />
         <CheckBox
-          label={`Odoslaním objednávky súhlasíte so začatím kurzu a potvrdzujete,
-                že ste boli poučený o tom, že týmto strácate právo odstúpiť od
+          size="24px"
+          label={`Odoslaním objednávky súhlasím so začatím kurzu a potvrdzujem,
+                že som bol poučený o tom, že týmto strácam právo odstúpiť od
                 zmluvy.`}
           checked={isReturnPolicyAccepted}
           onToggle={() => setIsReturnPolicyAccepted(!isReturnPolicyAccepted)}
         />
-        {isSubmitting ? (
+        {isSubmitting || validatingPromoCode ? (
           <Loading />
         ) : (
           <StyledButton
@@ -166,11 +270,16 @@ const Stripe = ({
   courseProductId: string
 }) => {
   const theme = useTheme()
-  const createPaymentIntentQuery = useCreatePaymentIntent(courseProductId)
+  const router = useRouter()
+  const promoCode = router.query.promoCode as string | undefined
+  const createPaymentIntentQuery = useCreatePaymentIntent(
+    courseProductId,
+    promoCode,
+  )
 
   return (
     <QueryGuard {...createPaymentIntentQuery}>
-      {({clientSecret}) => {
+      {({clientSecret, fullPriceAmount, discountAmount, promoCode}) => {
         const appearance: Appearance = {
           theme: theme.isLightTheme ? 'stripe' : 'night',
         }
@@ -185,6 +294,9 @@ const Stripe = ({
             <CheckoutForm
               courseSlug={courseSlug}
               courseProductId={courseProductId}
+              fullPriceAmount={fullPriceAmount}
+              discountAmount={discountAmount}
+              appliedPromoCode={promoCode}
             />
           </Elements>
         )
@@ -244,10 +356,6 @@ const CourseCheckoutPage = () => {
   return (
     <QueryGuard {...getCourseOverview}>
       {(courseOverview) => {
-        const price = courseOverview.courseProducts.find(
-          (cp) => cp.productId === courseProductId,
-        )?.price
-
         return (
           <>
             <Head
@@ -270,14 +378,9 @@ const CourseCheckoutPage = () => {
                   gap="32px"
                   style={{width: 400}}
                 >
-                  <div>
-                    <Text size="large" weight="bold">
-                      {getCourseProductName(courseProductId)}
-                    </Text>
-                    <Heading variant="h4">
-                      {price ? `${price / 100}€` : 'N/A'}
-                    </Heading>
-                  </div>
+                  <Heading variant="h4">
+                    {getCourseProductName(courseProductId)}
+                  </Heading>
                   <Stripe
                     courseSlug={courseSlug as string}
                     courseProductId={courseProductId as string}
@@ -315,6 +418,8 @@ const CardFlex = styled(Flex)`
     order: 1;
   }
 `
+
+const RemovePromoCodeButton = styled(Button)``
 
 const InlineLink = styled(NextLink)`
   display: inline-block;

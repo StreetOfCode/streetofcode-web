@@ -349,8 +349,16 @@ export interface YouTubeVideo {
 
 export interface CreatePaymentIntentResponse {
   clientSecret: string
+  fullPriceAmount: number
+  discountAmount: number
+  promoCode: string
 }
 
 export interface IsCourseOwnedByUserResponse {
   isOwnedByUser: boolean
+}
+
+export interface IsPromotionCodeValid {
+  isPromotionCodeValid: boolean
+  validForCourseProductId: string[] | null
 }

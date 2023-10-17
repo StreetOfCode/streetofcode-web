@@ -19,9 +19,13 @@ export const queryKeys = {
   ],
 }
 
-const createPaymentIntent = async (courseProductId: string) => {
+const createPaymentIntent = async (
+  courseProductId: string,
+  promoCode: string | undefined,
+) => {
   const response = await Api.authPost(Api.stripeCreatePaymentIntentUrl(), {
     courseProductId,
+    promoCode,
   })
 
   if (!response.ok) {
@@ -40,9 +44,12 @@ const getPaymentIntent = async (
   return paymentIntent
 }
 
-export const useCreatePaymentIntent = (courseProductId: string) => {
+export const useCreatePaymentIntent = (
+  courseProductId: string,
+  promoCode: string | undefined,
+) => {
   return useQuery(queryKeys.createPaymentIntent(courseProductId), () =>
-    createPaymentIntent(courseProductId),
+    createPaymentIntent(courseProductId, promoCode),
   )
 }
 
