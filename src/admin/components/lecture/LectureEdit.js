@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  BooleanInput,
   Edit,
   NumberInput,
   SimpleForm,
@@ -26,6 +27,7 @@ const LectureEdit = () => {
         <TextInput source="name" />
         <NumberInput source="lectureOrder" />
         <TextInput required={false} source="videoUrl" />
+        <BooleanInput source="allowPreviewWhenPaid" defaultChecked={false} />
         <MarkdownInput source="content" />
       </SimpleForm>
     </Edit>

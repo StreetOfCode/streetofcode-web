@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  BooleanInput,
   Create,
   NumberInput,
   SimpleForm,
@@ -25,6 +26,7 @@ const LectureCreate = () => {
         <TextInput source="name" />
         <NumberInput source="lectureOrder" />
         <TextInput required={false} source="videoUrl" />
+        <BooleanInput source="allowPreviewWhenPaid" defaultChecked={false} />
         <MarkdownInput source="content" />
       </SimpleForm>
     </Create>

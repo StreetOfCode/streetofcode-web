@@ -14,6 +14,7 @@ import {
   ShowButton,
   DeleteWithConfirmButton,
   EditButton,
+  BooleanField,
 } from 'react-admin'
 import {MarkdownField} from '../../custom/MarkdownField'
 
@@ -68,6 +69,7 @@ const LectureShow = () => {
         <DateField source="createdAt" />
         <DateField source="updatedAt" />
         <TextField source="videoUrl" />
+        <BooleanField source="allowPreviewWhenPaid" />
         <MarkdownField addLabel source="content" />
       </SimpleShowLayout>
     </Show>
