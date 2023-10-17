@@ -1,5 +1,5 @@
 import React from 'react'
-import {AiOutlinePlayCircle, AiOutlineQuestionCircle} from 'react-icons/ai'
+import {AiOutlinePlayCircle} from 'react-icons/ai'
 import {CgNotes} from 'react-icons/cg'
 import {routes} from './routes'
 import {
@@ -65,12 +65,10 @@ export const getTakeCourseUrl = (course: CourseOverview) => {
 }
 
 export const getLectureTypeIcon = (lectureType: LectureType) => {
-  if (lectureType === 'VIDEO') {
-    return <AiOutlinePlayCircle />
-  } else if (lectureType === 'TEXT') {
+  if (lectureType === 'TEXT') {
     return <CgNotes />
   } else {
-    return <AiOutlineQuestionCircle />
+    return <AiOutlinePlayCircle />
   }
 }
 

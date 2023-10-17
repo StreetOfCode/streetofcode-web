@@ -48,6 +48,7 @@ const TakeCoursePage: NextPage<Props> = ({
     getCourseOverview.data &&
     !Utils.isCourseOwnedByUser(getCourseOverview.data)
   ) {
+    // this page can be seen only by users who own the course
     router.replace({
       pathname: routes.kurzy.slug(courseSlug),
     })

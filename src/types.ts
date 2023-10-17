@@ -47,6 +47,7 @@ export interface Lecture {
   videoDurationSeconds: null | number
   createdAt: Date
   updatedAt: Date
+  allowPreviewWhenPaid: boolean
 }
 
 export interface LectureComment {
@@ -94,6 +95,7 @@ export interface LectureOverview {
   name: string
   videoDurationSeconds: number
   lectureType: LectureType
+  allowPreviewWhenPaid: boolean
 }
 
 export enum ProgressStatus {

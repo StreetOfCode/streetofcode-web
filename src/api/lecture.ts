@@ -8,8 +8,8 @@ export const queryKeys = {
   get: (lectureId: number) => [P, lectureId.toString()],
 }
 
-const fetchLecture = async (lectureId: number) => {
-  const response = await Api.authFetch(Api.lectureUrl(lectureId))
+const fetchLecture = async (lectureId: number, preview?: boolean) => {
+  const response = await Api.authFetch(Api.lectureUrl(lectureId, preview))
 
   if (!response.ok) {
     throw Error('Nepodarilo sa načítať lekciu')
@@ -18,9 +18,13 @@ const fetchLecture = async (lectureId: number) => {
   return (await response.json()) as Lecture
 }
 
-export const useGetLecture = (lectureId: number) => {
-  return useQuery(queryKeys.get(lectureId), () => fetchLecture(lectureId), {
-    cacheTime: 60 * 60 * 1000,
-    staleTime: 30 * 60 * 1000,
-  })
+export const useGetLecture = (lectureId: number, preview?: boolean) => {
+  return useQuery(
+    queryKeys.get(lectureId),
+    () => fetchLecture(lectureId, preview),
+    {
+      cacheTime: 60 * 60 * 1000,
+      staleTime: 30 * 60 * 1000,
+    },
+  )
 }

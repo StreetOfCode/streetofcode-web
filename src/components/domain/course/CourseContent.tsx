@@ -1,7 +1,7 @@
-import React, {HTMLAttributes} from 'react'
+import React, {HTMLAttributes, useState} from 'react'
 import styled, {keyframes} from 'styled-components'
 import * as Accordion from '@radix-ui/react-accordion'
-import {ChapterOverview, CourseOverview} from '../../../types'
+import {ChapterOverview, CourseOverview, LectureOverview} from '../../../types'
 import Heading from '../../core/Heading'
 import Text from '../../core/Text'
 import Flex from '../../core/Flex'
@@ -10,6 +10,8 @@ import {useRouter} from 'next/router'
 import {BiChevronDown} from 'react-icons/bi'
 import {device} from '../../../theme/device'
 import {routes} from '../../../routes'
+import {useAuth} from '../../../AuthUserContext'
+import LecturePreview from '../lecture/LecturePreview'
 
 type Props = {
   className?: string
@@ -18,6 +20,39 @@ type Props = {
 
 const CourseContent = ({className, course, ...props}: Props) => {
   const router = useRouter()
+  const {user} = useAuth()
+  const [previewLectureInModal, setPreviewLectureInModal] =
+    useState<LectureOverview | null>(null)
+
+  // TODO extract this logic (it is same in CourseCTAButton)
+  const hasProducts = course.courseProducts.length !== 0
+  const ownedByUser = Utils.isCourseOwnedByUser(course)
+
+  const states = {
+    hasProductsAndIsOwnedByUser: hasProducts && ownedByUser,
+    hasProductsButIsNotOwnedByUser: hasProducts && !ownedByUser,
+    hasNoProductsAndIsLoggedIn: !hasProducts && user,
+    hasNoProductsAndIsNotLoggedIn: !hasProducts && !user,
+  }
+
+  const isLectureClickable = (lecture: LectureOverview) => {
+    if (states.hasNoProductsAndIsLoggedIn || states.hasProductsAndIsOwnedByUser)
+      return true
+
+    const allowPreviewWhenPaid = lecture.allowPreviewWhenPaid
+    if (allowPreviewWhenPaid && states.hasProductsButIsNotOwnedByUser)
+      return true
+
+    return false
+  }
+
+  const shouldPreviewLectureForPaidCourse = (lecture: LectureOverview) => {
+    return (
+      isLectureClickable(lecture) &&
+      (states.hasProductsAndIsOwnedByUser ||
+        states.hasProductsButIsNotOwnedByUser)
+    )
+  }
 
   const getChapterLengthInfo = (chapter: ChapterOverview): React.ReactNode => {
     return (
@@ -34,63 +69,82 @@ const CourseContent = ({className, course, ...props}: Props) => {
     e: React.MouseEvent,
     chapterId: number,
     lectureId: number,
+    lecture: LectureOverview,
   ) => {
     e.preventDefault()
     e.stopPropagation()
 
-    router.push(routes.kurzy.lekcia(course.slug, chapterId, lectureId))
+    if (shouldPreviewLectureForPaidCourse(lecture)) {
+      setPreviewLectureInModal(lecture)
+    } else if (isLectureClickable(lecture)) {
+      router.push(routes.kurzy.lekcia(course.slug, chapterId, lectureId))
+    }
   }
 
   return (
-    <Wrapper className={className} {...props}>
-      <AccordionRoot
-        type="multiple"
-        defaultValue={course.chapters.map((c) => c.id.toString())}
-      >
-        {course.chapters.map((chapter) => (
-          <Item value={chapter.id.toString()} key={chapter.id}>
-            <Header>
-              <Trigger>
-                <Heading variant="h5" normalWeight>
-                  {chapter.name}
-                </Heading>
-                <Flex gap="24px">
-                  {getChapterLengthInfo(chapter)}
-                  <AccordionChevron />
-                </Flex>
-              </Trigger>
-            </Header>
-            <AccordionContent>
-              {chapter.lectures.map((lecture) => (
-                <AccordionContentWrapper
-                  key={lecture.id}
-                  onClick={(e) =>
-                    handleLectureOnClick(e, chapter.id, lecture.id)
-                  }
-                  justifyContent="space-between"
-                >
-                  <Flex gap="12px">
-                    <LectureTypeIcon>
-                      {Utils.getLectureTypeIcon(lecture.lectureType)}
-                    </LectureTypeIcon>
-                    <StyledText>{lecture.name}</StyledText>
+    <>
+      <Wrapper className={className} {...props}>
+        <AccordionRoot
+          type="multiple"
+          defaultValue={course.chapters.map((c) => c.id.toString())}
+        >
+          {course.chapters.map((chapter) => (
+            <Item value={chapter.id.toString()} key={chapter.id}>
+              <Header>
+                <Trigger>
+                  <Heading variant="h5" normalWeight>
+                    {chapter.name}
+                  </Heading>
+                  <Flex gap="24px">
+                    {getChapterLengthInfo(chapter)}
+                    <AccordionChevron />
                   </Flex>
-                  <Flex>
-                    {lecture.videoDurationSeconds > 0 && (
-                      <StyledText size="small">
-                        {Utils.formatDurationFromSeconds(
-                          lecture.videoDurationSeconds,
-                        )}
-                      </StyledText>
-                    )}
-                  </Flex>
-                </AccordionContentWrapper>
-              ))}
-            </AccordionContent>
-          </Item>
-        ))}
-      </AccordionRoot>
-    </Wrapper>
+                </Trigger>
+              </Header>
+              <AccordionContent>
+                {chapter.lectures.map((lecture) => (
+                  <AccordionContentWrapper
+                    key={lecture.id}
+                    onClick={(e) =>
+                      handleLectureOnClick(e, chapter.id, lecture.id, lecture)
+                    }
+                    clickable={isLectureClickable(lecture)}
+                    justifyContent="space-between"
+                  >
+                    <Flex gap="12px">
+                      <LectureTypeIcon>
+                        {Utils.getLectureTypeIcon(lecture.lectureType)}
+                      </LectureTypeIcon>
+                      <StyledText>{lecture.name}</StyledText>
+                      {shouldPreviewLectureForPaidCourse(lecture) && (
+                        <PreviewText size="very-small" color="accent">
+                          náhľad
+                        </PreviewText>
+                      )}
+                    </Flex>
+                    <Flex>
+                      {lecture.videoDurationSeconds > 0 && (
+                        <StyledText size="small">
+                          {Utils.formatDurationFromSeconds(
+                            lecture.videoDurationSeconds,
+                          )}
+                        </StyledText>
+                      )}
+                    </Flex>
+                  </AccordionContentWrapper>
+                ))}
+              </AccordionContent>
+            </Item>
+          ))}
+        </AccordionRoot>
+      </Wrapper>
+      {previewLectureInModal && (
+        <LecturePreview
+          lecture={previewLectureInModal}
+          onClosePreview={() => setPreviewLectureInModal(null)}
+        />
+      )}
+    </>
   )
 }
 
@@ -136,6 +190,14 @@ const LectureTypeIcon = styled.span`
 
 const StyledText = styled(Text)``
 
+const PreviewText = styled(Text)`
+  text-transform: uppercase;
+  padding: 2px 4px;
+  border-radius: 4px;
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+`
+
 const openContentAnimation = keyframes({
   from: {height: 0},
   to: {height: 'var(--radix-accordion-content-height)'},
@@ -161,15 +223,15 @@ const AccordionContent = styled(Accordion.Content)`
   }
 `
 
-const AccordionContentWrapper = styled(Flex)`
+const AccordionContentWrapper = styled(Flex)<{clickable: boolean}>`
   padding: 0 4px;
 
   &:hover {
-    cursor: pointer;
-    color: var(--color-accent);
+    cursor: ${(props) => props.clickable && 'pointer'};
+    color: ${(props) => props.clickable && 'var(--color-accent)'};
 
     ${StyledText} {
-      color: var(--color-accent);
+      color: ${(props) => props.clickable && 'var(--color-accent)'};
     }
   }
 

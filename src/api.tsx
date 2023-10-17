@@ -42,8 +42,13 @@ export const courseReviewUrl = (reviewId: number) =>
   `${COURSE_REVIEW_URL}/${reviewId}`
 
 const GET_LECTURE_URL = `${API_URL}/lecture/`
-export const lectureUrl = (lectureId: number) =>
-  `${GET_LECTURE_URL}${lectureId}`
+export const lectureUrl = (lectureId: number, preview?: boolean) => {
+  if (preview) {
+    return `${GET_LECTURE_URL}${lectureId}?preview=true`
+  } else {
+    return `${GET_LECTURE_URL}${lectureId}`
+  }
+}
 
 const LECTURE_COMMENTS_URL = `${API_URL}/lecture/`
 export const lectureCommentsUrl = (lectureId: number) =>
