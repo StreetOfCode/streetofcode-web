@@ -1,8 +1,12 @@
 import {Stripe} from '@stripe/stripe-js'
-import {useQuery} from 'react-query'
+import {useMutation, useQuery} from 'react-query'
 import * as Api from '../api'
-import {CreatePaymentIntentResponse} from '../types'
+import {
+  CreatePaymentIntentResponse,
+  UpdatePaymentIntentResponse,
+} from '../types'
 import {assert} from '../utils'
+import queryClient from '../queryClient'
 
 const P = 'checkout'
 
@@ -19,13 +23,33 @@ export const queryKeys = {
   ],
 }
 
-const createPaymentIntent = async (
-  courseProductId: string,
-  promoCode: string | undefined,
+export const mutationKeys = {
+  updatePaymentIntent: (paymentIntentId: string) => [
+    P,
+    'updatePaymentIntent',
+    paymentIntentId,
+  ],
+}
+
+const updatePaymentIntent = async (
+  paymentIntentId: string,
+  promoCode: string,
 ) => {
+  const response = await Api.authPost(Api.stripeUpdatePaymentIntentUrl(), {
+    paymentIntentId,
+    promoCode,
+  })
+
+  if (!response.ok) {
+    throw Error('Nepodarilo sa upraviť platbu')
+  }
+
+  return (await response.json()) as UpdatePaymentIntentResponse
+}
+
+const createPaymentIntent = async (courseProductId: string) => {
   const response = await Api.authPost(Api.stripeCreatePaymentIntentUrl(), {
     courseProductId,
-    promoCode,
   })
 
   if (!response.ok) {
@@ -44,12 +68,27 @@ const getPaymentIntent = async (
   return paymentIntent
 }
 
-export const useCreatePaymentIntent = (
-  courseProductId: string,
-  promoCode: string | undefined,
-) => {
+export const useCreatePaymentIntent = (courseProductId: string) => {
   return useQuery(queryKeys.createPaymentIntent(courseProductId), () =>
-    createPaymentIntent(courseProductId, promoCode),
+    createPaymentIntent(courseProductId),
+  )
+}
+
+export const useUpdatePaymentIntent = (
+  paymentIntentId: string,
+  courseProductId: string,
+) => {
+  return useMutation(
+    mutationKeys.updatePaymentIntent(paymentIntentId),
+    (promoCode: string) => updatePaymentIntent(paymentIntentId, promoCode),
+    {
+      onSuccess: (data) => {
+        queryClient.setQueryData(
+          queryKeys.createPaymentIntent(courseProductId),
+          data,
+        )
+      },
+    },
   )
 }
 

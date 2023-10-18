@@ -119,6 +119,9 @@ const STRIPE_URL = `${API_URL}/stripe`
 export const stripeCreatePaymentIntentUrl = () =>
   `${STRIPE_URL}/create-payment-intent`
 
+export const stripeUpdatePaymentIntentUrl = () =>
+  `${STRIPE_URL}/update-payment-intent`
+
 export const stripeIsPromotionCodeValidUrl = (code: string) =>
   `${STRIPE_URL}/check-promotion-code/${code}`
 

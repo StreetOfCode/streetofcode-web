@@ -351,7 +351,16 @@ export interface YouTubeVideo {
 
 export interface CreatePaymentIntentResponse {
   clientSecret: string
-  fullPriceAmount: number
+  fullAmount: number
+  discountAmount: number | null
+  promoCode: string | null
+  paymentIntentId: string
+}
+
+export interface UpdatePaymentIntentResponse {
+  clientSecret: string
+  paymentIntentId: string
+  fullAmount: number
   discountAmount: number
   promoCode: string
 }

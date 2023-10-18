@@ -15,7 +15,10 @@ import React, {MouseEventHandler, useState} from 'react'
 import styled from 'styled-components'
 import {useAuth} from '../../../../AuthUserContext'
 import {QueryGuard} from '../../../../QueryGuard'
-import {useCreatePaymentIntent} from '../../../../api/checkout'
+import {
+  useCreatePaymentIntent,
+  useUpdatePaymentIntent,
+} from '../../../../api/checkout'
 import {useGetCourseOverview} from '../../../../api/courseOverview'
 import Head from '../../../../components/Head'
 import Loading from '../../../../components/Loading'
@@ -91,14 +94,16 @@ const CheckoutForm = ({
   fullPriceAmount,
   discountAmount,
   appliedPromoCode,
+  paymentIntentId,
 }: {
   courseSlug: string
   courseProductId: string
   fullPriceAmount: number
-  discountAmount: number
-  appliedPromoCode: string
+  discountAmount: number | null
+  appliedPromoCode: string | null
+  paymentIntentId: string
 }) => {
-  assert(fullPriceAmount - discountAmount >= 0, 'Invalid price')
+  assert(fullPriceAmount - (discountAmount || 0) >= 0, 'Invalid price')
 
   const {canSubmit, handleSubmit, isSubmitting} = useStripe(
     courseSlug,
@@ -111,6 +116,10 @@ const CheckoutForm = ({
   const [promoCode, setPromoCode] = useState(appliedPromoCode || '')
   const [promoCodeError, setPromoCodeError] = useState<string | null>(null)
   const [validatingPromoCode, setValidatingPromoCode] = useState(false)
+  const updatePaymentIntentMutation = useUpdatePaymentIntent(
+    paymentIntentId,
+    courseProductId,
+  )
 
   const paymentElementOptions: StripePaymentElementOptions = {
     layout: 'tabs',
@@ -128,6 +137,7 @@ const CheckoutForm = ({
     e.preventDefault()
     setPromoCode('')
     setPromoCodeError(null)
+    // TODO
     router.replace({
       pathname: routes.checkout.courseProduct(courseSlug, courseProductId),
     })
@@ -148,14 +158,10 @@ const CheckoutForm = ({
 
     const isValidResponse = (await response.json()) as IsPromotionCodeValid
     if (isValidResponse.isPromotionCodeValid) {
-      setValidatingPromoCode(false)
       setPromoCodeError(null)
 
       if (isValidResponse.validForCourseProductId?.includes(courseProductId)) {
-        router.replace({
-          pathname: routes.checkout.courseProduct(courseSlug, courseProductId),
-          query: {promoCode},
-        })
+        await updatePaymentIntentMutation.mutateAsync(promoCode)
       } else {
         // create error message with promoCode bold
         setPromoCodeError(
@@ -163,13 +169,14 @@ const CheckoutForm = ({
         )
       }
     } else {
-      setValidatingPromoCode(false)
       setPromoCode('')
       setPromoCodeError(`Neplatný promo kód ${promoCode}`)
     }
+
+    setValidatingPromoCode(false)
   }
 
-  const amount = fullPriceAmount - discountAmount
+  const amount = fullPriceAmount - (discountAmount || 0)
 
   return (
     <form>
@@ -199,17 +206,20 @@ const CheckoutForm = ({
           </Button>
         </Flex>
         {promoCodeError && <Text>{promoCodeError}</Text>}
-        {!promoCodeError && appliedPromoCode && discountAmount > 0 && (
-          <Flex justifyContent="center" gap="8px">
-            <Text>
-              Promo kód <b>{appliedPromoCode}</b> uplatnený. Zľava{' '}
-              <b>{discountAmount / 100}€</b>
-            </Text>
-            <RemovePromoCodeButton size="small" onClick={removePromoCode}>
-              Odstrániť
-            </RemovePromoCodeButton>
-          </Flex>
-        )}
+        {!promoCodeError &&
+          appliedPromoCode &&
+          discountAmount &&
+          (discountAmount || 0) > 0 && (
+            <Flex justifyContent="center" gap="8px">
+              <Text>
+                Promo kód <b>{appliedPromoCode}</b> uplatnený. Zľava{' '}
+                <b>{discountAmount / 100}€</b>
+              </Text>
+              <RemovePromoCodeButton size="small" onClick={removePromoCode}>
+                Odstrániť
+              </RemovePromoCodeButton>
+            </Flex>
+          )}
         <Heading variant="h4">{amount ? `${amount / 100}€` : 'N/A'}</Heading>
         <CheckBox
           size="24px"
@@ -270,16 +280,17 @@ const Stripe = ({
   courseProductId: string
 }) => {
   const theme = useTheme()
-  const router = useRouter()
-  const promoCode = router.query.promoCode as string | undefined
-  const createPaymentIntentQuery = useCreatePaymentIntent(
-    courseProductId,
-    promoCode,
-  )
+  const createPaymentIntentQuery = useCreatePaymentIntent(courseProductId)
 
   return (
     <QueryGuard {...createPaymentIntentQuery}>
-      {({clientSecret, fullPriceAmount, discountAmount, promoCode}) => {
+      {({
+        clientSecret,
+        fullAmount,
+        discountAmount,
+        promoCode,
+        paymentIntentId,
+      }) => {
         const appearance: Appearance = {
           theme: theme.isLightTheme ? 'stripe' : 'night',
         }
@@ -294,9 +305,10 @@ const Stripe = ({
             <CheckoutForm
               courseSlug={courseSlug}
               courseProductId={courseProductId}
-              fullPriceAmount={fullPriceAmount}
+              fullPriceAmount={fullAmount}
               discountAmount={discountAmount}
               appliedPromoCode={promoCode}
+              paymentIntentId={paymentIntentId}
             />
           </Elements>
         )
