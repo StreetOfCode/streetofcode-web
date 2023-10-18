@@ -109,7 +109,6 @@ const CheckoutForm = ({
     courseSlug,
     courseProductId,
   )
-  const router = useRouter()
   const [isStripeLoading, setIsStripeLoading] = useState(true)
   const [areTosAccepted, setAreTosAccepted] = useState(true)
   const [isReturnPolicyAccepted, setIsReturnPolicyAccepted] = useState(true)
@@ -132,15 +131,15 @@ const CheckoutForm = ({
     }
   }
 
-  const removePromoCode = (e: React.MouseEvent) => {
+  const removePromoCode = async (e: React.MouseEvent) => {
     e.stopPropagation()
     e.preventDefault()
     setPromoCode('')
     setPromoCodeError(null)
-    // TODO
-    router.replace({
-      pathname: routes.checkout.courseProduct(courseSlug, courseProductId),
-    })
+    setValidatingPromoCode(true)
+    // reset paymentIntent with original amount
+    await updatePaymentIntentMutation.mutateAsync(null)
+    setValidatingPromoCode(false)
   }
 
   const usePromoCode = async (e: React.MouseEvent) => {
@@ -215,7 +214,11 @@ const CheckoutForm = ({
                 Promo kód <b>{appliedPromoCode}</b> uplatnený. Zľava{' '}
                 <b>{discountAmount / 100}€</b>
               </Text>
-              <RemovePromoCodeButton size="small" onClick={removePromoCode}>
+              <RemovePromoCodeButton
+                size="small"
+                onClick={removePromoCode}
+                disabled={validatingPromoCode}
+              >
                 Odstrániť
               </RemovePromoCodeButton>
             </Flex>

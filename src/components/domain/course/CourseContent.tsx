@@ -47,11 +47,7 @@ const CourseContent = ({className, course, ...props}: Props) => {
   }
 
   const shouldPreviewLectureForPaidCourse = (lecture: LectureOverview) => {
-    return (
-      isLectureClickable(lecture) &&
-      (states.hasProductsAndIsOwnedByUser ||
-        states.hasProductsButIsNotOwnedByUser)
-    )
+    return isLectureClickable(lecture) && states.hasProductsButIsNotOwnedByUser
   }
 
   const getChapterLengthInfo = (chapter: ChapterOverview): React.ReactNode => {

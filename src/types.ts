@@ -359,10 +359,10 @@ export interface CreatePaymentIntentResponse {
 
 export interface UpdatePaymentIntentResponse {
   clientSecret: string
-  paymentIntentId: string
   fullAmount: number
-  discountAmount: number
-  promoCode: string
+  discountAmount: number | null
+  promoCode: string | null
+  paymentIntentId: string
 }
 
 export interface IsCourseOwnedByUserResponse {

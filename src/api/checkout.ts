@@ -33,7 +33,7 @@ export const mutationKeys = {
 
 const updatePaymentIntent = async (
   paymentIntentId: string,
-  promoCode: string,
+  promoCode: string | null,
 ) => {
   const response = await Api.authPost(Api.stripeUpdatePaymentIntentUrl(), {
     paymentIntentId,
@@ -80,7 +80,8 @@ export const useUpdatePaymentIntent = (
 ) => {
   return useMutation(
     mutationKeys.updatePaymentIntent(paymentIntentId),
-    (promoCode: string) => updatePaymentIntent(paymentIntentId, promoCode),
+    (promoCode: string | null) =>
+      updatePaymentIntent(paymentIntentId, promoCode),
     {
       onSuccess: (data) => {
         queryClient.setQueryData(
