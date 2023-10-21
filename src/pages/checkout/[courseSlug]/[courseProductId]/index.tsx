@@ -191,6 +191,7 @@ const CheckoutForm = ({
             text={appliedPromoCode || promoCode}
             onTextChanged={onPromoCodeChanged}
             disabled={validatingPromoCode || appliedPromoCode != null}
+            disableMultiline
           />
           <Button
             variant="accent"
@@ -386,25 +387,22 @@ const CourseCheckoutPage = () => {
             />
             <NavBar />
             <PageContentWrapper>
-              <WrapperFlex>
-                <Flex
-                  direction="column"
-                  alignItems="flex-start"
-                  gap="32px"
-                  style={{width: 400}}
-                >
-                  <Heading variant="h4">
-                    {getCourseProductName(courseProductId)}
-                  </Heading>
-                  <Stripe
-                    courseSlug={courseSlug as string}
-                    courseProductId={courseProductId as string}
-                  />
-                </Flex>
-                <CardFlex direction="column">
-                  <CourseCard course={courseOverview} />
-                </CardFlex>
-              </WrapperFlex>
+              <Flex direction="column" alignItems="center" gap="32px">
+                <Heading variant="h4">
+                  {getCourseProductName(courseProductId)}
+                </Heading>
+                <WrapperFlex gap="64px">
+                  <Flex direction="column" alignItems="flex-start" gap="32px">
+                    <Stripe
+                      courseSlug={courseSlug as string}
+                      courseProductId={courseProductId as string}
+                    />
+                  </Flex>
+                  <CardFlex direction="column">
+                    <CourseCard course={courseOverview} />
+                  </CardFlex>
+                </WrapperFlex>
+              </Flex>
             </PageContentWrapper>
           </>
         )
@@ -414,9 +412,6 @@ const CourseCheckoutPage = () => {
 }
 
 const WrapperFlex = styled(Flex)`
-  align-content: center;
-  justify-content: center;
-  gap: 64px;
   @media ${device.S} {
     flex-direction: column;
     gap: 32px;

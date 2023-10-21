@@ -14,6 +14,7 @@ type Props = {
   borderColor?: Color
   inputBackgroundColor?: Color
   maxRows?: number
+  disableMultiline?: boolean
 } & HTMLAttributes<HTMLElement>
 
 type Color = 'primary' | 'secondary' | 'accent'
@@ -30,6 +31,7 @@ const TextField = ({
   borderColor,
   inputBackgroundColor,
   maxRows,
+  disableMultiline,
   ...props
 }: Props) => {
   const inputRef = useRef<HTMLDivElement>()
@@ -49,7 +51,7 @@ const TextField = ({
         inputRef={inputRef}
         value={text}
         onChange={onTextChanged}
-        multiline
+        multiline={!disableMultiline}
         minRows={1}
         maxRows={maxRows || 6}
         fullWidth
@@ -92,7 +94,10 @@ const ErrorMessage = styled.span`
   font-size: 14px;
 `
 
-const StyledTextField = styled(MuiTextField)<{disabled?: boolean}>`
+const StyledTextField = styled(MuiTextField)<{
+  disabled?: boolean
+  multiline?: boolean
+}>`
   .MuiInputBase-root {
     padding: 0;
     font-family: soleil, sans-serif;
@@ -102,6 +107,10 @@ const StyledTextField = styled(MuiTextField)<{disabled?: boolean}>`
     .MuiOutlinedInput-notchedOutline {
       border: none;
     }
+  }
+
+  .MuiInputBase-input {
+    padding: ${(props) => !props.multiline && '0'};
   }
 
   .MuiFormHelperText-root {
