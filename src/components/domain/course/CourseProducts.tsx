@@ -7,12 +7,17 @@ import Flex from '../../core/Flex'
 import NextLink from '../../core/NextLink'
 import * as Utils from '../../../utils'
 import {courseProductsConfig, getCourseProductName} from '../../../constants'
+import Text from '../../core/Text'
 
 type Props = {
   course: CourseOverview
 }
 
 const JavaKurzCourseProducts = ({course}: Props) => {
+  const buyableUntil =
+    process.env.NEXT_PUBLIC_COURSE_PRODUCT_BUYABLE_UNTIL_JAVA_KURZ || ''
+  const isBuyable = new Date(buyableUntil) > new Date()
+
   const CourseProduct = ({courseProduct}: {courseProduct: CourseProduct}) => {
     const isCourseOwnedByUser = Utils.isCourseOwnedByUser(course)
 
@@ -38,7 +43,7 @@ const JavaKurzCourseProducts = ({course}: Props) => {
             <StyledButton
               variant="accent"
               disableHoverTransform
-              disabled={courseProduct.price == null}
+              disabled={courseProduct.price == null || !isBuyable}
             >
               Kúpiť
             </StyledButton>
@@ -49,11 +54,18 @@ const JavaKurzCourseProducts = ({course}: Props) => {
   }
 
   return (
-    <Flex id="products">
-      {course.courseProducts.map((cp) => (
-        <CourseProduct key={cp.productId} courseProduct={cp} />
-      ))}
-    </Flex>
+    <>
+      <Flex id="products">
+        {course.courseProducts.map((cp) => (
+          <CourseProduct key={cp.productId} courseProduct={cp} />
+        ))}
+      </Flex>
+      {!isBuyable && (
+        <Text align="center">
+          Predpredaj skončil. Kurz bude opäť dostupný od 1.1.2024.
+        </Text>
+      )}
+    </>
   )
 }
 
