@@ -392,15 +392,11 @@ const CourseCheckoutPage = () => {
                   {getCourseProductName(courseProductId)}
                 </Heading>
                 <WrapperFlex gap="64px">
-                  <Flex direction="column" alignItems="flex-start" gap="32px">
-                    <Stripe
-                      courseSlug={courseSlug as string}
-                      courseProductId={courseProductId as string}
-                    />
-                  </Flex>
-                  <CardFlex direction="column">
-                    <CourseCard course={courseOverview} />
-                  </CardFlex>
+                  <Stripe
+                    courseSlug={courseSlug as string}
+                    courseProductId={courseProductId as string}
+                  />
+                  <StyledCourseCard course={courseOverview} />
                 </WrapperFlex>
               </Flex>
             </PageContentWrapper>
@@ -412,20 +408,15 @@ const CourseCheckoutPage = () => {
 }
 
 const WrapperFlex = styled(Flex)`
-  @media ${device.S} {
+  @media ${device.M} {
     flex-direction: column;
     gap: 32px;
   }
 `
 
-const CardFlex = styled(Flex)`
-  width: 300px;
-  align-self: center;
-
-  @media ${device.S} {
-    align-self: center;
-    width: 100%;
-    order: 1;
+const StyledCourseCard = styled(CourseCard)`
+  @media ${device.M} {
+    display: none;
   }
 `
 
@@ -441,7 +432,7 @@ const StyledButton = styled(Button)`
 
 const FormFlex = styled(Flex)`
   gap: 16px;
-  width: 400px;
+  max-width: 400px;
 `
 
 const StyledPaymentElement = styled(PaymentElement)`
