@@ -355,7 +355,10 @@ const CourseCheckoutPage = () => {
 
   const {courseSlug, courseProductId} = useQueryParams()
 
-  const getCourseOverview = useGetCourseOverview(courseSlug, !!courseSlug)
+  const getCourseOverview = useGetCourseOverview(
+    courseSlug,
+    !!courseSlug && !!user,
+  )
 
   if (isLoading || !courseSlug || !courseProductId) {
     return <Loading />

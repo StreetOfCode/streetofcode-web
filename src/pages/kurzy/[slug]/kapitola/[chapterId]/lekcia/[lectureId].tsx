@@ -28,8 +28,8 @@ const TakeCoursePage: NextPage<Props> = ({
   chapterId,
   lectureId,
 }: Props) => {
-  const getCourseOverview = useGetCourseOverview(courseSlug, true)
   const {user, isLoading} = useAuth()
+  const getCourseOverview = useGetCourseOverview(courseSlug, !!user)
   const router = useRouter()
 
   if (isLoading) {

@@ -22,8 +22,8 @@ import {isRunningOnServer} from '../utils'
 import {routes} from '../routes'
 
 const ProfilePage: NextPage = () => {
-  const getSocUser = useGetUser(true)
   const {user} = useAuth()
+  const getSocUser = useGetUser(!!user)
   const router = useRouter()
 
   if (!user) {

@@ -93,12 +93,18 @@ const CheckoutSuccessPage = () => {
     finalAmount,
   } = useQueryParams()
 
-  const {user} = useAuth()
-  const getCourseOverview = useGetCourseOverview(courseSlug as string, true)
+  const {user, isLoading} = useAuth()
+  const getCourseOverview = useGetCourseOverview(courseSlug as string, !!user)
 
   usePeriodicUserOwnsCourseCheck(getCourseOverview.data)
 
-  if (!courseSlug || !courseProductId || !redirectStatus || !finalAmount) {
+  if (
+    isLoading ||
+    !courseSlug ||
+    !courseProductId ||
+    !redirectStatus ||
+    !finalAmount
+  ) {
     return <Loading />
   }
 
