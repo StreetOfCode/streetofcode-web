@@ -15,10 +15,43 @@ import Flex from '../../../../components/core/Flex'
 import Heading from '../../../../components/core/Heading'
 import Text from '../../../../components/core/Text'
 import CourseCard from '../../../../components/domain/course/CourseCard'
+import {getCourseProductName} from '../../../../constants'
+import queryClient from '../../../../queryClient'
 import {device} from '../../../../theme/device'
 import {CourseOverview, IsCourseOwnedByUserResponse} from '../../../../types'
 import * as Utils from '../../../../utils'
-import queryClient from '../../../../queryClient'
+
+const useQueryParams = () => {
+  const router = useRouter()
+  const {
+    courseSlug: _courseSlug,
+    courseProductId: _courseProductId,
+    appliedPromoCode: _appliedPromoCode,
+    finalAmount: _finalAmount,
+    redirect_status: _redirectStatus,
+  } = router.query
+
+  // on first render router.query content is empty
+  const courseSlug = _courseSlug || ''
+  const courseProductId = _courseProductId || ''
+  const appliedPromoCode = _appliedPromoCode || ''
+  const finalAmount = _finalAmount || ''
+  const redirectStatus = _redirectStatus || ''
+
+  Utils.assert(typeof courseSlug === 'string', 'Invalid query params')
+  Utils.assert(typeof courseProductId === 'string', 'Invalid query params')
+  Utils.assert(typeof appliedPromoCode === 'string', 'Invalid query params')
+  Utils.assert(typeof courseProductId === 'string', 'Invalid query params')
+  Utils.assert(typeof finalAmount === 'string', 'Invalid query params')
+
+  return {
+    courseSlug,
+    courseProductId,
+    appliedPromoCode,
+    finalAmount,
+    redirectStatus,
+  }
+}
 
 const usePeriodicUserOwnsCourseCheck = (
   courseOverview: CourseOverview | undefined,
@@ -52,18 +85,22 @@ const usePeriodicUserOwnsCourseCheck = (
 }
 
 const CheckoutSuccessPage = () => {
-  const router = useRouter()
-
   const {
     courseSlug,
     courseProductId,
-    redirect_status: redirectStatus,
-  } = router.query
+    redirectStatus,
+    appliedPromoCode,
+    finalAmount,
+  } = useQueryParams()
 
   const {user} = useAuth()
   const getCourseOverview = useGetCourseOverview(courseSlug as string, true)
 
   usePeriodicUserOwnsCourseCheck(getCourseOverview.data)
+
+  if (!courseSlug || !courseProductId || !redirectStatus || !finalAmount) {
+    return <Loading />
+  }
 
   return (
     <>
@@ -75,20 +112,20 @@ const CheckoutSuccessPage = () => {
           {...getCourseOverview}
         >
           {(courseOverview) => {
-            const price = courseOverview.courseProducts.find(
-              (cp) => cp.productId === courseProductId,
-            )?.price
             return (
               <>
                 <WrapperFlex>
                   <Flex direction="column" alignItems="flex-start" gap="32px">
                     <div>
                       <Text size="large" weight="bold">
-                        Informatika 101 - basic verzia
+                        {getCourseProductName(courseProductId)}
                       </Text>
                       <Heading variant="h4">
-                        {price ? `${price / 100}€` : 'N/A'}
+                        {parseInt(finalAmount, 10) / 100}€
                       </Heading>
+                      {appliedPromoCode && (
+                        <Text>Promokód: {appliedPromoCode}</Text>
+                      )}
                     </div>
                     {redirectStatus === 'succeeded' ? (
                       <>
@@ -102,7 +139,6 @@ const CheckoutSuccessPage = () => {
                     )}
                   </Flex>
                   <CardFlex direction="column">
-                    {/* <h1>{courseOverview.name}</h1> */}
                     <CourseCard course={courseOverview} />
                   </CardFlex>
                 </WrapperFlex>

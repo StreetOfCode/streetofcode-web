@@ -48,7 +48,12 @@ const loadStripePromise = loadStripe(
   },
 )
 
-const useStripe = (courseSlug: string, courseProductId: string) => {
+const useStripe = (
+  courseSlug: string,
+  courseProductId: string,
+  appliedPromoCode: string | null,
+  finalAmount: number,
+) => {
   const stripe = _useStripe()
   const elements = useElements()
 
@@ -69,6 +74,8 @@ const useStripe = (courseSlug: string, courseProductId: string) => {
         return_url: `${routes.host}${routes.checkout.success(
           courseSlug,
           courseProductId,
+          appliedPromoCode,
+          finalAmount,
         )}`,
       },
     })
@@ -103,11 +110,14 @@ const CheckoutForm = ({
   appliedPromoCode: string | null
   paymentIntentId: string
 }) => {
-  assert(fullPriceAmount - (discountAmount || 0) >= 0, 'Invalid price')
+  const finalAmount = fullPriceAmount - (discountAmount || 0)
+  assert(finalAmount >= 0, 'Invalid price')
 
   const {canSubmit, handleSubmit, isSubmitting} = useStripe(
     courseSlug,
     courseProductId,
+    appliedPromoCode,
+    finalAmount,
   )
   const [isStripeLoading, setIsStripeLoading] = useState(true)
   const [areTosAccepted, setAreTosAccepted] = useState(true)
@@ -175,8 +185,6 @@ const CheckoutForm = ({
     setValidatingPromoCode(false)
   }
 
-  const amount = fullPriceAmount - (discountAmount || 0)
-
   return (
     <form>
       <FormFlex direction="column" gap="12px">
@@ -224,7 +232,9 @@ const CheckoutForm = ({
               </RemovePromoCodeButton>
             </Flex>
           )}
-        <Heading variant="h4">{amount ? `${amount / 100}€` : 'N/A'}</Heading>
+        <Heading variant="h4">
+          {finalAmount ? `${finalAmount / 100}€` : 'N/A'}
+        </Heading>
         <CheckBox
           size="24px"
           labelComponent={

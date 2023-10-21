@@ -41,8 +41,15 @@ const lektor = {
 const checkout = {
   courseProduct: (courseSlug: string, productId: string) =>
     `/checkout/${courseSlug}/${productId}`,
-  success: (courseSlug: string, productId: string) =>
-    `/checkout/${courseSlug}/${productId}/success`,
+  success: (
+    courseSlug: string,
+    productId: string,
+    appliedPromoCode: string | null,
+    finalPrice: number,
+  ) =>
+    `/checkout/${courseSlug}/${productId}/success?appliedPromoCode=${
+      appliedPromoCode || ''
+    }&finalAmount=${finalPrice}`,
 }
 
 const feedback = '/feedback'
