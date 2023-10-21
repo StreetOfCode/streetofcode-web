@@ -115,32 +115,31 @@ const CheckoutSuccessPage = () => {
             return (
               <>
                 <WrapperFlex>
-                  <Flex direction="column" alignItems="flex-start" gap="32px">
-                    <div>
-                      <Text size="large" weight="bold">
-                        {getCourseProductName(courseProductId)}
-                      </Text>
-                      <Heading variant="h4">
-                        {parseInt(finalAmount, 10) / 100}€
-                      </Heading>
-                      {appliedPromoCode && (
-                        <Text>Promokód: {appliedPromoCode}</Text>
-                      )}
-                    </div>
+                  <Flex direction="column" alignItems="center" gap="32px">
+                    <Heading variant="h3" align="center">
+                      {getCourseProductName(courseProductId)}
+                    </Heading>
+                    <Heading variant="h4">
+                      Zaplatené: {parseInt(finalAmount, 10) / 100}€
+                    </Heading>
+                    {appliedPromoCode && (
+                      <Text>Promokód: {appliedPromoCode}</Text>
+                    )}
                     {redirectStatus === 'succeeded' ? (
                       <>
                         <Loading />
-                        <FullWidthText align="center">
+                        <InfoText align="center">
                           Spracovávam platbu, o chvíľu ťa presmerujeme na kurz.
-                        </FullWidthText>
+                          Ak to trvá dlho, tak skús obnoviť stránku, alebo ísť
+                          znova na kurzovú stránku a spustiť kurz. Ak by platba
+                          neprešla, tak nás kontaktuj na info@streetofcode.sk
+                        </InfoText>
                       </>
                     ) : (
                       <p>Nastala neočakávaná chyba: {redirectStatus}</p>
                     )}
                   </Flex>
-                  <CardFlex direction="column">
-                    <CourseCard course={courseOverview} />
-                  </CardFlex>
+                  <StyledCoursedCard course={courseOverview} />
                 </WrapperFlex>
               </>
             )
@@ -154,25 +153,19 @@ const CheckoutSuccessPage = () => {
 const WrapperFlex = styled(Flex)`
   justify-content: center;
   gap: 64px;
-  @media ${device.S} {
+  @media ${device.M} {
     flex-direction: column;
     gap: 32px;
   }
 `
-
-const CardFlex = styled(Flex)`
-  width: 300px;
-  align-self: flex-end;
-
-  @media ${device.S} {
-    align-self: center;
-    width: 100%;
-    order: 1;
+const StyledCoursedCard = styled(CourseCard)`
+  @media ${device.M} {
+    display: none;
   }
 `
 
-const FullWidthText = styled(Text)`
-  width: 100%;
+const InfoText = styled(Text)`
+  max-width: 500px;
 `
 
 export default CheckoutSuccessPage
