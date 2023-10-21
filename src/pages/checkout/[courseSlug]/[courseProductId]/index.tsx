@@ -366,7 +366,7 @@ const CourseCheckoutPage = () => {
 
   if (!user) {
     // this page can be seen only by logged in users
-    router.replace({
+    router.push({
       pathname: routes.login.redirectUri(encodeURIComponent(location.pathname)),
       query: {
         returnTo: routes.checkout.courseProduct(courseSlug, courseProductId),
@@ -379,7 +379,7 @@ const CourseCheckoutPage = () => {
     Utils.isCourseOwnedByUser(getCourseOverview.data)
   ) {
     // course already owned, no need to checkout, redirect to take course
-    router.replace(Utils.getTakeCourseUrl(getCourseOverview.data))
+    router.push(Utils.getTakeCourseUrl(getCourseOverview.data))
   }
 
   return (

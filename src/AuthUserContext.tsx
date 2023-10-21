@@ -53,7 +53,7 @@ export const AuthContextProvider = ({
   }, [])
 
   const logout = async () => {
-    await Auth.signOut().then(() => router.replace('/'))
+    await Auth.signOut().then(() => router.push('/'))
   }
 
   const useAuthResult = {

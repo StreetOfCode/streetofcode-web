@@ -38,7 +38,7 @@ const TakeCoursePage: NextPage<Props> = ({
 
   if (!user) {
     // this page can be seen only by logged in users
-    router.replace({
+    router.push({
       pathname: routes.login.redirectUri(encodeURIComponent(location.pathname)),
       query: {returnTo: routes.kurzy.slug(courseSlug)},
     })
@@ -49,7 +49,7 @@ const TakeCoursePage: NextPage<Props> = ({
     !Utils.isCourseOwnedByUser(getCourseOverview.data)
   ) {
     // this page can be seen only by users who own the course
-    router.replace({
+    router.push({
       pathname: routes.kurzy.slug(courseSlug),
     })
   }

@@ -75,7 +75,7 @@ const usePeriodicUserOwnsCourseCheck = (
           )
 
           const url = Utils.getTakeCourseUrl(courseOverview)
-          router.replace({pathname: url})
+          router.push({pathname: url})
         }
       }
     }

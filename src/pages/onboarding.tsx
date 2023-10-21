@@ -236,9 +236,9 @@ const OnboardingPage: NextPage = () => {
       setLoading(false)
     } finally {
       if (router.query && router.query.from) {
-        router.replace(router.query.from as string)
+        router.push(router.query.from as string)
       } else {
-        router.replace(routes.root)
+        router.push(routes.root)
       }
     }
   }

@@ -29,7 +29,7 @@ const ProfilePage: NextPage = () => {
   if (!user) {
     if (isRunningOnServer()) return <></>
     // this page can be seen only by logged in users
-    router.replace({
+    router.push({
       pathname: routes.login.redirectUri(encodeURIComponent(router.pathname)),
     })
   }

@@ -20,7 +20,7 @@ const OnboardingProtectionRoute = ({children}: {children: React.ReactNode}) => {
     !useGetSocUser.data &&
     !routesThatDontNeedOnBoardingProtection.includes(router.pathname)
   ) {
-    router.replace({
+    router.push({
       pathname: routes.onboarding,
       query: {from: location.pathname},
     })
