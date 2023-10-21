@@ -8,9 +8,6 @@ export const coursesOverviewUrl = () => COURSES_OVERVIEW_URL
 const COURSE_SLUGS_URL = `${API_URL}/course/slug`
 export const courseSlugsUrl = () => COURSE_SLUGS_URL
 
-const COURSE_ALL_PRODUCTS_URL = `${API_URL}/course/all-products`
-export const courseAllProductsUrl = () => COURSE_ALL_PRODUCTS_URL
-
 const COURSE_PRODUCT_URL = `${API_URL}/course-product`
 export const isCourseOwnedByUserUrl = (courseId: number) =>
   `${COURSE_PRODUCT_URL}/${courseId}/is-owned-by-user`

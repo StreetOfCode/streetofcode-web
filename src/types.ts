@@ -115,8 +115,9 @@ export interface UserProgressMetadata {
 }
 
 export interface CourseUserProduct {
-  priceId: string
   boughtAt: Date
+  finalAmount: number
+  usedPromoCode?: string
 }
 
 export interface CourseProduct {

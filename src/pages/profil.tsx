@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from 'react'
 import {QueryGuard} from '../QueryGuard'
-import {SocUser} from '../types'
+import {CourseOverview, SocUser} from '../types'
 import {AiOutlineEdit} from 'react-icons/ai'
 import Text from '../components/core/Text'
 import Flex from '../components/core/Flex'
@@ -11,17 +11,16 @@ import Courses from '../components/domain/course/Courses'
 import Button from '../components/core/Button'
 import TextField from '../components/core/TextField'
 import {useEditUser, useGetUser} from '../api/user'
-import {NextPage} from 'next'
 import {useAuth} from '../AuthUserContext'
 import {useGetMyCourses} from '../api/myCourses'
 import {useRouter} from 'next/router'
 import PageContentWrapper from '../components/PageContentWrapper'
 import NavBar from '../components/NavBar'
 import {device} from '../theme/device'
-import {isRunningOnServer} from '../utils'
+import {formatDate, isRunningOnServer} from '../utils'
 import {routes} from '../routes'
 
-const ProfilePage: NextPage = () => {
+const ProfilePage = () => {
   const {user} = useAuth()
   const getSocUser = useGetUser(!!user)
   const router = useRouter()
@@ -48,6 +47,13 @@ const ProfilePage: NextPage = () => {
       }}
     </QueryGuard>
   )
+}
+
+type BoughtCourse = {
+  courseName: string
+  boughtAt: Date
+  finalPrice: number
+  usedPromoCode?: string
 }
 
 const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
@@ -166,6 +172,23 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
     )
   }
 
+  const getBoughtCourses = (courses: CourseOverview[]): BoughtCourse[] => {
+    const boughtCourses: BoughtCourse[] = []
+    courses.forEach((course) => {
+      course.courseProducts.forEach((courseProduct) => {
+        courseProduct.courseUserProducts.forEach((courseUserProduct) => {
+          boughtCourses.push({
+            courseName: course.name,
+            boughtAt: courseUserProduct.boughtAt,
+            finalPrice: courseUserProduct.finalAmount,
+            usedPromoCode: courseUserProduct.usedPromoCode,
+          })
+        })
+      })
+    })
+    return boughtCourses
+  }
+
   return (
     <>
       <GoBackText size="small" onClick={handleGoBack}>
@@ -209,27 +232,54 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
               {nameEditing && renderEditNameTextField()}
             </Flex>
           </ProfileInfoFlex>
-
-          {!socUser.receiveNewsletter && renderNewsletterSignUp()}
         </ProfileInfoWithNewsletterFlex>
 
         <QueryGuard {...getMyCoursesQuery}>
-          {(courses) => (
-            <Flex
-              direction="column"
-              gap="32px"
-              alignSelf="flex-start"
-              alignItems="flex-start"
-            >
-              {courses.length > 0 && (
-                <Heading variant="h4" withAccentUnderline normalWeight>
-                  Moje kurzy
-                </Heading>
-              )}
-              <Courses courses={courses} shouldLinkToTakeCourse />
-            </Flex>
-          )}
+          {(courses) => {
+            const boughtCourses = getBoughtCourses(courses)
+            return (
+              <Flex
+                direction="column"
+                gap="32px"
+                alignSelf="flex-start"
+                alignItems="flex-start"
+              >
+                {courses.length > 0 && (
+                  <Heading variant="h4" withAccentUnderline normalWeight>
+                    Moje kurzy
+                  </Heading>
+                )}
+                <Courses courses={courses} shouldLinkToTakeCourse />
+                {boughtCourses.length > 0 && (
+                  <>
+                    <Heading variant="h4" withAccentUnderline normalWeight>
+                      História platieb
+                    </Heading>
+                    <Flex direction="column" gap="16px">
+                      {boughtCourses.map((boughtCourse, i) => (
+                        <Flex
+                          key={i}
+                          direction="row"
+                          gap="48px"
+                          alignItems="center"
+                        >
+                          <Text>{boughtCourse.courseName}</Text>
+                          <Text>{boughtCourse.finalPrice / 100}€</Text>
+                          {boughtCourse.usedPromoCode && (
+                            <Text>Promokód: {boughtCourse.usedPromoCode}</Text>
+                          )}
+                          <Text>{formatDate(boughtCourse.boughtAt)} </Text>
+                        </Flex>
+                      ))}
+                    </Flex>
+                  </>
+                )}
+              </Flex>
+            )
+          }}
         </QueryGuard>
+
+        {!socUser.receiveNewsletter && renderNewsletterSignUp()}
 
         <Button onClick={logout}>Odhlásiť</Button>
       </Flex>
