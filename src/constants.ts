@@ -15,16 +15,11 @@ export const courseProductsConfig: {
     productIds: Record<string, string>
   }
 } = {
-  // TODO REMOVE || prod_Opf91PbCKmN79b || prod_OkklGrYeJgDOg4
   javaKurz: {
     slug: process.env.NEXT_PUBLIC_COURSE_PRODUCT_SLUG_JAVA_KURZ || 'java-kurz',
     productIds: {
-      basic:
-        process.env.NEXT_PUBLIC_COURSE_PRODUCT_ID_JAVA_KURZ_BASIC ||
-        'prod_Opf91PbCKmN79b',
-      pro:
-        process.env.NEXT_PUBLIC_COURSE_PRODUCT_ID_JAVAKURZ_SLUG ||
-        'prod_OkklGrYeJgDOg4',
+      basic: process.env.NEXT_PUBLIC_COURSE_PRODUCT_ID_JAVA_KURZ_BASIC || '',
+      pro: process.env.NEXT_PUBLIC_COURSE_PRODUCT_ID_JAVAKURZ_SLUG || '',
     },
   },
 } as const
