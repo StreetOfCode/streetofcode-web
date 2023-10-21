@@ -24,16 +24,7 @@ const CourseContent = ({className, course, ...props}: Props) => {
   const [previewLectureInModal, setPreviewLectureInModal] =
     useState<LectureOverview | null>(null)
 
-  // TODO extract this logic (it is same in CourseCTAButton)
-  const hasProducts = course.courseProducts.length !== 0
-  const ownedByUser = Utils.isCourseOwnedByUser(course)
-
-  const states = {
-    hasProductsAndIsOwnedByUser: hasProducts && ownedByUser,
-    hasProductsButIsNotOwnedByUser: hasProducts && !ownedByUser,
-    hasNoProductsAndIsLoggedIn: !hasProducts && user,
-    hasNoProductsAndIsNotLoggedIn: !hasProducts && !user,
-  }
+  const states = Utils.getCourseProductStates(course, user)
 
   const isLectureClickable = (lecture: LectureOverview) => {
     if (states.hasNoProductsAndIsLoggedIn || states.hasProductsAndIsOwnedByUser)

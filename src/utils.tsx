@@ -8,6 +8,7 @@ import {
   LectureOverview,
   LectureType,
 } from './types'
+import {User} from 'firebase/auth'
 
 export const isRunningOnServer = () => typeof window === 'undefined'
 
@@ -230,3 +231,20 @@ export function assert(
 export const isCourseOwnedByUser = (courseOverview: CourseOverview) =>
   courseOverview.courseProducts.length === 0 ||
   courseOverview.courseProducts.some((cp) => cp.courseUserProducts.length !== 0)
+
+export const getCourseProductStates = (
+  course: CourseOverview,
+  user: User | null,
+) => {
+  const hasProducts = course.courseProducts.length !== 0
+  const ownedByUser = isCourseOwnedByUser(course)
+
+  const states = {
+    hasProductsAndIsOwnedByUser: hasProducts && ownedByUser,
+    hasProductsButIsNotOwnedByUser: hasProducts && !ownedByUser,
+    hasNoProductsAndIsLoggedIn: !hasProducts && user,
+    hasNoProductsAndIsNotLoggedIn: !hasProducts && !user,
+  }
+
+  return states
+}

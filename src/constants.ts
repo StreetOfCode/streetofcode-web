@@ -19,7 +19,7 @@ export const courseProductsConfig: {
     slug: process.env.NEXT_PUBLIC_COURSE_PRODUCT_SLUG_JAVA_KURZ || 'java-kurz',
     productIds: {
       basic: process.env.NEXT_PUBLIC_COURSE_PRODUCT_ID_JAVA_KURZ_BASIC || '',
-      pro: process.env.NEXT_PUBLIC_COURSE_PRODUCT_ID_JAVAKURZ_SLUG || '',
+      pro: process.env.NEXT_PUBLIC_COURSE_PRODUCT_ID_JAVA_KURZ_PRO || '',
     },
   },
 } as const

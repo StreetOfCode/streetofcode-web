@@ -24,15 +24,7 @@ const CourseCTAButton = ({
 }: Props) => {
   if (isLoading) return <Loading />
 
-  const hasProducts = courseOverview.courseProducts.length !== 0
-  const ownedByUser = Utils.isCourseOwnedByUser(courseOverview)
-
-  const states = {
-    hasProductsAndIsOwnedByUser: hasProducts && ownedByUser,
-    hasProductsButIsNotOwnedByUser: hasProducts && !ownedByUser,
-    hasNoProductsAndIsLoggedIn: !hasProducts && user,
-    hasNoProductsAndIsNotLoggedIn: !hasProducts && !user,
-  }
+  const states = Utils.getCourseProductStates(courseOverview, user)
 
   if (states.hasProductsAndIsOwnedByUser) {
     return (
