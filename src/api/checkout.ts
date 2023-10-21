@@ -34,7 +34,7 @@ export const mutationKeys = {
 const updatePaymentIntent = async (
   paymentIntentId: string,
   promoCode: string | null,
-) => {
+): Promise<UpdatePaymentIntentResponse> => {
   const response = await Api.authPost(Api.stripeUpdatePaymentIntentUrl(), {
     paymentIntentId,
     promoCode,
@@ -47,7 +47,9 @@ const updatePaymentIntent = async (
   return (await response.json()) as UpdatePaymentIntentResponse
 }
 
-const createPaymentIntent = async (courseProductId: string) => {
+const createPaymentIntent = async (
+  courseProductId: string,
+): Promise<CreatePaymentIntentResponse> => {
   const response = await Api.authPost(Api.stripeCreatePaymentIntentUrl(), {
     courseProductId,
   })
