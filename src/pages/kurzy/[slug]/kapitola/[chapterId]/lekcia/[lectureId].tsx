@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic'
 import Head from '../../../../../../components/Head'
 import {prefixWithHost, routes} from '../../../../../../routes'
 import * as Utils from '../../../../../../utils'
+import Heading from '../../../../../../components/core/Heading'
 
 type Props = {
   courseSlug: string
@@ -17,9 +18,19 @@ type Props = {
 }
 
 const LazyTakeCourse = dynamic(
-  () => import('../../../../../../components/domain/course/TakeCourse'),
+  () =>
+    import('../../../../../../components/domain/course/TakeCourse').catch(
+      () => {
+        return () => (
+          <Heading variant="h4" align="center">
+            Chyba pri načítaní kurzu. Skús obnoviť stránku
+          </Heading>
+        )
+      },
+    ),
   {
     ssr: false,
+    loading: () => <Loading />,
   },
 )
 
