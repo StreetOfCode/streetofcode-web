@@ -193,7 +193,7 @@ const CheckoutForm = ({
           options={paymentElementOptions}
           onLoaderStart={() => setIsStripeLoading(false)}
         />
-        <Flex justifyContent="space-between" alignSelf="stretch" gap="12px">
+        <Flex justifyContent="flex-start" alignSelf="stretch" gap="12px">
           <TextField
             label="Zľavový kód"
             text={appliedPromoCode || promoCode}

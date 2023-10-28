@@ -100,8 +100,35 @@ const CourseDetailContent = ({
 }) => {
   const {user, isLoading} = useAuth()
   const courseReviewsRef = useRef<null | HTMLDivElement>(null)
+  const courseProductsRef = useRef<null | HTMLDivElement>(null)
   const router = useRouter()
+  const [hasProductsInLocation, setHasProductsInLocation] = useState(false)
   const [sidebarReviewsVisible, setSidebarReviewsVisible] = useState(true)
+  const [sidebarCardVisible, setSidebarCardVisible] = useState(true)
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#products') {
+        setHasProductsInLocation(true)
+      } else {
+        setHasProductsInLocation(false)
+      }
+    }
+
+    window.addEventListener('hashchange', handleHashChange)
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (hasProductsInLocation && courseProductsRef.current) {
+      courseProductsRef.current.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
+  }, [hasProductsInLocation, courseProductsRef])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -123,6 +150,36 @@ const CourseDetailContent = ({
       window.removeEventListener('scroll', handleScroll)
     }
   }, [courseReviewsRef])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (courseProductsRef.current) {
+        if (
+          window.scrollY + window.innerHeight >=
+          courseProductsRef.current.offsetTop
+        ) {
+          setSidebarCardVisible(false)
+        } else {
+          setSidebarCardVisible(true)
+        }
+      } else if (courseReviewsRef.current) {
+        if (
+          window.scrollY + window.innerHeight >=
+          courseReviewsRef.current.offsetTop
+        ) {
+          setSidebarCardVisible(false)
+        } else {
+          setSidebarCardVisible(true)
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [courseProductsRef, courseReviewsRef])
 
   if (!courseOverview.thumbnailUrl && !courseOverview.trailerUrl) return null
 
@@ -185,133 +242,146 @@ const CourseDetailContent = ({
   return (
     <PageContentWrapper>
       <BackLink to={routes.kurzy.index} text={'Späť na kurzy'} />
-      <WrapperFlex justifyContent="space-between" gap="24px">
-        <CourseDetailsFlex
-          direction="column"
-          alignSelf="flex-start"
-          alignItems="flex-start"
-          gap="24px"
-        >
-          <Heading variant="h1" normalWeight>
-            {courseOverview.name}
-          </Heading>
-          <Text size="large">{courseOverview.shortDescription}</Text>
-          <LazyCourseDescription children={courseOverview.longDescription} />
-          <Heading variant="h3" normalWeight>
-            Obsah
-          </Heading>
-          <CourseContent course={courseOverview} />
-          <CourseProducts course={courseOverview} />
-          <CourseReviews
-            courseOverview={courseOverview}
-            innerRef={courseReviewsRef}
-          />
-        </CourseDetailsFlex>
+      <Flex direction="column" gap="24px" alignItems="stretch">
+        <WrapperFlex justifyContent="space-between" gap="24px">
+          <CourseDetailsFlex
+            direction="column"
+            alignSelf="flex-start"
+            alignItems="flex-start"
+            gap="24px"
+          >
+            <Heading variant="h1" normalWeight>
+              {courseOverview.name}
+            </Heading>
+            <Text size="large">{courseOverview.shortDescription}</Text>
+            <LazyCourseDescription children={courseOverview.longDescription} />
+            <Heading variant="h3" normalWeight>
+              Obsah
+            </Heading>
+            <CourseContent course={courseOverview} />
+          </CourseDetailsFlex>
 
-        <CardFlex direction="column" gap="12px" alignSelf="flex-start">
-          {renderThubmnailOrTrailer()}
-          <CourseCTAButton
-            user={user}
-            isLoading={isLoading}
-            continueUrl={url}
-            courseOverview={courseOverview}
-          />
-          <Flex justifyContent="space-between" alignSelf="stretch">
-            <Flex
-              direction="column"
-              alignItems="flex-start"
-              alignSelf="flex-start"
-              gap="12px"
-            >
-              <CourseInfoItem>
-                <DifficultyIcon
-                  difficultyLevel={courseOverview.difficulty.skillLevel}
-                />
-                <Text>{courseOverview.difficulty?.name}</Text>
-              </CourseInfoItem>
-              <CourseInfoItem>
-                <AiOutlineClockCircle />
-                <Text>{courseDuration}</Text>
-              </CourseInfoItem>
-              <CourseInfoItem>
-                <AiOutlineVideoCamera />
-                <Text>
-                  {lecturesCount} {Utils.numOfLecturesText(lecturesCount)}
-                </Text>
-              </CourseInfoItem>
-              {quizzesCount > 0 && (
-                <CourseInfoItem>
-                  <AiOutlineQuestionCircle />
-                  <Text>
-                    {quizzesCount} {Utils.numOfQuizzesText(quizzesCount)}
-                  </Text>
-                </CourseInfoItem>
-              )}
-            </Flex>
-            <Flex
-              direction="column"
-              alignItems="flex-end"
-              alignSelf="stretch"
-              justifyContent="space-between"
-              gap="12px"
-            >
-              <Flex direction="column" gap="12px" alignItems="flex-end">
-                <CourseInfoItem clickable onClick={handleCourseReviewsRefClick}>
-                  <Rating
-                    readOnly
-                    value={courseOverview.reviewsOverview.averageRating}
-                  />
-                  <Text>
-                    ({courseOverview.reviewsOverview.numberOfReviews})
-                  </Text>
-                </CourseInfoItem>
-                <CourseInfoItem
-                  clickable
-                  onClick={() =>
-                    handleAuthorClicked(courseOverview.author.slug)
-                  }
-                >
-                  <Avatar
-                    altName={courseOverview.author.name}
-                    src={courseOverview.author.imageUrl}
-                    sizePx={28}
-                    priority
-                  />
-                  <Text>{courseOverview.author.name}</Text>
-                </CourseInfoItem>
-              </Flex>
-              {progressValuePercent && (
-                <CourseInfoItem>
-                  <CircullarProgressWithLabel
-                    size="28px"
-                    withoutTextInMiddle
-                    value={progressValuePercent}
-                  />
-                  <Text>{progressValuePercent}% dokončených</Text>
-                </CourseInfoItem>
-              )}
-              {!progressValuePercent && (
-                <Text uppercase color="accent" weight="bold">
-                  zadarmo
-                </Text>
-              )}
-            </Flex>
-          </Flex>
-          {sidebarReviewsVisible && (
-            <StyledSidebarCourseReviews courseOverview={courseOverview} />
-          )}
-          {sidebarReviewsVisible &&
-            courseOverview.reviewsOverview.numberOfReviews > 0 && (
-              <AllReviewsText
-                color="accent"
-                withAccentUnderline
-                onClick={handleCourseReviewsRefClick}
+          <CardFlex
+            direction="column"
+            gap="12px"
+            alignSelf="flex-start"
+            sticky={sidebarCardVisible}
+          >
+            {renderThubmnailOrTrailer()}
+            <CourseCTAButton
+              user={user}
+              isLoading={isLoading}
+              continueUrl={url}
+              courseOverview={courseOverview}
+            />
+            <Flex justifyContent="space-between" alignSelf="stretch">
+              <Flex
+                direction="column"
+                alignItems="flex-start"
+                alignSelf="flex-start"
+                gap="12px"
               >
-                Zobraziť všetky hodnotenia
-              </AllReviewsText>
+                <CourseInfoItem>
+                  <DifficultyIcon
+                    difficultyLevel={courseOverview.difficulty.skillLevel}
+                  />
+                  <Text>{courseOverview.difficulty?.name}</Text>
+                </CourseInfoItem>
+                <CourseInfoItem>
+                  <AiOutlineClockCircle />
+                  <Text>{courseDuration}</Text>
+                </CourseInfoItem>
+                <CourseInfoItem>
+                  <AiOutlineVideoCamera />
+                  <Text>
+                    {lecturesCount} {Utils.numOfLecturesText(lecturesCount)}
+                  </Text>
+                </CourseInfoItem>
+                {quizzesCount > 0 && (
+                  <CourseInfoItem>
+                    <AiOutlineQuestionCircle />
+                    <Text>
+                      {quizzesCount} {Utils.numOfQuizzesText(quizzesCount)}
+                    </Text>
+                  </CourseInfoItem>
+                )}
+              </Flex>
+              <Flex
+                direction="column"
+                alignItems="flex-end"
+                alignSelf="stretch"
+                justifyContent="space-between"
+                gap="12px"
+              >
+                <Flex direction="column" gap="12px" alignItems="flex-end">
+                  <CourseInfoItem
+                    clickable
+                    onClick={handleCourseReviewsRefClick}
+                  >
+                    <Rating
+                      readOnly
+                      value={courseOverview.reviewsOverview.averageRating}
+                    />
+                    <Text>
+                      ({courseOverview.reviewsOverview.numberOfReviews})
+                    </Text>
+                  </CourseInfoItem>
+                  <CourseInfoItem
+                    clickable
+                    onClick={() =>
+                      handleAuthorClicked(courseOverview.author.slug)
+                    }
+                  >
+                    <Avatar
+                      altName={courseOverview.author.name}
+                      src={courseOverview.author.imageUrl}
+                      sizePx={28}
+                      priority
+                    />
+                    <Text>{courseOverview.author.name}</Text>
+                  </CourseInfoItem>
+                </Flex>
+                {progressValuePercent && (
+                  <CourseInfoItem>
+                    <CircullarProgressWithLabel
+                      size="28px"
+                      withoutTextInMiddle
+                      value={progressValuePercent}
+                    />
+                    <Text>{progressValuePercent}% dokončených</Text>
+                  </CourseInfoItem>
+                )}
+                {!progressValuePercent && (
+                  <Text uppercase color="accent" weight="bold">
+                    zadarmo
+                  </Text>
+                )}
+              </Flex>
+            </Flex>
+            {sidebarReviewsVisible && (
+              <StyledSidebarCourseReviews courseOverview={courseOverview} />
             )}
-        </CardFlex>
-      </WrapperFlex>
+            {sidebarReviewsVisible &&
+              courseOverview.reviewsOverview.numberOfReviews > 0 && (
+                <AllReviewsText
+                  color="accent"
+                  withAccentUnderline
+                  onClick={handleCourseReviewsRefClick}
+                >
+                  Zobraziť všetky hodnotenia
+                </AllReviewsText>
+              )}
+          </CardFlex>
+        </WrapperFlex>
+        <StyledCourseProducts
+          course={courseOverview}
+          innerRef={courseProductsRef}
+        />
+        <StyledCourseReviews
+          courseOverview={courseOverview}
+          innerRef={courseReviewsRef}
+        />
+      </Flex>
     </PageContentWrapper>
   )
 }
@@ -332,6 +402,15 @@ const CourseDetailsFlex = styled(Flex)`
   }
 `
 
+const StyledCourseProducts = styled(CourseProducts)`
+  margin-top: 48px;
+`
+
+const StyledCourseReviews = styled(CourseReviews)`
+  margin-top: 48px;
+  align-self: center;
+`
+
 const CourseInfoItem = styled.div<{clickable?: boolean}>`
   display: flex;
   gap: 12px;
@@ -346,9 +425,9 @@ const CourseInfoItem = styled.div<{clickable?: boolean}>`
   }
 `
 
-const CardFlex = styled(Flex)`
+const CardFlex = styled(Flex)<{sticky: boolean}>`
   width: 400px;
-  position: sticky;
+  position: ${(props) => (props.sticky ? 'sticky' : 'static')};
   top: 80px;
 
   @media ${device.M} {

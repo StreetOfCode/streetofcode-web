@@ -215,6 +215,11 @@ export interface AddToNewsletterRequest {
   subscribedFrom: SubscribedFromType
 }
 
+export interface ReceivePromoCodeRequest {
+  email: string
+  recaptchaToken?: string
+}
+
 export type QuizId = string & {_type: 'QuizId'}
 
 export interface Quiz {

@@ -1,6 +1,7 @@
 import React, {ChangeEvent, HTMLAttributes, useRef} from 'react'
 import MuiTextField from '@mui/material/TextField'
 import styled from 'styled-components'
+import Flex from './Flex'
 
 type Props = {
   className?: string
@@ -37,33 +38,35 @@ const TextField = ({
   const inputRef = useRef<HTMLDivElement>()
 
   return (
-    <InputBox
-      className={className}
-      itemBefore={itemBefore}
-      borderColor={borderColor || 'accent'}
-      inputBackgroundColor={inputBackgroundColor}
-      onClick={() => inputRef.current?.focus()}
-      {...props}
-    >
-      {itemBefore}
-      <StyledTextField
-        placeholder={label}
-        inputRef={inputRef}
-        value={text}
-        onChange={onTextChanged}
-        multiline={!disableMultiline}
-        minRows={1}
-        maxRows={maxRows || 6}
-        fullWidth
-        disabled={disabled}
-        inputProps={{
-          maxLength,
-        }}
-        helperText={maxLength && `${text.length}/${maxLength}`}
-        spellCheck={false}
-      />
+    <Flex direction="column" alignItems="flex-start" gap="4px">
+      <InputBox
+        className={className}
+        itemBefore={itemBefore}
+        borderColor={borderColor || 'accent'}
+        inputBackgroundColor={inputBackgroundColor}
+        onClick={() => inputRef.current?.focus()}
+        {...props}
+      >
+        {itemBefore}
+        <StyledTextField
+          placeholder={label}
+          inputRef={inputRef}
+          value={text}
+          onChange={onTextChanged}
+          multiline={!disableMultiline}
+          minRows={1}
+          maxRows={maxRows || 6}
+          fullWidth
+          disabled={disabled}
+          inputProps={{
+            maxLength,
+          }}
+          helperText={maxLength && `${text.length}/${maxLength}`}
+          spellCheck={false}
+        />
+      </InputBox>
       {errorText && <ErrorMessage>{errorText}</ErrorMessage>}
-    </InputBox>
+    </Flex>
   )
 }
 

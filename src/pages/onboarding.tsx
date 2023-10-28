@@ -43,7 +43,10 @@ const ConfirmName = ({
     setNameError('')
   }
 
-  const onSubmit = () => {
+  const onSubmit = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+
     if (!name.trimEnd()) {
       setNameError('Meno nemôže byť prázdne')
     } else {
@@ -54,20 +57,23 @@ const ConfirmName = ({
   return (
     <PageContent>
       <UserAvatar src={imageUrl || ''} name={name} sizePx={150} />
-      <Flex direction="column" alignItems="flex-start" gap="20px">
-        <Heading normalWeight variant="h4" align="left" withAccentUnderline>
-          Meno
-        </Heading>
-        <TextField
-          text={name}
-          onTextChanged={onNameChanged}
-          label="Meno"
-          errorText={nameError}
-        />
-        <Button variant="accent" onClick={onSubmit}>
-          Pokračovať
-        </Button>
-      </Flex>
+      <form>
+        <Flex direction="column" alignItems="flex-start" gap="20px">
+          <Heading normalWeight variant="h4" align="left" withAccentUnderline>
+            Meno
+          </Heading>
+          <TextField
+            text={name}
+            onTextChanged={onNameChanged}
+            label="Meno"
+            errorText={nameError}
+            disableMultiline
+          />
+          <Button variant="accent" onClick={onSubmit}>
+            Pokračovať
+          </Button>
+        </Flex>
+      </form>
       <Text weight="bold" align="right">
         {currentStep + 1}/{TOTAL_STEPS}
       </Text>

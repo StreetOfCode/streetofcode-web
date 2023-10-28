@@ -2,6 +2,9 @@ import * as Auth from './auth'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
+const JAVA_COURSE_URL = `${API_URL}/course/java`
+export const javaCourseCouponUrl = () => `${JAVA_COURSE_URL}/promo-code`
+
 const COURSES_OVERVIEW_URL = `${API_URL}/course/overview`
 export const coursesOverviewUrl = () => COURSES_OVERVIEW_URL
 

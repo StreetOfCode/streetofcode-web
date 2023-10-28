@@ -34,10 +34,10 @@ export const courseProductsConstants: {
     name: 'Java Kurz',
     variants: {
       [courseProductsConfig.javaKurz.productIds.basic]: {
-        variantName: 'Základný kurz',
+        variantName: 'Základný balík',
       },
       [courseProductsConfig.javaKurz.productIds.pro]: {
-        variantName: 'Pro verzia',
+        variantName: 'Premium balík',
       },
     },
   },
@@ -50,5 +50,5 @@ export const getCourseProductName = (courseProductId: string): string => {
 
   if (constants == null) return 'N/A'
 
-  return `${constants.name} - ${constants.variants[courseProductId].variantName}`
+  return `${constants.variants[courseProductId].variantName}`
 }

@@ -33,7 +33,10 @@ const NewsletterPage: NextPage = () => {
     setNewsletterEmailError('')
   }
 
-  const onSubmit = async () => {
+  const onSubmit = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+
     if (!newsletterEmail.trimEnd()) {
       setNewsletterEmailError('Email je prázdny')
       return
@@ -84,43 +87,46 @@ const NewsletterPage: NextPage = () => {
       <NavBar />
       <PageContentWrapper>
         {!newsletterSubmittedSuccess && !newsletterSubmitedFailure && (
-          <NewsletterFlexWrapper
-            direction="column"
-            gap="16px"
-            alignItems="flex-start"
-            alignSelf="center"
-          >
-            <Heading variant="h4" withAccentUnderline normalWeight>
-              Odber noviniek
-            </Heading>
-            <TextField
-              text={newsletterEmail}
-              onTextChanged={onNewsletterChanged}
-              label="Email"
-              errorText={newsletterEmailError}
-              disabled={newsletterLoading}
-            />
-            <Button
-              disabled={newsletterLoading}
-              variant="accent"
-              onClick={onSubmit}
-              style={{alignSelf: 'stretch'}}
+          <form>
+            <NewsletterFlexWrapper
+              direction="column"
+              gap="16px"
+              alignItems="flex-start"
+              alignSelf="center"
             >
-              Prihlásiť sa na odber noviniek
-            </Button>
-            <Text size="small">
-              Poskytnutím emailu súhlasíš s jeho spracovaním v súlade s{' '}
-              <a href={GDPR_URL} target="_blank">
-                ochranou osobných údajov.
-              </a>
-            </Text>
-            <Text>
-              Prihlás sa na odber našich noviniek a medzi prvými sa dozvieš o
-              nových kurzoch, videách, podcastoch a všeličom ďalšom, čo
-              podnikneme. Neboj sa, nebudeme ťa spamovať a občas ťa potešíme aj
-              nejakou tou programátorskou radou.
-            </Text>
-          </NewsletterFlexWrapper>
+              <Heading variant="h4" withAccentUnderline normalWeight>
+                Odber noviniek
+              </Heading>
+              <TextField
+                text={newsletterEmail}
+                onTextChanged={onNewsletterChanged}
+                label="Email"
+                errorText={newsletterEmailError}
+                disabled={newsletterLoading}
+                disableMultiline
+              />
+              <Button
+                disabled={newsletterLoading}
+                variant="accent"
+                onClick={onSubmit}
+                type="submit"
+              >
+                Prihlásiť sa na odber noviniek
+              </Button>
+              <Text size="small">
+                Poskytnutím emailu súhlasíš s jeho spracovaním v súlade s{' '}
+                <a href={GDPR_URL} target="_blank">
+                  ochranou osobných údajov.
+                </a>
+              </Text>
+              <Text>
+                Prihlás sa na odber našich noviniek a medzi prvými sa dozvieš o
+                nových kurzoch, videách, podcastoch a všeličom ďalšom, čo
+                podnikneme. Neboj sa, nebudeme ťa spamovať a občas ťa potešíme
+                aj nejakou tou programátorskou radou.
+              </Text>
+            </NewsletterFlexWrapper>
+          </form>
         )}
         {newsletterSubmittedSuccess && (
           <Heading variant="h5" align="center">

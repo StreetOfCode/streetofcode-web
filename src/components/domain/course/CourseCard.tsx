@@ -133,9 +133,9 @@ const CourseCard = ({
         </CourseInfoItemsWrapper>
       </Flex>
       <Flex
-        direction="column"
+        direction="row"
         alignItems="center"
-        justifyContent="space-between"
+        justifyContent="center"
         alignSelf="stretch"
         gap="12px"
       >

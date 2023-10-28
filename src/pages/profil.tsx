@@ -77,7 +77,10 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
     setNameError('')
   }
 
-  const submitChangedName = async () => {
+  const submitChangedName = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+
     if (!name.trimEnd()) {
       setNameError('Meno nemôže byť prázdne')
     } else {
@@ -143,32 +146,36 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
 
   const renderEditNameTextField = () => {
     return (
-      <Flex direction="column" gap="8px">
-        <StyledTextField
-          text={name}
-          onTextChanged={onNameChanged}
-          maxLength={64}
-          label="Meno"
-          errorText={nameError}
-        />
-        <Flex gap="8px" alignSelf="stretch" justifyContent="space-between">
-          <Button
-            disabled={changeLoading}
-            variant="accent"
-            style={{flex: 1}}
-            onClick={submitChangedName}
-          >
-            Potvrdiť
-          </Button>
-          <Button
-            disabled={changeLoading}
-            style={{flex: 1}}
-            onClick={cancelEditName}
-          >
-            Zrušiť
-          </Button>
+      <form>
+        <Flex direction="column" gap="8px">
+          <StyledTextField
+            text={name}
+            onTextChanged={onNameChanged}
+            maxLength={64}
+            label="Meno"
+            errorText={nameError}
+            disableMultiline
+          />
+          <Flex gap="8px" alignSelf="stretch" justifyContent="space-between">
+            <Button
+              disabled={changeLoading}
+              variant="accent"
+              style={{flex: 1}}
+              onClick={submitChangedName}
+              type="submit"
+            >
+              Potvrdiť
+            </Button>
+            <Button
+              disabled={changeLoading}
+              style={{flex: 1}}
+              onClick={cancelEditName}
+            >
+              Zrušiť
+            </Button>
+          </Flex>
         </Flex>
-      </Flex>
+      </form>
     )
   }
 

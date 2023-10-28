@@ -14,11 +14,16 @@ import Loading from '../../Loading'
 import {CourseOverview} from '../../../types'
 
 interface CourseReviewsProps {
+  className?: string
   courseOverview: CourseOverview
   innerRef?: React.MutableRefObject<null | HTMLDivElement>
 }
 
-const CourseReviews = ({courseOverview, innerRef}: CourseReviewsProps) => {
+const CourseReviews = ({
+  className,
+  courseOverview,
+  innerRef,
+}: CourseReviewsProps) => {
   const {userId, isLoading} = useAuth()
 
   const courseId = courseOverview.id
@@ -38,6 +43,7 @@ const CourseReviews = ({courseOverview, innerRef}: CourseReviewsProps) => {
 
   return (
     <WrapperFlex
+      className={className}
       innerRef={innerRef}
       direction="column"
       gap="32px"

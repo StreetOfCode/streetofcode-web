@@ -48,7 +48,10 @@ const NewsletterForm = ({
     setNewsletterError('')
   }
 
-  const onSubmit = async () => {
+  const onSubmit = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+
     if (!newsletterEmail.trimEnd()) {
       setNewsletterError('Email je prázdny')
       return
@@ -93,36 +96,39 @@ const NewsletterForm = ({
   return (
     <Wrapper className={className} {...props}>
       {!newsletterUpdatedSuccess && !newsletterUpdatedFailure && (
-        <Flex direction="column" gap="12px">
-          {!removeHeading && (
-            <Text color="primary" weight="bold">
-              Chcem odoberať novinky
+        <form>
+          <Flex direction="column" gap="12px">
+            {!removeHeading && (
+              <Text color="primary" weight="bold">
+                Chcem odoberať novinky
+              </Text>
+            )}
+            <Flex gap="12px" alignSelf="stretch" alignItems="flex-start">
+              <TextField
+                text={newsletterEmail}
+                onTextChanged={onNewsletterChanged}
+                label="Email"
+                errorText={nesletterError}
+                disabled={newsletterLoading}
+                borderColor="primary"
+                inputBackgroundColor="primary"
+                disableMultiline
+              />
+              <Button
+                iconBefore={<AiOutlineSend />}
+                variant="accent"
+                disabled={newsletterLoading}
+                onClick={onSubmit}
+              />
+            </Flex>
+            <Text size="small" color="primary" align="center">
+              Poskytnutím emailu súhlasíš s jeho spracovaním v súlade s{' '}
+              <a href={GDPR_URL} target="_blank">
+                GDPR.
+              </a>
             </Text>
-          )}
-          <Flex gap="12px" alignSelf="stretch">
-            <TextField
-              text={newsletterEmail}
-              onTextChanged={onNewsletterChanged}
-              label="Email"
-              errorText={nesletterError}
-              disabled={newsletterLoading}
-              borderColor="primary"
-              inputBackgroundColor="primary"
-            />
-            <Button
-              iconBefore={<AiOutlineSend />}
-              variant="accent"
-              disabled={newsletterLoading}
-              onClick={onSubmit}
-            />
           </Flex>
-          <Text size="small" color="primary" align="center">
-            Poskytnutím emailu súhlasíš s jeho spracovaním v súlade s{' '}
-            <a href={GDPR_URL} target="_blank">
-              GDPR.
-            </a>
-          </Text>
-        </Flex>
+        </form>
       )}
       {newsletterUpdatedSuccess && (
         <Text color="primary" align="center">
