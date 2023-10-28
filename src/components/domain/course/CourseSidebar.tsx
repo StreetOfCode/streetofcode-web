@@ -110,103 +110,99 @@ const CourseSidebar = ({
   )
 
   return (
-    <>
-      <Flex direction="column" gap="16px" className={className} {...props}>
-        <TopWrapperFlex justifyContent="space-between" alignSelf="stretch">
-          <Flex gap="12px" alignSelf="flex-start">
-            <CircullarProgressWithLabel
-              value={progressValuePercent}
-              accentColor
-            />
-            <Text>
-              {courseProgressOverview.lecturesViewed} /{' '}
-              {courseProgressOverview.courseLecturesCount}
-            </Text>
-          </Flex>
+    <Flex direction="column" gap="16px" className={className} {...props}>
+      <TopWrapperFlex justifyContent="space-between" alignSelf="stretch">
+        <Flex gap="12px" alignSelf="flex-start">
+          <CircullarProgressWithLabel
+            value={progressValuePercent}
+            accentColor
+          />
+          <Text>
+            {courseProgressOverview.lecturesViewed} /{' '}
+            {courseProgressOverview.courseLecturesCount}
+          </Text>
+        </Flex>
 
-          {hasResources && (
-            <NextLink
-              href={{
-                pathname: routes.kurzy.zdroje(courseSlug),
-                query: {chapterId, lectureId},
-              }}
-              alignSelf="center"
-            >
-              <ResourcesWrapper gap="8px">
-                <Text withAccentUnderline>Materiály</Text>
-                <ResourcesIcon />
-              </ResourcesWrapper>
-            </NextLink>
-          )}
-        </TopWrapperFlex>
+        {hasResources && (
+          <NextLink
+            href={{
+              pathname: routes.kurzy.zdroje(courseSlug),
+              query: {chapterId, lectureId},
+            }}
+            alignSelf="center"
+          >
+            <ResourcesWrapper gap="8px">
+              <Text withAccentUnderline>Materiály</Text>
+              <ResourcesIcon />
+            </ResourcesWrapper>
+          </NextLink>
+        )}
+      </TopWrapperFlex>
 
-        <AccordionRoot
-          type="multiple"
-          defaultValue={courseProgressOverview.chapters
-            .filter((chapter) => chapter.id === chapterId)
-            .map((chapter) => chapter.id.toString())}
-        >
-          {courseProgressOverview.chapters.map((chapter) => (
-            <Item value={chapter.id.toString()} key={chapter.id}>
-              <Header>
-                <Trigger>
-                  <Flex direction="column" alignItems="flex-start" gap="8px">
-                    <Heading variant="h6" normalWeight>
-                      {chapter.name}
-                    </Heading>
-                    {getChapterLengthInfo(chapter)}
-                  </Flex>
-                  <AccordionChevron />
-                </Trigger>
-              </Header>
-              <AccordionContent>
-                {chapter.lectures.map((lecture) => (
-                  <AccordionContentWrapper
-                    key={lecture.id}
-                    onClick={(e) =>
-                      handleLectureOnClick(e, chapter.id, lecture.id)
-                    }
-                    selected={
-                      lectureId !== undefined && lecture.id === lectureId
-                    }
-                    justifyContent="space-between"
-                  >
-                    <Flex gap="12px" justifyContent="space-between" flex="1">
-                      <Flex gap="8px">
-                        <LectureTypeIcon>
-                          {Utils.getLectureTypeIcon(lecture.lectureType)}
-                        </LectureTypeIcon>
-                        <Flex
-                          direction="column"
-                          alignItems="flex-start"
-                          gap="2px"
-                        >
-                          <StyledText>{lecture.name}</StyledText>
-                          {lecture.videoDurationSeconds > 0 && (
-                            <StyledText size="small">
-                              {Utils.formatDurationFromSeconds(
-                                lecture.videoDurationSeconds,
-                              )}
-                            </StyledText>
-                          )}
-                        </Flex>
+      <AccordionRoot
+        type="multiple"
+        defaultValue={courseProgressOverview.chapters
+          .filter((chapter) => chapter.id === chapterId)
+          .map((chapter) => chapter.id.toString())}
+      >
+        {courseProgressOverview.chapters.map((chapter) => (
+          <Item value={chapter.id.toString()} key={chapter.id}>
+            <Header>
+              <Trigger>
+                <Flex direction="column" alignItems="flex-start" gap="8px">
+                  <Heading variant="h6" normalWeight>
+                    {chapter.name}
+                  </Heading>
+                  {getChapterLengthInfo(chapter)}
+                </Flex>
+                <AccordionChevron />
+              </Trigger>
+            </Header>
+            <AccordionContent>
+              {chapter.lectures.map((lecture) => (
+                <AccordionContentWrapper
+                  key={lecture.id}
+                  onClick={(e) =>
+                    handleLectureOnClick(e, chapter.id, lecture.id)
+                  }
+                  selected={lectureId !== undefined && lecture.id === lectureId}
+                  justifyContent="space-between"
+                >
+                  <Flex gap="12px" justifyContent="space-between" flex="1">
+                    <Flex gap="8px">
+                      <LectureTypeIcon>
+                        {Utils.getLectureTypeIcon(lecture.lectureType)}
+                      </LectureTypeIcon>
+                      <Flex
+                        direction="column"
+                        alignItems="flex-start"
+                        gap="2px"
+                      >
+                        <StyledText>{lecture.name}</StyledText>
+                        {lecture.videoDurationSeconds > 0 && (
+                          <StyledText size="small">
+                            {Utils.formatDurationFromSeconds(
+                              lecture.videoDurationSeconds,
+                            )}
+                          </StyledText>
+                        )}
                       </Flex>
-                      <CheckBox
-                        checked={lecture.viewed}
-                        onToggle={(newValue) =>
-                          handleLectureCheckboxOnClick(newValue, lecture.id)
-                        }
-                        alignSelf="center"
-                      />
                     </Flex>
-                  </AccordionContentWrapper>
-                ))}
-              </AccordionContent>
-            </Item>
-          ))}
-        </AccordionRoot>
-      </Flex>
-    </>
+                    <CheckBox
+                      checked={lecture.viewed}
+                      onToggle={(newValue) =>
+                        handleLectureCheckboxOnClick(newValue, lecture.id)
+                      }
+                      alignSelf="center"
+                    />
+                  </Flex>
+                </AccordionContentWrapper>
+              ))}
+            </AccordionContent>
+          </Item>
+        ))}
+      </AccordionRoot>
+    </Flex>
   )
 }
 
@@ -301,6 +297,9 @@ const AccordionContentWrapper = styled(Flex)<{selected?: boolean}>`
     color: ${(props) =>
       props.selected ? 'var(--color-accent)' : 'var(--color-secondary)'};
   }
+
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-shadow);
 `
 
 const AccordionChevron = styled(BiChevronDown)`
