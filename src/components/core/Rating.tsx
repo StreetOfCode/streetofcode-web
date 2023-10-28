@@ -2,6 +2,8 @@ import React from 'react'
 import MuiRating, {RatingProps} from '@mui/material/Rating'
 import StarIcon from '@mui/icons-material/Star'
 import styled from 'styled-components'
+import Flex from './Flex'
+import Text from './Text'
 
 type Props = {
   className?: string
@@ -17,6 +19,17 @@ const Rating = ({
   precision,
   ...props
 }: Props) => {
+  if (readOnly && !value) {
+    return (
+      <Flex gap="6px">
+        <FilledStar />
+        <Text size="large" color="accent">
+          -
+        </Text>
+      </Flex>
+    )
+  }
+
   return (
     <StyledRating
       className={className}

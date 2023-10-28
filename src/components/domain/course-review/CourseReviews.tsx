@@ -4,7 +4,6 @@ import {useGetCourseReviewsOverview} from '../../../api/courseReviewOverviews'
 import {useGetCourseReviews} from '../../../api/courseReviews'
 import {QueryGuard} from '../../../QueryGuard'
 import Heading from '../../core/Heading'
-import Text from '../../core/Text'
 import Flex from '../../core/Flex'
 import AddCourseReview from './AddCourseReview'
 import CourseReviewItem from './CourseReviewItem'
@@ -61,7 +60,6 @@ const CourseReviews = ({
                 value={courseReviewsOverview.averageRating}
                 customSize="32px"
               />
-              <Text>({courseReviewsOverview.numberOfReviews})</Text>
             </Flex>
           </Flex>
         )}

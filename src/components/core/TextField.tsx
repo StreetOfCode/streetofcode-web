@@ -38,7 +38,12 @@ const TextField = ({
   const inputRef = useRef<HTMLDivElement>()
 
   return (
-    <Flex direction="column" alignItems="flex-start" gap="4px">
+    <Flex
+      direction="column"
+      alignItems="flex-start"
+      gap="4px"
+      alignSelf="stretch"
+    >
       <InputBox
         className={className}
         itemBefore={itemBefore}

@@ -322,9 +322,6 @@ const CourseDetailContent = ({
                       readOnly
                       value={courseOverview.reviewsOverview.averageRating}
                     />
-                    <Text>
-                      ({courseOverview.reviewsOverview.numberOfReviews})
-                    </Text>
                   </CourseInfoItem>
                   <CourseInfoItem
                     clickable

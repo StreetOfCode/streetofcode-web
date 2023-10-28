@@ -105,14 +105,14 @@ const NewsletterPage: NextPage = () => {
                 disabled={newsletterLoading}
                 disableMultiline
               />
-              <Button
+              <StyledButton
                 disabled={newsletterLoading}
                 variant="accent"
                 onClick={onSubmit}
                 type="submit"
               >
                 Prihlásiť sa na odber noviniek
-              </Button>
+              </StyledButton>
               <Text size="small">
                 Poskytnutím emailu súhlasíš s jeho spracovaním v súlade s{' '}
                 <a href={GDPR_URL} target="_blank">
@@ -146,6 +146,10 @@ const NewsletterPage: NextPage = () => {
 const NewsletterFlexWrapper = styled(Flex)`
   margin: 0 auto;
   max-width: 420px;
+`
+
+const StyledButton = styled(Button)`
+  align-self: stretch;
 `
 
 export default NewsletterPage

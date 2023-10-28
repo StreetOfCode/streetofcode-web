@@ -4,6 +4,7 @@ import Button from '../../core/Button'
 import Flex from '../../core/Flex'
 import Rating from '../../core/Rating'
 import TextField from '../../core/TextField'
+import Text from '../../core/Text'
 import Loading from '../../Loading'
 
 type EditableCourseReviewProps = {
@@ -46,12 +47,14 @@ const EditableCourseReview = ({
         maxLength={1500}
         label="Sem napíš svoje hodnotenie"
         itemBefore={
-          <Rating
-            name="half-rating-read"
-            value={rating}
-            onChange={onRatingChanged}
-            style={{marginBottom: '12px'}}
-          />
+          <RatingWrapperFlex gap="12px" alignItems="center">
+            <Rating
+              name="half-rating-read"
+              value={rating}
+              onChange={onRatingChanged}
+            />
+            <Text size="small">{rating} / 5</Text>
+          </RatingWrapperFlex>
         }
       />
       {isLoading && <Loading />}
@@ -74,6 +77,10 @@ const WrapperFlex = styled(Flex)`
 
 const SubmitButton = styled(Button)`
   margin-top: 12px;
+`
+
+const RatingWrapperFlex = styled(Flex)`
+  margin-bottom: 8px;
 `
 
 export default EditableCourseReview
