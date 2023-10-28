@@ -73,7 +73,7 @@ const CourseContent = ({className, course, ...props}: Props) => {
       <Wrapper className={className} {...props}>
         <AccordionRoot
           type="multiple"
-          defaultValue={course.chapters.map((c) => c.id.toString())}
+          defaultValue={[course.chapters[0].id.toString()]}
         >
           {course.chapters.map((chapter) => (
             <Item value={chapter.id.toString()} key={chapter.id}>
@@ -225,6 +225,9 @@ const AccordionContentWrapper = styled(Flex)<{clickable: boolean}>`
   svg {
     color: var(--color-secondary);
   }
+
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-shadow);
 `
 
 const AccordionChevron = styled(BiChevronDown)`
