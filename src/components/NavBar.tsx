@@ -84,16 +84,11 @@ const NavBar = () => {
               >
                 <Text>Prihlásiť</Text>
               </NextLink>
-              <NextLink styleIfActive href={routes.kurzy.index}>
-                <Text>Kurzy</Text>
-              </NextLink>
             </>
           )}
-          {user && (
-            <NextLink styleIfActive href={routes.profil}>
-              <Text>Moje kurzy a nastavenia</Text>
-            </NextLink>
-          )}
+          <NextLink styleIfActive href={routes.kurzy.index}>
+            <Text>Kurzy</Text>
+          </NextLink>
           <NextLink styleIfActive href={routes.podcast.index}>
             <Text>Podcast</Text>
           </NextLink>
@@ -106,6 +101,11 @@ const NavBar = () => {
           <NextLink styleIfActive href={routes.oProjekte}>
             <Text>O projekte</Text>
           </NextLink>
+          {user && (
+            <NextLink styleIfActive href={routes.profil}>
+              <Text>Moje kurzy a nastavenia</Text>
+            </NextLink>
+          )}
           {user && <LogoutText onClick={logout}>Odhlásiť</LogoutText>}
           {mobileNavbarOpen && (
             <CloseMobileMenuFlexWrapper
