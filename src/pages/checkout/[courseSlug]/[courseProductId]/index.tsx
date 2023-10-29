@@ -327,8 +327,10 @@ const Stripe = ({
         }
 
         const options: StripeElementsOptions = {
-          clientSecret,
           appearance,
+          mode: 'payment',
+          currency: 'eur',
+          amount: fullAmount - (discountAmount || 0),
         }
 
         return (
