@@ -115,7 +115,9 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
           predpredaj
         </Heading>
         {isBuyable && showEmailInput && (
-          <Text>Nemáš zľavový kód? Napíš svoj email a pošleme ti ho</Text>
+          <Text align="center">
+            Nemáš zľavový kód? Napíš svoj email a pošleme ti ho
+          </Text>
         )}
         {isBuyable && showEmailInput && (
           <form>

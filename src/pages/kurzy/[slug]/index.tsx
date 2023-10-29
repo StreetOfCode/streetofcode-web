@@ -350,7 +350,13 @@ const CourseDetailContent = ({
                 )}
                 {!progressValuePercent && (
                   <Text uppercase color="accent" weight="bold">
-                    zadarmo
+                    {courseOverview.courseProducts.length > 0
+                      ? `od ${Math.min(
+                          ...courseOverview.courseProducts.map(
+                            (cp) => cp.price / 100,
+                          ),
+                        )}€`
+                      : 'ZADARMO'}
                   </Text>
                 )}
               </Flex>
