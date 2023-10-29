@@ -317,8 +317,8 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
             </PlusBenefitsSection>
           </PlusWrapperFlex>
           <BottomText>
-            Získaj individuálny prístup k mentorovi, ktorý ti pomôže s tvojou
-            kariérou.
+            Získaj individuálny prístup k mentorovi, a nakopni svoju kariéru na
+            100 percent.
           </BottomText>
         </CardWrapper>
       </CardsFlex>

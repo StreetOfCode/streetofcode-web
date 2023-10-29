@@ -47,7 +47,11 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
       {!isEditing && (
         <CommentField>
           <Flex direction="column" alignItems="flex-start" gap="8px">
-            <Flex justifyContent="space-between" alignSelf="stretch">
+            <Flex
+              justifyContent="space-between"
+              alignSelf="stretch"
+              alignItems="flex-start"
+            >
               <CommentTimeWrapper
                 gap="6px"
                 alignItems="flex-start"

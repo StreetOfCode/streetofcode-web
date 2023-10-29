@@ -80,7 +80,11 @@ export const CourseReviewContainer = ({
       {!isEditing && (
         <ReviewField>
           <Flex direction="column" alignItems="flex-start" gap="8px">
-            <Flex justifyContent="space-between" alignSelf="stretch">
+            <Flex
+              justifyContent="space-between"
+              alignSelf="stretch"
+              alignItems="flex-start"
+            >
               <Rating readOnly value={review.rating} />
               <Flex gap="16px">
                 <Flex direction="row">
