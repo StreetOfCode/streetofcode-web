@@ -11,6 +11,7 @@ import Rating from '../../core/Rating'
 import {useAuth} from '../../../AuthUserContext'
 import Loading from '../../Loading'
 import {CourseOverview} from '../../../types'
+import {isCourseOwnedByUser} from '../../../utils'
 
 interface CourseReviewsProps {
   className?: string
@@ -36,7 +37,14 @@ const CourseReviews = ({
     getCourseReviewsQuery.data.some(
       (courseReview) => courseReview.userId === userId,
     )
-  const canAddReview = userId && !hasUserReview
+
+  const hasCourseProducts = courseOverview.courseProducts.length !== 0
+  const usersOwnsTheCourse = isCourseOwnedByUser(courseOverview)
+
+  const canAddReview =
+    userId &&
+    !hasUserReview &&
+    (!hasCourseProducts || (hasCourseProducts && usersOwnsTheCourse))
 
   if (isLoading) return <Loading />
 
