@@ -10,6 +10,7 @@ import {useDeleteCourseReview} from '../../../api/courseReviews'
 import {useAuth} from '../../../AuthUserContext'
 import UserAvatar from '../user/UserAvatar'
 import Loading from '../../Loading'
+import {Button, Tooltip} from '@mui/material'
 
 type CourseReviewItemProps = {
   className?: string
@@ -76,50 +77,44 @@ export const CourseReviewContainer = ({
 }) => {
   return (
     <ReviewItem className={className}>
-      <Flex gap="12px" alignSelf="stretch">
-        <LeftColumn
-          direction="column"
-          alignSelf="flex-start"
-          gap="8px"
-          justifyContent="center"
-        >
-          <UserAvatar
-            src={review.imageUrl || review.staticImage}
-            name={review.userName}
-            sizePx={42}
-          />
-          <EditItemActions />
-        </LeftColumn>
-        {!isEditing && (
-          <ReviewField>
-            <Flex direction="column" alignItems="flex-start" gap="8px">
-              <Flex justifyContent="space-between" alignSelf="stretch">
-                <Rating readOnly value={review.rating} />
-                <Text size="very-small">{review.userName}</Text>
+      {!isEditing && (
+        <ReviewField>
+          <Flex direction="column" alignItems="flex-start" gap="8px">
+            <Flex justifyContent="space-between" alignSelf="stretch">
+              <Rating readOnly value={review.rating} />
+              <Flex gap="16px">
+                <Flex direction="row">
+                  <Tooltip title={review.userName}>
+                    <Button>
+                      <UserAvatar
+                        src={review.imageUrl || review.staticImage}
+                        name={review.userName}
+                        sizePx={32}
+                      />
+                    </Button>
+                  </Tooltip>
+                  <EditItemActions />
+                </Flex>
               </Flex>
-              <Text>{review.text}</Text>
             </Flex>
-          </ReviewField>
-        )}
-        {isEditing && (
-          <EditCourseReview
-            review={review}
-            onCancelled={onEditCancelled}
-            onEdited={onEdited}
-            courseSlug={courseSlug}
-          />
-        )}
-      </Flex>
+            <Text>{review.text}</Text>
+          </Flex>
+        </ReviewField>
+      )}
+      {isEditing && (
+        <EditCourseReview
+          review={review}
+          onCancelled={onEditCancelled}
+          onEdited={onEdited}
+          courseSlug={courseSlug}
+        />
+      )}
     </ReviewItem>
   )
 }
 
 const ReviewItem = styled.div`
   align-self: stretch;
-`
-
-const LeftColumn = styled(Flex)`
-  width: 70px;
 `
 
 const ReviewField = styled.div`

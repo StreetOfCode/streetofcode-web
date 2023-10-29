@@ -12,6 +12,7 @@ import Loading from '../../Loading'
 import UserAvatar from '../user/UserAvatar'
 import EditPostComment from './EditPostComment'
 import {device} from '../../../theme/device'
+import {Button, Tooltip} from '@mui/material'
 
 type PostCommentItemProps = {
   postId: string
@@ -40,68 +41,57 @@ const PostCommentItem = ({postId, comment}: PostCommentItemProps) => {
 
   return (
     <CommentItem>
-      <Flex gap="12px" alignSelf="stretch">
-        <LeftColumn
-          direction="column"
-          alignSelf="flex-start"
-          gap="8px"
-          justifyContent="center"
-        >
-          <UserAvatar
-            src={comment.imageUrl}
-            name={comment.userName || 'Anonym'}
-            sizePx={42}
-          />
-          <EditItemActions />
-        </LeftColumn>
-        {!isEditing && (
-          <CommentField>
-            <Flex direction="column" alignItems="flex-start" gap="8px">
-              <Flex
-                justifyContent="space-between"
-                alignSelf="stretch"
-                alignItems="flex-start"
+      {!isEditing && (
+        <CommentField>
+          <Flex direction="column" alignItems="flex-start" gap="8px">
+            <Flex justifyContent="space-between" alignSelf="stretch">
+              <CommentTimeWrapper
+                gap="6px"
+                alignItems="center"
+                justifyContent="flex-start"
               >
-                <Text size="very-small">{comment.userName || 'Anonym'}</Text>
-                <CommentTimeWrapper
-                  gap="6px"
-                  alignItems="center"
-                  justifyContent="flex-start"
-                >
-                  <Text size="very-small">
-                    {formatDateTime(comment.createdAt)}
+                <Text size="very-small">
+                  {formatDateTime(comment.createdAt)}
+                </Text>
+                {subtractDates(comment.updatedAt, comment.createdAt) > 500 && (
+                  <Text size="very-small" color="secondary">
+                    (upravené)
                   </Text>
-                  {subtractDates(comment.updatedAt, comment.createdAt) >
-                    500 && (
-                    <Text size="very-small" color="secondary">
-                      (upravené)
-                    </Text>
-                  )}
-                </CommentTimeWrapper>
+                )}
+              </CommentTimeWrapper>
+              <Flex gap="16px">
+                <Flex direction="row">
+                  <Tooltip title={comment.userName || 'Anonym'}>
+                    <Button>
+                      <UserAvatar
+                        src={comment.imageUrl}
+                        name={comment.userName || 'Anonym'}
+                        sizePx={32}
+                      />
+                    </Button>
+                  </Tooltip>
+                  <EditItemActions />
+                </Flex>
               </Flex>
-              <MarkdownView children={comment.commentText} />
             </Flex>
-          </CommentField>
-        )}
-        {isEditing && (
-          <EditPostComment
-            postId={postId}
-            comment={comment}
-            onCommentEdited={onEdited}
-            onCancelled={onEditCancelled}
-          />
-        )}
-      </Flex>
+            <MarkdownView children={comment.commentText} />
+          </Flex>
+        </CommentField>
+      )}
+      {isEditing && (
+        <EditPostComment
+          postId={postId}
+          comment={comment}
+          onCommentEdited={onEdited}
+          onCancelled={onEditCancelled}
+        />
+      )}
     </CommentItem>
   )
 }
 
 const CommentItem = styled.div`
   align-self: stretch;
-`
-
-const LeftColumn = styled(Flex)`
-  width: 70px;
 `
 
 const CommentField = styled.div`

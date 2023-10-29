@@ -12,6 +12,7 @@ import Loading from '../../Loading'
 import UserAvatar from '../user/UserAvatar'
 import EditLectureComment from './EditLectureComment'
 import {device} from '../../../theme/device'
+import {Button, Tooltip} from '@mui/material'
 
 type LectureCommentItemProps = {
   lectureId: number
@@ -43,63 +44,57 @@ const LectureCommentItem = ({lectureId, comment}: LectureCommentItemProps) => {
 
   return (
     <CommentItem>
-      <Flex gap="12px" alignSelf="stretch">
-        <LeftColumn
-          direction="column"
-          alignSelf="flex-start"
-          gap="8px"
-          justifyContent="center"
-        >
-          <UserAvatar
-            src={comment.imageUrl}
-            name={comment.userName}
-            sizePx={42}
-          />
-          <EditItemActions />
-        </LeftColumn>
-        {!isEditing && (
-          <CommentField>
-            <Flex direction="column" alignItems="flex-start" gap="8px">
-              <Flex justifyContent="space-between" alignSelf="stretch">
-                <CommentTimeWrapper
-                  gap="6px"
-                  alignItems="flex-start"
-                  justifyContent="flex-start"
-                >
+      {!isEditing && (
+        <CommentField>
+          <Flex direction="column" alignItems="flex-start" gap="8px">
+            <Flex justifyContent="space-between" alignSelf="stretch">
+              <CommentTimeWrapper
+                gap="6px"
+                alignItems="flex-start"
+                justifyContent="flex-start"
+              >
+                <Text size="very-small">
+                  {formatDateTime(comment.createdAt)}
+                </Text>
+                {comment.updatedAt > comment.createdAt && (
                   <Text size="very-small">
-                    {formatDateTime(comment.createdAt)}
+                    (upravené {formatDate(comment.updatedAt)})
                   </Text>
-                  {comment.updatedAt > comment.createdAt && (
-                    <Text size="very-small">
-                      (upravené {formatDate(comment.updatedAt)})
-                    </Text>
-                  )}
-                </CommentTimeWrapper>
-                <Text size="very-small">{comment.userName}</Text>
+                )}
+              </CommentTimeWrapper>
+              <Flex gap="16px">
+                <Flex direction="row">
+                  <Tooltip title={comment.userName}>
+                    <Button>
+                      <UserAvatar
+                        src={comment.imageUrl}
+                        name={comment.userName}
+                        sizePx={32}
+                      />
+                    </Button>
+                  </Tooltip>
+                  <EditItemActions />
+                </Flex>
               </Flex>
-              <MarkdownView children={comment.commentText} />
             </Flex>
-          </CommentField>
-        )}
-        {isEditing && (
-          <EditLectureComment
-            lectureId={lectureId}
-            comment={comment}
-            onCommentEdited={onEdited}
-            onCancelled={onEditCancelled}
-          />
-        )}
-      </Flex>
+            <MarkdownView children={comment.commentText} />
+          </Flex>
+        </CommentField>
+      )}
+      {isEditing && (
+        <EditLectureComment
+          lectureId={lectureId}
+          comment={comment}
+          onCommentEdited={onEdited}
+          onCancelled={onEditCancelled}
+        />
+      )}
     </CommentItem>
   )
 }
 
 const CommentItem = styled.div`
   align-self: stretch;
-`
-
-const LeftColumn = styled(Flex)`
-  width: 70px;
 `
 
 const CommentField = styled.div`
