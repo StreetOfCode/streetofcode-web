@@ -73,6 +73,8 @@ const useStripe = (
     const {error: submitError} = await elements.submit()
     if (submitError) {
       setIsSubmitting(false)
+      onStripeError(submitError.message || 'Nastala neočakávaná chyba')
+      return
     }
 
     const {error} = await stripe.confirmPayment({
