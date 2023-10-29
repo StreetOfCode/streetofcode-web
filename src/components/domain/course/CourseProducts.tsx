@@ -30,6 +30,8 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
   const [emailError, setEmailError] = React.useState('')
   const [emailLoading, setEmailLoading] = React.useState(false)
   const [showEmailInput, setShowEmailInput] = React.useState(true)
+  const [hasUserReceivedPromoCode, setHasUserReceivedPromoCode] =
+    React.useState(false)
 
   const isCourseOwnedByUser = Utils.isCourseOwnedByUser(course)
   if (isCourseOwnedByUser) return <></>
@@ -91,6 +93,7 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
 
       if (result.ok) {
         setShowEmailInput(false)
+        setHasUserReceivedPromoCode(true)
       } else {
         setEmailError('Nepodarilo sa odoslať email')
       }
@@ -135,6 +138,12 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
               />
             </Flex>
           </form>
+        )}
+        {isBuyable && !showEmailInput && hasUserReceivedPromoCode && (
+          <Text>
+            Zľavový kód bol odoslaný na email. Ak ho nevidíš, skontroluj si
+            spam.
+          </Text>
         )}
       </Flex>
       <CardsFlex justifyContent="center" gap="32px" alignItems="flex-start">
