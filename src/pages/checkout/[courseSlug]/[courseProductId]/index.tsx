@@ -53,6 +53,8 @@ const useStripe = (
   courseProductId: string,
   appliedPromoCode: string | null,
   finalAmount: number,
+  clientSecret: string,
+  onStripeError: (error: string | null) => void,
 ) => {
   const stripe = _useStripe()
   const elements = useElements()
@@ -68,7 +70,13 @@ const useStripe = (
 
     setIsSubmitting(true)
 
+    const {error: submitError} = await elements.submit()
+    if (submitError) {
+      setIsSubmitting(false)
+    }
+
     const {error} = await stripe.confirmPayment({
+      clientSecret,
       elements,
       confirmParams: {
         return_url: `${routes.host}${routes.checkout.success(
@@ -85,8 +93,11 @@ const useStripe = (
     // your `return_url`. For some payment methods like iDEAL, your customer will
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
-    if (error.type === 'card_error' || error.type === 'validation_error') {
+    if (error) {
+      onStripeError(error.message || 'Nastala neočakávaná chyba')
       setIsSubmitting(false)
+    } else {
+      onStripeError(null)
     }
   }
 
@@ -102,6 +113,7 @@ const CheckoutForm = ({
   discountAmount,
   appliedPromoCode,
   paymentIntentId,
+  clientSecret,
 }: {
   courseSlug: string
   courseProductId: string
@@ -109,6 +121,7 @@ const CheckoutForm = ({
   discountAmount: number | null
   appliedPromoCode: string | null
   paymentIntentId: string
+  clientSecret: string
 }) => {
   const finalAmount = fullPriceAmount - (discountAmount || 0)
   assert(finalAmount >= 0, 'Invalid price')
@@ -118,10 +131,13 @@ const CheckoutForm = ({
     courseProductId,
     appliedPromoCode,
     finalAmount,
+    clientSecret,
+    (error) => setStripeError(error),
   )
   const [isStripeLoading, setIsStripeLoading] = useState(true)
   const [areTosAccepted, setAreTosAccepted] = useState(true)
   const [isReturnPolicyAccepted, setIsReturnPolicyAccepted] = useState(true)
+  const [stripeError, setStripeError] = useState<string | null>(null)
   const [promoCode, setPromoCode] = useState(appliedPromoCode || '')
   const [promoCodeError, setPromoCodeError] = useState<string | null>(null)
   const [validatingPromoCode, setValidatingPromoCode] = useState(false)
@@ -265,6 +281,7 @@ const CheckoutForm = ({
           checked={isReturnPolicyAccepted}
           onToggle={() => setIsReturnPolicyAccepted(!isReturnPolicyAccepted)}
         />
+        {stripeError && <Text color="danger">{stripeError}</Text>}
         {isSubmitting || validatingPromoCode ? (
           <Loading />
         ) : (
@@ -323,6 +340,7 @@ const Stripe = ({
               discountAmount={discountAmount}
               appliedPromoCode={promoCode}
               paymentIntentId={paymentIntentId}
+              clientSecret={clientSecret}
             />
           </Elements>
         )

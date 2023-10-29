@@ -12,7 +12,7 @@ type Props = {
 } & HTMLAttributes<HTMLElement>
 
 type Weight = 'normal' | 'bold'
-type Color = 'primary' | 'secondary' | 'accent' | 'inherit'
+type Color = 'primary' | 'secondary' | 'accent' | 'inherit' | 'danger'
 type Size = 'default' | 'small' | 'very-small' | 'large'
 type Align = 'left' | 'center' | 'right'
 

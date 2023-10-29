@@ -62,6 +62,11 @@ const usePeriodicUserOwnsCourseCheck = (
     const fetchOwnsCourse = async () => {
       if (courseOverview == null) return
 
+      const redirectStatus = router.query.redirect_status
+      if (redirectStatus !== 'succeeded') {
+        return
+      }
+
       const isOwnedByUserResponse = await Api.authFetch(
         Api.isCourseOwnedByUserUrl(courseOverview.id),
       )
@@ -79,6 +84,7 @@ const usePeriodicUserOwnsCourseCheck = (
         }
       }
     }
+
     const interval = setInterval(() => fetchOwnsCourse(), 2000)
     return () => clearInterval(interval)
   }, [courseOverview, router])
@@ -120,33 +126,42 @@ const CheckoutSuccessPage = () => {
           {(courseOverview) => {
             return (
               <>
-                <WrapperFlex>
-                  <Flex direction="column" alignItems="center" gap="32px">
-                    <Heading variant="h3" align="center">
-                      {getCourseProductName(courseProductId)}
-                    </Heading>
-                    <Heading variant="h4">
-                      Zaplatené: {parseInt(finalAmount, 10) / 100}€
-                    </Heading>
-                    {appliedPromoCode && (
-                      <Text>Promokód: {appliedPromoCode}</Text>
-                    )}
-                    {redirectStatus === 'succeeded' ? (
-                      <>
-                        <Loading />
-                        <InfoText align="center">
-                          Spracovávam platbu, o chvíľu ťa presmerujeme na kurz.
-                          Ak to trvá dlho, tak skús obnoviť stránku, alebo ísť
-                          znova na kurzovú stránku a spustiť kurz. Ak by platba
-                          neprešla, tak nás kontaktuj na info@streetofcode.sk
-                        </InfoText>
-                      </>
-                    ) : (
-                      <p>Nastala neočakávaná chyba: {redirectStatus}</p>
-                    )}
-                  </Flex>
-                  <StyledCoursedCard course={courseOverview} />
-                </WrapperFlex>
+                {redirectStatus === 'succeeded' && (
+                  <WrapperFlex>
+                    <Flex direction="column" alignItems="center" gap="32px">
+                      <Heading variant="h3" align="center">
+                        {getCourseProductName(courseProductId)}
+                      </Heading>
+                      <Heading variant="h4">
+                        Zaplatené: {parseInt(finalAmount, 10) / 100}€
+                      </Heading>
+                      {appliedPromoCode && (
+                        <Text>Promokód: {appliedPromoCode}</Text>
+                      )}
+                      <Loading />
+                      <InfoText align="center">
+                        Spracovávam platbu, o chvíľu ťa presmerujeme na kurz. Ak
+                        to trvá dlho, tak skús obnoviť stránku, alebo ísť znova
+                        na kurzovú stránku a spustiť kurz. Ak by platba
+                        neprešla, tak nás kontaktuj na info@streetofcode.sk
+                      </InfoText>
+                    </Flex>
+                    <StyledCoursedCard course={courseOverview} />
+                  </WrapperFlex>
+                )}
+                {redirectStatus !== 'succeeded' && (
+                  <WrapperFlex>
+                    <Flex direction="column" alignItems="center" gap="32px">
+                      <Heading variant="h3" align="center">
+                        Platba sa nepodarila
+                      </Heading>
+                      <InfoText align="center">
+                        Platba sa nepodarila, skús to znova, alebo nás kontaktuj
+                        na info@streetofcode.sk
+                      </InfoText>
+                    </Flex>
+                  </WrapperFlex>
+                )}
               </>
             )
           }}
