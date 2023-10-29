@@ -104,9 +104,7 @@ const CourseContent = ({className, course, ...props}: Props) => {
                       </LectureTypeIcon>
                       <StyledText>{lecture.name}</StyledText>
                       {shouldPreviewLectureForPaidCourse(lecture) && (
-                        <PreviewText size="very-small" color="accent">
-                          náhľad
-                        </PreviewText>
+                        <PreviewText size="very-small">náhľad</PreviewText>
                       )}
                     </Flex>
                     <Flex>
