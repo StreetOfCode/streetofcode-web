@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import styled from 'styled-components'
 import {routes} from '../../../routes'
 import {CourseOverview, ReceivePromoCodeRequest} from '../../../types'
@@ -16,12 +17,15 @@ import {emailRegex} from '../../../utils'
 import {useGoogleReCaptcha} from 'react-google-recaptcha-v3'
 import {useAuth} from '../../../AuthUserContext'
 import {authPost, javaCourseCouponUrl} from '../../../api'
+import {javaCourseGoldLogo, javaCourseLogo} from '../../../images'
 
 type Props = {
   className?: string
   course: CourseOverview
   innerRef?: React.MutableRefObject<null | HTMLDivElement>
 }
+
+const GOLD_COLOR = '#F2BD4C'
 
 const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
   const {executeRecaptcha} = useGoogleReCaptcha()
@@ -150,11 +154,11 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
       </Flex>
       <CardsFlex justifyContent="center" gap="32px" alignItems="flex-start">
         <CardWrapper direction="column" gap="16px" alignItems="flex-start">
-          <HeaderWrapper direction="column" gap="24px">
-            <Heading variant="h5" uppercase>
+          <HeaderWrapper direction="column" gap="16px">
+            <Heading variant="h4" uppercase>
               {getCourseProductName(basic.productId)}
             </Heading>
-            <Heading variant="h4">
+            <Heading variant="h3">
               {basic.price != null ? `${basic.price / 100} €` : 'N/A'}
             </Heading>
             <NextLink
@@ -168,10 +172,19 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
               <CheckoutButton
                 variant="accent"
                 disabled={basic.price == null || !isBuyable}
+                uppercase
               >
                 Kúpiť
               </CheckoutButton>
             </NextLink>
+            <JavaCourseImageWrapper>
+              <Image
+                alt="Java kurz"
+                src={javaCourseLogo}
+                layout="fill"
+                priority
+              />
+            </JavaCourseImageWrapper>
           </HeaderWrapper>
           <BenefitsSection>
             <li>
@@ -224,17 +237,18 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
             </ModulesSection>
           </ModulesWrapperFlex>
           <BottomText>
-            Nauč sa všetko čo potrebuješ vedieť nato, aby si sa mohol stať Java
-            programátorom.
+            Staň sa Junior Java programátorom/kou! V kurze sa naučíš všetko
+            potrebné a dostaneš podporu našej Discord komunity. Nekupuj 4 rôzne
+            kurzy od rôznych inštruktorov, stačí ti tento jeden.
           </BottomText>
         </CardWrapper>
 
-        <CardWrapper direction="column" gap="16px" alignItems="flex-start">
-          <HeaderWrapper direction="column" gap="24px">
-            <Heading variant="h5" uppercase>
+        <CardWrapper direction="column" gap="16px" alignItems="flex-start" gold>
+          <HeaderWrapper direction="column" gap="24px" gold>
+            <GoldHeading variant="h4" uppercase>
               {getCourseProductName(premium.productId)}
-            </Heading>
-            <Heading variant="h4">
+            </GoldHeading>
+            <Heading variant="h3">
               {premium.price != null ? `${premium.price / 100} €` : 'N/A'}
             </Heading>
             <NextLink
@@ -248,12 +262,22 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
               <CheckoutButton
                 variant="accent"
                 disabled={premium.price == null || !isBuyable}
+                uppercase
+                gold
               >
                 Kúpiť
               </CheckoutButton>
             </NextLink>
+            <JavaCourseImageWrapper gold>
+              <Image
+                alt="Java kurz"
+                src={javaCourseGoldLogo}
+                layout="fill"
+                priority
+              />
+            </JavaCourseImageWrapper>
           </HeaderWrapper>
-          <BenefitsSection>
+          <BenefitsSection gold>
             <li>
               <Text>Prístup ku všetkým videám</Text>
             </li>
@@ -268,6 +292,7 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
             direction="column"
             gap="12px"
             alignItems="flex-start"
+            gold
           >
             <Text weight="bold">Moduly:</Text>
             <ModulesSection>
@@ -307,6 +332,7 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
             direction="column"
             gap="12px"
             alignItems="flex-start"
+            gold
           >
             <Text weight="bold">Plus:</Text>
             <PlusBenefitsSection>
@@ -328,8 +354,9 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
             </PlusBenefitsSection>
           </PlusWrapperFlex>
           <BottomText>
-            Získaj individuálny prístup k mentorovi, a nakopni svoju kariéru na
-            100 percent.
+            Zvýš svoje šance na úspech! Vďaka individuálnemu prístupu budeš v
+            kurze napredovať rýchlejšie. S mentorom z praxe sa zameriaš aj na
+            to, ako sa úspešne dostať na trh práce.
           </BottomText>
         </CardWrapper>
       </CardsFlex>
@@ -363,10 +390,12 @@ const CardsFlex = styled(Flex)`
   }
 `
 
-const CardWrapper = styled(Flex)`
-  padding: 8px 8px 16px 8px;
+const CardWrapper = styled(Flex)<{gold?: boolean}>`
+  margin-top: 48px;
+  padding: 16px 16px 24px 16px;
   border-radius: 22px;
-  border: 4px solid var(--color-accent);
+  border: ${(props) =>
+    `6px solid ${props.gold ? GOLD_COLOR : 'var(--color-accent)'}`};
   width: 400px;
 
   @media ${device.S} {
@@ -378,19 +407,41 @@ const CardWrapper = styled(Flex)`
   }
 `
 
-const HeaderWrapper = styled(Flex)`
+const HeaderWrapper = styled(Flex)<{gold?: boolean}>`
   align-self: stretch;
-  padding: 16px 0;
-  margin-left: -8px;
-  margin-right: -8px;
-  margin-top: -8px;
+  padding-top: 64px;
+  padding-bottom: 24px;
   border-radius: 18px;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
-  border: 2px solid var(--color-secondary);
+  border: ${(props) =>
+    `4px solid ${props.gold ? GOLD_COLOR : 'var(--color-accent)'}`};
+  position: relative;
 `
 
-const BenefitsSection = styled.ul`
+const JavaCourseImageWrapper = styled.div<{gold?: boolean}>`
+  width: 100px;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  border: ${(props) =>
+    `4px solid ${props.gold ? GOLD_COLOR : 'var(--color-accent)'}`};
+  background-color: var(--color-primary);
+
+  position: absolute;
+  bottom: 85%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  span {
+    margin: 12px !important;
+  }
+
+  @media ${device.S} {
+    width: 80px;
+  }
+`
+
+const BenefitsSection = styled.ul<{gold?: boolean}>`
   list-style: none;
   align-self: stretch;
   margin: 0;
@@ -398,7 +449,8 @@ const BenefitsSection = styled.ul`
   padding-right: 8px;
   padding-left: 8px;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--color-secondary);
+  border-bottom: ${(props) =>
+    `2px solid ${props.gold ? GOLD_COLOR : 'var(--color-accent)'}`};
 
   li {
     display: flex;
@@ -436,20 +488,22 @@ const PlusBenefitsSection = styled.ul`
   }
 `
 
-const PlusWrapperFlex = styled(Flex)`
+const PlusWrapperFlex = styled(Flex)<{gold?: boolean}>`
   align-self: stretch;
   padding-right: 8px;
   padding-left: 8px;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--color-secondary);
+  border-bottom: ${(props) =>
+    `2px solid ${props.gold ? GOLD_COLOR : 'var(--color-accent)'}`};
 `
 
-const ModulesWrapperFlex = styled(Flex)`
+const ModulesWrapperFlex = styled(Flex)<{gold?: boolean}>`
   align-self: stretch;
   padding-right: 8px;
   padding-left: 8px;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--color-secondary);
+  border-bottom: ${(props) =>
+    `2px solid ${props.gold ? GOLD_COLOR : 'var(--color-accent)'}`};
 `
 
 const ModulesSection = styled.ol`
@@ -497,13 +551,28 @@ const ComingSoon = styled.li`
   }
 `
 
-const CheckoutButton = styled(Button)`
+const CheckoutButton = styled(Button)<{gold?: boolean}>`
   width: 260px;
+  background-color: ${(props) =>
+    props.gold ? GOLD_COLOR : 'var(--color-accent)'};
+  border-color: ${(props) => (props.gold ? GOLD_COLOR : 'var(--color-accent)')};
+
+  @media ${device.S} {
+    width: 220px;
+  }
+
+  @media ${device.XS} {
+    width: 200px;
+  }
 `
 
 const BottomText = styled(Text)`
   padding-right: 8px;
   padding-left: 8px;
+`
+
+const GoldHeading = styled(Heading)`
+  color: ${GOLD_COLOR};
 `
 
 export default CourseProducts

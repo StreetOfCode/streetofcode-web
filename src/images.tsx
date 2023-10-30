@@ -19,6 +19,8 @@ import socLogoImage from '../public/images/soc_logo.png'
 import pavolImage from '../public/images/pavol.jpg'
 import theodorImage from '../public/images/theodor.jpg'
 import socLampImage from '../public/favicon.ico'
+import javaCourseImage from '../public/images/java_logo.png'
+import javaCourseImageGold from '../public/images/java_logo_gold.png'
 
 export const akoSaNaucisFrontend = akoSaNaucisFrontendImage as StaticImageData
 export const FirstDesignCourseDetail =
@@ -43,3 +45,5 @@ export const socLogo = socLogoImage as StaticImageData
 export const socLamp = socLampImage as StaticImageData
 export const pavol = pavolImage as StaticImageData
 export const theodor = theodorImage as StaticImageData
+export const javaCourseLogo = javaCourseImage as StaticImageData
+export const javaCourseGoldLogo = javaCourseImageGold as StaticImageData
