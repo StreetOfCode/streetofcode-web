@@ -115,12 +115,14 @@ const CourseDetailContent = ({
       }
     }
 
+    setHasProductsInLocation(window.location.hash === '#products')
+
     window.addEventListener('hashchange', handleHashChange)
 
     return () => {
       window.removeEventListener('hashchange', handleHashChange)
     }
-  }, [])
+  }, [setHasProductsInLocation])
 
   useEffect(() => {
     if (hasProductsInLocation && courseProductsRef.current) {
