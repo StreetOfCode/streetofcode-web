@@ -43,7 +43,7 @@ const CourseContent = ({className, course, ...props}: Props) => {
 
   const getChapterLengthInfo = (chapter: ChapterOverview): React.ReactNode => {
     return (
-      <Text>
+      <Text align="right">
         {chapter.lectures.length}{' '}
         {Utils.numOfLecturesText(chapter.lectures.length)}
         {} | {chapter.chapterDurationMinutes}{' '}
@@ -97,23 +97,24 @@ const CourseContent = ({className, course, ...props}: Props) => {
                     }
                     clickable={isLectureClickable(lecture)}
                     justifyContent="space-between"
+                    gap="4px"
                   >
                     <Flex gap="12px">
                       <LectureTypeIcon>
                         {Utils.getLectureTypeIcon(lecture.lectureType)}
                       </LectureTypeIcon>
                       <StyledText>{lecture.name}</StyledText>
-                      {shouldPreviewLectureForPaidCourse(lecture) && (
-                        <PreviewText size="very-small">náhľad</PreviewText>
-                      )}
                     </Flex>
-                    <Flex>
+                    <Flex gap="8px">
                       {lecture.videoDurationSeconds > 0 && (
                         <StyledText size="small">
                           {Utils.formatDurationFromSeconds(
                             lecture.videoDurationSeconds,
                           )}
                         </StyledText>
+                      )}
+                      {shouldPreviewLectureForPaidCourse(lecture) && (
+                        <PreviewText size="very-small">náhľad</PreviewText>
                       )}
                     </Flex>
                   </AccordionContentWrapper>
@@ -157,6 +158,7 @@ const Trigger = styled(Accordion.Trigger)`
   justify-content: space-between;
   align-items: center;
   width: 550px;
+  gap: 8px;
 
   @media ${device.L} {
     width: 100%;
