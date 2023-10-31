@@ -343,7 +343,7 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
                 <Text>Ohodnotené zadania</Text>
               </li>
               <li>
-                <Text>2 hodiny konzultácii</Text>
+                <Text>2 hodiny konzultácií</Text>
               </li>
               <li>
                 <Text>Pomoc s tvorbou životopisu</Text>
