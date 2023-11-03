@@ -18,6 +18,7 @@ import {useGoogleReCaptcha} from 'react-google-recaptcha-v3'
 import {useAuth} from '../../../AuthUserContext'
 import {authPost, javaCourseCouponUrl} from '../../../api'
 import {javaCourseGoldLogo, javaCourseLogo} from '../../../images'
+import Countdown from 'react-countdown'
 
 type Props = {
   className?: string
@@ -29,7 +30,7 @@ const GOLD_COLOR = '#F2BD4C'
 
 const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
   const {executeRecaptcha} = useGoogleReCaptcha()
-  const {user} = useAuth()
+  const {user, isLoading} = useAuth()
   const [email, setEmail] = React.useState('')
   const [emailError, setEmailError] = React.useState('')
   const [emailLoading, setEmailLoading] = React.useState(false)
@@ -118,6 +119,17 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
         <Heading variant="h3" align="center" uppercase>
           predpredaj
         </Heading>
+        {isBuyable && !isLoading && (
+          <CountdownWrapper direction="column" gap="16px" alignItems="center">
+            <StyledCountdown date={new Date(buyableUntil)} />
+            <Flex gap="8px">
+              <Text size="small">Dni</Text>
+              <Text size="small">Hodiny</Text>
+              <Text size="small">Minúty</Text>
+              <Text size="small">Sekundy</Text>
+            </Flex>
+          </CountdownWrapper>
+        )}
         {isBuyable && showEmailInput && (
           <Text align="center">
             Nemáš zľavový kód? Napíš svoj email a pošleme ti ho
@@ -146,9 +158,15 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
           </form>
         )}
         {isBuyable && !showEmailInput && hasUserReceivedPromoCode && (
-          <Text>
+          <Text align="center">
             Zľavový kód bol odoslaný na email. Ak ho nevidíš, skontroluj si
             spam.
+          </Text>
+        )}
+        {!isBuyable && (
+          <Text align="center">
+            Predpredaj skončil. Kurz bude otvorený najskôr na začiatku roka
+            2024. Pre viac info sa prihlás na náš newsletter
           </Text>
         )}
       </Flex>
@@ -405,6 +423,22 @@ const CardWrapper = styled(Flex)<{gold?: boolean}>`
   @media ${device.XS} {
     width: 100%;
   }
+`
+
+const CountdownWrapper = styled(Flex)`
+  margin-bottom: 12px;
+  width: 300px;
+  opacity: 0.7;
+
+  span {
+    color: var(--color-accent);
+  }
+`
+
+const StyledCountdown = styled(Countdown)`
+  font-size: 30px;
+  font-weight: bold;
+  letter-spacing: 0.13em;
 `
 
 const HeaderWrapper = styled(Flex)<{gold?: boolean}>`
