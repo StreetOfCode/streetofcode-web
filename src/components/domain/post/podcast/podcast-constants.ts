@@ -5,4 +5,4 @@ export const EMPTY_PODCAST_IMAGE_PLACEHOLDER_URL =
 export const PODCAST_MICROPHONE_IMG =
   'http://wp.streetofcode.sk/wp-content/uploads/2022/09/Group-145.png'
 export const RECOMMENDED_PODCASTS_COUNT = 3
-export const TOP_TAGS_COUNT = 8
+export const TOP_TAGS_COUNT = 10

@@ -38,7 +38,7 @@ const YouTubeVideos = ({videos}: Props) => {
   return (
     <Flex direction="column" gap="36px">
       <Flex direction="column" gap="16px">
-        <div>
+        <HeaderWrapper>
           <Heading inline align="center" variant="h2">
             Naše
           </Heading>
@@ -46,7 +46,7 @@ const YouTubeVideos = ({videos}: Props) => {
             {' '}
             YouTube videá
           </Heading>
-        </div>
+        </HeaderWrapper>
         <Text align="center">
           Robíme videá o všeličom. Javascript, Python, CSS, úvahy programátora,
           tipy pre programátorov atď.
@@ -71,6 +71,10 @@ const YouTubeVideos = ({videos}: Props) => {
     </Flex>
   )
 }
+
+const HeaderWrapper = styled.div`
+  text-align: center;
+`
 
 const SearchTextField = styled(TextField)`
   align-self: center;
