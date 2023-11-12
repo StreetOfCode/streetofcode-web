@@ -6,6 +6,7 @@ const THEME_SETTING_KEY = 'themeSetting'
 const VIDEO_WATCH_TIME_STORAGE_KEY = 'videoWatchTime'
 const NEWSLETTER_MODAL_KEY = 'newsletterModal'
 const NEXT_COURSE_VOTE_KEY = 'nextCourseVoted'
+const VIMEO_PLAYBACK_RATE = 'vimeoPlaybackRate'
 
 const getThemeSetting = () =>
   !isRunningOnServer()
@@ -112,6 +113,14 @@ const deleteVideoWatchTime = (videoId: string) => {
   )
 }
 
+const getVimeoPlaybackRate = (): string | null => {
+  return localStorage.getItem(VIMEO_PLAYBACK_RATE)
+}
+
+const setVimeoPlaybackRate = (vimeoPlaybackRate: string) => {
+  localStorage.setItem(VIMEO_PLAYBACK_RATE, vimeoPlaybackRate)
+}
+
 export const storage = {
   getThemeSetting,
   setThemeSetting,
@@ -122,4 +131,6 @@ export const storage = {
   setHasUserSeenNewsletterModal,
   hasUserVotedForNextCourse,
   setHasUserVotedForNextCourse,
+  getVimeoPlaybackRate,
+  setVimeoPlaybackRate,
 }

@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
-import Vimeo, {TimeUpdateEvent} from '@u-wave/react-vimeo'
+import Vimeo, {PlaybackRateEvent, TimeUpdateEvent} from '@u-wave/react-vimeo'
 import NextLectureOverlay from './NextLectureOverlay'
 import {storage} from '../../../localStorage'
 
@@ -24,6 +24,14 @@ const VideoWrapper = ({
   hasQuiz,
 }: Props) => {
   const [showNextLectureOverlay, setShowNextLectureOverlay] = useState(false)
+  const [vimeoPlaybackRate, setVimeoPlaybackRate] = useState(1)
+
+  useEffect(() => {
+    const vimeoPlaybackRate = storage.getVimeoPlaybackRate()
+    if (vimeoPlaybackRate != null) {
+      setVimeoPlaybackRate(parseFloat(vimeoPlaybackRate))
+    }
+  }, [])
 
   const handleOnVideoEnded = () => {
     if (onVideoEnded) {
@@ -41,6 +49,12 @@ const VideoWrapper = ({
     if (nextLectureUrl && nextLectureName) {
       setShowNextLectureOverlay(true)
     }
+  }
+
+  const handleVimeoPlaybackRateChanged = (value: PlaybackRateEvent) => {
+    const _vimeoPlaybackRate = value.playbackRate
+    storage.setVimeoPlaybackRate(_vimeoPlaybackRate.toString())
+    setVimeoPlaybackRate(_vimeoPlaybackRate)
   }
 
   return (
@@ -61,6 +75,8 @@ const VideoWrapper = ({
             storage.setVideoWatchTime(vimeoVideoId, {seconds: secondsWatched})
           }
         }}
+        playbackRate={vimeoPlaybackRate}
+        onPlaybackRateChange={handleVimeoPlaybackRateChanged}
       />
       {showNextLectureOverlay && nextLectureUrl && nextLectureName && (
         <NextLectureOverlay
