@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {hasCookie, setCookie, getCookie} from 'cookies-next'
 import Flex from '../core/Flex'
 import Text from '../core/Text'
 import styled from 'styled-components'
@@ -7,62 +6,45 @@ import {createPortal} from 'react-dom'
 import {device} from '../../theme/device'
 import Button from '../core/Button'
 import {GDPR_URL} from '../../constants'
-import CookieConsentContext from './CookieConsentContext'
+import {CookieConsentContext} from './CookieConsentContext'
 import CheckBox from '../core/CheckBox'
 import {useTheme} from '../../hooks/useTheme'
-import assert from 'assert'
+import {CookieConsent} from '../../types'
 
-const COOKIE_CONSENT = 'cookieConsent'
-const ONE_YEAR = 365 * 24 * 60 * 60
-
-const CookieConsent = () => {
+const CookieConsentModal = () => {
   const [showConsent, setShowConsent] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
-  const [analyticsCookies, setAnalyticsCookies] = useState(false)
-  const [marketingCookies, setMarketingCookies] = useState(false)
+  const [userCookieConsent, setUserCookieConsent] = useState<CookieConsent>({
+    agreedToAnalyticsCookies: false,
+    agreedToMarketingCookies: false,
+  })
   const {theme} = useTheme()
-  const {setAgreedToAnalyticsCookies, setAgreedToMarketingCookies} =
-    useContext(CookieConsentContext)
+  const {cookieConsent, setCookieConsent} = useContext(CookieConsentContext)
 
   useEffect(() => {
-    if (hasCookie(COOKIE_CONSENT)) {
-      const hasConsent = getCookie(COOKIE_CONSENT)
-      if (hasConsent?.toString()) {
-        // 00 is false for both analytics and marketing
-        // 01 is false for analytics and false for marketing
-        // 10 is true for analytics and true for marketing
-        // 11 is true for both analytics and marketing
-        assert(hasConsent.toString().length === 2, 'Invalid cookie consent')
-        setAgreedToAnalyticsCookies(hasConsent.toString()[0] === '1')
-        setAgreedToMarketingCookies(hasConsent.toString()[1] === '1')
-      }
-    } else {
+    if (cookieConsent == null) {
       setShowConsent(true)
     }
-  }, [])
+  }, [cookieConsent, setShowConsent])
 
   const denyCookies = () => {
+    setCookieConsent({
+      agreedToAnalyticsCookies: false,
+      agreedToMarketingCookies: false,
+    })
     setShowConsent(false)
-    // 00 is false for both analytics and marketing
-    setCookie(COOKIE_CONSENT, '00', {maxAge: ONE_YEAR})
   }
 
   const acceptAllCookies = () => {
-    // 11 is true for both analytics and marketing
-    setCookie(COOKIE_CONSENT, '11', {maxAge: ONE_YEAR})
-    setAgreedToAnalyticsCookies(true)
-    setAgreedToMarketingCookies(true)
+    setCookieConsent({
+      agreedToAnalyticsCookies: true,
+      agreedToMarketingCookies: true,
+    })
     setShowConsent(false)
   }
 
   const confirmSettings = () => {
-    setCookie(
-      COOKIE_CONSENT,
-      `${analyticsCookies ? '1' : '0'}${marketingCookies ? '1' : '0'}`,
-      {maxAge: ONE_YEAR},
-    )
-    setAgreedToAnalyticsCookies(analyticsCookies)
-    setAgreedToMarketingCookies(marketingCookies)
+    setCookieConsent(userCookieConsent)
     setShowConsent(false)
   }
 
@@ -134,8 +116,13 @@ const CookieConsent = () => {
                   </CookieDescription>
                   <CheckBox
                     checkedColor={theme.secondaryColor}
-                    checked={analyticsCookies}
-                    onToggle={(value) => setAnalyticsCookies(value)}
+                    checked={userCookieConsent.agreedToAnalyticsCookies}
+                    onToggle={(value) =>
+                      setUserCookieConsent({
+                        ...userCookieConsent,
+                        agreedToAnalyticsCookies: value,
+                      })
+                    }
                     size="24px"
                     label="Analytické cookies"
                   />
@@ -146,8 +133,13 @@ const CookieConsent = () => {
                   </CookieDescription>
                   <CheckBox
                     checkedColor={theme.secondaryColor}
-                    checked={marketingCookies}
-                    onToggle={(value) => setMarketingCookies(value)}
+                    checked={userCookieConsent.agreedToMarketingCookies}
+                    onToggle={(value) =>
+                      setUserCookieConsent({
+                        ...userCookieConsent,
+                        agreedToMarketingCookies: value,
+                      })
+                    }
                     size="24px"
                     label="Marketingové cookies"
                   />
@@ -228,4 +220,4 @@ const CookiesText = styled(Text)`
   }
 `
 
-export default CookieConsent
+export default CookieConsentModal

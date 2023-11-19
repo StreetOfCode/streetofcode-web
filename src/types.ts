@@ -379,3 +379,8 @@ export interface IsPromotionCodeValid {
   isPromotionCodeValid: boolean
   validForCourseProductId: string[] | null
 }
+
+export type CookieConsent = {
+  agreedToAnalyticsCookies: boolean
+  agreedToMarketingCookies: boolean
+}

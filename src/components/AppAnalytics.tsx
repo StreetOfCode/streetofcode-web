@@ -1,17 +1,18 @@
 import React, {useContext, useEffect} from 'react'
-import CookieConsentContext from './cookie-consent/CookieConsentContext'
+import {CookieConsentContext} from './cookie-consent/CookieConsentContext'
 import {useRouter} from 'next/router'
 import {getFirebaseAnalytics} from '../firebase'
 import {Analytics, logEvent} from 'firebase/analytics'
 import Script from 'next/script'
 
 const AppAnalytics = () => {
-  const {agreedToAnalyticsCookies, agreedToMarketingCookies} =
-    useContext(CookieConsentContext)
+  const {cookieConsent} = useContext(CookieConsentContext)
   const router = useRouter()
 
   useEffect(() => {
-    const analytics = getFirebaseAnalytics(agreedToAnalyticsCookies)
+    const analytics = getFirebaseAnalytics(
+      cookieConsent?.agreedToAnalyticsCookies || false,
+    )
 
     if (analytics == null) {
       return () => {
@@ -32,9 +33,9 @@ const AppAnalytics = () => {
         router.events.off('routeChangeComplete', _logEvent)
       }
     }
-  }, [router.events, agreedToAnalyticsCookies])
+  }, [router.events, cookieConsent?.agreedToAnalyticsCookies])
 
-  if (agreedToMarketingCookies) {
+  if (cookieConsent?.agreedToMarketingCookies) {
     return (
       <>
         <Script

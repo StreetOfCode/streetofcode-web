@@ -18,17 +18,13 @@ import NewsletterModal from '../components/NewsletterModal'
 import NextNProgress from 'nextjs-progressbar'
 import {routes} from '../routes'
 import {lightTheme} from '../theme/theme'
-import CookieConsent from '../components/cookie-consent/CookieConsent'
-import CookieConsentContext from '../components/cookie-consent/CookieConsentContext'
+import CookieConsentModal from '../components/cookie-consent/CookieConsentModal'
+import {CookieConsentContextProvider} from '../components/cookie-consent/CookieConsentContext'
 import AppAnalytics from '../components/AppAnalytics'
 import '../theme/animations/HeroAnimation.scss'
 import 'pure-react-carousel/dist/react-carousel.es.css'
 
 function MyApp({Component, pageProps}: AppProps) {
-  const [agreedToAnalyticsCookies, setAgreedToAnalyticsCookies] =
-    useState(false)
-  const [agreedToMarketingCookies, setAgreedToMarketingCookies] =
-    useState(false)
   const [themeSetting, setThemeSetting] = useState(
     storage.getThemeSetting() || 'NOT-SET',
   )
@@ -50,14 +46,7 @@ function MyApp({Component, pageProps}: AppProps) {
         reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY || ''}
       >
         <ThemeSettingContext.Provider value={{themeSetting, setThemeSetting}}>
-          <CookieConsentContext.Provider
-            value={{
-              agreedToAnalyticsCookies,
-              setAgreedToAnalyticsCookies,
-              agreedToMarketingCookies,
-              setAgreedToMarketingCookies,
-            }}
-          >
+          <CookieConsentContextProvider>
             <AuthContextProvider>
               <RootWrapper>
                 <QueryClientProvider client={queryClient}>
@@ -69,7 +58,7 @@ function MyApp({Component, pageProps}: AppProps) {
                         <Component {...pageProps} />
                         <AppAnalytics />
                         <NewsletterModal />
-                        <CookieConsent />
+                        <CookieConsentModal />
                         <Footer />
                       </OnboardingProtectionRoute>
                     )}
@@ -83,7 +72,7 @@ function MyApp({Component, pageProps}: AppProps) {
                 </QueryClientProvider>
               </RootWrapper>
             </AuthContextProvider>
-          </CookieConsentContext.Provider>
+          </CookieConsentContextProvider>
         </ThemeSettingContext.Provider>
       </GoogleReCaptchaProvider>
     </Sentry.ErrorBoundary>
