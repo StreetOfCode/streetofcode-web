@@ -10,6 +10,7 @@ import {GDPR_URL} from '../../constants'
 import CookieConsentContext from './CookieConsentContext'
 import CheckBox from '../core/CheckBox'
 import {useTheme} from '../../hooks/useTheme'
+import assert from 'assert'
 
 const COOKIE_CONSENT = 'cookieConsent'
 const ONE_YEAR = 365 * 24 * 60 * 60
@@ -18,14 +19,22 @@ const CookieConsent = () => {
   const [showConsent, setShowConsent] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [analyticsCookies, setAnalyticsCookies] = useState(false)
+  const [marketingCookies, setMarketingCookies] = useState(false)
   const {theme} = useTheme()
-  const {setAgreedToAnalyticsCookies} = useContext(CookieConsentContext)
+  const {setAgreedToAnalyticsCookies, setAgreedToMarketingCookies} =
+    useContext(CookieConsentContext)
 
   useEffect(() => {
     if (hasCookie(COOKIE_CONSENT)) {
-      const hasProvidedConsent = getCookie(COOKIE_CONSENT)
-      if (hasProvidedConsent?.toString() === 'true') {
-        setAgreedToAnalyticsCookies(true)
+      const hasConsent = getCookie(COOKIE_CONSENT)
+      if (hasConsent?.toString()) {
+        // 00 is false for both analytics and marketing
+        // 01 is false for analytics and false for marketing
+        // 10 is true for analytics and true for marketing
+        // 11 is true for both analytics and marketing
+        assert(hasConsent.toString().length === 2, 'Invalid cookie consent')
+        setAgreedToAnalyticsCookies(hasConsent.toString()[0] === '1')
+        setAgreedToMarketingCookies(hasConsent.toString()[1] === '1')
       }
     } else {
       setShowConsent(true)
@@ -34,23 +43,26 @@ const CookieConsent = () => {
 
   const denyCookies = () => {
     setShowConsent(false)
-    setCookie(COOKIE_CONSENT, 'false', {maxAge: ONE_YEAR})
+    // 00 is false for both analytics and marketing
+    setCookie(COOKIE_CONSENT, '00', {maxAge: ONE_YEAR})
   }
 
   const acceptAllCookies = () => {
-    setCookie(COOKIE_CONSENT, 'true', {maxAge: ONE_YEAR})
+    // 11 is true for both analytics and marketing
+    setCookie(COOKIE_CONSENT, '11', {maxAge: ONE_YEAR})
     setAgreedToAnalyticsCookies(true)
+    setAgreedToMarketingCookies(true)
     setShowConsent(false)
   }
 
   const confirmSettings = () => {
-    if (analyticsCookies) {
-      setCookie(COOKIE_CONSENT, 'true', {maxAge: ONE_YEAR})
-      setAgreedToAnalyticsCookies(true)
-    } else {
-      setCookie(COOKIE_CONSENT, 'false', {maxAge: ONE_YEAR})
-      setAgreedToAnalyticsCookies(false)
-    }
+    setCookie(
+      COOKIE_CONSENT,
+      `${analyticsCookies ? '1' : '0'}${marketingCookies ? '1' : '0'}`,
+      {maxAge: ONE_YEAR},
+    )
+    setAgreedToAnalyticsCookies(analyticsCookies)
+    setAgreedToMarketingCookies(marketingCookies)
     setShowConsent(false)
   }
 
@@ -131,6 +143,20 @@ const CookieConsent = () => {
                     Analytické cookies nám pomáhajú pochopiť, ako komunikovať s
                     návštevníkmi webovej stránky prostredníctvom zberu a
                     hlásenia informácií anonymne.
+                  </CookieDescription>
+                  <CheckBox
+                    checkedColor={theme.secondaryColor}
+                    checked={marketingCookies}
+                    onToggle={(value) => setMarketingCookies(value)}
+                    size="24px"
+                    label="Marketingové cookies"
+                  />
+                  <CookieDescription size="small">
+                    Marketingové cookies používame na sledovanie návštevníkov na
+                    webovej stránke. Tieto cookies sú nastavené tretími
+                    stranami, ktoré môžu sledovať používateľa cez viacero
+                    webových stránok a používať zozbierané údaje na zobrazenie
+                    prispôsobených reklám.
                   </CookieDescription>
                 </SettingsFlexWrapper>
               )}

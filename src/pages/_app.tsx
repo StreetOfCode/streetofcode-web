@@ -27,6 +27,8 @@ import 'pure-react-carousel/dist/react-carousel.es.css'
 function MyApp({Component, pageProps}: AppProps) {
   const [agreedToAnalyticsCookies, setAgreedToAnalyticsCookies] =
     useState(false)
+  const [agreedToMarketingCookies, setAgreedToMarketingCookies] =
+    useState(false)
   const [themeSetting, setThemeSetting] = useState(
     storage.getThemeSetting() || 'NOT-SET',
   )
@@ -52,6 +54,8 @@ function MyApp({Component, pageProps}: AppProps) {
             value={{
               agreedToAnalyticsCookies,
               setAgreedToAnalyticsCookies,
+              agreedToMarketingCookies,
+              setAgreedToMarketingCookies,
             }}
           >
             <AuthContextProvider>
