@@ -25,7 +25,8 @@ import '../theme/animations/HeroAnimation.scss'
 import 'pure-react-carousel/dist/react-carousel.es.css'
 
 function MyApp({Component, pageProps}: AppProps) {
-  const [agreedToCookies, setAgreedToCookies] = useState(false)
+  const [agreedToAnalyticsCookies, setAgreedToAnalyticsCookies] =
+    useState(false)
   const [themeSetting, setThemeSetting] = useState(
     storage.getThemeSetting() || 'NOT-SET',
   )
@@ -48,7 +49,10 @@ function MyApp({Component, pageProps}: AppProps) {
       >
         <ThemeSettingContext.Provider value={{themeSetting, setThemeSetting}}>
           <CookieConsentContext.Provider
-            value={{agreedToCookies, setAgreedToCookies}}
+            value={{
+              agreedToAnalyticsCookies,
+              setAgreedToAnalyticsCookies,
+            }}
           >
             <AuthContextProvider>
               <RootWrapper>

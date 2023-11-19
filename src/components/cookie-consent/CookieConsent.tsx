@@ -19,30 +19,39 @@ const CookieConsent = () => {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [analyticsCookies, setAnalyticsCookies] = useState(false)
   const {theme} = useTheme()
-  const [settingsManipulated, setSettingsManipulated] = useState(false)
-
-  const {setAgreedToCookies} = useContext(CookieConsentContext)
+  const {setAgreedToAnalyticsCookies} = useContext(CookieConsentContext)
 
   useEffect(() => {
     if (hasCookie(COOKIE_CONSENT)) {
       const hasProvidedConsent = getCookie(COOKIE_CONSENT)
       if (hasProvidedConsent?.toString() === 'true') {
-        setAgreedToCookies(true)
+        setAgreedToAnalyticsCookies(true)
       }
     } else {
       setShowConsent(true)
     }
   }, [])
 
-  const denyCookie = () => {
+  const denyCookies = () => {
     setShowConsent(false)
     setCookie(COOKIE_CONSENT, 'false', {maxAge: ONE_YEAR})
   }
 
-  const acceptCookie = () => {
-    setShowConsent(false)
-    setAgreedToCookies(true)
+  const acceptAllCookies = () => {
     setCookie(COOKIE_CONSENT, 'true', {maxAge: ONE_YEAR})
+    setAgreedToAnalyticsCookies(true)
+    setShowConsent(false)
+  }
+
+  const confirmSettings = () => {
+    if (analyticsCookies) {
+      setCookie(COOKIE_CONSENT, 'true', {maxAge: ONE_YEAR})
+      setAgreedToAnalyticsCookies(true)
+    } else {
+      setCookie(COOKIE_CONSENT, 'false', {maxAge: ONE_YEAR})
+      setAgreedToAnalyticsCookies(false)
+    }
+    setShowConsent(false)
   }
 
   if (!showConsent) {
@@ -54,7 +63,6 @@ const CookieConsent = () => {
     e.stopPropagation()
 
     setSettingsOpen(!settingsOpen)
-    setSettingsManipulated(!settingsManipulated)
   }
 
   return (
@@ -79,9 +87,19 @@ const CookieConsent = () => {
                   <SettingsText onClick={toggleSettings}>
                     Nastavenia
                   </SettingsText>
-                  <Button onClick={denyCookie}>Odmietnuť</Button>
-                  <Button onClick={acceptCookie} variant="accent" noWrap>
-                    {settingsManipulated ? 'Potvrdiť výber' : 'Súhlasím'}
+                  <Button onClick={denyCookies}>Odmietnuť</Button>
+                  <Button
+                    onClick={() => {
+                      if (settingsOpen) {
+                        confirmSettings()
+                      } else {
+                        acceptAllCookies()
+                      }
+                    }}
+                    variant="accent"
+                    noWrap
+                  >
+                    {settingsOpen ? 'Potvrdiť výber' : 'Súhlasím'}
                   </Button>
                 </ButtonsFlex>
               </MainContent>

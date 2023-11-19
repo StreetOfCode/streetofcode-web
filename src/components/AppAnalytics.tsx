@@ -5,11 +5,11 @@ import {getFirebaseAnalytics} from '../firebase'
 import {Analytics, logEvent} from 'firebase/analytics'
 
 const AppAnalytics = () => {
-  const {agreedToCookies} = useContext(CookieConsentContext)
+  const {agreedToAnalyticsCookies} = useContext(CookieConsentContext)
   const router = useRouter()
 
   useEffect(() => {
-    const analytics = getFirebaseAnalytics(agreedToCookies)
+    const analytics = getFirebaseAnalytics(agreedToAnalyticsCookies)
 
     if (analytics == null) {
       return () => {
@@ -30,7 +30,7 @@ const AppAnalytics = () => {
         router.events.off('routeChangeComplete', _logEvent)
       }
     }
-  }, [router.events, agreedToCookies])
+  }, [router.events, agreedToAnalyticsCookies])
 
   return null
 }
