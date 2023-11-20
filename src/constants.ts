@@ -53,5 +53,5 @@ export const getCourseProductName = (courseProductId: string): string => {
   return `${constants.variants[courseProductId].variantName}`
 }
 
-export const COOKIE_CONSENT = 'cookieConsent'
+export const COOKIE_CONSENT = 'cookiesConsent'
 export const ONE_YEAR = 365 * 24 * 60 * 60
