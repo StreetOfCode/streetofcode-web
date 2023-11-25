@@ -5,7 +5,16 @@ export default async function handler(req, res) {
 
   try {
     // path is i.e clanky/preco-sa-stat-programatorom
-    await res.revalidate(`/${req.query.path}`)
+    if (
+      req.query.path.includes('clanky/') ||
+      req.query.path.includes('podcast/')
+    ) {
+      // &revalidate=true is added to the path to inform getStatisProps that it should revalidate
+      // ?revalidate=true is not used because it does not work with getStaticProps
+      await res.revalidate(`/${req.query.path}&revalidate=true`)
+    } else {
+      await res.revalidate(`/${req.query.path}`)
+    }
     return res.json({revalidated: true})
   } catch (err) {
     // If there was an error, Next.js will continue

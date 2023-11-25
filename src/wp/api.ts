@@ -1,6 +1,7 @@
 import {useQuery} from 'react-query'
 import {assert} from '../utils'
 import {Post} from './types'
+import * as BackendApi from '../api'
 
 const API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL
 
@@ -41,35 +42,6 @@ async function fetchAPI(query: string, variables?: object) {
   return json.data
 }
 
-const FULL_POST_SCHEMA_BASE = `
-        id
-        title
-        excerpt
-        slug
-        date
-        content
-        featuredImage {
-          node {
-            sourceUrl
-          }
-        }
-        author {
-          node {
-            name
-            firstName
-            lastName
-            avatar {
-              url
-            }
-          }
-        }
-        tags {
-          nodes {
-            id
-            name
-          }
-        }
-`
 // has no content
 const PREVIEW_POST_SCHEMA_BASE = `
         id
@@ -136,16 +108,16 @@ export function useGetAllPosts(categoryName: string, limit = 1000) {
   )
 }
 
-export async function getPostBySlug(slug: string): Promise<Post> {
-  const data = await fetchAPI(`
-    {
-      post(id: "${slug}", idType: SLUG) {
-        ${FULL_POST_SCHEMA_BASE}
-      }
-    }
-  `)
+export async function getPostBySlug(
+  slug: string,
+  revalidate: boolean | undefined,
+): Promise<Post> {
+  const response = await BackendApi.noAuthFetch(
+    BackendApi.postBySlugUrl(slug, revalidate || false),
+  )
+  const data = (await response.json()) as Post
 
-  return data?.post
+  return data as Post
 }
 
 const AUTHOR_WP_ID: Record<string, number> = {

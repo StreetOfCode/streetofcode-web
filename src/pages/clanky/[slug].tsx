@@ -43,9 +43,14 @@ const SinglePostPage: NextPage<Props> = ({post, recommendedPosts}) => {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const slug = context?.params?.slug as string
+  let slug = context?.params?.slug as string
+  let revalidate = false
+  if (slug.includes('&')) {
+    revalidate = slug.split('&')[1] === 'revalidate=true'
+    slug = slug.split('&')[0]
+  }
 
-  const post = await getPostBySlug(slug)
+  const post = await getPostBySlug(slug, revalidate)
   let recommendedPosts: Post[] = []
   if (post != null) {
     recommendedPosts = await getRecommendedPosts(

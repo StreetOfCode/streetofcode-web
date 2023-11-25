@@ -125,6 +125,10 @@ export const stripeUpdatePaymentIntentUrl = () =>
 export const stripeIsPromotionCodeValidUrl = (code: string) =>
   `${STRIPE_URL}/check-promotion-code/${code}`
 
+const WP_POST_URL = `${API_URL}/wp/post`
+export const postBySlugUrl = (slug: string, revalidate: boolean) =>
+  `${WP_POST_URL}/${slug}?revalidate=${revalidate}`
+
 export const authFetch = async (url: string) => {
   const params = await createParams('GET')
   return fetch(url, params)
