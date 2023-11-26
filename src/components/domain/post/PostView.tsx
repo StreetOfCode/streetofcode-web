@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import parse, {Element, Text as HtmlParserText} from 'html-react-parser'
 import styled from 'styled-components'
 import {Maybe, Post} from '../../../wp/types'
@@ -13,19 +13,44 @@ import NextLink from '../../core/NextLink'
 import Heading from '../../core/Heading'
 import GridWrapper from './../../GridWrapper'
 import RecommendedPostPreview from './RecommendedPostPreview'
-import {convertTagToUrlParam} from './postUtils'
+import {convertTagToUrlParam, getRecommendedPosts} from './postUtils'
+import {
+  CATEGORY_NAME as PODCAST_CATEGORY,
+  RECOMMENDED_PODCASTS_COUNT,
+} from './podcast/podcast-constants'
+import {
+  CATEGORY_NAME as CLANKY_CATEGORY,
+  RECOMMENDED_POSTS_COUNT,
+} from './blog/clanky-constants'
+import Loading from '../../Loading'
 
 type Props = {
   className?: string
   isPodcast?: boolean
   post: Post
-  recommendedPosts: Post[]
 }
 
 /***
  * Works with blog posts and podcasts.
  */
-const PostView = ({className, isPodcast, post, recommendedPosts}: Props) => {
+const PostView = ({className, isPodcast, post}: Props) => {
+  const [recommendedPosts, setRecommendedPosts] = React.useState<Post[]>([])
+  const [recommendedLoading, setRecommendedLoading] = React.useState(false)
+
+  useEffect(() => {
+    if (post.id != null) {
+      setRecommendedLoading(true)
+      getRecommendedPosts(
+        post,
+        isPodcast ? RECOMMENDED_PODCASTS_COUNT : RECOMMENDED_POSTS_COUNT,
+        isPodcast ? PODCAST_CATEGORY : CLANKY_CATEGORY,
+      ).then((posts) => {
+        setRecommendedPosts(posts)
+        setRecommendedLoading(false)
+      })
+    }
+  }, [post.slug])
+
   const authorName = post.author
     ? post.author.node?.firstName && post.author.node.lastName
       ? `${post.author.node.firstName} ${post.author.node.lastName}`
@@ -103,6 +128,7 @@ const PostView = ({className, isPodcast, post, recommendedPosts}: Props) => {
       </AuthorAndTagsWrapper>
       {post.content && <PostContent>{postContentElements}</PostContent>}
       <PostComments postId={post.id} postSlug={post.slug || 'empty'} />
+      {recommendedLoading && <Loading />}
       {recommendedPosts.length > 0 && (
         <>
           <Heading variant="h4">Mohlo by ťa zaujímať</Heading>

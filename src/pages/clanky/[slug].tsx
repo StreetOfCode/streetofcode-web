@@ -8,18 +8,15 @@ import PostView from '../../components/domain/post/PostView'
 import {
   CATEGORY_NAME,
   EMPTY_BLOG_IMAGE_PLACEHOLDER_URL,
-  RECOMMENDED_POSTS_COUNT,
 } from '../../components/domain/post/blog/clanky-constants'
 import Head from '../../components/Head'
 import {prefixWithHost, routes} from '../../routes'
-import {getRecommendedPosts} from '../../components/domain/post/postUtils'
 
 interface Props {
   post: Post
-  recommendedPosts: Post[]
 }
 
-const SinglePostPage: NextPage<Props> = ({post, recommendedPosts}) => {
+const SinglePostPage: NextPage<Props> = ({post}) => {
   return (
     <>
       <Head
@@ -36,7 +33,7 @@ const SinglePostPage: NextPage<Props> = ({post, recommendedPosts}) => {
       />
       <NavBar />
       <PageContentWrapper>
-        <PostView post={post} recommendedPosts={recommendedPosts} />
+        <PostView post={post} />
       </PageContentWrapper>
     </>
   )
@@ -51,25 +48,16 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 
   const post = await getPostBySlug(slug, revalidate)
-
-  let recommendedPosts: Post[] = []
   if (post != null && post.id != null) {
-    recommendedPosts = await getRecommendedPosts(
-      post,
-      RECOMMENDED_POSTS_COUNT,
-      CATEGORY_NAME,
-    )
+    return {
+      props: {
+        post,
+      },
+    }
   } else {
     return {
       notFound: true,
     }
-  }
-
-  return {
-    props: {
-      post,
-      recommendedPosts,
-    },
   }
 }
 
