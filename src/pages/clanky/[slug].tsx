@@ -51,26 +51,25 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 
   const post = await getPostBySlug(slug, revalidate)
+
   let recommendedPosts: Post[] = []
-  if (post != null) {
+  if (post != null && post.id != null) {
     recommendedPosts = await getRecommendedPosts(
       post,
       RECOMMENDED_POSTS_COUNT,
       CATEGORY_NAME,
     )
-  }
-
-  if (post === null) {
+  } else {
     return {
       notFound: true,
     }
-  } else {
-    return {
-      props: {
-        post,
-        recommendedPosts,
-      },
-    }
+  }
+
+  return {
+    props: {
+      post,
+      recommendedPosts,
+    },
   }
 }
 
