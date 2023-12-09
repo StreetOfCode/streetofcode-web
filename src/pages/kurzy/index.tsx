@@ -12,7 +12,6 @@ import NavBar from '../../components/NavBar'
 import {useAuth} from '../../AuthUserContext'
 import {useGetCourses} from '../../api/courses'
 import {UserAndQueryGuard} from '../../QueryGuard'
-import VoteNextCourse from '../../components/domain/vote/VoteNextCourse'
 import {device} from '../../theme/device'
 import Head from '../../components/Head'
 import {prefixWithHost, routes} from '../../routes'
@@ -118,7 +117,6 @@ const BottomContentWraper = () => {
   return (
     <>
       <Testimonials />
-      <VoteNextCourse />
       <Text align="center" size="large">
         Chceš sa naučiť vyvíjať softvér? Ak hľadáš online kurz programovania, si
         tu správne. Zameriavame sa na programovanie pre úplných začiatočníkov aj
