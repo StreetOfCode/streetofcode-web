@@ -241,6 +241,10 @@ const PostContent = styled.div`
     > * {
       max-width: 100%;
     }
+
+    b {
+      font-weight: bold;
+    }
   }
 
   h2 {
