@@ -19,7 +19,6 @@ export const courseProductsConfig: {
     slug: process.env.NEXT_PUBLIC_COURSE_PRODUCT_SLUG_JAVA_KURZ || 'java-kurz',
     productIds: {
       basic: process.env.NEXT_PUBLIC_COURSE_PRODUCT_ID_JAVA_KURZ_BASIC || '',
-      pro: process.env.NEXT_PUBLIC_COURSE_PRODUCT_ID_JAVA_KURZ_PRO || '',
     },
   },
 } as const
@@ -34,9 +33,6 @@ export const courseProductsConstants: {
     name: 'Java Kurz',
     variants: {
       [courseProductsConfig.javaKurz.productIds.basic]: {
-        variantName: 'Základný balík',
-      },
-      [courseProductsConfig.javaKurz.productIds.pro]: {
         variantName: 'Premium balík',
       },
     },

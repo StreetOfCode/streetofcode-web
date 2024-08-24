@@ -3,8 +3,8 @@ import Image from 'next/image'
 import styled from 'styled-components'
 import {
   AiOutlineClockCircle,
-  AiOutlineVideoCamera,
   AiOutlineQuestionCircle,
+  AiOutlineVideoCamera,
 } from 'react-icons/ai'
 import Flex from '../../core/Flex'
 import Heading from '../../core/Heading'
@@ -60,11 +60,7 @@ const CourseCard = ({
       <Flex justifyContent="space-between" alignSelf="stretch">
         <PriceTag>
           <Text uppercase weight="bold" color="primary">
-            {course.courseProducts.length > 0
-              ? `od ${Math.min(
-                  ...course.courseProducts.map((cp) => cp.price / 100),
-                )}€`
-              : 'ZADARMO'}
+            {coursePrice(course)}
           </Text>
         </PriceTag>
         <RatingWrapper
@@ -153,6 +149,18 @@ const CourseCard = ({
       </Flex>
     </WrapperFlex>
   )
+}
+
+export const coursePrice = (course: CourseOverview) => {
+  if (course.courseProducts.length === 0) {
+    return 'ZADARMO'
+  } else if (course.courseProducts.length === 1) {
+    return `${course.courseProducts[0].price / 100}€`
+  } else {
+    return `od ${Math.min(
+      ...course.courseProducts.map((cp) => cp.price / 100),
+    )}€`
+  }
 }
 
 const PriceTag = styled.div`

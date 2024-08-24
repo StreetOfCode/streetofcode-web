@@ -35,6 +35,7 @@ import {prefixWithHost, routes} from '../../../routes'
 import SidebarCourseReviews from '../../../components/domain/course-review/SidebarCourseReviews'
 import CourseProducts from '../../../components/domain/course/CourseProducts'
 import CourseCTAButton from '../../../components/domain/course/CourseCTAButton'
+import {coursePrice} from '../../../components/domain/course/CourseCard'
 
 type Props = {
   slug: string
@@ -352,13 +353,7 @@ const CourseDetailContent = ({
                 )}
                 {!progressValuePercent && (
                   <Text uppercase color="accent" weight="bold">
-                    {courseOverview.courseProducts.length > 0
-                      ? `od ${Math.min(
-                          ...courseOverview.courseProducts.map(
-                            (cp) => cp.price / 100,
-                          ),
-                        )}€`
-                      : 'ZADARMO'}
+                    {coursePrice(courseOverview)}
                   </Text>
                 )}
               </Flex>

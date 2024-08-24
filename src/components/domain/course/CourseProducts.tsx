@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 import {routes} from '../../../routes'
 import {CourseOverview} from '../../../types'
 import Button from '../../core/Button'
@@ -11,7 +11,9 @@ import {courseProductsConfig, getCourseProductName} from '../../../constants'
 import Text from '../../core/Text'
 import Heading from '../../core/Heading'
 import {device} from '../../../theme/device'
-import {javaCourseGoldLogo, javaCourseLogo} from '../../../images'
+import {javaCourseLogo} from '../../../images'
+import {BiChevronDown} from 'react-icons/bi'
+import * as Accordion from '@radix-ui/react-accordion'
 
 type Props = {
   className?: string
@@ -19,21 +21,16 @@ type Props = {
   innerRef?: React.MutableRefObject<null | HTMLDivElement>
 }
 
-const GOLD_COLOR = '#F2BD4C'
-
-const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
+const JavaKurzCourseProduct = ({className, course, innerRef}: Props) => {
   const isCourseOwnedByUser = Utils.isCourseOwnedByUser(course)
   if (isCourseOwnedByUser) return <></>
 
   const courseProducts = course.courseProducts
-  Utils.assert(courseProducts.length === 2, 'Expected 2 course products')
+  Utils.assert(courseProducts.length === 1, 'Expected 1 course product')
 
-  const basic = courseProducts.reduce((prev, current) =>
-    prev.price < current.price ? prev : current,
-  )
-  const premium = courseProducts.filter(
-    (cp) => cp.productId !== basic.productId,
-  )[0]
+  const javaProduct = courseProducts[0]
+
+  let counter = 0
 
   return (
     <Flex
@@ -47,22 +44,24 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
         <CardWrapper direction="column" gap="16px" alignItems="flex-start">
           <HeaderWrapper direction="column" gap="16px">
             <Heading variant="h4" uppercase>
-              {getCourseProductName(basic.productId)}
+              {getCourseProductName(javaProduct.productId)}
             </Heading>
             <Heading variant="h3">
-              {basic.price != null ? `${basic.price / 100} €` : 'N/A'}
+              {javaProduct.price != null
+                ? `${javaProduct.price / 100} €`
+                : 'N/A'}
             </Heading>
             <NextLink
               href={{
                 pathname: routes.checkout.courseProduct(
                   course.slug,
-                  basic.productId,
+                  javaProduct.productId,
                 ),
               }}
             >
               <CheckoutButton
                 variant="accent"
-                disabled={basic.price == null}
+                disabled={javaProduct.price == null}
                 uppercase
               >
                 Kúpiť
@@ -85,10 +84,13 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
               <Text>Všetky úlohy a zadania</Text>
             </li>
             <li>
+              <Text>Všetky zadania ohodnotené lektorom</Text>
+            </li>
+            <li>
               <Text>Prístup k súkromnej Discord komunite</Text>
             </li>
             <li>
-              <Text>Ohodnotené zadania</Text>
+              <Text>Kariérne poradenstvo</Text>
             </li>
           </BenefitsSection>
           <BottomText>
@@ -97,72 +99,144 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
             kurzy od rôznych inštruktorov, stačí ti tento jeden.
           </BottomText>
         </CardWrapper>
-
-        <CardWrapper direction="column" gap="16px" alignItems="flex-start" gold>
-          <HeaderWrapper direction="column" gap="24px" gold>
-            <GoldHeading variant="h4" uppercase>
-              {getCourseProductName(premium.productId)}
-            </GoldHeading>
-            <Heading variant="h3">
-              {premium.price != null ? `${premium.price / 100} €` : 'N/A'}
-            </Heading>
-            <NextLink
-              href={{
-                pathname: routes.checkout.courseProduct(
-                  course.slug,
-                  premium.productId,
-                ),
-              }}
-            >
-              <CheckoutButton
-                variant="accent"
-                disabled={premium.price == null}
-                uppercase
-                gold
-              >
-                Kúpiť
-              </CheckoutButton>
-            </NextLink>
-            <JavaCourseImageWrapper gold>
-              <Image
-                alt="Java kurz"
-                src={javaCourseGoldLogo}
-                layout="fill"
-                priority
-              />
-            </JavaCourseImageWrapper>
-          </HeaderWrapper>
-          <BenefitsSection gold>
-            <li>
-              <Text>Všetko, čo obsahuje základný balík</Text>
-            </li>
-          </BenefitsSection>
-          <PlusWrapperFlex
-            direction="column"
-            gap="12px"
-            alignItems="flex-start"
-            gold
-          >
-            <Text weight="bold">Plus:</Text>
-            <PlusBenefitsSection>
-              <li>
-                <Text>2 hodiny konzultácií</Text>
-              </li>
-              <li>
-                <Text>Pomoc s tvorbou životopisu a portfólia</Text>
-              </li>
-              <li>
-                <Text>Kariérne poradenstvo</Text>
-              </li>
-            </PlusBenefitsSection>
-          </PlusWrapperFlex>
-          <BottomText>
-            Zvýš svoje šance na úspech! Vďaka individuálnemu prístupu budeš v
-            kurze napredovať rýchlejšie. S mentorom z praxe sa zameriaš aj na
-            to, ako sa úspešne dostať na trh práce.
-          </BottomText>
-        </CardWrapper>
       </CardsFlex>
+
+      <Heading variant="h4">Časté otázky</Heading>
+      <AccordionRoot type="multiple">
+        <Item value={`${counter++}`}>
+          <Header>
+            <Trigger>
+              <Heading variant="h6">Pre koho je kurz určený?</Heading>
+              <AccordionChevron />
+            </Trigger>
+          </Header>
+          <AccordionContent>
+            <AccordionContentWrapper clickable>
+              <Text>
+                Tento kurz nie je pre úplných začiatočníkov. Javu síce nemusíš
+                poznať vôbec, ale mať za sebou už aspoň trošku programovania
+                áno. Ak máš záujem skôr o kurz, ktorý ťa uvedie do sveta
+                programovania, tak na to máme zadarmo kurz{' '}
+                <a href={'/kurzy/informatika-101'} target="_blank">
+                  Informatika 101
+                </a>
+                . Zároveň tento Java kurz je pre všetkých serióznych záujemcov
+                stať sa Java programátorom či programátorkou.
+              </Text>
+            </AccordionContentWrapper>
+          </AccordionContent>
+        </Item>
+        <Item value={`${counter++}`}>
+          <Header>
+            <Trigger>
+              <Heading variant="h6">Čo všetko získam?</Heading>
+              <AccordionChevron />
+            </Trigger>
+          </Header>
+          <AccordionContent>
+            <AccordionContentWrapper clickable>
+              <Text>
+                Po zakúpení kurzu získaš prístup ku všetkým videám, úlohám,
+                zadaniam, materiálom či súkromnej Discord komunite. Študenti
+                tohto kurzu si najviac cenia hodnotenie zadaní.
+                <br />
+                Kurz sa skladá z dopredu nahratých videí a úloh. Každý študent
+                si ide vlastným tempom a pozerá videá kedy chce, v akom poradí
+                chce.
+              </Text>
+            </AccordionContentWrapper>
+          </AccordionContent>
+        </Item>
+        <Item value={`${counter++}`}>
+          <Header>
+            <Trigger>
+              <Heading variant="h6">
+                Ako dlho budem mať prístup ku kurzu?
+              </Heading>
+              <AccordionChevron />
+            </Trigger>
+          </Header>
+          <AccordionContent>
+            <AccordionContentWrapper clickable>
+              <Text>
+                Po zakúpení kurzu budeš mať prístup ku všetkým materiálom
+                navždy.
+              </Text>
+            </AccordionContentWrapper>
+          </AccordionContent>
+        </Item>
+        <Item value={`${counter++}`}>
+          <Header>
+            <Trigger>
+              <Heading variant="h6">Ako môžem platiť?</Heading>
+              <AccordionChevron />
+            </Trigger>
+          </Header>
+          <AccordionContent>
+            <AccordionContentWrapper clickable>
+              <Text>
+                Platbu môžeš vykonať platobnou kartou. Po platbe získaš prístup
+                ku kurzu ihneď. Kurz bude spárovaný s tvojím účtom na stránke.{' '}
+                <br />
+                Ak máš záujem o inú formu platby, alebo platbu na faktúru,
+                kontaktuj nás na info@streetofcode.sk
+              </Text>
+            </AccordionContentWrapper>
+          </AccordionContent>
+        </Item>
+        <Item value={`${counter++}`}>
+          <Header>
+            <Trigger>
+              <Heading variant="h6">
+                Čo ak mám záujem o osobné konzultácie?
+              </Heading>
+              <AccordionChevron />
+            </Trigger>
+          </Header>
+          <AccordionContent>
+            <AccordionContentWrapper clickable>
+              <Text>
+                Po zakúpení kurzu získaš prístup ku súkromnej Discord komunite,
+                kde môžeš klásť otázky. Navyše s každým študentom sa snažím mať
+                osobný kontakt (na Discorde) a pomôcť mu s jeho problémami.{' '}
+                <br /> <br />
+                Ak máš záujem o osobné konzultácie, napíš mi na
+                jakub@streetofcode.sk (alebo na Discorde) a dohodneme sa. Cez
+                osobné konzulácie formou videohovoru vieme spolu napríklad
+                riešiť nasledovné témy:
+                <ul>
+                  <li>
+                    Príprava na pohovor (vieme si dať aj simulovaný pohovor)
+                  </li>
+                  <li>Code review</li>
+                  <li>Technické a iné otázky</li>
+                  <li>Tvorba životopisu a kariérne poradenstvo</li>
+                </ul>
+              </Text>
+            </AccordionContentWrapper>
+          </AccordionContent>
+        </Item>
+        <Item value={`${counter++}`}>
+          <Header>
+            <Trigger>
+              <Heading variant="h6">Dostanem certifikát?</Heading>
+              <AccordionChevron />
+            </Trigger>
+          </Header>
+          <AccordionContent>
+            <AccordionContentWrapper clickable>
+              <Text>
+                Veľmi rád by som napísal, že bude pekný farebný certifikát, no
+                pravda je taká, že certifikáty z programovania skoro nikoho
+                nezaujímajú. Na pohovore sa ťa budú pýtať technické otázky a
+                pozerať na tvoje projekty na GitHube, a nie na to, či máš
+                certifikát o absolvovaní kurzu. Na veciach, na ktorých záleží,
+                ťa v tomto kurze pripravím.
+              </Text>
+            </AccordionContentWrapper>
+          </AccordionContent>
+        </Item>
+      </AccordionRoot>
     </Flex>
   )
 }
@@ -170,7 +244,7 @@ const JavaKurzCourseProducts = ({className, course, innerRef}: Props) => {
 const CourseProducts = ({className, course, innerRef}: Props) => {
   if (course.slug === courseProductsConfig.javaKurz.slug) {
     return (
-      <JavaKurzCourseProducts
+      <JavaKurzCourseProduct
         course={course}
         innerRef={innerRef}
         className={className}
@@ -180,6 +254,100 @@ const CourseProducts = ({className, course, innerRef}: Props) => {
     return <></>
   }
 }
+
+const AccordionRoot = styled(Accordion.Root)`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 75%;
+
+  @media ${device.S} {
+    width: 100%;
+  }
+`
+const Item = styled(Accordion.Item)`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`
+
+const Header = styled(Accordion.Header)`
+  margin: 0;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--color-accent);
+
+  &:hover {
+    cursor: pointer;
+  }
+`
+
+const Trigger = styled(Accordion.Trigger)`
+  all: unset;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`
+
+const openContentAnimation = keyframes({
+  from: {height: 0},
+  to: {height: 'var(--radix-accordion-content-height)'},
+})
+
+const closeContentAnimation = keyframes({
+  from: {height: 'var(--radix-accordion-content-height)'},
+  to: {height: 0},
+})
+
+const AccordionContent = styled(Accordion.Content)`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  [data-state='open'] & {
+    animation: ${openContentAnimation} 300ms ease-out forwards;
+    overflow: hidden;
+  }
+  [data-state='closed'] & {
+    animation: ${closeContentAnimation} 300ms ease-out forwards;
+    overflow: hidden;
+  }
+`
+
+const StyledText = styled(Text)``
+
+const AccordionContentWrapper = styled(Flex)<{clickable: boolean}>`
+  padding: 0 4px;
+
+  &:hover {
+    cursor: ${(props) => props.clickable && 'pointer'};
+    color: ${(props) => props.clickable && 'var(--color-accent)'};
+
+    ${StyledText} {
+      color: ${(props) => props.clickable && 'var(--color-accent)'};
+    }
+  }
+
+  svg {
+    color: var(--color-secondary);
+  }
+`
+
+const AccordionChevron = styled(BiChevronDown)`
+  width: 24px;
+  height: 24px;
+  transition: transform 300ms;
+  [data-state='open'] & {
+    transform: rotate(180deg);
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  flex-shrink: 0;
+  color: var(--color-secondary);
+`
 
 const CardsFlex = styled(Flex)`
   @media ${device.M} {
@@ -192,9 +360,8 @@ const CardWrapper = styled(Flex)<{gold?: boolean}>`
   margin-top: 48px;
   padding: 16px 16px 24px 16px;
   border-radius: 22px;
-  border: ${(props) =>
-    `6px solid ${props.gold ? GOLD_COLOR : 'var(--color-accent)'}`};
-  width: 400px;
+  border: 6px solid var(--color-accent);
+  width: 500px;
 
   @media ${device.S} {
     width: 360px;
@@ -212,8 +379,7 @@ const HeaderWrapper = styled(Flex)<{gold?: boolean}>`
   border-radius: 18px;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
-  border: ${(props) =>
-    `4px solid ${props.gold ? GOLD_COLOR : 'var(--color-accent)'}`};
+  border: 4px solid var(--color-accent);
   position: relative;
 `
 
@@ -221,8 +387,7 @@ const JavaCourseImageWrapper = styled.div<{gold?: boolean}>`
   width: 100px;
   aspect-ratio: 1;
   border-radius: 10px;
-  border: ${(props) =>
-    `4px solid ${props.gold ? GOLD_COLOR : 'var(--color-accent)'}`};
+  border: 4px solid var(--color-accent);
   background-color: var(--color-primary);
 
   position: absolute;
@@ -247,8 +412,7 @@ const BenefitsSection = styled.ul<{gold?: boolean}>`
   padding-right: 8px;
   padding-left: 8px;
   padding-bottom: 12px;
-  border-bottom: ${(props) =>
-    `2px solid ${props.gold ? GOLD_COLOR : 'var(--color-accent)'}`};
+  border-bottom: 2px solid var(--color-accent);
 
   li {
     display: flex;
@@ -265,41 +429,10 @@ const BenefitsSection = styled.ul<{gold?: boolean}>`
   }
 `
 
-const PlusBenefitsSection = styled.ul`
-  list-style: none;
-  align-self: stretch;
-  margin: 0;
-  padding: 0;
-
-  li {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-
-    :before {
-      content: '+';
-    }
-
-    :not(:last-of-type) {
-      margin-bottom: 12px;
-    }
-  }
-`
-
-const PlusWrapperFlex = styled(Flex)<{gold?: boolean}>`
-  align-self: stretch;
-  padding-right: 8px;
-  padding-left: 8px;
-  padding-bottom: 12px;
-  border-bottom: ${(props) =>
-    `2px solid ${props.gold ? GOLD_COLOR : 'var(--color-accent)'}`};
-`
-
 const CheckoutButton = styled(Button)<{gold?: boolean}>`
   width: 260px;
-  background-color: ${(props) =>
-    props.gold ? GOLD_COLOR : 'var(--color-accent)'};
-  border-color: ${(props) => (props.gold ? GOLD_COLOR : 'var(--color-accent)')};
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
 
   @media ${device.S} {
     width: 220px;
@@ -313,10 +446,6 @@ const CheckoutButton = styled(Button)<{gold?: boolean}>`
 const BottomText = styled(Text)`
   padding-right: 8px;
   padding-left: 8px;
-`
-
-const GoldHeading = styled(Heading)`
-  color: ${GOLD_COLOR};
 `
 
 export default CourseProducts

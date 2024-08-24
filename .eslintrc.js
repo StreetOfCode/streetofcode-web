@@ -31,7 +31,7 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'max-len': ['error', {code: 120}],
     'react/display-name': 'off',
-    'linebreak-style': ['error', 'unix'],
+    'linebreak-style': 0,
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
