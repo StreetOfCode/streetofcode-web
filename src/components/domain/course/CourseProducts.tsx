@@ -25,8 +25,11 @@ const JavaKurzCourseProduct = ({className, course, innerRef}: Props) => {
   const isCourseOwnedByUser = Utils.isCourseOwnedByUser(course)
   if (isCourseOwnedByUser) return <></>
 
-  const activeCourseProducts = course.courseProducts.filter(c => !c.archived)
-  Utils.assert(activeCourseProducts.length === 1, 'Expected 1 active course product')
+  const activeCourseProducts = course.courseProducts.filter((c) => !c.archived)
+  Utils.assert(
+    activeCourseProducts.length === 1,
+    'Expected 1 active course product',
+  )
 
   const javaProduct = activeCourseProducts[0]
 
@@ -43,7 +46,7 @@ const JavaKurzCourseProduct = ({className, course, innerRef}: Props) => {
       <CardsFlex justifyContent="center" gap="32px" alignItems="flex-start">
         <CardWrapper direction="column" gap="16px" alignItems="flex-start">
           <HeaderWrapper direction="column" gap="16px">
-            <Heading variant="h5" align={"center"}>
+            <Heading variant="h5" align={'center'}>
               Chcem sa stať Java programátorom/kou
             </Heading>
             <Heading variant="h4">

@@ -152,7 +152,7 @@ const CourseCard = ({
 }
 
 export const coursePrice = (course: CourseOverview) => {
-  const activeCourseProducts = course.courseProducts.filter(c => !c.archived)
+  const activeCourseProducts = course.courseProducts.filter((c) => !c.archived)
   if (activeCourseProducts.length === 0) {
     return 'ZADARMO'
   } else if (activeCourseProducts.length === 1) {
