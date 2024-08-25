@@ -7,7 +7,7 @@ import Button from '../../core/Button'
 import Flex from '../../core/Flex'
 import NextLink from '../../core/NextLink'
 import * as Utils from '../../../utils'
-import {courseProductsConfig, getCourseProductName} from '../../../constants'
+import {courseProductsConfig} from '../../../constants'
 import Text from '../../core/Text'
 import Heading from '../../core/Heading'
 import {device} from '../../../theme/device'
@@ -25,10 +25,10 @@ const JavaKurzCourseProduct = ({className, course, innerRef}: Props) => {
   const isCourseOwnedByUser = Utils.isCourseOwnedByUser(course)
   if (isCourseOwnedByUser) return <></>
 
-  const courseProducts = course.courseProducts
-  Utils.assert(courseProducts.length === 1, 'Expected 1 course product')
+  const activeCourseProducts = course.courseProducts.filter(c => !c.archived)
+  Utils.assert(activeCourseProducts.length === 1, 'Expected 1 active course product')
 
-  const javaProduct = courseProducts[0]
+  const javaProduct = activeCourseProducts[0]
 
   let counter = 0
 
@@ -43,10 +43,10 @@ const JavaKurzCourseProduct = ({className, course, innerRef}: Props) => {
       <CardsFlex justifyContent="center" gap="32px" alignItems="flex-start">
         <CardWrapper direction="column" gap="16px" alignItems="flex-start">
           <HeaderWrapper direction="column" gap="16px">
-            <Heading variant="h4" uppercase>
-              {getCourseProductName(javaProduct.productId)}
+            <Heading variant="h5" align={"center"}>
+              Chcem sa stať Java programátorom/kou
             </Heading>
-            <Heading variant="h3">
+            <Heading variant="h4">
               {javaProduct.price != null
                 ? `${javaProduct.price / 100} €`
                 : 'N/A'}

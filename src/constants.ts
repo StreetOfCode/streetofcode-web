@@ -33,7 +33,7 @@ export const courseProductsConstants: {
     name: 'Java Kurz',
     variants: {
       [courseProductsConfig.javaKurz.productIds.basic]: {
-        variantName: 'Premium balík',
+        variantName: 'Java kurz',
       },
     },
   },

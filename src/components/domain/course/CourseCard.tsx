@@ -152,13 +152,14 @@ const CourseCard = ({
 }
 
 export const coursePrice = (course: CourseOverview) => {
-  if (course.courseProducts.length === 0) {
+  const activeCourseProducts = course.courseProducts.filter(c => !c.archived)
+  if (activeCourseProducts.length === 0) {
     return 'ZADARMO'
-  } else if (course.courseProducts.length === 1) {
-    return `${course.courseProducts[0].price / 100}€`
+  } else if (activeCourseProducts.length === 1) {
+    return `${activeCourseProducts[0].price / 100}€`
   } else {
     return `od ${Math.min(
-      ...course.courseProducts.map((cp) => cp.price / 100),
+      ...activeCourseProducts.map((cp) => cp.price / 100),
     )}€`
   }
 }

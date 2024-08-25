@@ -26,7 +26,7 @@ const CourseCTAButton = ({
 
   const states = Utils.getCourseProductStates(courseOverview, user)
 
-  if (states.hasProductsAndIsOwnedByUser) {
+  if (states.hasActiveProductsAndIsOwnedByUser) {
     return (
       <NextLink
         href={{pathname: continueUrl, query: {autoplay: 'false'}}}
@@ -39,7 +39,7 @@ const CourseCTAButton = ({
         </StyledButton>
       </NextLink>
     )
-  } else if (states.hasProductsButIsNotOwnedByUser) {
+  } else if (states.hasActiveProductsButIsNotOwnedByUser) {
     return (
       <a href="#products" style={{alignSelf: 'stretch'}}>
         <StyledButton variant="accent" disableHoverTransform>
@@ -47,7 +47,7 @@ const CourseCTAButton = ({
         </StyledButton>
       </a>
     )
-  } else if (states.hasNoProductsAndIsLoggedIn) {
+  } else if (states.hasNoActiveProductsAndIsLoggedIn) {
     return (
       <NextLink
         href={{pathname: continueUrl, query: {autoplay: 'false'}}}
@@ -60,7 +60,7 @@ const CourseCTAButton = ({
         </StyledButton>
       </NextLink>
     )
-  } else if (states.hasNoProductsAndIsNotLoggedIn) {
+  } else if (states.hasNoActiveProductsAndIsNotLoggedIn) {
     return (
       <NextLink
         href={routes.login.redirectUri(encodeURIComponent(location.pathname))}

@@ -27,18 +27,18 @@ const CourseContent = ({className, course, ...props}: Props) => {
   const states = Utils.getCourseProductStates(course, user)
 
   const isLectureClickable = (lecture: LectureOverview) => {
-    if (states.hasNoProductsAndIsLoggedIn || states.hasProductsAndIsOwnedByUser)
+    if (states.hasNoActiveProductsAndIsLoggedIn || states.hasActiveProductsAndIsOwnedByUser)
       return true
 
     const allowPreviewWhenPaid = lecture.allowPreviewWhenPaid
-    if (allowPreviewWhenPaid && states.hasProductsButIsNotOwnedByUser)
+    if (allowPreviewWhenPaid && states.hasActiveProductsButIsNotOwnedByUser)
       return true
 
     return false
   }
 
   const shouldPreviewLectureForPaidCourse = (lecture: LectureOverview) => {
-    return isLectureClickable(lecture) && states.hasProductsButIsNotOwnedByUser
+    return isLectureClickable(lecture) && states.hasActiveProductsButIsNotOwnedByUser
   }
 
   const getChapterLengthInfo = (chapter: ChapterOverview): React.ReactNode => {

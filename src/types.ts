@@ -125,6 +125,7 @@ export interface CourseProduct {
   courseId: number
   courseUserProducts: CourseUserProduct[]
   price: number
+  archived: boolean
 }
 
 export interface CourseProgressOverview {

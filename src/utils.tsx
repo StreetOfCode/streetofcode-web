@@ -236,14 +236,14 @@ export const getCourseProductStates = (
   course: CourseOverview,
   user: User | null,
 ) => {
-  const hasProducts = course.courseProducts.length !== 0
+  const hasActiveProducts = course.courseProducts.map(c => !c.archived).length !== 0
   const ownedByUser = isCourseOwnedByUser(course)
 
   const states = {
-    hasProductsAndIsOwnedByUser: hasProducts && ownedByUser,
-    hasProductsButIsNotOwnedByUser: hasProducts && !ownedByUser,
-    hasNoProductsAndIsLoggedIn: !hasProducts && user,
-    hasNoProductsAndIsNotLoggedIn: !hasProducts && !user,
+    hasActiveProductsAndIsOwnedByUser: hasActiveProducts && ownedByUser,
+    hasActiveProductsButIsNotOwnedByUser: hasActiveProducts && !ownedByUser,
+    hasNoActiveProductsAndIsLoggedIn: !hasActiveProducts && user,
+    hasNoActiveProductsAndIsNotLoggedIn: !hasActiveProducts && !user,
   }
 
   return states
