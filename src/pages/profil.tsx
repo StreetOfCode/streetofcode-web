@@ -262,7 +262,7 @@ const ProfilePageContent = ({socUser}: {socUser: SocUser | null}) => {
                     <Heading variant="h4" withAccentUnderline normalWeight>
                       História platieb
                     </Heading>
-                    <Flex direction="column" gap="16px">
+                    <Flex direction="column" gap="16px" alignItems="flex-start">
                       {boughtCourses.map((boughtCourse, i) => (
                         <Flex
                           key={i}
