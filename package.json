@@ -81,7 +81,11 @@
     "postcss": "^8.4.31",
     "braces": "3.0.3",
     "micromatch": "4.0.8",
-    "@grpc/grpc-js": "1.11.1"
+    "@grpc/grpc-js": "1.11.1",
+    "rollup": "2.79.2",
+    "dompurify": "2.5.4",
+    "@sentry/browser": "7.119.1",
+    "cookie": "0.7.0"
   },
   "eslintConfig": {
     "extends": "next/core-web-vitals"

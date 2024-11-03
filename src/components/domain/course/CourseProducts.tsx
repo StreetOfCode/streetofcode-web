@@ -11,7 +11,7 @@ import {courseProductsConfig} from '../../../constants'
 import Text from '../../core/Text'
 import Heading from '../../core/Heading'
 import {device} from '../../../theme/device'
-import {javaCourseLogo} from '../../../images'
+import {javaCourseLogo, sqlLogoImage} from '../../../images'
 import {BiChevronDown} from 'react-icons/bi'
 import * as Accordion from '@radix-ui/react-accordion'
 
@@ -150,43 +150,8 @@ const JavaKurzCourseProduct = ({className, course, innerRef}: Props) => {
             </AccordionContentWrapper>
           </AccordionContent>
         </Item>
-        <Item value={`${counter++}`}>
-          <Header>
-            <Trigger>
-              <Heading variant="h6">
-                Ako dlho budem mať prístup ku kurzu?
-              </Heading>
-              <AccordionChevron />
-            </Trigger>
-          </Header>
-          <AccordionContent>
-            <AccordionContentWrapper clickable>
-              <Text>
-                Po zakúpení kurzu budeš mať prístup ku všetkým materiálom
-                navždy.
-              </Text>
-            </AccordionContentWrapper>
-          </AccordionContent>
-        </Item>
-        <Item value={`${counter++}`}>
-          <Header>
-            <Trigger>
-              <Heading variant="h6">Ako môžem platiť?</Heading>
-              <AccordionChevron />
-            </Trigger>
-          </Header>
-          <AccordionContent>
-            <AccordionContentWrapper clickable>
-              <Text>
-                Platbu môžeš vykonať platobnou kartou. Po platbe získaš prístup
-                ku kurzu ihneď. Kurz bude spárovaný s tvojím účtom na stránke.{' '}
-                <br />
-                Ak máš záujem o inú formu platby, alebo platbu na faktúru,
-                kontaktuj nás na info@streetofcode.sk
-              </Text>
-            </AccordionContentWrapper>
-          </AccordionContent>
-        </Item>
+        <CourseValidationQuestion counter={counter++} />
+        <PaymentMethodsQuestion counter={counter++} />
         <Item value={`${counter++}`}>
           <Header>
             <Trigger>
@@ -244,10 +209,168 @@ const JavaKurzCourseProduct = ({className, course, innerRef}: Props) => {
   )
 }
 
+const SQLCourseProduct = ({className, course, innerRef}: Props) => {
+  const isCourseOwnedByUser = Utils.isCourseOwnedByUser(course)
+  if (isCourseOwnedByUser) return <></>
+
+  const activeCourseProducts = course.courseProducts.filter((c) => !c.archived)
+  Utils.assert(
+    activeCourseProducts.length === 1,
+    'Expected 1 active course product',
+  )
+
+  const sqlProduct = activeCourseProducts[0]
+
+  let counter = 0
+
+  return (
+    <Flex
+      direction="column"
+      gap="48px"
+      alignItems="center"
+      className={className}
+      innerRef={innerRef}
+    >
+      <CardsFlex justifyContent="center" gap="32px" alignItems="flex-start">
+        <CardWrapper direction="column" gap="16px" alignItems="flex-start">
+          <HeaderWrapper direction="column" gap="16px">
+            <Heading variant="h5" align={'center'}>
+              Chcem sa naučiť základy SQL
+            </Heading>
+            <Heading variant="h4">
+              {sqlProduct.price != null ? `${sqlProduct.price / 100} €` : 'N/A'}
+            </Heading>
+            <NextLink
+              href={{
+                pathname: routes.checkout.courseProduct(
+                  course.slug,
+                  sqlProduct.productId,
+                ),
+              }}
+            >
+              <CheckoutButton
+                variant="accent"
+                disabled={sqlProduct.price == null}
+                uppercase
+              >
+                Kúpiť
+              </CheckoutButton>
+            </NextLink>
+            <JavaCourseImageWrapper>
+              <Image
+                alt="SQL Základy kurz"
+                src={sqlLogoImage}
+                layout="fill"
+                priority
+              />
+            </JavaCourseImageWrapper>
+          </HeaderWrapper>
+          <BottomText>
+            Ovládni základy SQL. Nauč sa prehľadávať a vytvárať dáta, ako aj
+            navrhovať vlastné databázy.
+          </BottomText>
+        </CardWrapper>
+      </CardsFlex>
+
+      <Heading variant="h4">Časté otázky</Heading>
+      <AccordionRoot type="multiple">
+        <Item value={`${counter++}`}>
+          <Header>
+            <Trigger>
+              <Heading variant="h6">Pre koho je kurz určený?</Heading>
+              <AccordionChevron />
+            </Trigger>
+          </Header>
+          <AccordionContent>
+            <AccordionContentWrapper clickable>
+              <Text>
+                Kurz je určený pre všetkých, ktorí sa chcú naučiť základy SQL.
+                Nie je potrebná žiadna predchádzajúca znalosť databáz. Či už si
+                začínajúci programátor, analytik, alebo manažér, tento kurz ti
+                pomôže zlepšiť tvoje schopnosti práce s dátami.
+              </Text>
+            </AccordionContentWrapper>
+          </AccordionContent>
+        </Item>
+        <Item value={`${counter++}`}>
+          <Header>
+            <Trigger>
+              <Heading variant="h6">Čo všetko získam?</Heading>
+              <AccordionChevron />
+            </Trigger>
+          </Header>
+          <AccordionContent>
+            <AccordionContentWrapper clickable>
+              <Text>
+                Po zakúpení kurzu získaš prístup ku všetkým videám, úlohám a
+                materiálom. Každý študent si ide vlastným tempom a pozerá videá
+                kedy chce, v akom poradí chce.
+              </Text>
+            </AccordionContentWrapper>
+          </AccordionContent>
+        </Item>
+        <CourseValidationQuestion counter={counter++} />
+        <PaymentMethodsQuestion counter={counter++} />
+      </AccordionRoot>
+    </Flex>
+  )
+}
+
+const CourseValidationQuestion = ({counter}: {counter: number}) => {
+  return (
+    <Item value={`${counter++}`}>
+      <Header>
+        <Trigger>
+          <Heading variant="h6">Ako dlho budem mať prístup ku kurzu?</Heading>
+          <AccordionChevron />
+        </Trigger>
+      </Header>
+      <AccordionContent>
+        <AccordionContentWrapper clickable>
+          <Text>
+            Po zakúpení kurzu budeš mať prístup ku všetkým materiálom navždy.
+          </Text>
+        </AccordionContentWrapper>
+      </AccordionContent>
+    </Item>
+  )
+}
+
+const PaymentMethodsQuestion = ({counter}: {counter: number}) => {
+  return (
+    <Item value={`${counter++}`}>
+      <Header>
+        <Trigger>
+          <Heading variant="h6">Ako môžem platiť?</Heading>
+          <AccordionChevron />
+        </Trigger>
+      </Header>
+      <AccordionContent>
+        <AccordionContentWrapper clickable>
+          <Text>
+            Platbu môžeš vykonať platobnou kartou. Po platbe získaš prístup ku
+            kurzu ihneď. Kurz bude spárovaný s tvojím účtom na stránke. <br />
+            Ak máš záujem o inú formu platby, alebo platbu na faktúru, kontaktuj
+            nás na info@streetofcode.sk
+          </Text>
+        </AccordionContentWrapper>
+      </AccordionContent>
+    </Item>
+  )
+}
+
 const CourseProducts = ({className, course, innerRef}: Props) => {
   if (course.slug === courseProductsConfig.javaKurz.slug) {
     return (
       <JavaKurzCourseProduct
+        course={course}
+        innerRef={innerRef}
+        className={className}
+      />
+    )
+  } else if (course.slug === courseProductsConfig.sql.slug) {
+    return (
+      <SQLCourseProduct
         course={course}
         innerRef={innerRef}
         className={className}

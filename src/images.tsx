@@ -12,6 +12,7 @@ import pavolImage from '../public/images/pavol.jpg'
 import theodorImage from '../public/images/theodor.jpg'
 import socLampImage from '../public/favicon.ico'
 import javaCourseImage from '../public/images/java_logo.png'
+import sqlLogo from '../public/images/database.png'
 
 export const FirstDesignCourseDetail =
   FirstDesignCourseDetailImage as StaticImageData
@@ -28,3 +29,4 @@ export const socLamp = socLampImage as StaticImageData
 export const pavol = pavolImage as StaticImageData
 export const theodor = theodorImage as StaticImageData
 export const javaCourseLogo = javaCourseImage as StaticImageData
+export const sqlLogoImage = sqlLogo as StaticImageData

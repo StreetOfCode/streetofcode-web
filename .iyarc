@@ -1,3 +1,5 @@
 # next js
 # no fix for next 12, requires update to next 13, but has low severity
 GHSA-c59h-r6p8-q9wc
+# no fix for next 12, requires update to next 14
+GHSA-g77x-44xx-532m
