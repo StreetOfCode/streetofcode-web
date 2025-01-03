@@ -29,7 +29,7 @@
     "@uiw/react-md-editor": "3.6.0",
     "clsx": "^1.2.1",
     "cookies-next": "^2.1.2",
-    "firebase": "^9.9.0",
+    "firebase": "^10.9.0",
     "html-react-parser": "^3.0.4",
     "next": "12.3.1",
     "next-remove-imports": "^1.0.11",
@@ -79,13 +79,15 @@
     "tsconfig-paths/json5": "1.0.2",
     "protobufjs": "^7.4.0",
     "postcss": "^8.4.31",
+    "nanoid": "^3.3.8",
     "braces": "3.0.3",
     "micromatch": "4.0.8",
     "@grpc/grpc-js": "1.11.1",
     "rollup": "2.79.2",
     "dompurify": "2.5.4",
     "@sentry/browser": "7.119.1",
-    "cookie": "0.7.0"
+    "cookie": "0.7.0",
+    "cross-spawn": "7.0.5"
   },
   "eslintConfig": {
     "extends": "next/core-web-vitals"

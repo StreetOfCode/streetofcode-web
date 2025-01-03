@@ -11,7 +11,7 @@ import {courseProductsConfig} from '../../../constants'
 import Text from '../../core/Text'
 import Heading from '../../core/Heading'
 import {device} from '../../../theme/device'
-import {javaCourseLogo, sqlLogoImage} from '../../../images'
+import {javaCourseLogo, sqlLogoImage, webGamesLogo} from '../../../images'
 import {BiChevronDown} from 'react-icons/bi'
 import * as Accordion from '@radix-ui/react-accordion'
 
@@ -316,6 +316,115 @@ const SQLCourseProduct = ({className, course, innerRef}: Props) => {
   )
 }
 
+const WebGamesCourseProduct = ({className, course, innerRef}: Props) => {
+  const isCourseOwnedByUser = Utils.isCourseOwnedByUser(course)
+  if (isCourseOwnedByUser) return <></>
+
+  const activeCourseProducts = course.courseProducts.filter((c) => !c.archived)
+  Utils.assert(
+    activeCourseProducts.length === 1,
+    'Expected 1 active course product',
+  )
+
+  const webGamesProduct = activeCourseProducts[0]
+
+  let counter = 0
+
+  return (
+    <Flex
+      direction="column"
+      gap="48px"
+      alignItems="center"
+      className={className}
+      innerRef={innerRef}
+    >
+      <CardsFlex justifyContent="center" gap="32px" alignItems="flex-start">
+        <CardWrapper direction="column" gap="16px" alignItems="flex-start">
+          <HeaderWrapper direction="column" gap="16px">
+            <Heading variant="h5" align={'center'}>
+              Chcem sa naučiť kódiť webové hry
+            </Heading>
+            <Heading variant="h4">
+              {webGamesProduct.price != null
+                ? `${webGamesProduct.price / 100} €`
+                : 'N/A'}
+            </Heading>
+            <NextLink
+              href={{
+                pathname: routes.checkout.courseProduct(
+                  course.slug,
+                  webGamesProduct.productId,
+                ),
+              }}
+            >
+              <CheckoutButton
+                variant="accent"
+                disabled={webGamesProduct.price == null}
+                uppercase
+              >
+                Kúpiť
+              </CheckoutButton>
+            </NextLink>
+            <JavaCourseImageWrapper>
+              <Image
+                alt="Webové hry kurz"
+                src={webGamesLogo}
+                layout="fill"
+                priority
+              />
+            </JavaCourseImageWrapper>
+          </HeaderWrapper>
+          <BottomText>
+            Vytvor si 3 klasické hry a pridaj si ich do svojho portfólia.
+          </BottomText>
+        </CardWrapper>
+      </CardsFlex>
+
+      <Heading variant="h4">Časté otázky</Heading>
+      <AccordionRoot type="multiple">
+        <Item value={`${counter++}`}>
+          <Header>
+            <Trigger>
+              <Heading variant="h6">Pre koho je kurz určený?</Heading>
+              <AccordionChevron />
+            </Trigger>
+          </Header>
+          <AccordionContent>
+            <AccordionContentWrapper clickable>
+              <Text>
+                Tento kurz je ideálny pre začiatočníkov, ktorí už poznajú
+                základy HTML, CSS a JavaScriptu a chcú si vytvoriť prvé
+                interaktívne projekty. Je to perfektná príležitosť ako si
+                precvičiť svoje znalosti na reálnych hrách, ktoré môžete pridať
+                do svojho portfólia.
+              </Text>
+            </AccordionContentWrapper>
+          </AccordionContent>
+        </Item>
+        <Item value={`${counter++}`}>
+          <Header>
+            <Trigger>
+              <Heading variant="h6">Čo všetko získam?</Heading>
+              <AccordionChevron />
+            </Trigger>
+          </Header>
+          <AccordionContent>
+            <AccordionContentWrapper clickable>
+              <Text>
+                Po zakúpení kurzu získaš prístup ku všetkým videám a materiálom.
+                Každý študent si ide vlastným tempom a pozerá videá kedy chce, v
+                akom poradí chce.
+              </Text>
+            </AccordionContentWrapper>
+          </AccordionContent>
+        </Item>
+        <CourseValidationQuestion counter={counter++} />
+        <PaymentMethodsQuestion counter={counter++} />
+      </AccordionRoot>
+    </Flex>
+  )
+}
+
 const CourseValidationQuestion = ({counter}: {counter: number}) => {
   return (
     <Item value={`${counter++}`}>
@@ -371,6 +480,14 @@ const CourseProducts = ({className, course, innerRef}: Props) => {
   } else if (course.slug === courseProductsConfig.sql.slug) {
     return (
       <SQLCourseProduct
+        course={course}
+        innerRef={innerRef}
+        className={className}
+      />
+    )
+  } else if (course.slug === courseProductsConfig.webGames.slug) {
+    return (
+      <WebGamesCourseProduct
         course={course}
         innerRef={innerRef}
         className={className}

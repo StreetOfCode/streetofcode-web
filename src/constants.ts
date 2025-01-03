@@ -7,7 +7,7 @@ export const TERMS_OF_SERVICE_URL =
 export const GDPR_URL =
   'http://wp.streetofcode.sk/wp-content/uploads/2023/08/GDPR.pdf'
 
-export type CourseProductType = 'javaKurz' | 'sql'
+export type CourseProductType = 'javaKurz' | 'sql' | 'webGames'
 
 export const courseProductsConfig: {
   [key in CourseProductType]: {
@@ -25,6 +25,12 @@ export const courseProductsConfig: {
     slug: process.env.NEXT_PUBLIC_COURSE_PRODUCT_SLUG_SQL || 'sql-zaklady',
     productIds: {
       basic: process.env.NEXT_PUBLIC_COURSE_PRODUCT_ID_SQL || '',
+    },
+  },
+  webGames: {
+    slug: process.env.NEXT_PUBLIC_COURSE_PRODUCT_SLUG_WEB_GAMES || 'webove-hry',
+    productIds: {
+      basic: process.env.NEXT_PUBLIC_COURSE_PRODUCT_ID_WEB_GAMES || '',
     },
   },
 } as const
@@ -48,6 +54,14 @@ export const courseProductsConstants: {
     variants: {
       [courseProductsConfig.sql.productIds.basic]: {
         variantName: 'SQL Základy',
+      },
+    },
+  },
+  webGames: {
+    name: 'Webové Hry: Pexeso, Had, 2048',
+    variants: {
+      [courseProductsConfig.webGames.productIds.basic]: {
+        variantName: 'Webové Hry: Pexeso, Had, 2048',
       },
     },
   },
