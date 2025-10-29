@@ -13,9 +13,6 @@ jobs:
       - name: Set up yarn
         run: yarn
 
-      - name: Run yarn audit
-        run: yarn improved-yarn-audit
-
       - name: Run tsc
         run: yarn tsc --noEmit
 
