@@ -14,6 +14,7 @@ import socLampImage from '../public/favicon.ico'
 import javaCourseImage from '../public/images/java_logo.png'
 import sqlLogo from '../public/images/database.png'
 import webGamesLogoImage from '../public/images/webGamesLogo.png'
+import aiLogo from '../public/images/ai_logo.png'
 
 export const FirstDesignCourseDetail =
   FirstDesignCourseDetailImage as StaticImageData
@@ -32,3 +33,4 @@ export const theodor = theodorImage as StaticImageData
 export const javaCourseLogo = javaCourseImage as StaticImageData
 export const sqlLogoImage = sqlLogo as StaticImageData
 export const webGamesLogo = webGamesLogoImage as StaticImageData
+export const aiLogoImage = aiLogo as StaticImageData
