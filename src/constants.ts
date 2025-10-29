@@ -38,7 +38,7 @@ export const courseProductsConfig: {
     productIds: {
       basic: process.env.NEXT_PUBLIC_COURSE_PRODUCT_ID_AI || '',
     },
-  }
+  },
 } as const
 
 export const courseProductsConstants: {

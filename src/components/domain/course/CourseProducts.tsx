@@ -11,7 +11,12 @@ import {courseProductsConfig} from '../../../constants'
 import Text from '../../core/Text'
 import Heading from '../../core/Heading'
 import {device} from '../../../theme/device'
-import {aiLogoImage, javaCourseLogo, sqlLogoImage, webGamesLogo} from '../../../images'
+import {
+  aiLogoImage,
+  javaCourseLogo,
+  sqlLogoImage,
+  webGamesLogo,
+} from '../../../images'
 import {BiChevronDown} from 'react-icons/bi'
 import * as Accordion from '@radix-ui/react-accordion'
 
@@ -364,16 +369,12 @@ const AICourseProduct = ({className, course, innerRef}: Props) => {
               </CheckoutButton>
             </NextLink>
             <CourseImageWrapper>
-              <Image
-                alt="AI kurz"
-                src={aiLogoImage}
-                layout="fill"
-                priority
-              />
+              <Image alt="AI kurz" src={aiLogoImage} layout="fill" priority />
             </CourseImageWrapper>
           </HeaderWrapper>
           <BottomText>
-          Updatni svoj spôsob programovania s AI nástrojmi - od GitHub Copilot až po Claude Code
+            Updatni svoj spôsob programovania s AI nástrojmi - od GitHub Copilot
+            až po Claude Code
           </BottomText>
         </CardWrapper>
       </CardsFlex>
@@ -390,9 +391,11 @@ const AICourseProduct = ({className, course, innerRef}: Props) => {
           <AccordionContent>
             <AccordionContentWrapper clickable>
               <Text>
-              Tento kurz je pre programátorov, ktorí už majú základné programovacie skúsenosti. Nemusíš byť senior, ale mal/a by si vedieť
-              pracovať vo svojom IDE (VSCode, Visual Studio, IntelliJ IDEA alebo podobné),
-              rozumieť základom Git a GitHub a orientovať sa v kóde svojho hlavného programovacieho jazyka.
+                Tento kurz je pre programátorov, ktorí už majú základné
+                programovacie skúsenosti. Nemusíš byť senior, ale mal/a by si
+                vedieť pracovať vo svojom IDE (VSCode, Visual Studio, IntelliJ
+                IDEA alebo podobné), rozumieť základom Git a GitHub a orientovať
+                sa v kóde svojho hlavného programovacieho jazyka.
               </Text>
             </AccordionContentWrapper>
           </AccordionContent>
@@ -407,9 +410,9 @@ const AICourseProduct = ({className, course, innerRef}: Props) => {
           <AccordionContent>
             <AccordionContentWrapper clickable>
               <Text>
-                Po zakúpení kurzu získaš prístup ku všetkým videám a
-                materiálom. Každý študent si ide vlastným tempom a pozerá videá
-                kedy chce, v akom poradí chce.
+                Po zakúpení kurzu získaš prístup ku všetkým videám a materiálom.
+                Každý študent si ide vlastným tempom a pozerá videá kedy chce, v
+                akom poradí chce.
               </Text>
             </AccordionContentWrapper>
           </AccordionContent>
@@ -424,8 +427,9 @@ const AICourseProduct = ({className, course, innerRef}: Props) => {
           <AccordionContent>
             <AccordionContentWrapper clickable>
               <Text>
-                Ak máte záujem o firemné školenie, kontaktujte nás na info@streetofcode.sk.
-                Pripravím vám ponuku do mailu pre školenie vo vašich priestoroch.
+                Ak máte záujem o firemné školenie, kontaktujte nás na
+                info@streetofcode.sk. Pripravím vám ponuku do mailu pre školenie
+                vo vašich priestoroch.
               </Text>
             </AccordionContentWrapper>
           </AccordionContent>
