@@ -396,6 +396,11 @@ const WrapperFlex = styled(Flex)`
 const CourseDetailsFlex = styled(Flex)`
   max-width: 50%;
 
+  h1 {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
   @media ${device.S} {
     max-width: 100%;
     order: 2;
