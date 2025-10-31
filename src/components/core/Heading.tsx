@@ -87,7 +87,7 @@ const Heading = ({
 
 const styleValuesBasedOnDevice = {
   XL: {
-    h1: {fontSize: '82px', lineHeight: '1.0'},
+    h1: {fontSize: '72px', lineHeight: '1.0'},
     h2: {fontSize: '62px', lineHeight: '1.1'},
     h3: {fontSize: '48px', lineHeight: '1.2'},
     h4: {fontSize: '32px', lineHeight: '1.3'},
