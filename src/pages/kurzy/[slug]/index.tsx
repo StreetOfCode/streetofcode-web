@@ -36,6 +36,7 @@ import SidebarCourseReviews from '../../../components/domain/course-review/Sideb
 import CourseProducts from '../../../components/domain/course/CourseProducts'
 import CourseCTAButton from '../../../components/domain/course/CourseCTAButton'
 import {coursePrice} from '../../../components/domain/course/CourseCard'
+import AiCoursePage from '../../../components/misc/ai-page'
 
 type Props = {
   slug: string
@@ -242,6 +243,16 @@ const CourseDetailContent = ({
       )
     }
   }
+
+  if (courseOverview.slug === 'informatika-101') {
+    return (
+      <PageContentWrapper>
+        <BackLink to={routes.kurzy.index} text={'Späť na kurzy'} />
+        <AiCoursePage courseOverview={courseOverview} />
+      </PageContentWrapper>
+    )
+  }
+
   return (
     <PageContentWrapper>
       <BackLink to={routes.kurzy.index} text={'Späť na kurzy'} />
