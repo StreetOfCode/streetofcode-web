@@ -1,0 +1,1542 @@
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+
+export const AnimatedCodeEditor = () => {
+  const [codeLines, setCodeLines] = useState<string[]>([
+    "// vytvor funkciu na sčítanie",
+    "",
+    "",
+    "",
+  ]);
+
+  useEffect(() => {
+    const lines = [
+      "// vytvor funkciu na sčítanie",
+      "function sum(a: number, b: number) {",
+      "  return a + b;",
+      "}",
+    ];
+
+    let currentLine = 1;
+    let currentChar = 0;
+
+    const typeCode = () => {
+      if (currentLine >= lines.length) {
+        setTimeout(() => {
+          setCodeLines(["// vytvor funkciu na sčítanie", "", "", ""]);
+          currentLine = 1;
+          currentChar = 0;
+          setTimeout(typeCode, 1000);
+        }, 3000);
+        return;
+      }
+
+      const targetLine = lines[currentLine];
+      if (currentChar <= targetLine.length) {
+        const newLines = [...lines];
+        newLines[currentLine] = targetLine.substring(0, currentChar);
+        setCodeLines(newLines);
+        currentChar++;
+        setTimeout(typeCode, 50);
+      } else {
+        currentLine++;
+        currentChar = 0;
+        setTimeout(typeCode, 200);
+      }
+    };
+
+    const timer = setTimeout(typeCode, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <motion.div
+      className="relative rounded-xl overflow-hidden shadow-2xl"
+      animate={{ y: [0, -10, 0] }}
+      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+    >
+      {/* Editor header */}
+      <div className="bg-card border border-border px-4 py-3 flex items-center gap-2">
+        <div className="flex gap-2">
+          <div className="w-3 h-3 rounded-full bg-destructive" />
+          <div className="w-3 h-3 rounded-full bg-yellow-500" />
+          <div className="w-3 h-3 rounded-full bg-green-500" />
+        </div>
+        <span className="text-xs text-muted-foreground ml-4">sum.ts</span>
+      </div>
+
+      {/* Code content */}
+      <div className="bg-card/50 backdrop-blur-sm border-x border-b border-border p-6 font-mono text-sm">
+        {codeLines.map((line, i) => (
+          <div key={i} className="flex gap-4 min-h-[24px]">
+            <span className="text-muted-foreground select-none w-6 text-right">{i + 1}</span>
+            <span className="flex-1">
+              {i === 0 && (
+                <span className="text-muted-foreground italic">{line}</span>
+              )}
+              {i === 1 && (
+                <span>
+                  <span className="text-secondary">function</span>
+                  {" "}
+                  <span className="text-accent">sum</span>
+                  <span className="text-muted-foreground">(</span>
+                  <span className="text-foreground">a</span>
+                  <span className="text-muted-foreground">: </span>
+                  <span className="text-secondary">number</span>
+                  <span className="text-muted-foreground">, </span>
+                  <span className="text-foreground">b</span>
+                  <span className="text-muted-foreground">: </span>
+                  <span className="text-secondary">number</span>
+                  <span className="text-muted-foreground">) {"{"}</span>
+                  {line.length < 42 && <span className="animate-pulse">|</span>}
+                </span>
+              )}
+              {i === 2 && (
+                <span>
+                  {"  "}
+                  <span className="text-primary">return</span>
+                  {" "}
+                  <span className="text-foreground">a + b</span>
+                  <span className="text-muted-foreground">;</span>
+                  {line.length < 15 && <span className="animate-pulse">|</span>}
+                </span>
+              )}
+              {i === 3 && (
+                <span>
+                  <span className="text-muted-foreground">{"}"}</span>
+                  {line.length < 1 && <span className="animate-pulse">|</span>}
+                </span>
+              )}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Glow effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 pointer-events-none" />
+    </motion.div>
+  );
+};
+
+
+
+import { motion } from "framer-motion";
+import { X, Check, Clock, BookOpen, Bug, Zap, Bot, Smile } from "lucide-react";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+    },
+  },
+};
+
+export const ComparisonSection = () => {
+  return (
+    <section className="py-20 relative">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            Aký je rozdiel?
+          </h2>
+          <p className="text-xl text-muted-foreground">
+            Porovnanie tradičného a AI-powered prístupu
+          </p>
+        </motion.div>
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+        >
+          {/* Without AI */}
+          <motion.div
+            variants={cardVariants}
+            whileHover={{ y: -8 }}
+            className="gradient-border p-8 rounded-2xl transition-transform duration-300"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 rounded-full bg-destructive/10 flex items-center justify-center">
+                <X className="w-6 h-6 text-destructive" />
+              </div>
+              <h3 className="text-2xl font-bold">Bez AI nástrojov</h3>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <Clock className="w-5 h-5 text-muted-foreground mt-1 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold">8 hodín na feature</p>
+                  <p className="text-sm text-muted-foreground">Pomalý development cyklus</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <BookOpen className="w-5 h-5 text-muted-foreground mt-1 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold">Stack Overflow hunting</p>
+                  <p className="text-sm text-muted-foreground">Manuálne hľadanie riešení</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Bug className="w-5 h-5 text-muted-foreground mt-1 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold">Debugging hell</p>
+                  <p className="text-sm text-muted-foreground">Ťažké hľadanie bugov</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <BookOpen className="w-5 h-5 text-muted-foreground mt-1 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold">Čítanie dokumentácie</p>
+                  <p className="text-sm text-muted-foreground">Časovo náročné štúdium</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Clock className="w-5 h-5 text-muted-foreground mt-1 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold">Opakujúca sa práca</p>
+                  <p className="text-sm text-muted-foreground">Manuálne písanie boilerplate</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* With AI */}
+          <motion.div
+            variants={cardVariants}
+            whileHover={{ y: -8 }}
+            className="gradient-border p-8 rounded-2xl transition-transform duration-300 relative overflow-hidden"
+          >
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-3xl" />
+            
+            <div className="flex items-center gap-3 mb-6 relative">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <Check className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold">S AI nástrojmi</h3>
+            </div>
+
+            <div className="space-y-4 relative">
+              <div className="flex items-start gap-3">
+                <Zap className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold text-primary">2 hodiny na feature</p>
+                  <p className="text-sm text-muted-foreground">4x rýchlejší development</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Bot className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold text-secondary">Asistent priamo v IDE</p>
+                  <p className="text-sm text-muted-foreground">Okamžité odpovede</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold text-accent">AI Code review</p>
+                  <p className="text-sm text-muted-foreground">Automatická detekcia chýb</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Zap className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold text-primary">Instant suggestions</p>
+                  <p className="text-sm text-muted-foreground">Inteligentné autocomplete</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Smile className="w-5 h-5 text-secondary mt-1 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold text-secondary">Automation</p>
+                  <p className="text-sm text-muted-foreground">Generovanie boilerplate kódu</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+
+import { motion } from "framer-motion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
+import { BookOpen, Code, Target, Bot, Zap, Wrench, CheckCircle2, Star } from "lucide-react";
+
+const courseModules = [
+  {
+    id: "intro",
+    icon: BookOpen,
+    title: "Úvod",
+    lessons: 7,
+    duration: "17 minút",
+    description: "Úvodné lekcie a nastavenie prostredia",
+    topics: [
+      "O čom je tento kurz",
+      "Pre koho je kurz určený",
+      "Čo už potrebuješ vedieť",
+      "Ako získať maximum z kurzu",
+    ],
+  },
+  {
+    id: "daily",
+    icon: Code,
+    title: "Každodenné programovanie",
+    lessons: 19,
+    duration: "141 minút",
+    popular: true,
+    description: "Praktické využitie AI v dennej práci",
+    topics: [
+      "GitHub Copilot základy",
+      "Efektívne prompty",
+      "Code completion tricks",
+      "Generovanie testov",
+      "Refactoring s AI",
+    ],
+  },
+  {
+    id: "cursor",
+    icon: Target,
+    title: "Cursor - ultimátne AI IDE",
+    lessons: 8,
+    duration: "60 minút",
+    description: "Komplexný sprievodca Cursor IDE",
+    topics: [
+      "Inštalácia a setup",
+      "Chat s codebase",
+      "Multi-file editing",
+      "Composer mode",
+      "Advanced features",
+    ],
+  },
+  {
+    id: "claude",
+    icon: Bot,
+    title: "Claude Code",
+    lessons: 10,
+    duration: "54 minút",
+    description: "Úvod do Claude Code asistenta",
+    topics: [
+      "Čo je Claude Code",
+      "Setup a integrácia",
+      "Základné príkazy",
+      "Práca s projektmi",
+      "Best practices",
+    ],
+  },
+  {
+    id: "workflow",
+    icon: Zap,
+    title: "Ultimátny workflow s Claude Code",
+    lessons: 8,
+    duration: "65 minút",
+    description: "Pokročilé techniky a workflow",
+    topics: [
+      "Efektívny workflow setup",
+      "Kombinácia nástrojov",
+      "Automatizácia úloh",
+      "Team collaboration",
+    ],
+  },
+  {
+    id: "advanced",
+    icon: Wrench,
+    title: "Pokročilé techniky s Claude Code",
+    lessons: 9,
+    duration: "56 minút",
+    description: "Expertné použitie Claude Code",
+    topics: [
+      "Komplexný refactoring",
+      "Architektonické rozhodnutia",
+      "Performance optimization",
+      "Security best practices",
+    ],
+  },
+  {
+    id: "practices",
+    icon: CheckCircle2,
+    title: "Best practices",
+    lessons: 3,
+    duration: "15 minút",
+    description: "Zhrnutie a best practices",
+    topics: [
+      "Zhrnutie kurzu",
+      "Ďalšie kroky",
+      "Zdroje a komunita",
+    ],
+  },
+];
+
+export const CourseContentSection = () => {
+  return (
+    <section id="content" className="py-20 relative">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            Čo kurz obsahuje?
+          </h2>
+          <p className="text-xl text-muted-foreground mb-8">
+            Kompletný obsah kurzu rozdelený do 7 sekcií
+          </p>
+
+          {/* Progress info */}
+          <div className="max-w-2xl mx-auto mb-8">
+            <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
+              <span>Celková dĺžka: 7h 45 minút</span>
+              <span>68 lekcií</span>
+            </div>
+            <div className="h-2 bg-muted rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-gradient-to-r from-primary via-secondary to-accent"
+                initial={{ width: 0 }}
+                whileInView={{ width: "0%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, delay: 0.5 }}
+              />
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto"
+        >
+          <Accordion type="single" collapsible className="space-y-4">
+            {courseModules.map((module, index) => (
+              <AccordionItem
+                key={module.id}
+                value={module.id}
+                className="gradient-border rounded-xl overflow-hidden"
+              >
+                <AccordionTrigger className="px-6 py-4 hover:no-underline group">
+                  <div className="flex items-center gap-4 w-full text-left">
+                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                      <module.icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-lg font-bold">{module.title}</h3>
+                        {module.popular && (
+                          <Badge className="bg-primary text-xs">
+                            <Star className="w-3 h-3 mr-1 fill-current" />
+                            Najpopulárnejšia
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        {module.lessons} lekcií | {module.duration}
+                      </p>
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-4">
+                  <p className="text-muted-foreground mb-4">{module.description}</p>
+                  <div className="space-y-2">
+                    {module.topics.map((topic, i) => (
+                      <div key={i} className="flex items-center gap-3 text-sm">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                        <span>{topic}</span>
+                      </div>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+import { motion } from "framer-motion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+
+const faqs = [
+  {
+    question: "Pre koho je kurz určený?",
+    answer: "Kurz je určený pre vývojárov na všetkých úrovniach - od juniorov po seniorov a tech leadov. Potrebuješ základné znalosti programovania v aspoň jednom jazyku (JavaScript/TypeScript, C#, Java) a znalosť práce s IDE. Kurz ti ukáže, ako využiť AI nástroje na zvýšenie produktivity bez ohľadu na tvoju aktuálnu úroveň.",
+  },
+  {
+    question: "Čo všetko získam?",
+    answer: "Získaš prístup k 68 video lekciám (7h 45min celkovo), praktickým projektom v rôznych jazykoch, kompletným setupom pre VS Code, Visual Studio a IntelliJ IDEA, a detailnému sprievodcovi pre GitHub Copilot, Cursor a Claude Code. Súčasťou je aj lifetime prístup k updatom a prístup do komunity.",
+  },
+  {
+    question: "Máme záujem o firemné školenie",
+    answer: "Pre firmy ponúkame špeciálne balíčky s hromadnými licenciami, možnosťou customizácie obsahu a priamou podporou. Kontaktujte nás na email@example.com pre individuálnu cenovú ponuku a detaily.",
+  },
+  {
+    question: "Ako dlho budem mať prístup ku kurzu?",
+    answer: "Máš lifetime prístup ku kurzu! Po zakúpení môžeš kurz študovať vlastným tempom a vrátiť sa k nemu kedykoľvek. Navíc automaticky dostaneš všetky budúce updaty zadarmo.",
+  },
+  {
+    question: "Ako môžem platiť?",
+    answer: "Akceptujeme platobné karty (Visa, Mastercard, American Express) cez bezpečnú platobnú bránu. Po úspešnej platbe okamžite získaš prístup ku kurzu. Ponúkame 30-dňovú záruku vrátenia peňazí bez udania dôvodu.",
+  },
+];
+
+export const FAQSection = () => {
+  return (
+    <section className="py-20 relative">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            Časté otázky
+          </h2>
+          <p className="text-xl text-muted-foreground">
+            Odpovede na najčastejšie otázky
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mx-auto"
+        >
+          <Accordion type="single" collapsible defaultValue="item-0" className="space-y-4">
+            {faqs.map((faq, index) => (
+              <AccordionItem
+                key={index}
+                value={`item-${index}`}
+                className="gradient-border rounded-xl overflow-hidden"
+              >
+                <AccordionTrigger className="px-6 py-4 hover:no-underline text-left">
+                  <span className="text-lg font-semibold">❓ {faq.question}</span>
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-4">
+                  <p className="text-muted-foreground leading-relaxed">{faq.answer}</p>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Mail } from "lucide-react";
+
+export const FinalCTA = () => {
+  return (
+    <section className="py-20 relative overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.15),transparent)]" />
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto"
+        >
+          <h2 className="text-4xl md:text-6xl font-bold mb-8">
+            Pripravený stať sa
+            <br />
+            <span className="text-gradient">produktívnejším?</span>
+          </h2>
+
+          <p className="text-xl text-muted-foreground mb-12">
+            Začni programovať s AI nástrojmi ešte dnes a zvýš svoju produktivitu o 300%
+          </p>
+
+          <Button
+            size="lg"
+            className="text-xl px-12 py-8 bg-primary hover:bg-primary/90 relative group overflow-hidden mb-8"
+          >
+            <span className="relative z-10 font-bold">Kúpiť kurz za 149€</span>
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent"
+              animate={{
+                x: ["-100%", "100%"],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            />
+          </Button>
+
+          <div className="flex items-center justify-center gap-2 text-muted-foreground">
+            <Mail className="w-4 h-4" />
+            <span>Máš otázky? Napíš na</span>
+            <a href="mailto:info@aiprogramming.sk" className="text-primary hover:underline">
+              info@aiprogramming.sk
+            </a>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, Zap, Target, Rocket, Star, User } from "lucide-react";
+import { AnimatedCodeEditor } from "./AnimatedCodeEditor";
+
+export const HeroSection = () => {
+  return (
+    <section className="relative min-h-screen flex items-center py-20 overflow-hidden">
+      {/* Animated background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 opacity-50" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(139,92,246,0.1),transparent)]" />
+      
+      <div className="container relative z-10 mx-auto px-4">
+        <motion.a
+          href="#"
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <ChevronLeft className="w-4 h-4" />
+          Späť na kurzy
+        </motion.a>
+
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left side - Content */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+              Profesionálne
+              <br />
+              <span className="text-gradient">programovanie s AI</span>
+            </h1>
+
+            <p className="text-xl md:text-2xl text-muted-foreground mb-8">
+              Updatni svoj spôsob programovania s AI nástrojmi
+            </p>
+
+            {/* Value propositions */}
+            <div className="space-y-4 mb-10">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-primary" />
+                </div>
+                <span className="text-lg">Programuj 3x rýchlejšie</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center">
+                  <Target className="w-5 h-5 text-secondary" />
+                </div>
+                <span className="text-lg">Od základov po pokročilé techniky</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                  <Rocket className="w-5 h-5 text-accent" />
+                </div>
+                <span className="text-lg">Praktické projekty v JS/TS, C#, Java</span>
+              </div>
+            </div>
+
+            {/* Social proof */}
+            <div className="flex items-center gap-6 mb-8 flex-wrap">
+              <div className="flex items-center gap-2">
+                <div className="flex">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                  ))}
+                </div>
+              </div>
+              <div className="text-muted-foreground">
+                68 lekcií | 7h 45 minút
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                  <User className="w-4 h-4 text-white" />
+                </div>
+                <span className="text-sm">Jakub Jahič</span>
+              </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+              <Button
+                size="lg"
+                className="text-lg px-8 py-6 bg-primary hover:bg-primary/90 relative group overflow-hidden"
+              >
+                <span className="relative z-10">Kúpiť kurz - 149€</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="text-lg px-8 py-6 border-2"
+                onClick={() => document.getElementById("content")?.scrollIntoView({ behavior: "smooth" })}
+              >
+                Pozrieť obsah
+              </Button>
+            </div>
+
+            {/* Trust badge */}
+            <p className="text-sm text-muted-foreground flex items-center gap-2">
+              💳 30-dňová záruka vrátenia peňazí
+            </p>
+          </motion.div>
+
+          {/* Right side - Animated Code Editor */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <AnimatedCodeEditor />
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+import { motion } from "framer-motion";
+import { GraduationCap, Briefcase, Users, Check } from "lucide-react";
+
+const personas = [
+  {
+    icon: GraduationCap,
+    title: "Junior Developer",
+    quote: "Chcem byť efektívnejší",
+    color: "from-green-500/20 to-blue-500/20",
+    iconColor: "text-green-500",
+    requirements: [
+      "Základy Git",
+      "Znalosti IDE",
+      "Jeden jazyk (JS/C#/Java)",
+    ],
+  },
+  {
+    icon: Briefcase,
+    title: "Senior Developer",
+    quote: "Držať krok s AI",
+    color: "from-blue-500/20 to-purple-500/20",
+    iconColor: "text-blue-500",
+    requirements: [
+      "Chcem modernizovať workflow",
+      "Zostať konkurencieschopný",
+      "Vedieť využiť AI nástroje",
+    ],
+  },
+  {
+    icon: Users,
+    title: "Tech Lead",
+    quote: "Zvýšiť produktivitu tímu",
+    color: "from-purple-500/20 to-pink-500/20",
+    iconColor: "text-purple-500",
+    requirements: [
+      "Implementovať AI v tíme",
+      "Best practices",
+      "Školenie členov tímu",
+    ],
+  },
+];
+
+export const PersonasSection = () => {
+  return (
+    <section className="py-20 relative">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            Je tento kurz pre teba?
+          </h2>
+          <p className="text-xl text-muted-foreground">
+            Kurz je vhodný pre rôzne úrovne vývojárov
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {personas.map((persona, index) => (
+            <motion.div
+              key={persona.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              className="gradient-border p-8 rounded-2xl transition-all duration-300 text-center group relative overflow-hidden"
+            >
+              {/* Background gradient */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${persona.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+              
+              <div className="relative">
+                {/* Icon */}
+                <div className="w-20 h-20 rounded-2xl bg-card border border-border flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <persona.icon className={`w-10 h-10 ${persona.iconColor}`} />
+                </div>
+
+                {/* Title */}
+                <h3 className="text-2xl font-bold mb-3">{persona.title}</h3>
+
+                {/* Quote */}
+                <p className="text-lg text-muted-foreground italic mb-6">
+                  "{persona.quote}"
+                </p>
+
+                {/* Requirements */}
+                <div className="space-y-3 text-left">
+                  <p className="text-sm font-semibold mb-3 text-center">Potrebuješ:</p>
+                  {persona.requirements.map((req) => (
+                    <div key={req} className="flex items-start gap-2">
+                      <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">{req}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Check, Shield, Lock, TrendingUp } from "lucide-react";
+
+const features = [
+  "68 video lekcií (7h 45min)",
+  "4 praktické projekty",
+  "Prístup k VS Code, Visual Studio, IntelliJ setupom",
+  "Claude Code kompletný sprievodca",
+  "Lifetime updates",
+  "Prístup do komunity",
+];
+
+export const PricingSection = () => {
+  return (
+    <section className="py-20 relative">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mx-auto"
+        >
+          <div className="gradient-border p-8 md:p-12 rounded-3xl relative overflow-hidden">
+            {/* Background effects */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary/30 to-transparent rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-accent/30 to-transparent rounded-full blur-3xl" />
+            
+            <div className="relative">
+              {/* Header */}
+              <div className="text-center mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  🎯 Chcem sa naučiť ovládať AI nástroje
+                </h2>
+                <div className="flex items-baseline justify-center gap-2">
+                  <span className="text-6xl md:text-7xl font-bold text-gradient">149 €</span>
+                </div>
+              </div>
+
+              {/* CTA Button */}
+              <Button
+                size="lg"
+                className="w-full text-xl py-8 mb-8 bg-primary hover:bg-primary/90 relative group overflow-hidden"
+              >
+                <span className="relative z-10 font-bold">KÚPIŤ KURZ</span>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent"
+                  animate={{
+                    x: ["-100%", "100%"],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                />
+              </Button>
+
+              {/* Description */}
+              <p className="text-center text-lg text-muted-foreground mb-8 pb-8 border-b border-border">
+                Updatni svoj spôsob programovania s AI nástrojmi - od GitHub Copilot až po Claude Code
+              </p>
+
+              {/* Features */}
+              <div className="space-y-4 mb-8 pb-8 border-b border-border">
+                {features.map((feature) => (
+                  <div key={feature} className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Check className="w-4 h-4 text-primary" />
+                    </div>
+                    <span className="text-lg">{feature}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* ROI Calculator */}
+              <div className="bg-card/50 backdrop-blur-sm border border-border rounded-xl p-6 mb-8">
+                <div className="flex items-start gap-3 mb-4">
+                  <TrendingUp className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-bold text-lg mb-2">ROI Kalkulačka:</h3>
+                    <p className="text-muted-foreground">
+                      Ušetrí ti <span className="text-primary font-bold">10h/týždeň</span> = <span className="text-primary font-bold">520h ročne</span>
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-2">
+                      = <span className="text-accent font-bold text-lg">€15,600+ value</span> pri €30/hod sadzbe
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Trust badges */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <Shield className="w-5 h-5 text-primary" />
+                  <span>30-dňová záruka vrátenia peňazí</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Lock className="w-5 h-5 text-primary" />
+                  <span>Bezpečná platba</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+import { motion, useScroll } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { ShoppingCart } from "lucide-react";
+import { useState, useEffect } from "react";
+
+export const StickyButton = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const { scrollY } = useScroll();
+
+  useEffect(() => {
+    return scrollY.onChange((latest) => {
+      setIsVisible(latest > 800);
+    });
+  }, [scrollY]);
+
+  if (!isVisible) return null;
+
+  return (
+    <>
+      {/* Desktop version */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 20 }}
+        className="hidden md:block fixed bottom-8 right-8 z-50"
+      >
+        <Button
+          size="lg"
+          className="text-lg px-6 py-6 bg-primary hover:bg-primary/90 shadow-2xl relative group overflow-hidden"
+        >
+          <ShoppingCart className="w-5 h-5 mr-2" />
+          <span className="relative z-10 font-bold">Kúpiť kurz - 149€</span>
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent"
+            animate={{
+              x: ["-100%", "100%"],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+        </Button>
+      </motion.div>
+
+      {/* Mobile version */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 20 }}
+        className="md:hidden fixed bottom-0 left-0 right-0 z-50 p-4 bg-background/80 backdrop-blur-lg border-t border-border"
+      >
+        <Button
+          size="lg"
+          className="w-full text-lg py-6 bg-primary hover:bg-primary/90 relative group overflow-hidden"
+        >
+          <ShoppingCart className="w-5 h-5 mr-2" />
+          <span className="relative z-10 font-bold">Kúpiť kurz - 149€</span>
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent"
+            animate={{
+              x: ["-100%", "100%"],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+        </Button>
+      </motion.div>
+    </>
+  );
+};
+
+import { Moon, Sun } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+
+export const ThemeToggle = () => {
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initialTheme = savedTheme || (prefersDark ? "dark" : "light");
+    
+    setTheme(initialTheme);
+    document.documentElement.classList.toggle("dark", initialTheme === "dark");
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+  };
+
+  return (
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={toggleTheme}
+      className="fixed top-4 right-4 z-50 rounded-full"
+      aria-label="Toggle theme"
+    >
+      {theme === "dark" ? (
+        <Sun className="h-5 w-5" />
+      ) : (
+        <Moon className="h-5 w-5" />
+      )}
+    </Button>
+  );
+};
+
+import { motion } from "framer-motion";
+import { Github, Code, Sparkles } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+
+const tools = [
+  {
+    name: "GitHub Copilot",
+    icon: Github,
+    description: "Tvoj AI pár programátor priamo v editore",
+    level: "Začiatočník",
+    levelColor: "bg-green-500",
+    features: [
+      "Autocomplete kódu",
+      "Generovanie funkcií",
+      "Code suggestions",
+      "Dokumentácia kódu",
+    ],
+    gradient: "from-green-500/20 to-blue-500/20",
+  },
+  {
+    name: "Cursor IDE",
+    icon: Code,
+    description: "Ultimátne AI IDE pre moderných vývojárov",
+    level: "Pokročilý",
+    levelColor: "bg-blue-500",
+    features: [
+      "Chat s codebase",
+      "Multi-file editing",
+      "AI refactoring",
+      "Smart debugging",
+    ],
+    gradient: "from-blue-500/20 to-purple-500/20",
+  },
+  {
+    name: "Claude Code",
+    icon: Sparkles,
+    description: "Najvýkonnejší AI asistent pre komplexné úlohy",
+    level: "Expert",
+    levelColor: "bg-purple-500",
+    features: [
+      "Komplexné projekty",
+      "Architektonické rozhodnutia",
+      "Code review",
+      "Best practices",
+    ],
+    gradient: "from-purple-500/20 to-pink-500/20",
+  },
+];
+
+export const ToolsSection = () => {
+  return (
+    <section className="py-20 relative">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            Čo sa naučíš ovládať?
+          </h2>
+          <p className="text-xl text-muted-foreground">
+            Praktické ovládanie top AI nástrojov pre programátorov
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          {tools.map((tool, index) => (
+            <motion.div
+              key={tool.name}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              className="gradient-border p-6 rounded-2xl transition-all duration-300 group relative overflow-hidden"
+            >
+              {/* Background gradient */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${tool.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+              
+              <div className="relative">
+                {/* Icon */}
+                <div className="w-14 h-14 rounded-xl bg-card border border-border flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <tool.icon className="w-7 h-7 text-primary" />
+                </div>
+
+                {/* Title */}
+                <h3 className="text-2xl font-bold mb-2">{tool.name}</h3>
+
+                {/* Level badge */}
+                <Badge className={`${tool.levelColor} text-white mb-4`}>
+                  {tool.level}
+                </Badge>
+
+                {/* Description */}
+                <p className="text-muted-foreground mb-6">
+                  {tool.description}
+                </p>
+
+                {/* Features */}
+                <div className="space-y-2">
+                  <p className="text-sm font-semibold mb-3">Čo rieši:</p>
+                  {tool.features.map((feature) => (
+                    <div key={feature} className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                      <span className="text-sm text-muted-foreground">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profesionálne programovanie s AI | AI kurz pre programátorov</title>
+    <meta name="description" content="Nauč sa programovať 3x rýchlejšie s AI nástrojmi. GitHub Copilot, Cursor, Claude Code. 68 lekcií, 7h 45min. Praktické projekty v JS/TS, C#, Java." />
+    <meta name="author" content="Jakub Jahič" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <meta property="og:title" content="Profesionálne programovanie s AI | AI kurz pre programátorov" />
+    <meta property="og:description" content="Nauč sa programovať 3x rýchlejšie s AI nástrojmi. GitHub Copilot, Cursor, Claude Code." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 25% 5%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 240 25% 5%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 25% 5%;
+
+    --primary: 258 90% 66%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 221 83% 60%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;
+
+    --accent: 188 95% 42%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 258 90% 66%;
+
+    --radius: 0.75rem;
+
+    --gradient-primary: linear-gradient(135deg, hsl(258, 90%, 66%), hsl(221, 83%, 60%));
+    --gradient-hero: linear-gradient(135deg, hsl(258, 90%, 66%) 0%, hsl(221, 83%, 60%) 50%, hsl(188, 95%, 42%) 100%);
+  }
+
+  .dark {
+    --background: 240 25% 5%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 21% 15%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 25% 12%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 258 90% 66%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 221 83% 60%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 21% 15%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 188 95% 42%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 20% 20%;
+    --input: 240 20% 20%;
+    --ring: 258 90% 66%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(258, 90%, 66%), hsl(221, 83%, 60%));
+    --gradient-hero: linear-gradient(135deg, hsl(258, 90%, 66%) 0%, hsl(221, 83%, 60%) 50%, hsl(188, 95%, 42%) 100%);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent;
+  }
+  
+  .gradient-border {
+    position: relative;
+    background: hsl(var(--card));
+    border-radius: var(--radius);
+  }
+  
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    padding: 2px;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--accent)));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+}
+
+import { HeroSection } from "@/components/HeroSection";
+import { ComparisonSection } from "@/components/ComparisonSection";
+import { ToolsSection } from "@/components/ToolsSection";
+import { CourseContentSection } from "@/components/CourseContentSection";
+import { PersonasSection } from "@/components/PersonasSection";
+import { PricingSection } from "@/components/PricingSection";
+import { FAQSection } from "@/components/FAQSection";
+import { FinalCTA } from "@/components/FinalCTA";
+import { StickyButton } from "@/components/StickyButton";
+import { ThemeToggle } from "@/components/ThemeToggle";
+
+const Index = () => {
+  return (
+    <div className="min-h-screen">
+      <ThemeToggle />
+      <StickyButton />
+      
+      <HeroSection />
+      <ComparisonSection />
+      <ToolsSection />
+      <CourseContentSection />
+      <PersonasSection />
+      <PricingSection />
+      <FAQSection />
+      <FinalCTA />
+      
+      {/* Footer */}
+      <footer className="border-t border-border py-8">
+        <div className="container mx-auto px-4 text-center text-muted-foreground">
+          <p>© 2025 Profesionálne programovanie s AI. Všetky práva vyhradené.</p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default Index;
+
+import type { Config } from "tailwindcss";
+
+export default {
+  darkMode: ["class"],
+  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  prefix: "",
+  theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: {
+            height: "0",
+            opacity: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+            opacity: "1",
+          },
+        },
+        "accordion-up": {
+          from: {
+            height: "var(--radix-accordion-content-height)",
+            opacity: "1",
+          },
+          to: {
+            height: "0",
+            opacity: "0",
+          },
+        },
+        "fade-in": {
+          from: {
+            opacity: "0",
+            transform: "translateY(20px)",
+          },
+          to: {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        "fade-in-up": {
+          from: {
+            opacity: "0",
+            transform: "translateY(40px)",
+          },
+          to: {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        "scale-in": {
+          from: {
+            opacity: "0",
+            transform: "scale(0.95)",
+          },
+          to: {
+            opacity: "1",
+            transform: "scale(1)",
+          },
+        },
+        "slide-in-right": {
+          from: {
+            transform: "translateX(100%)",
+          },
+          to: {
+            transform: "translateX(0)",
+          },
+        },
+        "glow": {
+          "0%, 100%": {
+            opacity: "1",
+          },
+          "50%": {
+            opacity: "0.5",
+          },
+        },
+        "float": {
+          "0%, 100%": {
+            transform: "translateY(0px)",
+          },
+          "50%": {
+            transform: "translateY(-20px)",
+          },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.3s ease-out",
+        "accordion-up": "accordion-up 0.3s ease-out",
+        "fade-in": "fade-in 0.6s ease-out",
+        "fade-in-up": "fade-in-up 0.8s ease-out",
+        "scale-in": "scale-in 0.4s ease-out",
+        "slide-in-right": "slide-in-right 0.3s ease-out",
+        "glow": "glow 2s ease-in-out infinite",
+        "float": "float 6s ease-in-out infinite",
+      },
+    },
+  },
+  plugins: [require("tailwindcss-animate")],
+} satisfies Config;

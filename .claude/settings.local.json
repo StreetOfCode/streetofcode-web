@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(yarn tsc:*)",
+      "Bash(yarn lint:*)",
+      "Bash(yarn prettier:check:*)",
+      "Bash(yarn prettier:*)",
+      "Bash(yarn test:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
