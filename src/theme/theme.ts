@@ -33,7 +33,7 @@ export const darkTheme: ThemeType = {
   primaryColor: '#212121',
   secondaryColor: '#efefef',
   accentColor: '#7E50E6',
-  greyColor: '#545454',
+  greyColor: '#BFBFBF',
   dangerColor: '#CB2041',
   successColor: '#4CBF6B',
   footerBackgroundColor: '#efefef',

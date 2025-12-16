@@ -1,117 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import styled, {keyframes} from 'styled-components'
+import {device} from '../../../theme/device'
 
 const codeLines = [
-  '// vytvor funkciu na sčítanie',
+  '// vytvor funkciu na scitanie',
   'function sum(a: number, b: number) {',
   '  return a + b;',
   '}',
 ]
 
-const blink = keyframes`
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-`
-
-const float = keyframes`
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-`
-
-const EditorWrapper = styled.div`
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  animation: ${float} 6s ease-in-out infinite;
-  max-width: 600px;
-  width: 100%;
-`
-
-const EditorHeader = styled.div`
-  background: var(--color-primary);
-  border: 1px solid var(--color-secondary-light, rgba(0, 0, 0, 0.1));
-  border-bottom: none;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`
-
-const TrafficLights = styled.div`
-  display: flex;
-  gap: 8px;
-`
-
-const TrafficLight = styled.div<{color: string}>`
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: ${(props) => props.color};
-`
-
-const FileName = styled.span`
-  font-size: 12px;
-  color: var(--color-secondary);
-  margin-left: 16px;
-  opacity: 0.7;
-`
-
-const CodeContent = styled.div`
-  background: var(--color-primary);
-  border: 1px solid var(--color-secondary-light, rgba(0, 0, 0, 0.1));
-  border-top: none;
-  padding: 24px;
-  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-  font-size: 14px;
-  min-height: 120px;
-`
-
-const CodeLine = styled.div`
-  display: flex;
-  gap: 16px;
-  min-height: 24px;
-  line-height: 24px;
-`
-
-const LineNumber = styled.span`
-  color: var(--color-secondary);
-  opacity: 0.5;
-  user-select: none;
-  width: 24px;
-  text-align: right;
-  flex-shrink: 0;
-`
-
-const LineContent = styled.span`
-  flex: 1;
-  color: var(--color-secondary);
-`
-
-const Comment = styled.span`
-  color: var(--color-secondary);
-  opacity: 0.6;
-  font-style: italic;
-`
-
-const Keyword = styled.span`
-  color: #ff79c6;
-`
-
-const FunctionName = styled.span`
-  color: var(--color-accent);
-`
-
-const Type = styled.span`
-  color: #8be9fd;
-`
-
-const Cursor = styled.span`
-  animation: ${blink} 1s step-end infinite;
-  color: var(--color-secondary);
-`
-
-export const AnimatedCodeEditor: React.FC = () => {
+const AnimatedCodeEditor: React.FC = () => {
   const [displayedLines, setDisplayedLines] = useState<string[]>([
     codeLines[0],
     '',
@@ -122,76 +20,80 @@ export const AnimatedCodeEditor: React.FC = () => {
   const [currentChar, setCurrentChar] = useState(0)
 
   useEffect(() => {
-    const typeCode = () => {
-      if (currentLine >= codeLines.length) {
-        setTimeout(() => {
-          setDisplayedLines([codeLines[0], '', '', ''])
-          setCurrentLine(1)
-          setCurrentChar(0)
-        }, 3000)
-        return
-      }
-
-      const targetLine = codeLines[currentLine]
-      if (currentChar <= targetLine.length) {
-        const newLines = [...codeLines]
-        newLines[currentLine] = targetLine.substring(0, currentChar)
-        setDisplayedLines(newLines)
-        setCurrentChar(currentChar + 1)
-        setTimeout(typeCode, 50)
-      } else {
-        setCurrentLine(currentLine + 1)
+    if (currentLine >= codeLines.length) {
+      // Reset after completion
+      const timer = setTimeout(() => {
+        setDisplayedLines([codeLines[0], '', '', ''])
+        setCurrentLine(1)
         setCurrentChar(0)
-        setTimeout(typeCode, 200)
-      }
+      }, 3000)
+      return () => clearTimeout(timer)
     }
 
-    const timer = setTimeout(typeCode, 1000)
-    return () => clearTimeout(timer)
+    const targetLine = codeLines[currentLine]
+    if (currentChar <= targetLine.length) {
+      const timer = setTimeout(
+        () => {
+          const newLines = [...codeLines]
+          newLines[currentLine] = targetLine.substring(0, currentChar)
+          setDisplayedLines(newLines)
+          setCurrentChar((c) => c + 1)
+        },
+        currentChar === 0 ? 200 : 50,
+      )
+      return () => clearTimeout(timer)
+    }
+
+    setCurrentLine((l) => l + 1)
+    setCurrentChar(0)
+    return undefined
   }, [currentLine, currentChar])
 
-  const renderLineContent = (line: string, index: number) => {
+  const renderLine = (line: string, index: number) => {
+    const targetLine = codeLines[index]
+    const isTyping = currentLine === index && currentChar <= targetLine.length
+
     if (index === 0) {
       return <Comment>{line}</Comment>
     }
 
     if (index === 1) {
-      const showCursor = currentLine === 1 && line.length < codeLines[1].length
+      if (!line) return <Cursor show={currentLine === 1} />
       return (
         <>
           <Keyword>function</Keyword> <FunctionName>sum</FunctionName>
-          <span>(</span>
-          <span>a</span>
-          <span>: </span>
+          <Punctuation>(</Punctuation>
+          <Variable>a</Variable>
+          <Punctuation>: </Punctuation>
           <Type>number</Type>
-          <span>, </span>
-          <span>b</span>
-          <span>: </span>
+          <Punctuation>, </Punctuation>
+          <Variable>b</Variable>
+          <Punctuation>: </Punctuation>
           <Type>number</Type>
-          <span>) {'{'}</span>
-          {showCursor && <Cursor>|</Cursor>}
+          <Punctuation>) {'{'}</Punctuation>
+          {isTyping && <Cursor show />}
         </>
       )
     }
 
     if (index === 2) {
-      const showCursor = currentLine === 2 && line.length < codeLines[2].length
+      if (!line) return null
       return (
         <>
           {'  '}
-          <Keyword>return</Keyword> <span>a + b</span>
-          <span>;</span>
-          {showCursor && <Cursor>|</Cursor>}
+          <Keyword>return</Keyword> <Variable>a + b</Variable>
+          <Punctuation>;</Punctuation>
+          {isTyping && <Cursor show />}
         </>
       )
     }
 
     if (index === 3) {
-      const showCursor = currentLine === 3 && line.length < codeLines[3].length
+      if (!line) return null
       return (
         <>
-          <span>{'}'}</span>
-          {showCursor && <Cursor>|</Cursor>}
+          <Punctuation>{'}'}</Punctuation>
+          {isTyping && <Cursor show />}
         </>
       )
     }
@@ -202,21 +104,163 @@ export const AnimatedCodeEditor: React.FC = () => {
   return (
     <EditorWrapper>
       <EditorHeader>
-        <TrafficLights>
-          <TrafficLight color="#FF5F56" />
-          <TrafficLight color="#FFBD2E" />
-          <TrafficLight color="#27C93F" />
-        </TrafficLights>
+        <WindowButtons>
+          <WindowButton color="#ff5f56" />
+          <WindowButton color="#ffbd2e" />
+          <WindowButton color="#27ca40" />
+        </WindowButtons>
         <FileName>sum.ts</FileName>
       </EditorHeader>
-      <CodeContent>
+      <EditorContent>
         {displayedLines.map((line, i) => (
           <CodeLine key={i}>
             <LineNumber>{i + 1}</LineNumber>
-            <LineContent>{renderLineContent(line, i)}</LineContent>
+            <LineContent>{renderLine(line, i)}</LineContent>
           </CodeLine>
         ))}
-      </CodeContent>
+      </EditorContent>
+      <GlowEffect />
     </EditorWrapper>
   )
 }
+
+const float = keyframes`
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+`
+
+const blink = keyframes`
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+`
+
+const EditorWrapper = styled.div`
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: ${float} 6s ease-in-out infinite;
+
+  @media ${device.S} {
+    animation: none;
+  }
+`
+
+const EditorHeader = styled.div`
+  background: var(--color-primary);
+  border: 1px solid var(--color-shadow);
+  border-bottom: none;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`
+
+const WindowButtons = styled.div`
+  display: flex;
+  gap: 8px;
+`
+
+const WindowButton = styled.div<{color: string}>`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: ${(props) => props.color};
+`
+
+const FileName = styled.span`
+  color: var(--color-grey);
+  font-size: 12px;
+  margin-left: 16px;
+`
+
+const EditorContent = styled.div`
+  background: rgba(var(--color-primary-rgb, 255, 255, 255), 0.5);
+  background: var(--color-primary);
+  border: 1px solid var(--color-shadow);
+  border-top: none;
+  padding: 24px;
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: 14px;
+  min-height: 140px;
+
+  @media ${device.S} {
+    padding: 16px;
+    font-size: 12px;
+  }
+`
+
+const CodeLine = styled.div`
+  display: flex;
+  gap: 16px;
+  min-height: 24px;
+  line-height: 24px;
+`
+
+const LineNumber = styled.span`
+  color: var(--color-grey);
+  user-select: none;
+  width: 24px;
+  text-align: right;
+`
+
+const LineContent = styled.span`
+  flex: 1;
+`
+
+const Comment = styled.span`
+  color: var(--color-grey);
+  font-style: italic;
+`
+
+const Keyword = styled.span`
+  color: #4f8fef;
+`
+
+const FunctionName = styled.span`
+  color: var(--color-accent);
+`
+
+const Variable = styled.span`
+  color: var(--color-secondary);
+`
+
+const Type = styled.span`
+  color: #4f8fef;
+`
+
+const Punctuation = styled.span`
+  color: var(--color-grey);
+`
+
+const Cursor = styled.span<{show?: boolean}>`
+  display: ${(props) => (props.show ? 'inline-block' : 'none')};
+  width: 2px;
+  height: 18px;
+  background: var(--color-accent);
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: ${blink} 1s infinite;
+`
+
+const GlowEffect = styled.div`
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(126, 80, 230, 0.1) 0%,
+    transparent 50%,
+    rgba(0, 184, 212, 0.1) 100%
+  );
+  pointer-events: none;
+`
+
+export default AnimatedCodeEditor

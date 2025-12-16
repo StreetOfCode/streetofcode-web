@@ -102,7 +102,7 @@ export default class MyDocument extends Document {
           root.style.setProperty('--color-primary', '#212121')
           root.style.setProperty('--color-secondary', '#efefef')
           root.style.setProperty('--color-accent', '#7E50E6')
-          root.style.setProperty('--color-grey', '#545454')
+          root.style.setProperty('--color-grey', '#BFBFBF')
           root.style.setProperty('--color-danger', '#CB2041')
           root.style.setProperty('--color-success', '#4CBF6B')
           root.style.setProperty('--color-footer-background', '#efefef')

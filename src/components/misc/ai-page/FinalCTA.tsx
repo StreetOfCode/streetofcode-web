@@ -1,123 +1,120 @@
 import React from 'react'
 import styled from 'styled-components'
-import Heading from '../../core/Heading'
-import Text from '../../core/Text'
+import {AiOutlineMail} from 'react-icons/ai'
 import {CourseOverview} from '../../../types'
-import {routes} from '../../../routes'
-import Button from '../../core/Button'
-
-const SectionWrapper = styled.section`
-  padding: 80px 0;
-  position: relative;
-  overflow: hidden;
-`
-
-const BackgroundGradient = styled.div`
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(126, 80, 230, 0.1),
-    rgba(65, 105, 225, 0.1),
-    rgba(0, 206, 209, 0.1)
-  );
-  pointer-events: none;
-`
-
-const RadialGradient = styled.div`
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(139, 92, 246, 0.15),
-    transparent
-  );
-  pointer-events: none;
-`
-
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-  position: relative;
-  z-index: 1;
-`
-
-const Content = styled.div`
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  align-items: center;
-`
-
-const GradientText = styled.span`
-  background: linear-gradient(135deg, #7e50e6, #4169e1, #00ced1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-`
-
-const CTAButton = styled(Button)`
-  padding: 20px 48px;
-  font-size: 20px;
-  font-weight: 600;
-  min-width: 250px;
-  position: relative;
-  box-shadow: 0 8px 24px rgba(126, 80, 230, 0.3);
-
-  &:hover {
-    box-shadow: 0 12px 32px rgba(126, 80, 230, 0.4);
-  }
-`
+import {device} from '../../../theme/device'
+import Heading from '../../core/Heading'
+import AiCTAButton from './AiCTAButton'
+import {
+  Section,
+  Container,
+  AnimatedElement,
+  GradientText,
+  GradientOverlay,
+} from './styles'
 
 interface FinalCTAProps {
   courseOverview: CourseOverview
 }
 
-export const FinalCTA: React.FC<FinalCTAProps> = ({courseOverview}) => {
-  const activeProduct = courseOverview.courseProducts.find((p) => !p.archived)
-
-  const handlePurchase = () => {
-    if (activeProduct) {
-      window.location.href = routes.checkout.courseProduct(
-        courseOverview.slug,
-        activeProduct.productId,
-      )
-    }
-  }
-
-  if (!activeProduct) return null
-
+const FinalCTA: React.FC<FinalCTAProps> = ({courseOverview}) => {
   return (
-    <SectionWrapper>
-      <BackgroundGradient />
-      <RadialGradient />
+    <CTASection>
+      <GradientOverlay />
+      <RadialGlow />
       <Container>
-        <Content>
-          <Heading variant="h2">
-            Pripravený stať sa
-            <br />
-            <GradientText>produktívnejším?</GradientText>
-          </Heading>
+        <AnimatedElement>
+          <Content>
+            <Heading variant="h2" align="center">
+              Pripravený stať sa
+              <br />
+              <GradientText>produktivným?</GradientText>
+            </Heading>
 
-          <Text size="large" color="secondary">
-            Začni programovať s AI nástrojmi ešte dnes a zvýš svoju produktivitu
-            o 300%
-          </Text>
+            <Subtitle>
+              Začni programovať s AI nástrojmi ešte dnes a zvýš svoju
+              produktivitu o 200%
+            </Subtitle>
 
-          <CTAButton variant="accent" onClick={handlePurchase}>
-            Kúpiť kurz teraz
-          </CTAButton>
+            <AiCTAButton courseOverview={courseOverview} variant="finalCta" />
 
-          <Text size="small" color="secondary">
-            30-dňová záruka vrátenia peňazí • Lifetime prístup • Všetky updaty
-            zadarmo
-          </Text>
-        </Content>
+            <ContactInfo>
+              <AiOutlineMail />
+              <span>Máš otázky? Napíš na </span>
+              <ContactLink href="mailto:info@streetofcode.sk">
+                info@streetofcode.sk
+              </ContactLink>
+            </ContactInfo>
+          </Content>
+        </AnimatedElement>
       </Container>
-    </SectionWrapper>
+    </CTASection>
   )
 }
+
+const CTASection = styled(Section)`
+  position: relative;
+  overflow: hidden;
+`
+
+const RadialGlow = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(126, 80, 230, 0.15) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+`
+
+const Content = styled.div`
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+`
+
+const Subtitle = styled.p`
+  font-size: 20px;
+  color: var(--color-grey);
+  line-height: 1.5;
+
+  @media ${device.S} {
+    font-size: 18px;
+  }
+`
+
+const ContactInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-grey);
+  font-size: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+`
+
+const ContactLink = styled.a`
+  color: var(--color-accent);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
+export default FinalCTA

@@ -1,191 +1,201 @@
 import React from 'react'
 import styled from 'styled-components'
-import {
-  AiOutlineGithub,
-  AiOutlineCode,
-  AiOutlineThunderbolt,
-} from 'react-icons/ai'
+import {AiOutlineGithub, AiOutlineCode, AiOutlineStar} from 'react-icons/ai'
+import {device} from '../../../theme/device'
 import Heading from '../../core/Heading'
 import Text from '../../core/Text'
-import {device} from '../../../theme/device'
+import {
+  Section,
+  Container,
+  SectionTitle,
+  GradientBorderCard,
+  AnimatedElement,
+  Badge,
+  BulletPoint,
+} from './styles'
 
-const SectionWrapper = styled.section`
-  padding: 80px 0;
-  position: relative;
-  background: var(--color-primary);
-`
+const tools = [
+  {
+    name: 'GitHub Copilot',
+    icon: AiOutlineGithub,
+    description: 'Tvoj AI párový programátor priamo v editore',
+    level: 'Začiatočník',
+    levelColor: '#4CBF6B',
+    features: [
+      'Autocomplete kódu',
+      'Generovanie funkcií',
+      'Code suggestions',
+      'Dokumentácia kódu',
+    ],
+    gradient: 'from-green-500/20 to-blue-500/20',
+  },
+  {
+    name: 'Cursor IDE',
+    icon: AiOutlineCode,
+    description: 'Ultimátne AI IDE pre moderných vývojárov',
+    level: 'Pokročilý',
+    levelColor: '#4F8FEF',
+    features: [
+      'Agentové programovanie',
+      'Multi-file editing',
+      'AI refactoring',
+      'MCP servery',
+    ],
+    gradient: 'from-blue-500/20 to-purple-500/20',
+  },
+  {
+    name: 'Claude Code',
+    icon: AiOutlineStar,
+    description: 'Najvýkonnejší AI asistent pre komplexné úlohy',
+    level: 'Expert',
+    levelColor: 'var(--color-accent)',
+    features: [
+      'Komplexné projekty',
+      'Architektonické rozhodnutia',
+      'AI Code review',
+      'Best practices',
+    ],
+    gradient: 'from-purple-500/20 to-pink-500/20',
+  },
+]
 
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-`
+const ToolsSection: React.FC = () => {
+  return (
+    <Section>
+      <Container>
+        <SectionTitle>
+          <AnimatedElement>
+            <Heading variant="h2" align="center">
+              Čo sa naučíš ovládať?
+            </Heading>
+          </AnimatedElement>
+          <AnimatedElement delay={100}>
+            <Subtitle>
+              Praktické ovládanie top AI nástrojov pre programátorov
+            </Subtitle>
+          </AnimatedElement>
+        </SectionTitle>
 
-const SectionHeader = styled.div`
+        <ToolsGrid>
+          {tools.map((tool, index) => (
+            <AnimatedElement key={tool.name} delay={200 + index * 150}>
+              <ToolCard>
+                <ToolHeader>
+                  <IconWrapper>
+                    <tool.icon />
+                  </IconWrapper>
+                  <Heading variant="h4">{tool.name}</Heading>
+                  <Badge bgColor={tool.levelColor}>{tool.level}</Badge>
+                </ToolHeader>
+
+                <Text color="inherit">{tool.description}</Text>
+
+                <FeaturesSection>
+                  <Text size="small" weight="bold">
+                    Čo rieši:
+                  </Text>
+                  <FeaturesList>
+                    {tool.features.map((feature) => (
+                      <Feature key={feature}>
+                        <BulletPoint />
+                        <Text size="small" color="inherit">
+                          {feature}
+                        </Text>
+                      </Feature>
+                    ))}
+                  </FeaturesList>
+                </FeaturesSection>
+              </ToolCard>
+            </AnimatedElement>
+          ))}
+        </ToolsGrid>
+      </Container>
+    </Section>
+  )
+}
+
+const Subtitle = styled.p`
+  font-size: 18px;
+  color: var(--color-grey);
   text-align: center;
-  margin-bottom: 64px;
+  margin-top: 16px;
 `
 
 const ToolsGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 32px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
 
-  @media ${device.S} {
+  @media ${device.M} {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media ${device.L} {
-    grid-template-columns: repeat(3, 1fr);
+  @media ${device.S} {
+    grid-template-columns: 1fr;
   }
 `
 
-const ToolCard = styled.div`
-  position: relative;
-  background: var(--color-primary);
-  border-radius: 16px;
-  padding: 32px;
-  transition: transform 0.3s ease;
+const ToolCard = styled(GradientBorderCard)`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform 0.3s ease-out;
+  color: var(--color-grey);
+  height: 100%;
 
   &:hover {
-    transform: translateY(-8px);
+    transform: translateY(-8px) scale(1.02);
   }
+`
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 16px;
-    padding: 2px;
-    background: linear-gradient(135deg, var(--color-accent), #4169e1, #00ced1);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-  }
+const ToolHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
 `
 
 const IconWrapper = styled.div`
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--color-primary);
+  border: 1px solid var(--color-shadow);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(126, 80, 230, 0.1);
-  margin-bottom: 24px;
-  position: relative;
+  transition: transform 0.3s ease-out;
 
   svg {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     color: var(--color-accent);
+  }
+
+  ${ToolCard}:hover & {
+    transform: scale(1.1);
   }
 `
 
-const ToolContent = styled.div`
-  position: relative;
+const FeaturesSection = styled.div`
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 `
 
-const FeatureList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 16px 0 0 0;
+const FeaturesList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
 `
 
-const FeatureItem = styled.li`
+const Feature = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
-  font-size: 14px;
-  color: var(--color-secondary);
-  opacity: 0.8;
-
-  &::before {
-    content: '✓';
-    color: var(--color-accent);
-    font-weight: bold;
-    flex-shrink: 0;
-  }
 `
 
-export const ToolsSection: React.FC = () => {
-  const tools = [
-    {
-      icon: <AiOutlineGithub />,
-      name: 'GitHub Copilot',
-      description:
-        'AI asistent priamo v editore, ktorý ti pomáha písať kód rýchlejšie s inteligentnými návrhmi',
-      features: [
-        'Automatické dopĺňanie kódu',
-        'Generovanie celých funkcií',
-        'Kontextové návrhy',
-        'Podpora všetkých jazykov',
-      ],
-    },
-    {
-      icon: <AiOutlineCode />,
-      name: 'Cursor IDE',
-      description:
-        'Pokročilé AI IDE s integrovaným chatom, ktoré rozumie celému tvojmu projektu',
-      features: [
-        'Chat s celým codebase',
-        'Multi-file editing',
-        'Composer mode',
-        'Inteligentný refactoring',
-      ],
-    },
-    {
-      icon: <AiOutlineThunderbolt />,
-      name: 'Claude Code',
-      description:
-        'Mocný AI asistent pre komplexné úlohy, architektúru a code review',
-      features: [
-        'Expertné code review',
-        'Architektonické návrhy',
-        'Komplexný refactoring',
-        'Best practices',
-      ],
-    },
-  ]
-
-  return (
-    <SectionWrapper>
-      <Container>
-        <SectionHeader>
-          <Heading variant="h2">AI nástroje, ktoré zvládneš</Heading>
-          <Text size="large" color="secondary">
-            Nauč sa pracovať s troma najpokročilejšími AI nástrojmi
-          </Text>
-        </SectionHeader>
-
-        <ToolsGrid>
-          {tools.map((tool, index) => (
-            <ToolCard key={index}>
-              <ToolContent>
-                <IconWrapper>{tool.icon}</IconWrapper>
-                <Heading variant="h4">{tool.name}</Heading>
-                <Text
-                  size="small"
-                  color="secondary"
-                  style={{marginTop: '12px'}}
-                >
-                  {tool.description}
-                </Text>
-                <FeatureList>
-                  {tool.features.map((feature, i) => (
-                    <FeatureItem key={i}>{feature}</FeatureItem>
-                  ))}
-                </FeatureList>
-              </ToolContent>
-            </ToolCard>
-          ))}
-        </ToolsGrid>
-      </Container>
-    </SectionWrapper>
-  )
-}
+export default ToolsSection

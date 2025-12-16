@@ -1,32 +1,102 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 import * as Accordion from '@radix-ui/react-accordion'
-import {AiOutlineDown} from 'react-icons/ai'
+import {BiChevronDown} from 'react-icons/bi'
+import {device} from '../../../theme/device'
 import Heading from '../../core/Heading'
-import Text from '../../core/Text'
+import {Section, Container, SectionTitle, AnimatedElement} from './styles'
 
-const SectionWrapper = styled.section`
-  padding: 80px 0;
-  position: relative;
-`
+const faqs = [
+  {
+    question: 'Pre koho je kurz určený?',
+    answer:
+      'Kurz je určený pre programátorov, ktorí už majú základné programovacie skúsenosti. ' +
+      'Nemusíš byť senior, ale mal/a by si vedieť pracovať vo svojom IDE ' +
+      '(VSCode, Visual Studio, IntelliJ IDEA alebo podobné), ' +
+      'rozumieť základom Git a GitHub a orientovať sa v kóde svojho hlavného programovacieho jazyka.',
+  },
+  {
+    question: 'Co všetko získáš?',
+    answer:
+      'Po zakúpení kurzu získáš prístup ku všetkým videám a materiálom. ' +
+      'Každý študent si ide vlastným tempom a pozerá videá kedy chce, v akom poradí chce.',
+  },
+  {
+    question: 'Máme záujem o firemné školenie',
+    answer:
+      'Ak máš záujem o firemné školenie, kontaktuj nás na info@streetofcode.sk. ' +
+      'Pripravím vám ponuku do mailu pre školenie vo vašich priestoroch.'
+  },
+  {
+    question: 'Ako dlho budem mať prístup ku kurzu?',
+    answer: 'Po zakúpení kurzu budeš mať prístup ku všetkým materiálom navždy.',
+  },
+  {
+    question: 'Ako môžem platit?',
+    answer:
+      'Platbu môžeš vykonať platobnou kartou. Po platbe získáš prístup ku kurzu ihneď. ' +
+      'Kurz bude spárovaný s tvojím účtom na stránke. ' +
+      'Ak máš záujem o inú formu platby, alebo platbu na faktúru, kontaktuj nás na info@streetofcode.sk',
+  },
+]
 
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-`
+const FAQSection: React.FC = () => {
+  return (
+    <Section>
+      <Container>
+        <SectionTitle>
+          <AnimatedElement>
+            <Heading variant="h2" align="center">
+              Časté otázky
+            </Heading>
+          </AnimatedElement>
+          <AnimatedElement delay={100}>
+            <Subtitle>Odpovede na najčastejšie otázky</Subtitle>
+          </AnimatedElement>
+        </SectionTitle>
 
-const SectionHeader = styled.div`
+        <AnimatedElement delay={200}>
+          <FAQWrapper>
+            <AccordionRoot type="single" collapsible defaultValue="item-0">
+              {faqs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionHeader>
+                    <AccordionTrigger>
+                      <QuestionText>
+                        <span role="img" aria-label="question">
+                          ❓
+                        </span>{' '}
+                        {faq.question}
+                      </QuestionText>
+                      <ChevronIcon />
+                    </AccordionTrigger>
+                  </AccordionHeader>
+                  <AccordionContent>
+                    <AnswerText>{faq.answer}</AnswerText>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </AccordionRoot>
+          </FAQWrapper>
+        </AnimatedElement>
+      </Container>
+    </Section>
+  )
+}
+
+const Subtitle = styled.p`
+  font-size: 18px;
+  color: var(--color-grey);
   text-align: center;
-  margin-bottom: 64px;
+  margin-top: 16px;
 `
 
-const AccordionWrapper = styled.div`
-  max-width: 800px;
+const FAQWrapper = styled.div`
+  max-width: 700px;
   margin: 0 auto;
 `
 
-const StyledAccordion = styled(Accordion.Root)`
+const AccordionRoot = styled(Accordion.Root)`
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -44,164 +114,107 @@ const AccordionItem = styled(Accordion.Item)`
     inset: 0;
     border-radius: 12px;
     padding: 2px;
-    background: linear-gradient(135deg, var(--color-accent), #4169e1, #00ced1);
+    background: linear-gradient(135deg, var(--color-accent), #4f8fef, #00b8d4);
     -webkit-mask: linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
+    pointer-events: none;
   }
+`
+
+const AccordionHeader = styled(Accordion.Header)`
+  margin: 0;
 `
 
 const AccordionTrigger = styled(Accordion.Trigger)`
   all: unset;
+  box-sizing: border-box;
   width: 100%;
-  padding: 24px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  align-items: center;
+  padding: 20px 24px;
   cursor: pointer;
-  background: var(--color-primary);
-  position: relative;
-  transition: background 0.2s ease;
+  text-align: left;
 
   &:hover {
-    opacity: 0.9;
+    background: rgba(126, 80, 230, 0.05);
   }
 
-  &[data-state='open'] svg {
+  @media ${device.S} {
+    padding: 16px;
+  }
+`
+
+const QuestionText = styled.span`
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @media ${device.S} {
+    font-size: 16px;
+  }
+`
+
+const ChevronIcon = styled(BiChevronDown)`
+  width: 24px;
+  height: 24px;
+  color: var(--color-secondary);
+  transition: transform 0.3s ease-out;
+  flex-shrink: 0;
+
+  [data-state='open'] & {
     transform: rotate(180deg);
   }
 `
 
-const TriggerContent = styled.div`
-  flex: 1;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+const openContentAnimation = keyframes`
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
 `
 
-const ChevronIcon = styled(AiOutlineDown)`
-  transition: transform 0.3s ease;
-  color: var(--color-accent);
-  flex-shrink: 0;
+const closeContentAnimation = keyframes`
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
 `
 
 const AccordionContent = styled(Accordion.Content)`
   overflow: hidden;
-  background: var(--color-primary);
-  position: relative;
 
   &[data-state='open'] {
-    animation: slideDown 0.3s ease;
+    animation: ${openContentAnimation} 0.3s ease-out forwards;
   }
 
   &[data-state='closed'] {
-    animation: slideUp 0.3s ease;
-  }
-
-  @keyframes slideDown {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--radix-accordion-content-height);
-    }
-  }
-
-  @keyframes slideUp {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-    to {
-      height: 0;
-    }
+    animation: ${closeContentAnimation} 0.3s ease-out forwards;
   }
 `
 
-const ContentInner = styled.div`
-  padding: 0 24px 24px 24px;
-  position: relative;
+const AnswerText = styled.p`
+  padding: 0 24px 20px;
+  color: var(--color-grey);
+  line-height: 1.6;
+
+  @media ${device.S} {
+    padding: 0 16px 16px;
+  }
 `
 
-const faqs = [
-  {
-    question: 'Pre koho je kurz určený?',
-    answer:
-      'Kurz je určený pre vývojárov na všetkých úrovniach - od juniorov po ' +
-      'seniorov a tech leadov. Potrebuješ základné znalosti programovania v ' +
-      'aspoň jednom jazyku (JavaScript/TypeScript, C#, Java) a znalosť práce ' +
-      's IDE. Kurz ti ukáže, ako využiť AI nástroje na zvýšenie produktivity ' +
-      'bez ohľadu na tvoju aktuálnu úroveň.',
-  },
-  {
-    question: 'Čo všetko získam?',
-    answer:
-      'Získaš prístup k 68 video lekciám (7h 45min celkovo), praktickým ' +
-      'projektom v rôznych jazykoch, kompletným setupom pre VS Code, Visual ' +
-      'Studio a IntelliJ IDEA, a detailnému sprievodcovi pre GitHub Copilot, ' +
-      'Cursor a Claude Code. Súčasťou je aj lifetime prístup k updatom a ' +
-      'prístup do komunity.',
-  },
-  {
-    question: 'Máme záujem o firemné školenie',
-    answer:
-      'Pre firmy ponúkame špeciálne balíčky s hromadnými licenciami, ' +
-      'možnosťou customizácie obsahu a priamou podporou. Kontaktujte nás ' +
-      'na kontakt@streetofcode.sk pre individuálnu cenovú ponuku a detaily.',
-  },
-  {
-    question: 'Ako dlho budem mať prístup ku kurzu?',
-    answer:
-      'Máš lifetime prístup ku kurzu! Po zakúpení môžeš kurz študovať ' +
-      'vlastným tempom a vrátiť sa k nemu kedykoľvek. Navíc automaticky ' +
-      'dostaneš všetky budúce updaty zadarmo.',
-  },
-  {
-    question: 'Ako môžem platiť?',
-    answer:
-      'Akceptujeme platobné karty (Visa, Mastercard, American Express) cez ' +
-      'bezpečnú platobnú bránu. Po úspešnej platbe okamžite získaš prístup ' +
-      'ku kurzu. Ponúkame 30-dňovú záruku vrátenia peňazí bez udania dôvodu.',
-  },
-]
-
-export const FAQSection: React.FC = () => {
-  return (
-    <SectionWrapper>
-      <Container>
-        <SectionHeader>
-          <Heading variant="h2">Časté otázky</Heading>
-          <Text size="large" color="secondary">
-            Odpovede na najčastejšie otázky
-          </Text>
-        </SectionHeader>
-
-        <AccordionWrapper>
-          <StyledAccordion type="single" collapsible defaultValue="item-0">
-            {faqs.map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger>
-                  <TriggerContent>
-                    <span>❓</span>
-                    <Text weight="bold">{faq.question}</Text>
-                  </TriggerContent>
-                  <ChevronIcon />
-                </AccordionTrigger>
-                <AccordionContent>
-                  <ContentInner>
-                    <Text color="secondary" style={{lineHeight: '1.6'}}>
-                      {faq.answer}
-                    </Text>
-                  </ContentInner>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </StyledAccordion>
-        </AccordionWrapper>
-      </Container>
-    </SectionWrapper>
-  )
-}
+export default FAQSection

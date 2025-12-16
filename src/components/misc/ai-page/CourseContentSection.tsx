@@ -1,49 +1,219 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, {useState} from 'react'
+import styled, {keyframes} from 'styled-components'
 import * as Accordion from '@radix-ui/react-accordion'
-import {
-  AiOutlineDown,
-  AiOutlinePlayCircle,
-  AiOutlineFileText,
-} from 'react-icons/ai'
+import {BiChevronDown} from 'react-icons/bi'
+import {CourseOverview, LectureOverview} from '../../../types'
+import {device} from '../../../theme/device'
+import * as Utils from '../../../utils'
 import Heading from '../../core/Heading'
 import Text from '../../core/Text'
-import {CourseOverview, LectureType} from '../../../types'
+import Flex from '../../core/Flex'
+import {useAuth} from '../../../AuthUserContext'
+import LecturePreview from '../../domain/lecture/LecturePreview'
+import {
+  Section,
+  Container,
+  SectionTitle,
+  AnimatedElement,
+  ProgressBar,
+  ProgressBarFill,
+  BulletPoint,
+} from './styles'
 
-const SectionWrapper = styled.section`
-  padding: 80px 0;
-  position: relative;
-`
+interface CourseContentSectionProps {
+  courseOverview: CourseOverview
+}
 
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-`
+const CourseContentSection: React.FC<CourseContentSectionProps> = ({
+  courseOverview,
+}) => {
+  const {user} = useAuth()
+  const [previewLectureInModal, setPreviewLectureInModal] =
+    useState<LectureOverview | null>(null)
 
-const SectionHeader = styled.div`
+  const {chapters, courseDurationMinutes} = courseOverview
+  const lecturesCount = chapters.flatMap((chapter) => chapter.lectures).length
+  const formattedDuration = Utils.formatDurationFromMinutes(
+    courseDurationMinutes,
+  )
+
+  const states = Utils.getCourseProductStates(courseOverview, user)
+
+  const isLectureClickable = (lecture: LectureOverview) => {
+    if (
+      states.hasNoActiveProductsAndIsLoggedIn ||
+      states.hasActiveProductsAndIsOwnedByUser
+    )
+      return true
+
+    const allowPreviewWhenPaid = lecture.allowPreviewWhenPaid
+    if (allowPreviewWhenPaid && states.hasActiveProductsButIsNotOwnedByUser)
+      return true
+
+    return false
+  }
+
+  const shouldPreviewLectureForPaidCourse = (lecture: LectureOverview) => {
+    return (
+      isLectureClickable(lecture) && states.hasActiveProductsButIsNotOwnedByUser
+    )
+  }
+
+  const handleLectureOnClick = (
+    e: React.MouseEvent,
+    lecture: LectureOverview,
+  ) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    if (shouldPreviewLectureForPaidCourse(lecture)) {
+      setPreviewLectureInModal(lecture)
+    }
+  }
+
+  return (
+    <>
+      <Section id="content">
+        <Container>
+          <SectionTitle>
+            <AnimatedElement>
+              <Heading variant="h2" align="center">
+                Čo kurz obsahuje?
+              </Heading>
+            </AnimatedElement>
+            <AnimatedElement delay={100}>
+              <Subtitle>
+                Kompletný obsah kurzu rozdelený do {chapters.length} sekcií
+              </Subtitle>
+            </AnimatedElement>
+
+            <AnimatedElement delay={200}>
+              <ProgressInfo>
+                <Flex justifyContent="space-between" alignSelf="stretch">
+                  <Text size="small" color="inherit">
+                    Celková dĺžka: {formattedDuration}
+                  </Text>
+                  <Text size="small" color="inherit">
+                    {lecturesCount} {Utils.numOfLecturesText(lecturesCount)}
+                  </Text>
+                </Flex>
+                <ProgressBar>
+                  <ProgressBarFill width="0%" />
+                </ProgressBar>
+              </ProgressInfo>
+            </AnimatedElement>
+          </SectionTitle>
+
+          <AnimatedElement delay={300}>
+            <AccordionWrapper>
+              <AccordionRoot
+                type="multiple"
+                defaultValue={[chapters[0]?.id.toString()]}
+              >
+                {chapters.map((chapter) => {
+                  const chapterLectureCount = chapter.lectures.length
+                  return (
+                    <AccordionItem
+                      key={chapter.id}
+                      value={chapter.id.toString()}
+                    >
+                      <AccordionHeader>
+                        <AccordionTrigger>
+                          <TriggerContent>
+                            <ChapterIcon>
+                              {Utils.getLectureTypeIcon(
+                                chapter.lectures[0]?.lectureType || 'VIDEO',
+                              )}
+                            </ChapterIcon>
+                            <ChapterInfo>
+                              <ChapterTitle>{chapter.name}</ChapterTitle>
+                              <ChapterMeta>
+                                {chapterLectureCount}{' '}
+                                {Utils.numOfLecturesText(chapterLectureCount)} |{' '}
+                                {chapter.chapterDurationMinutes}{' '}
+                                {Utils.numOfMinutesText(
+                                  chapter.chapterDurationMinutes,
+                                )}
+                              </ChapterMeta>
+                            </ChapterInfo>
+                          </TriggerContent>
+                          <ChevronIcon />
+                        </AccordionTrigger>
+                      </AccordionHeader>
+                      <AccordionContent>
+                        <ContentInner>
+                          <LecturesList>
+                            {chapter.lectures.map((lecture) => (
+                              <LectureItem
+                                key={lecture.id}
+                                clickable={shouldPreviewLectureForPaidCourse(
+                                  lecture,
+                                )}
+                                onClick={(e) =>
+                                  handleLectureOnClick(e, lecture)
+                                }
+                              >
+                                <BulletPoint />
+                                <LectureText size="small">
+                                  {lecture.name}
+                                </LectureText>
+                                <LectureMetaWrapper>
+                                  {lecture.videoDurationSeconds > 0 && (
+                                    <LectureDuration>
+                                      {Utils.formatDurationFromSeconds(
+                                        lecture.videoDurationSeconds,
+                                      )}
+                                    </LectureDuration>
+                                  )}
+                                  {shouldPreviewLectureForPaidCourse(
+                                    lecture,
+                                  ) && <PreviewBadge>náhľad</PreviewBadge>}
+                                </LectureMetaWrapper>
+                              </LectureItem>
+                            ))}
+                          </LecturesList>
+                        </ContentInner>
+                      </AccordionContent>
+                    </AccordionItem>
+                  )
+                })}
+              </AccordionRoot>
+            </AccordionWrapper>
+          </AnimatedElement>
+        </Container>
+      </Section>
+      {previewLectureInModal && (
+        <LecturePreview
+          lecture={previewLectureInModal}
+          onClosePreview={() => setPreviewLectureInModal(null)}
+        />
+      )}
+    </>
+  )
+}
+
+const Subtitle = styled.p`
+  font-size: 18px;
+  color: var(--color-grey);
   text-align: center;
-  margin-bottom: 64px;
+  margin-top: 16px;
 `
 
-const StatsWrapper = styled.div`
+const ProgressInfo = styled.div`
+  max-width: 600px;
+  margin: 32px auto 0;
   display: flex;
-  justify-content: center;
-  gap: 32px;
-  margin-bottom: 48px;
-  flex-wrap: wrap;
-`
-
-const StatItem = styled.div`
-  text-align: center;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--color-grey);
 `
 
 const AccordionWrapper = styled.div`
-  max-width: 900px;
+  max-width: 800px;
   margin: 0 auto;
 `
 
-const StyledAccordion = styled(Accordion.Root)`
+const AccordionRoot = styled(Accordion.Root)`
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -61,96 +231,149 @@ const AccordionItem = styled(Accordion.Item)`
     inset: 0;
     border-radius: 12px;
     padding: 2px;
-    background: linear-gradient(135deg, var(--color-accent), #4169e1, #00ced1);
+    background: linear-gradient(135deg, var(--color-accent), #4f8fef, #00b8d4);
     -webkit-mask: linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
+    pointer-events: none;
   }
+`
+
+const AccordionHeader = styled(Accordion.Header)`
+  margin: 0;
 `
 
 const AccordionTrigger = styled(Accordion.Trigger)`
   all: unset;
+  box-sizing: border-box;
   width: 100%;
-  padding: 24px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  align-items: center;
+  padding: 20px 24px;
   cursor: pointer;
-  background: var(--color-primary);
-  position: relative;
-  transition: background 0.2s ease;
 
   &:hover {
-    opacity: 0.9;
+    background: rgba(126, 80, 230, 0.05);
   }
 
-  &[data-state='open'] svg {
-    transform: rotate(180deg);
+  @media ${device.S} {
+    padding: 16px;
   }
 `
 
 const TriggerContent = styled.div`
-  flex: 1;
-  text-align: left;
-`
-
-const TriggerTitle = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 8px;
-`
-
-const TriggerMeta = styled.div`
-  display: flex;
   gap: 16px;
-  flex-wrap: wrap;
 `
 
-const ChevronIcon = styled(AiOutlineDown)`
-  transition: transform 0.3s ease;
-  color: var(--color-accent);
+const ChapterIcon = styled.div`
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: rgba(126, 80, 230, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease-out;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    color: var(--color-accent);
+  }
+
+  ${AccordionTrigger}:hover & {
+    transform: scale(1.1);
+  }
+
+  @media ${device.S} {
+    width: 40px;
+    height: 40px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+`
+
+const ChapterInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`
+
+const ChapterTitle = styled.span`
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-secondary);
+
+  @media ${device.S} {
+    font-size: 16px;
+  }
+`
+
+const ChapterMeta = styled.span`
+  font-size: 14px;
+  color: var(--color-grey);
+`
+
+const ChevronIcon = styled(BiChevronDown)`
+  width: 24px;
+  height: 24px;
+  color: var(--color-secondary);
+  transition: transform 0.3s ease-out;
   flex-shrink: 0;
+
+  [data-state='open'] & {
+    transform: rotate(180deg);
+  }
+`
+
+const openContentAnimation = keyframes`
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+`
+
+const closeContentAnimation = keyframes`
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
 `
 
 const AccordionContent = styled(Accordion.Content)`
   overflow: hidden;
-  background: var(--color-primary);
-  position: relative;
 
   &[data-state='open'] {
-    animation: slideDown 0.3s ease;
+    animation: ${openContentAnimation} 0.3s ease-out forwards;
   }
 
   &[data-state='closed'] {
-    animation: slideUp 0.3s ease;
-  }
-
-  @keyframes slideDown {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--radix-accordion-content-height);
-    }
-  }
-
-  @keyframes slideUp {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-    to {
-      height: 0;
-    }
+    animation: ${closeContentAnimation} 0.3s ease-out forwards;
   }
 `
 
 const ContentInner = styled.div`
-  padding: 0 24px 24px 24px;
-  position: relative;
+  padding: 0 24px 20px;
+
+  @media ${device.S} {
+    padding: 0 16px 16px;
+  }
 `
 
 const LecturesList = styled.div`
@@ -159,147 +382,53 @@ const LecturesList = styled.div`
   gap: 12px;
 `
 
-const LectureItem = styled.div`
+const LectureText = styled(Text)``
+
+const LectureItem = styled.div<{clickable: boolean}>`
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px;
-  border-radius: 8px;
-  background: var(--color-primary);
-  opacity: 0.9;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-shadow);
+  cursor: ${(props) => (props.clickable ? 'pointer' : 'default')};
 
-  svg {
-    color: var(--color-accent);
-    flex-shrink: 0;
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    ${(props) =>
+      props.clickable &&
+      `
+      color: var(--color-accent);
+
+      ${LectureText} {
+        color: var(--color-accent);
+      }
+    `}
   }
 `
 
-const LectureInfo = styled.div`
-  flex: 1;
+const LectureMetaWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
+  margin-left: auto;
 `
 
-interface CourseContentSectionProps {
-  courseOverview: CourseOverview
-}
+const LectureDuration = styled.span`
+  font-size: 12px;
+  color: var(--color-grey);
+`
 
-const formatDuration = (minutes: number): string => {
-  if (minutes < 60) {
-    return `${minutes} min`
-  }
-  const hours = Math.floor(minutes / 60)
-  const mins = minutes % 60
-  return mins > 0 ? `${hours}h ${mins}min` : `${hours}h`
-}
+const PreviewBadge = styled.span`
+  text-transform: uppercase;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+  font-weight: 600;
+`
 
-const formatLectureDuration = (seconds: number | null): string => {
-  if (!seconds) return ''
-  const minutes = Math.floor(seconds / 60)
-  const secs = seconds % 60
-  if (minutes === 0) {
-    return `${secs}s`
-  }
-  return secs > 0
-    ? `${minutes}:${secs.toString().padStart(2, '0')}`
-    : `${minutes}min`
-}
-
-const getLectureIcon = (type: LectureType) => {
-  switch (type) {
-    case 'VIDEO':
-      return <AiOutlinePlayCircle size={20} />
-    case 'TEXT':
-      return <AiOutlineFileText size={20} />
-    case 'QUIZ':
-      return <AiOutlineFileText size={20} />
-    default:
-      return <AiOutlinePlayCircle size={20} />
-  }
-}
-
-export const CourseContentSection: React.FC<CourseContentSectionProps> = ({
-  courseOverview,
-}) => {
-  const totalLectures = courseOverview.chapters.reduce(
-    (sum, chapter) => sum + chapter.lectures.length,
-    0,
-  )
-  const totalDuration = courseOverview.courseDurationMinutes
-
-  return (
-    <SectionWrapper id="content">
-      <Container>
-        <SectionHeader>
-          <Heading variant="h2">Čo kurz obsahuje?</Heading>
-          <Text size="large" color="secondary">
-            Komplexný prehľad všetkých lekcií a tém
-          </Text>
-        </SectionHeader>
-
-        <StatsWrapper>
-          <StatItem>
-            <Heading variant="h3">{courseOverview.chapters.length}</Heading>
-            <Text color="secondary">Kapitol</Text>
-          </StatItem>
-          <StatItem>
-            <Heading variant="h3">{totalLectures}</Heading>
-            <Text color="secondary">Lekcií</Text>
-          </StatItem>
-          <StatItem>
-            <Heading variant="h3">{formatDuration(totalDuration)}</Heading>
-            <Text color="secondary">Video obsahu</Text>
-          </StatItem>
-        </StatsWrapper>
-
-        <AccordionWrapper>
-          <StyledAccordion type="single" collapsible>
-            {courseOverview.chapters.map((chapter) => (
-              <AccordionItem key={chapter.id} value={`chapter-${chapter.id}`}>
-                <AccordionTrigger>
-                  <TriggerContent>
-                    <TriggerTitle>
-                      <Heading variant="h4">{chapter.name}</Heading>
-                    </TriggerTitle>
-                    <TriggerMeta>
-                      <Text size="small" color="secondary">
-                        {chapter.lectures.length} lekcií
-                      </Text>
-                      <Text size="small" color="secondary">
-                        {formatDuration(chapter.chapterDurationMinutes)}
-                      </Text>
-                    </TriggerMeta>
-                  </TriggerContent>
-                  <ChevronIcon />
-                </AccordionTrigger>
-                <AccordionContent>
-                  <ContentInner>
-                    <LecturesList>
-                      {chapter.lectures.map((lecture) => (
-                        <LectureItem key={lecture.id}>
-                          {getLectureIcon(lecture.lectureType)}
-                          <LectureInfo>
-                            <Text size="small">{lecture.name}</Text>
-                            {lecture.videoDurationSeconds && (
-                              <Text size="small" color="secondary">
-                                {formatLectureDuration(
-                                  lecture.videoDurationSeconds,
-                                )}
-                              </Text>
-                            )}
-                          </LectureInfo>
-                        </LectureItem>
-                      ))}
-                    </LecturesList>
-                  </ContentInner>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </StyledAccordion>
-        </AccordionWrapper>
-      </Container>
-    </SectionWrapper>
-  )
-}
+export default CourseContentSection

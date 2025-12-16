@@ -6,7 +6,10 @@
       "Bash(yarn lint:*)",
       "Bash(yarn prettier:check:*)",
       "Bash(yarn prettier:*)",
-      "Bash(yarn test:*)"
+      "Bash(yarn test:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx eslint:*)",
+      "Bash(npx prettier:*)"
     ],
     "deny": [],
     "ask": []

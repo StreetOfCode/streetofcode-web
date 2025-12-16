@@ -1,499 +1,127 @@
-# PRP: Custom AI Course Landing Page
+# PRP: AI Course Custom Landing Page
 
-## Feature Overview
+## Overview
 
-Create a custom, visually distinct course detail page for a specific course (checking by slug). This page will replace the standard course detail page layout with a modern, marketing-focused design featuring:
+Create a custom landing page for the AI course that differs from the standard course page template. The page will have a modern, marketing-focused design inspired by a Lovable prototype while integrating with the existing backend data (course content, reviews, pricing).
 
-- Animated hero section with code editor simulation
-- Comparison section (traditional vs AI-powered development)
-- Tools showcase section (GitHub Copilot, Cursor IDE, Claude Code)
-- Interactive course content accordion
-- Persona-based targeting section
-- Pricing section with ROI calculator
-- FAQ accordion
-- Reviews integration (static featured + all reviews)
-- Multiple CTAs throughout the page
-- Sticky purchase button
+**Entry Point**: `src/pages/kurzy/[slug]/index.tsx:247-254` - Already wired up for slug `informatika-101`
+**Implementation Location**: `src/components/misc/ai-page/`
 
-## Context & Research Findings
+## Critical Constraints
 
-### Codebase Architecture
+### Must Use (Already in package.json)
 
-**Current Implementation**: `src/pages/kurzy/[slug]/index.tsx`
+- `styled-components` (^5.3.5) - Required for all styling
+- `@radix-ui/react-accordion` (^0.1.6) - For FAQ and course content accordions
+- `react-icons` (^4.4.0) - For icons throughout
+- `@mui/material` / `@mui/icons-material` - Available if needed
 
-- Line 246-248: Already has conditional check for `courseOverview.slug === 'informatika-101'`
-- Uses SSG with `getStaticProps` and `getStaticPaths`
-- Receives `CourseOverview` type from backend API
-- Wrapped in `UserAndQueryGuard` for auth handling
+### Must NOT Use
 
-**Component Location**: `src/components/misc/ai-page/` (already created, empty)
+- `framer-motion` - NOT in package.json, must convert to CSS animations/transitions
+- Tailwind CSS - Project uses styled-components exclusively
+- Any new dependencies without explicit approval
 
-**Data Structure** (from `src/types.ts`):
+### Theme Integration
+
+Use CSS variables (already defined in app):
+
+```css
+var(--color-primary)   /* Background - white/dark */
+var(--color-secondary) /* Text color */
+var(--color-accent)    /* Purple #7E50E6 */
+var(--color-grey)      /* Muted text */
+var(--color-danger)    /* Error/destructive red */
+var(--color-shadow)    /* Shadows */
+```
+
+### Breakpoints (from `src/theme/device.ts`)
 
 ```typescript
-CourseOverview {
-  id, name, slug, shortDescription, longDescription
-  chapters: ChapterOverview[] // contains lectures with names, durations, types
-  author: Author // name, slug, imageUrl
-  difficulty: Difficulty // name, skillLevel
-  courseDurationMinutes: number
-  reviewsOverview: CourseReviewsOverview
-  courseProducts: CourseProduct[]
-  trailerUrl, thumbnailUrl, iconUrl
+device.XS: '(max-width: 420px)'
+device.S: '(max-width: 720px)'
+device.M: '(max-width: 1024px)'
+device.L: '(max-width: 1366px)'
+device.XL: '(min-width: 1367px)'
+```
+
+## Data Flow
+
+### Input Prop
+
+```typescript
+interface AiCoursePageProps {
+  courseOverview: CourseOverview
 }
 ```
 
-### Styling System
+### Dynamic Data to Extract from `courseOverview`
 
-**Theme** (`src/theme/theme.ts`):
+| Data              | Source                                                    | Usage                          |
+| ----------------- | --------------------------------------------------------- | ------------------------------ |
+| Course title      | `courseOverview.name`                                     | Hero section                   |
+| Description       | `courseOverview.shortDescription`                         | Hero subtitle                  |
+| Chapters/Lectures | `courseOverview.chapters`                                 | CourseContentSection accordion |
+| Total duration    | `courseOverview.courseDurationMinutes`                    | Stats display                  |
+| Lecture count     | Calculate from `chapters.flatMap(c => c.lectures).length` | Stats display                  |
+| Author name       | `courseOverview.author.name`                              | Hero, author info              |
+| Author image      | `courseOverview.author.imageUrl`                          | Avatar display                 |
+| Price             | `courseOverview.courseProducts[0]?.price`                 | Pricing section                |
+| Product ID        | `courseOverview.courseProducts[0]?.productId`             | Checkout link                  |
+| Reviews           | `courseOverview.reviewsOverview`                          | Rating display                 |
+| User progress     | `courseOverview.userProgressMetadata`                     | CTA button state               |
 
-- Light: `primaryColor: 'white'`, `secondaryColor: '#212121'`, `accentColor: '#7E50E6'`
-- Dark: `primaryColor: '#212121'`, `secondaryColor: '#efefef'`, `accentColor: '#7E50E6'`
-- Uses CSS custom properties: `var(--color-primary)`, `var(--color-secondary)`, `var(--color-accent)`
-- Access via `useTheme()` hook from `src/hooks/useTheme.tsx`
+### Reviews Data
 
-**Core Components** (`src/components/core/`):
+Use existing hook: `useGetCourseReviews(courseId)` from `src/api/courseReviews.ts`
 
-- `Heading`: variants h1-h6, supports color, align, withAccentUnderline
-- `Text`: size (very-small|small|default|large), weight, color
-- `Flex`: direction, gap, justifyContent, alignItems
-- `Button`: existing button component
-- `BackLink`: for navigation back to courses
-- `Avatar`, `Rating`: for author and reviews
-- Responsive breakpoints in `src/theme/device.ts`
-
-**Styling Approach**:
-
-- Uses `styled-components` (NOT Tailwind CSS)
-- NO Material UI for new components
-- Responsive via media queries with `device` breakpoints
-
-### Design Prototype Analysis
-
-**Source**: `new-design/code/code.txt` + `new-design/dark/*.png` + `new-design/light/*.png`
-
-- Uses framer-motion, Tailwind CSS, shadcn/ui (NOT in current project)
-- Must adapt to styled-components + existing component patterns
-- Has @radix-ui/react-accordion (ALREADY in package.json v0.1.6)
-
-**Sections** (top to bottom, as shown in part1-part8):
-
-1. Hero with animated code editor (part1)
-2. Comparison: "Bez AI nástrojov" vs "S AI nástrojmi" (part2)
-3. Tools section: 3 cards for GitHub Copilot, Cursor, Claude Code (part3)
-4. Course content accordion with 7 modules (part4)
-5. Personas: Junior, Senior, Tech Lead (part5)
-6. Pricing with features and ROI (part6)
-7. FAQ accordion (part7)
-8. Final CTA section (part8)
-
-### Key Prototype Content
-
-**FAQs** (from code.txt lines 495-516):
-
-```javascript
-const faqs = [
-  {question: 'Pre koho je kurz určený?', answer: '...'},
-  {question: 'Čo všetko získam?', answer: '...'},
-  {question: 'Máme záujem o firemné školenie', answer: '...'},
-  {question: 'Ako dlho budem mať prístup ku kurzu?', answer: '...'},
-  {question: 'Ako môžem platiť?', answer: '...'},
-]
-```
-
-**Course Modules** (lines 298-400):
-
-- 7 modules with icon, title, lessons count, duration, topics
-- Module 2 marked as "popular"
-- Icons: BookOpen, Code, Target, Bot, Zap, Wrench, CheckCircle2
-
-**Comparison Content** (lines 147-289):
-
-- Without AI: 8h per feature, Stack Overflow hunting, Debugging hell
-- With AI: 2h per feature, AI assistant in IDE, Auto code review
-
-### Existing Components to Reuse
-
-**Reviews**: `src/components/domain/course-review/CourseReviews.tsx`
-
-- Already fetches and displays course reviews
-- Can be integrated at bottom of custom page
-- Use existing `CourseReviews` component
-
-**Course Content**: Render chapters dynamically from backend
-
-- Use `courseOverview.chapters` array
-- Each chapter has `name`, `chapterDurationMinutes`, `lectures[]`
-- Lectures have `name`, `videoDurationSeconds`, `lectureType`
-
-**No Existing FAQ System**: Must create from scratch
-
-## Technical Implementation Plan
-
-### Architecture Approach
+## File Structure
 
 ```
-src/pages/kurzy/[slug]/index.tsx
-  └─> if (courseOverview.slug === 'TARGET_SLUG') {
-        return <AiCoursePage courseOverview={courseOverview} />
-      }
-
 src/components/misc/ai-page/
-  ├─ index.tsx              // Main component, exports AiCoursePage
-  ├─ HeroSection.tsx        // Hero with animated code editor
-  ├─ ComparisonSection.tsx  // Traditional vs AI comparison
-  ├─ ToolsSection.tsx       // 3 tool cards
-  ├─ CourseContentSection.tsx  // Accordion of chapters from backend
-  ├─ PersonasSection.tsx    // Junior/Senior/Tech Lead
-  ├─ PricingSection.tsx     // Price, features, ROI
-  ├─ FAQSection.tsx         // FAQ accordion
-  ├─ FinalCTA.tsx           // Bottom CTA
-  ├─ StickyButton.tsx       // Sticky purchase button
-  └─ AnimatedCodeEditor.tsx // Typewriter animation
+  index.tsx              # Main AiCoursePage component
+  styles.ts              # Shared styled-components (gradients, cards, animations)
+  HeroSection.tsx        # Hero with title, value props, animated code editor
+  ComparisonSection.tsx  # "Bez AI" vs "S AI" comparison cards
+  ToolsSection.tsx       # GitHub Copilot, Cursor, Claude Code cards
+  CourseContentSection.tsx # Dynamic accordion from courseOverview.chapters
+  PersonasSection.tsx    # Junior/Senior/Tech Lead persona cards
+  PricingSection.tsx     # Price card with features, ROI calculator
+  FAQSection.tsx         # Accordion FAQ
+  FinalCTA.tsx           # Final call-to-action section
+  StickyButton.tsx       # Fixed purchase button (appears on scroll)
+  AnimatedCodeEditor.tsx # Typing animation component
 ```
 
-### Component Implementation Details
+## Component Specifications
 
-#### 1. AnimatedCodeEditor Component
-
-**Purpose**: Simulate typing code with animation (hero section)
-**Implementation**:
+### 1. styles.ts - Shared Styles
 
 ```typescript
-// Use React useState + useEffect with setTimeout
-// Animate typing: "function sum(a: number, b: number) { return a + b; }"
-// NO framer-motion (not installed) - use CSS animations or pure React
-// styled-components for code editor UI (border, background, line numbers)
-```
+// Key styled utilities to create:
 
-#### 2. Accordion Components
-
-**Library**: `@radix-ui/react-accordion` (already installed)
-**Usage**:
-
-```typescript
-import * as RadixAccordion from '@radix-ui/react-accordion'
-// Wrap with styled-components for custom styling
-```
-
-#### 3. Dynamic Course Content Section
-
-**Data Source**: `courseOverview.chapters`
-
-```typescript
-courseOverview.chapters.map((chapter) => (
-  <AccordionItem key={chapter.id}>
-    <AccordionTrigger>
-      {chapter.name} | {chapter.lectures.length} lekcií |{' '}
-      {formatDuration(chapter.chapterDurationMinutes)}
-    </AccordionTrigger>
-    <AccordionContent>
-      {chapter.lectures.map((lecture) => (
-        <div key={lecture.id}>{lecture.name}</div>
-      ))}
-    </AccordionContent>
-  </AccordionItem>
-))
-```
-
-#### 4. Static FAQ Section
-
-**Data**: Hardcoded FAQ array (from prototype)
-**Implementation**: Same accordion pattern as course content
-
-#### 5. Styling Patterns
-
-**Gradient Border Effect** (from prototype):
-
-```css
-// Tailwind version uses: gradient-border class with ::before pseudo-element
-// Adapt to styled-components:
-const GradientBorder = styled.div`
-  position: relative;
-  background: var(--color-primary);
-  border-radius: 12px;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 12px;
-    padding: 2px;
-    background: linear-gradient(135deg, var(--color-accent), #4169E1, #00CED1);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-  }
-`
-```
-
-**Text Gradient** (for headings):
-
-```css
-const GradientText = styled.span`
-  background: linear-gradient(135deg, #7E50E6, #4169E1, #00CED1);
+// Gradient text effect (replaces Tailwind's text-gradient)
+export const GradientText = styled.span`
+  background: linear-gradient(135deg, var(--color-accent), #4f8fef, #00b8d4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 `
-```
 
-**Theme-Aware Animations**:
-
-```typescript
-// Check current theme with useTheme() hook
-const {theme} = useTheme()
-// Adjust colors based on theme.type === 'DARK' or 'LIGHT'
-```
-
-#### 6. Icons
-
-**Prototype uses**: lucide-react icons
-**Available in project**: react-icons
-**Mapping**:
-
-- `Zap` → `AiOutlineThunderbolt` or custom SVG
-- `Target` → `AiOutlineAim`
-- `BookOpen` → `AiOutlineBook`
-- `Code` → `AiOutlineCode`
-- `Check` → `AiOutlineCheck`
-- Or use Material UI icons from @mui/icons-material
-
-#### 7. Responsive Design
-
-**Breakpoints** (from `src/theme/device.ts`):
-
-```typescript
-device.XL // > 1920px
-device.L // > 1280px
-device.M // > 1024px
-device.S // > 768px
-device.XS // > 0px
-```
-
-**Pattern**:
-
-```typescript
-const ResponsiveGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-
-  @media ${device.M} {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media ${device.L} {
-    grid-template-columns: repeat(3, 1fr);
-  }
-`
-```
-
-#### 8. CTAs and Purchase Integration
-
-**Existing**: `CourseCTAButton` component (`src/components/domain/course/CourseCTAButton.tsx`)
-**Approach**: Study existing implementation, create styled variant for new design
-**Purchase Flow**: Links to `/checkout/[courseSlug]/[courseProductId]`
-
-#### 9. Reviews Integration
-
-**Approach**:
-
-- Create static featured reviews section (3-4 hardcoded reviews)
-- Below that, integrate existing `<CourseReviews courseOverview={courseOverview} />` component
-- Use `innerRef` prop if needed for scroll behavior
-
-### Error Handling & Edge Cases
-
-1. **Missing Data**: Gracefully handle if `courseOverview.chapters` is empty
-2. **Theme Switching**: Ensure all colors adapt to light/dark theme
-3. **Mobile Layout**: Test accordion, buttons, and sticky elements on mobile
-4. **SSR Compatibility**: NO client-only features (localStorage, window) outside useEffect
-5. **TypeScript**: Properly type all props and data structures
-
-### Dependencies Check
-
-**Already Available**:
-
-- styled-components ✓
-- @radix-ui/react-accordion ✓
-- react-icons ✓
-- next/image ✓
-
-**NOT Available** (do NOT use):
-
-- framer-motion ✗
-- tailwindcss ✗
-- lucide-react ✗
-
-**Workarounds**:
-
-- Use CSS keyframe animations instead of framer-motion
-- Use styled-components instead of Tailwind
-- Use react-icons instead of lucide-react
-
-## Implementation Blueprint (Pseudocode)
-
-```typescript
-// 1. Main Entry Point
-// File: src/components/misc/ai-page/index.tsx
-export const AiCoursePage: React.FC<{courseOverview: CourseOverview}> = ({
-  courseOverview,
-}) => {
-  return (
-    <>
-      <NavBar />
-      <PageContentWrapper>
-        <BackLink to={routes.kurzy.index} text="Späť na kurzy" />
-        <HeroSection courseOverview={courseOverview} />
-        <ComparisonSection />
-        <ToolsSection />
-        <CourseContentSection courseOverview={courseOverview} />
-        <PersonasSection />
-        <PricingSection courseOverview={courseOverview} />
-        <FAQSection />
-        <CourseReviews courseOverview={courseOverview} />
-        <FinalCTA courseOverview={courseOverview} />
-        <StickyButton courseOverview={courseOverview} />
-      </PageContentWrapper>
-    </>
-  )
-}
-
-// 2. AnimatedCodeEditor
-// File: src/components/misc/ai-page/AnimatedCodeEditor.tsx
-const AnimatedCodeEditor: React.FC = () => {
-  const [code, setCode] = useState(initialCode)
-
-  useEffect(() => {
-    // Typewriter animation logic
-    let currentLine = 1
-    let currentChar = 0
-
-    const typeCode = () => {
-      // Implement character-by-character typing
-      // setTimeout for animation timing
-    }
-
-    const timer = setTimeout(typeCode, 1000)
-    return () => clearTimeout(timer)
-  }, [])
-
-  return (
-    <CodeEditorWrapper>
-      <EditorHeader>
-        <TrafficLights />
-        <FileName>sum.ts</FileName>
-      </EditorHeader>
-      <CodeContent>
-        {code.map((line, i) => (
-          <CodeLine key={i}>
-            <LineNumber>{i + 1}</LineNumber>
-            <LineContent>{line}</LineContent>
-          </CodeLine>
-        ))}
-      </CodeContent>
-    </CodeEditorWrapper>
-  )
-}
-
-// 3. Course Content Section with Backend Data
-// File: src/components/misc/ai-page/CourseContentSection.tsx
-import * as Accordion from '@radix-ui/react-accordion'
-
-const CourseContentSection: React.FC<{courseOverview: CourseOverview}> = ({
-  courseOverview,
-}) => {
-  const totalLectures = courseOverview.chapters.reduce(
-    (sum, ch) => sum + ch.lectures.length,
-    0,
-  )
-  const totalDuration = courseOverview.courseDurationMinutes
-
-  return (
-    <SectionWrapper>
-      <Heading variant="h2">Čo kurz obsahuje?</Heading>
-      <Text>
-        {totalLectures} lekcií | {formatDuration(totalDuration)}
-      </Text>
-
-      <StyledAccordion type="single" collapsible>
-        {courseOverview.chapters.map((chapter) => (
-          <AccordionItem key={chapter.id} value={`chapter-${chapter.id}`}>
-            <AccordionTrigger>
-              <Flex gap="12px" alignItems="center">
-                <IconWrapper>{/* Chapter icon */}</IconWrapper>
-                <div>
-                  <Heading variant="h4">{chapter.name}</Heading>
-                  <Text size="small">
-                    {chapter.lectures.length} lekcií |{' '}
-                    {formatDuration(chapter.chapterDurationMinutes)}
-                  </Text>
-                </div>
-              </Flex>
-            </AccordionTrigger>
-            <AccordionContent>
-              {chapter.lectures.map((lecture) => (
-                <LectureItem key={lecture.id}>{lecture.name}</LectureItem>
-              ))}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </StyledAccordion>
-    </SectionWrapper>
-  )
-}
-
-// 4. FAQ Section with Static Data
-// File: src/components/misc/ai-page/FAQSection.tsx
-const faqs = [
-  {
-    question: 'Pre koho je kurz určený?',
-    answer: 'Kurz je určený pre vývojárov...',
-  },
-  // ... rest from prototype
-]
-
-const FAQSection: React.FC = () => {
-  return (
-    <SectionWrapper>
-      <Heading variant="h2">Časté otázky</Heading>
-      <StyledAccordion type="single" collapsible>
-        {faqs.map((faq, index) => (
-          <AccordionItem key={index} value={`faq-${index}`}>
-            <AccordionTrigger>
-              <Text>❓ {faq.question}</Text>
-            </AccordionTrigger>
-            <AccordionContent>
-              <Text color="secondary">{faq.answer}</Text>
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </StyledAccordion>
-    </SectionWrapper>
-  )
-}
-
-// 5. Styling Example
-const StyledAccordion = styled(Accordion.Root)`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`
-
-const AccordionItem = styled(Accordion.Item)`
+// Gradient border card (replaces .gradient-border class)
+export const GradientBorderCard = styled.div`
   position: relative;
   background: var(--color-primary);
-  border-radius: 12px;
-  overflow: hidden;
+  border-radius: 16px;
+  padding: 32px;
 
-  // Gradient border effect
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 2px;
-    background: linear-gradient(135deg, var(--color-accent), #4169e1, #00ced1);
+    background: linear-gradient(135deg, var(--color-accent), #4f8fef, #00b8d4);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(
         #fff 0 0
       );
@@ -502,196 +130,388 @@ const AccordionItem = styled(Accordion.Item)`
     mask-composite: exclude;
   }
 `
+
+// Section wrapper with consistent padding
+export const Section = styled.section`
+  padding: 80px 0;
+  position: relative;
+
+  @media ${device.S} {
+    padding: 48px 0;
+  }
+`
+
+// Container with max-width
+export const Container = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+`
+
+// Fade-in animation (replaces framer-motion)
+export const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`
+
+export const AnimatedElement = styled.div<{delay?: number}>`
+  animation: ${fadeIn} 0.6s ease-out forwards;
+  animation-delay: ${(props) => props.delay || 0}ms;
+  opacity: 0;
+`
 ```
 
-## Validation Gates (Executable)
+### 2. index.tsx - Main Component
 
-After implementation, run these commands to ensure code quality:
+```typescript
+import React from 'react'
+import {CourseOverview} from '../../../types'
+import HeroSection from './HeroSection'
+import ComparisonSection from './ComparisonSection'
+import ToolsSection from './ToolsSection'
+import CourseContentSection from './CourseContentSection'
+import PersonasSection from './PersonasSection'
+import PricingSection from './PricingSection'
+import FAQSection from './FAQSection'
+import FinalCTA from './FinalCTA'
+import StickyButton from './StickyButton'
+import CourseReviews from '../../domain/course-review/CourseReviews'
+import styled from 'styled-components'
+
+interface AiCoursePageProps {
+  courseOverview: CourseOverview
+}
+
+export const AiCoursePage: React.FC<AiCoursePageProps> = ({courseOverview}) => {
+  // Calculate derived data
+  const lecturesCount = courseOverview.chapters.flatMap(
+    (chapter) => chapter.lectures,
+  ).length
+
+  const price = courseOverview.courseProducts[0]?.price || 0
+  const productId = courseOverview.courseProducts[0]?.productId
+
+  return (
+    <Wrapper>
+      <HeroSection
+        courseOverview={courseOverview}
+        lecturesCount={lecturesCount}
+      />
+      <ComparisonSection />
+      <ToolsSection />
+      <CourseContentSection
+        chapters={courseOverview.chapters}
+        courseDurationMinutes={courseOverview.courseDurationMinutes}
+        lecturesCount={lecturesCount}
+      />
+      <PersonasSection />
+      <PricingSection
+        price={price}
+        productId={productId}
+        courseSlug={courseOverview.slug}
+        lecturesCount={lecturesCount}
+        courseDurationMinutes={courseOverview.courseDurationMinutes}
+      />
+      <FAQSection />
+      <FinalCTA
+        price={price}
+        productId={productId}
+        courseSlug={courseOverview.slug}
+      />
+      <ReviewsWrapper>
+        <CourseReviews courseOverview={courseOverview} />
+      </ReviewsWrapper>
+      <StickyButton
+        price={price}
+        productId={productId}
+        courseSlug={courseOverview.slug}
+      />
+    </Wrapper>
+  )
+}
+
+const Wrapper = styled.div`
+  min-height: 100vh;
+`
+
+const ReviewsWrapper = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 80px 24px;
+`
+
+export default AiCoursePage
+```
+
+### 3. HeroSection.tsx
+
+Key requirements:
+
+- Two-column layout (content left, animated code editor right)
+- Gradient text for title highlight
+- Value proposition icons (use react-icons: `AiOutlineThunderbolt`, `AiOutlineAim`, `AiOutlineRocket`)
+- Author info with Avatar component
+- Rating display
+- CTA buttons linking to checkout and content section
+- Responsive: stack vertically on mobile
+
+```typescript
+// Props interface
+interface HeroSectionProps {
+  courseOverview: CourseOverview
+  lecturesCount: number
+}
+
+// Import existing components:
+import Avatar from '../../core/Avatar'
+import Button from '../../core/Button'
+import Heading from '../../core/Heading'
+import Text from '../../core/Text'
+import Flex from '../../core/Flex'
+import Rating from '../../core/Rating'
+import NextLink from '../../core/NextLink'
+import {routes} from '../../../routes'
+import * as Utils from '../../../utils'
+```
+
+### 4. CourseContentSection.tsx - CRITICAL DYNAMIC SECTION
+
+This MUST use dynamic data from `courseOverview.chapters`. Reference the existing `CourseContent` component pattern from `src/components/domain/course/CourseContent.tsx`.
+
+```typescript
+interface CourseContentSectionProps {
+  chapters: ChapterOverview[]
+  courseDurationMinutes: number
+  lecturesCount: number
+}
+
+// Use @radix-ui/react-accordion exactly like CourseContent.tsx does
+import * as Accordion from '@radix-ui/react-accordion'
+import {BiChevronDown} from 'react-icons/bi'
+import * as Utils from '../../../utils'
+
+// Map chapter data to accordion items
+// Show: chapter name, lecture count, duration
+// Expand to show lecture list with icons based on lectureType
+```
+
+### 5. PricingSection.tsx - DYNAMIC PRICING
+
+```typescript
+interface PricingSectionProps {
+  price: number
+  productId?: string
+  courseSlug: string
+  lecturesCount: number
+  courseDurationMinutes: number
+}
+
+// Format price: `${price} €`
+// Link to checkout: routes.checkout.courseProduct(courseSlug, productId)
+// Calculate ROI based on price
+```
+
+### 6. StickyButton.tsx - Scroll-activated CTA
+
+Replace framer-motion scroll detection with native scroll listener:
+
+```typescript
+const [isVisible, setIsVisible] = useState(false)
+
+useEffect(() => {
+  const handleScroll = () => {
+    setIsVisible(window.scrollY > 800)
+  }
+  window.addEventListener('scroll', handleScroll)
+  return () => window.removeEventListener('scroll', handleScroll)
+}, [])
+```
+
+### 7. AnimatedCodeEditor.tsx - Typing Animation
+
+Convert framer-motion animation to CSS:
+
+- Use `useEffect` with `setTimeout` for typing simulation
+- Replace `motion.div` float animation with CSS keyframes
+- Keep the same visual effect of code typing line by line
+
+```typescript
+// CSS animation for floating effect
+const float = keyframes`
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+`
+
+const EditorWrapper = styled.div`
+  animation: ${float} 6s ease-in-out infinite;
+`
+```
+
+### 8. FAQSection.tsx - Static FAQ Content
+
+Use the FAQ questions from the Lovable prototype (Slovak language):
+
+1. "Pre koho je kurz urceny?"
+2. "Co vsetko ziskam?"
+3. "Mame zaujem o firemne skolenie"
+4. "Ako dlho budem mat pristup ku kurzu?"
+5. "Ako mozem platit?"
+
+Use Radix accordion pattern from existing CourseContent.tsx.
+
+## Animation Conversion Guide (framer-motion to CSS)
+
+| Framer Motion                     | CSS Equivalent                                                  |
+| --------------------------------- | --------------------------------------------------------------- |
+| `initial={{ opacity: 0, y: 20 }}` | `opacity: 0; transform: translateY(20px);` in keyframe `from`   |
+| `animate={{ opacity: 1, y: 0 }}`  | `opacity: 1; transform: translateY(0);` in keyframe `to`        |
+| `whileInView={{ ... }}`           | Use Intersection Observer or just animate on mount              |
+| `whileHover={{ y: -8 }}`          | `&:hover { transform: translateY(-8px); }`                      |
+| `transition={{ duration: 0.6 }}`  | `transition: all 0.6s ease-out;` or `animation-duration: 0.6s;` |
+| `staggerChildren: 0.2`            | Use `animation-delay` with incremental values                   |
+
+## Icon Mapping (lucide-react to react-icons)
+
+| Lovable (lucide) | react-icons equivalent                                |
+| ---------------- | ----------------------------------------------------- |
+| `Zap`            | `AiOutlineThunderbolt` from `react-icons/ai`          |
+| `Target`         | `AiOutlineAim` from `react-icons/ai`                  |
+| `Rocket`         | `AiOutlineRocket` from `react-icons/ai`               |
+| `Check`          | `AiOutlineCheck` from `react-icons/ai`                |
+| `X`              | `AiOutlineClose` from `react-icons/ai`                |
+| `Clock`          | `AiOutlineClockCircle` from `react-icons/ai`          |
+| `BookOpen`       | `AiOutlineBook` from `react-icons/ai`                 |
+| `Bug`            | `AiOutlineBug` from `react-icons/ai`                  |
+| `Bot`            | `AiOutlineRobot` from `react-icons/ai`                |
+| `Github`         | `AiOutlineGithub` from `react-icons/ai`               |
+| `Code`           | `AiOutlineCode` from `react-icons/ai`                 |
+| `Sparkles`       | `AiOutlineStar` from `react-icons/ai`                 |
+| `GraduationCap`  | `IoSchoolOutline` from `react-icons/io5`              |
+| `Briefcase`      | `AiOutlineFundProjectionScreen` from `react-icons/ai` |
+| `Users`          | `AiOutlineTeam` from `react-icons/ai`                 |
+| `Shield`         | `AiOutlineSafety` from `react-icons/ai`               |
+| `Lock`           | `AiOutlineLock` from `react-icons/ai`                 |
+| `TrendingUp`     | `AiOutlineRise` from `react-icons/ai`                 |
+| `Mail`           | `AiOutlineMail` from `react-icons/ai`                 |
+| `ShoppingCart`   | `AiOutlineShoppingCart` from `react-icons/ai`         |
+| `ChevronDown`    | `BiChevronDown` from `react-icons/bi` (already used)  |
+| `ChevronLeft`    | `BiChevronLeft` from `react-icons/bi`                 |
+
+## Implementation Order
+
+1. **styles.ts** - Create shared styled components (GradientText, GradientBorderCard, Section, Container, animations)
+2. **AnimatedCodeEditor.tsx** - Standalone component, can be tested independently
+3. **HeroSection.tsx** - Main visual component with author/stats integration
+4. **ComparisonSection.tsx** - Static content, gradient border cards
+5. **ToolsSection.tsx** - Static content, tool cards with badges
+6. **CourseContentSection.tsx** - CRITICAL: Dynamic accordion from courseOverview.chapters
+7. **PersonasSection.tsx** - Static persona cards
+8. **PricingSection.tsx** - Dynamic pricing from courseOverview.courseProducts
+9. **FAQSection.tsx** - Static FAQ accordion
+10. **FinalCTA.tsx** - Final call to action with pricing
+11. **StickyButton.tsx** - Scroll-activated fixed button
+12. **index.tsx** - Wire everything together
+
+## Validation Gates
 
 ```bash
-# 1. TypeScript type checking
-yarn tsc
-
-# 2. Linting
-yarn lint
-
-# 3. Format checking
-yarn prettier:check
-
-# 4. Full test suite
-yarn test
-
-# 5. Build verification
-yarn build
+# Must pass all checks before PR
+yarn tsc          # TypeScript compilation - no errors
+yarn lint         # ESLint - no errors
+yarn prettier:check  # Formatting check
+yarn build        # Production build succeeds
 ```
 
-**Manual Testing Checklist**:
+## Testing Checklist
 
-- [ ] Page renders for correct course slug
-- [ ] Standard page renders for other courses
-- [ ] Light/dark theme toggle works
-- [ ] All sections visible and styled correctly
-- [ ] Accordion interactions work (course content, FAQ)
-- [ ] Responsive design on mobile, tablet, desktop
-- [ ] CTA buttons link correctly
-- [ ] Reviews section displays
-- [ ] Sticky button appears on scroll
-- [ ] No console errors
-- [ ] Backend data (chapters, lectures, author) displays correctly
+- [ ] Page renders without errors for the specific course slug
+- [ ] All sections display correctly in both light and dark themes
+- [ ] Course content accordion shows real chapter/lecture data
+- [ ] Pricing shows correct price from backend
+- [ ] CTA buttons link to correct checkout URL
+- [ ] Reviews section loads and displays course reviews
+- [ ] Sticky button appears after scrolling 800px
+- [ ] Responsive layout works on mobile (< 720px)
+- [ ] No TypeScript errors
+- [ ] No ESLint errors
+- [ ] Prettier formatting passes
 
-## Implementation Tasks (In Order)
+## Reference Files
 
-1. **Create base file structure**
+| Purpose           | File Path                                                     |
+| ----------------- | ------------------------------------------------------------- |
+| Accordion pattern | `src/components/domain/course/CourseContent.tsx`              |
+| Button component  | `src/components/core/Button.tsx`                              |
+| Heading component | `src/components/core/Heading.tsx`                             |
+| Text component    | `src/components/core/Text.tsx`                                |
+| Flex component    | `src/components/core/Flex.tsx`                                |
+| Avatar component  | `src/components/core/Avatar.tsx`                              |
+| Rating component  | `src/components/core/Rating.tsx`                              |
+| Theme colors      | `src/theme/theme.ts`                                          |
+| Breakpoints       | `src/theme/device.ts`                                         |
+| Routes            | `src/routes.ts`                                               |
+| Types             | `src/types.ts`                                                |
+| Reviews component | `src/components/domain/course-review/CourseReviews.tsx`       |
+| CTA button logic  | `src/components/domain/course/CourseCTAButton.tsx`            |
+| Lovable prototype | `new-design/code/code.txt`                                    |
+| Design images     | `new-design/dark/part1-8.png`, `new-design/light/part1-8.png` |
 
-   - Create `src/components/misc/ai-page/index.tsx`
-   - Export `AiCoursePage` component
-   - Update `src/pages/kurzy/[slug]/index.tsx` to conditionally render
+## Color Scheme Reference
 
-2. **Implement AnimatedCodeEditor component**
+From design images and theme:
 
-   - Create typewriter animation logic
-   - Style code editor with line numbers, syntax highlighting
-   - Ensure animation loops correctly
+- Primary accent: `#7E50E6` (purple) - `var(--color-accent)`
+- Secondary blue: `#4F8FEF` - for gradients
+- Cyan accent: `#00B8D4` - for gradient endpoints
+- Success green: `#4CBF6B` - for positive indicators
+- Danger red: `#CB2041` - for "without AI" section
 
-3. **Create static content sections**
+## Slovak Text Content
 
-   - ComparisonSection (Without AI vs With AI)
-   - ToolsSection (3 tool cards)
-   - PersonasSection (Junior/Senior/Tech Lead)
-   - FinalCTA section
+All UI text must be in Slovak. Key phrases from design:
 
-4. **Implement accordion components**
+- "Profesionalne programovanie s AI"
+- "Updatni svoj sposob programovania s AI nastrojmi"
+- "Programuj 3x rychlejsie"
+- "Od zakladov po pokrocile techniky"
+- "Prakticke projekty v JS/TS, C#, Java"
+- "30-dnova zaruka vratenia penazi"
+- "Kupit kurz"
+- "Pozriet obsah"
+- "Aky je rozdiel?"
+- "Bez AI nastrojov" / "S AI nastrojmi"
+- "Co sa naucis ovladat?"
+- "Co kurz obsahuje?"
+- "Je tento kurz pre teba?"
+- "Caste otazky"
+- "Pripraveny stat sa produktivnejsim?"
 
-   - Create shared StyledAccordion wrapper
-   - FAQSection with static data
-   - Ensure @radix-ui/react-accordion is properly imported
+## Confidence Score: 8/10
 
-5. **Implement dynamic CourseContentSection**
+**Strengths:**
 
-   - Map over `courseOverview.chapters`
-   - Display lectures in accordion
-   - Calculate and display totals
+- Clear entry point and integration pattern already established
+- Comprehensive type definitions available
+- Existing components to reuse (Accordion, Button, Avatar, etc.)
+- Design reference images and code prototype available
+- Theme system well-documented
 
-6. **Implement HeroSection**
+**Risks:**
 
-   - Integrate AnimatedCodeEditor
-   - Display course name, description
-   - Add CTAs
-   - Show author, duration, ratings
+- Animation conversions from framer-motion may need iteration
+- Gradient border effect requires careful CSS (mask-composite browser support)
+- Dynamic data integration needs testing with real backend data
+- Responsive layout complexity across 8 sections
 
-7. **Implement PricingSection**
+**Mitigation:**
 
-   - Display course price from `courseOverview.courseProducts`
-   - Show features list
-   - ROI calculator component
-   - Purchase CTA
-
-8. **Implement StickyButton**
-
-   - Show/hide based on scroll position
-   - Purchase CTA with price
-   - Mobile vs desktop variants
-
-9. **Integrate reviews**
-
-   - Create static featured reviews section
-   - Integrate existing `<CourseReviews>` component below
-
-10. **Styling and theming**
-
-    - Apply gradient borders throughout
-    - Implement gradient text effects
-    - Ensure theme compatibility (light/dark)
-    - Add responsive breakpoints
-
-11. **Polish and animations**
-
-    - Add CSS keyframe animations (fade-in, slide-in)
-    - Hover effects on cards
-    - Smooth scrolling for anchor links
-    - Loading states if needed
-
-12. **Testing and bug fixes**
-    - Run validation gates
-    - Test on different screen sizes
-    - Verify TypeScript types
-    - Fix any linting issues
-
-## Critical Context References
-
-### Files to Study
-
-- `src/pages/kurzy/[slug]/index.tsx` (lines 246-248) - Conditional rendering location
-- `src/types.ts` - CourseOverview type definition
-- `src/theme/theme.ts` - Color system and theme structure
-- `src/components/core/Heading.tsx` - Heading component API
-- `src/components/core/Text.tsx` - Text component API
-- `src/components/domain/course-review/CourseReviews.tsx` - Reviews integration
-- `new-design/code/code.txt` - Full prototype code for reference
-
-### Design References
-
-- `new-design/dark/part1-8.png` - Dark theme UI reference
-- `new-design/light/part1-8.png` - Light theme UI reference
-
-### External Documentation
-
-- Radix UI Accordion: https://www.radix-ui.com/docs/primitives/components/accordion
-- styled-components: https://styled-components.com/docs
-- Next.js Image: https://nextjs.org/docs/api-reference/next/image
-
-### Common Pitfalls
-
-1. **Don't use framer-motion** - Not installed, use CSS animations
-2. **Don't use Tailwind classes** - Use styled-components
-3. **Don't use lucide-react** - Use react-icons or @mui/icons-material
-4. **Theme colors** - Always use `var(--color-*)` CSS variables
-5. **SSR compatibility** - No window/localStorage outside useEffect
-6. **TypeScript** - Ensure all props typed, no implicit any
-
-### Code Style Conventions
-
-- Component files: PascalCase (e.g., `HeroSection.tsx`)
-- Styled components: Suffix with "Styled" or descriptive name
-- Props interface: Define at top of file
-- Export default for main component
-- Use Flex component for layouts
-- Slovak language for user-facing text
-
-## Success Criteria
-
-✅ Custom page renders for target course slug
-✅ Standard page renders for all other courses
-✅ All sections match design prototype
-✅ Dynamic data (chapters, lectures) displays correctly
-✅ Both light and dark themes work perfectly
-✅ Responsive on all screen sizes
-✅ No TypeScript errors
-✅ All validation gates pass
-✅ No console errors or warnings
-✅ Course purchase flow works correctly
-
----
-
-## PRP Quality Score: **9/10**
-
-**Confidence Level**: Very High
-
-**Reasoning**:
-
-- ✅ Complete codebase analysis with specific file references
-- ✅ Design prototype fully analyzed with 8 UI sections documented
-- ✅ All data structures and types identified
-- ✅ Styling system completely understood (styled-components + theme)
-- ✅ Existing components and patterns documented
-- ✅ Clear implementation path with pseudocode
-- ✅ Dependency compatibility verified (radix-ui available, framer-motion NOT)
-- ✅ Validation gates defined and executable
-- ✅ Common pitfalls identified and documented
-- ⚠️ Minor uncertainty: Exact course slug to use (mentioned in INITIAL.md as "different from informatika-101")
-
-**Why not 10/10**: User needs to specify the actual course slug to use, though the conditional structure is already in place.
-
-**Estimated Implementation Time**: 6-8 hours for experienced developer
-
-**One-Pass Success Probability**: 85-90% with this PRP
+- Start with static sections, add animations last
+- Test gradient borders in both themes early
+- Use fallback borders if mask-composite fails
+- Build mobile-first for responsive reliability

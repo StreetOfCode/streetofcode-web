@@ -1,229 +1,241 @@
 import React from 'react'
 import styled from 'styled-components'
 import {
-  AiOutlineStar,
-  AiOutlineClockCircle,
-  AiOutlineUser,
+  AiOutlineThunderbolt,
+  AiOutlineAim,
+  AiOutlineRocket,
 } from 'react-icons/ai'
+import {CourseOverview} from '../../../types'
+import {device} from '../../../theme/device'
+import {routes} from '../../../routes'
+import * as Utils from '../../../utils'
 import Heading from '../../core/Heading'
 import Text from '../../core/Text'
 import Flex from '../../core/Flex'
-import {CourseOverview} from '../../../types'
-import {AnimatedCodeEditor} from './AnimatedCodeEditor'
-import {device} from '../../../theme/device'
+import Avatar from '../../core/Avatar'
+import Rating from '../../core/Rating'
 import Button from '../../core/Button'
+import AnimatedCodeEditor from './AnimatedCodeEditor'
+import AiCTAButton from './AiCTAButton'
+import {
+  Section,
+  Container,
+  GradientText,
+  AnimatedElement,
+  GradientOverlay,
+  FeatureIconWrapper,
+} from './styles'
+import {useRouter} from 'next/router'
 
-const SectionWrapper = styled.section`
-  padding: 80px 0 40px;
-  position: relative;
-  overflow: hidden;
+interface HeroSectionProps {
+  courseOverview: CourseOverview
+  lecturesCount: number
+}
+
+const HeroSection: React.FC<HeroSectionProps> = ({
+  courseOverview,
+  lecturesCount,
+}) => {
+  const courseDuration = Utils.formatDurationFromMinutes(
+    courseOverview.courseDurationMinutes,
+  )
+  const router = useRouter()
+  const scrollToContent = () => {
+    document.getElementById('content')?.scrollIntoView({behavior: 'smooth'})
+  }
+
+  return (
+    <HeroWrapper>
+      <GradientOverlay />
+      <Container>
+        <HeroGrid>
+          <HeroContent>
+            <AnimatedElement delay={0}>
+              <Heading variant="h1">
+                Profesionálne
+                <br />
+                <GradientText>programovanie s AI</GradientText>
+              </Heading>
+            </AnimatedElement>
+
+            <AnimatedElement delay={100}>
+              <Subtitle>{courseOverview.shortDescription}</Subtitle>
+            </AnimatedElement>
+
+            <ValueProps>
+              <AnimatedElement delay={200}>
+                <ValueProp>
+                  <FeatureIconWrapper bgColor="rgba(126, 80, 230, 0.1)">
+                    <AiOutlineThunderbolt />
+                  </FeatureIconWrapper>
+                  <Text size="large">Programuj 2x rýchlejšie</Text>
+                </ValueProp>
+              </AnimatedElement>
+
+              <AnimatedElement delay={300}>
+                <ValueProp>
+                  <FeatureIconWrapper bgColor="rgba(79, 143, 239, 0.1)">
+                    <AiOutlineAim style={{color: '#4F8FEF'}} />
+                  </FeatureIconWrapper>
+                  <Text size="large">Od základov po pokročilé techniky</Text>
+                </ValueProp>
+              </AnimatedElement>
+
+              <AnimatedElement delay={400}>
+                <ValueProp>
+                  <FeatureIconWrapper bgColor="rgba(0, 184, 212, 0.1)">
+                    <AiOutlineRocket style={{color: '#00B8D4'}} />
+                  </FeatureIconWrapper>
+                  <Text size="large">Praktické projekty v JS/TS, C#, Java</Text>
+                </ValueProp>
+              </AnimatedElement>
+            </ValueProps>
+
+            <AnimatedElement delay={500}>
+              <SocialProof>
+                <RatingWrapper>
+                  <Rating
+                    readOnly
+                    value={courseOverview.reviewsOverview.averageRating}
+                  />
+                </RatingWrapper>
+                <Text color="inherit">
+                  {lecturesCount} {Utils.numOfLecturesText(lecturesCount)} |{' '}
+                  {courseDuration}
+                </Text>
+                <AuthorInfo
+                  onClick={() =>
+                    router.push(routes.lektor.slug(courseOverview.author.slug))
+                  }
+                >
+                  <Avatar
+                    altName={courseOverview.author.name}
+                    src={courseOverview.author.imageUrl}
+                    sizePx={32}
+                  />
+                  <Text size="small">{courseOverview.author.name}</Text>
+                </AuthorInfo>
+              </SocialProof>
+            </AnimatedElement>
+
+            <AnimatedElement delay={600}>
+              <CTAButtons>
+                <AiCTAButton courseOverview={courseOverview} variant="hero" />
+                <Button
+                  variant="outline"
+                  size="large"
+                  onClick={scrollToContent}
+                >
+                  Pozrieť obsah
+                </Button>
+              </CTAButtons>
+            </AnimatedElement>
+          </HeroContent>
+
+          <EditorWrapper>
+            <AnimatedCodeEditor />
+          </EditorWrapper>
+        </HeroGrid>
+      </Container>
+    </HeroWrapper>
+  )
+}
+
+const HeroWrapper = styled(Section)`
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+
+  @media ${device.S} {
+    min-height: auto;
+    padding-top: 24px;
+  }
 `
 
-const BackgroundGradient = styled.div`
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at 50% 0%,
-    rgba(126, 80, 230, 0.1),
-    transparent 70%
-  );
-  pointer-events: none;
-`
-
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-  position: relative;
-`
-
-const HeroContent = styled.div`
+const HeroGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 48px;
   align-items: center;
 
   @media ${device.M} {
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
 `
 
-const TextContent = styled.div`
+const HeroContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
-`
 
-const GradientText = styled.span`
-  background: linear-gradient(135deg, #7e50e6, #4169e1, #00ced1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-`
-
-const MetaInfo = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  align-items: center;
-`
-
-const MetaItem = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  svg {
-    color: var(--color-accent);
-    flex-shrink: 0;
+  @media ${device.M} {
+    order: 2;
   }
 `
 
-const CTAWrapper = styled.div`
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-`
-
-const StyledButton = styled(Button)`
-  padding: 16px 32px;
-  font-size: 16px;
-  font-weight: 600;
-  min-width: 180px;
-`
-
-const SecondaryButton = styled(Button)`
-  padding: 16px 32px;
-  font-size: 16px;
-  font-weight: 600;
-  min-width: 180px;
-`
-
 const EditorWrapper = styled.div`
+  @media ${device.M} {
+    order: 1;
+  }
+`
+
+const Subtitle = styled.p`
+  font-size: 20px;
+  color: var(--color-grey);
+  line-height: 1.5;
+
+  @media ${device.S} {
+    font-size: 18px;
+  }
+`
+
+const ValueProps = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+`
+
+const ValueProp = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`
+
+const SocialProof = styled(Flex)`
+  gap: 24px;
+  flex-wrap: wrap;
+  color: var(--color-grey);
+  margin-top: 8px;
+
+  @media ${device.S} {
+    gap: 16px;
+  }
+`
+
+const RatingWrapper = styled.div`
+  display: flex;
   align-items: center;
 `
 
 const AuthorInfo = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px;
-  background: var(--color-primary);
-  border-radius: 12px;
-  border: 1px solid var(--color-secondary);
-  opacity: 0.1;
+  gap: 8px;
+  cursor: pointer;
 `
 
-const AuthorAvatar = styled.img`
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
+const CTAButtons = styled.div`
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+
+  @media ${device.S} {
+    flex-direction: column;
+  }
 `
 
-interface HeroSectionProps {
-  courseOverview: CourseOverview
-}
-
-const formatDuration = (minutes: number): string => {
-  if (minutes < 60) {
-    return `${minutes} min`
-  }
-  const hours = Math.floor(minutes / 60)
-  const mins = minutes % 60
-  return mins > 0 ? `${hours}h ${mins}min` : `${hours}h`
-}
-
-export const HeroSection: React.FC<HeroSectionProps> = ({courseOverview}) => {
-  const scrollToContent = () => {
-    const contentSection = document.getElementById('content')
-    if (contentSection) {
-      contentSection.scrollIntoView({behavior: 'smooth'})
-    }
-  }
-
-  const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing')
-    if (pricingSection) {
-      pricingSection.scrollIntoView({behavior: 'smooth'})
-    }
-  }
-
-  return (
-    <SectionWrapper>
-      <BackgroundGradient />
-      <Container>
-        <HeroContent>
-          <TextContent>
-            <Heading variant="h1">{courseOverview.name}</Heading>
-
-            <Heading variant="h3" normalWeight>
-              Nauč sa programovať <GradientText>3x rýchlejšie</GradientText> s
-              AI nástrojmi
-            </Heading>
-
-            <Text size="large" color="secondary">
-              {courseOverview.shortDescription}
-            </Text>
-
-            <MetaInfo>
-              {courseOverview.reviewsOverview.numberOfReviews > 0 && (
-                <MetaItem>
-                  <AiOutlineStar size={20} />
-                  <Text weight="bold">
-                    {courseOverview.reviewsOverview.averageRating.toFixed(1)}
-                  </Text>
-                  <Text size="small" color="secondary">
-                    ({courseOverview.reviewsOverview.numberOfReviews} hodnotení)
-                  </Text>
-                </MetaItem>
-              )}
-              <MetaItem>
-                <AiOutlineClockCircle size={20} />
-                <Text weight="bold">
-                  {formatDuration(courseOverview.courseDurationMinutes)}
-                </Text>
-                <Text size="small" color="secondary">
-                  video obsahu
-                </Text>
-              </MetaItem>
-              <MetaItem>
-                <AiOutlineUser size={20} />
-                <Text weight="bold">{courseOverview.author.name}</Text>
-              </MetaItem>
-            </MetaInfo>
-
-            <CTAWrapper>
-              <StyledButton variant="accent" onClick={scrollToPricing}>
-                Kúpiť kurz
-              </StyledButton>
-              <SecondaryButton variant="outline" onClick={scrollToContent}>
-                Pozrieť obsah
-              </SecondaryButton>
-            </CTAWrapper>
-
-            <AuthorInfo>
-              <AuthorAvatar
-                src={courseOverview.author.imageUrl}
-                alt={courseOverview.author.name}
-              />
-              <Flex direction="column" gap="4px">
-                <Text weight="bold">{courseOverview.author.name}</Text>
-                <Text size="small" color="secondary">
-                  {courseOverview.author.coursesTitle || 'Lektor'}
-                </Text>
-              </Flex>
-            </AuthorInfo>
-          </TextContent>
-
-          <EditorWrapper>
-            <AnimatedCodeEditor />
-          </EditorWrapper>
-        </HeroContent>
-      </Container>
-    </SectionWrapper>
-  )
-}
+export default HeroSection

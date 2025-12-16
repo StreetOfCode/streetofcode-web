@@ -1,89 +1,204 @@
 import React from 'react'
 import styled from 'styled-components'
 import {
+  AiOutlineClose,
+  AiOutlineCheck,
   AiOutlineClockCircle,
   AiOutlineBook,
   AiOutlineBug,
   AiOutlineThunderbolt,
-  AiOutlineCheck,
-  AiOutlineClose,
+  AiOutlineRobot,
+  AiOutlineSmile,
 } from 'react-icons/ai'
+import {device} from '../../../theme/device'
 import Heading from '../../core/Heading'
 import Text from '../../core/Text'
-import {device} from '../../../theme/device'
+import {
+  Section,
+  Container,
+  SectionTitle,
+  GradientBorderCard,
+  AnimatedElement,
+} from './styles'
 
-const SectionWrapper = styled.section`
-  padding: 80px 0;
-  position: relative;
-`
+const withoutAIItems = [
+  {
+    icon: AiOutlineClockCircle,
+    title: '8 hodín na feature',
+    description: 'Pomalý development cyklus',
+  },
+  {
+    icon: AiOutlineBook,
+    title: 'Stack Overflow hunting',
+    description: 'Manuálne hľadanie riešení',
+  },
+  {
+    icon: AiOutlineBug,
+    title: 'Debugging hell',
+    description: 'ťažké hľadanie bugov',
+  },
+  {
+    icon: AiOutlineBook,
+    title: 'Čitanie dokumentácie',
+    description: 'Časovo náročné štúdium',
+  },
+  {
+    icon: AiOutlineClockCircle,
+    title: 'Opakujúca sa práca',
+    description: 'Manuálne písanie boilerplate',
+  },
+]
 
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-`
+const withAIItems = [
+  {
+    icon: AiOutlineThunderbolt,
+    title: '4 hodiny na feature',
+    description: '2x rýchlejší development',
+    color: 'var(--color-accent)',
+  },
+  {
+    icon: AiOutlineRobot,
+    title: 'Asistent priamo v IDE',
+    description: 'Okamžité odpovede',
+    color: '#4F8FEF',
+  },
+  {
+    icon: AiOutlineCheck,
+    title: 'AI Code review',
+    description: 'Automaticka detekcia chyb',
+    color: '#00B8D4',
+  },
+  {
+    icon: AiOutlineThunderbolt,
+    title: 'Instant suggestions',
+    description: 'Inteligentne autocomplete',
+    color: 'var(--color-accent)',
+  },
+  {
+    icon: AiOutlineSmile,
+    title: 'Automation',
+    description: 'Generovanie boilerplate kodu',
+    color: '#4F8FEF',
+  },
+]
 
-const SectionHeader = styled.div`
+const ComparisonSection: React.FC = () => {
+  return (
+    <Section>
+      <Container>
+        <SectionTitle>
+          <AnimatedElement>
+            <Heading variant="h2" align="center">
+              Aký je rozdiel?
+            </Heading>
+          </AnimatedElement>
+          <AnimatedElement delay={100}>
+            <Subtitle>Porovnanie tradičného a AI-powered prístupu</Subtitle>
+          </AnimatedElement>
+        </SectionTitle>
+
+        <CardsGrid>
+          <AnimatedElement delay={200}>
+            <ComparisonCard>
+              <CardHeader>
+                <IconCircle variant="danger">
+                  <AiOutlineClose />
+                </IconCircle>
+                <Heading variant="h4">Bez AI nástrojov</Heading>
+              </CardHeader>
+
+              <ItemsList>
+                {withoutAIItems.map((item, index) => (
+                  <Item key={index}>
+                    <item.icon />
+                    <ItemContent>
+                      <Text weight="bold">{item.title}</Text>
+                      <Text size="small" color="inherit">
+                        {item.description}
+                      </Text>
+                    </ItemContent>
+                  </Item>
+                ))}
+              </ItemsList>
+            </ComparisonCard>
+          </AnimatedElement>
+
+          <AnimatedElement delay={400}>
+            <ComparisonCard highlight>
+              <GlowEffect />
+              <CardHeader>
+                <IconCircle variant="success">
+                  <AiOutlineCheck />
+                </IconCircle>
+                <Heading variant="h4">S AI nástrojmi</Heading>
+              </CardHeader>
+
+              <ItemsList>
+                {withAIItems.map((item, index) => (
+                  <Item key={index}>
+                    <item.icon style={{color: item.color}} />
+                    <ItemContent>
+                      <Text weight="bold" style={{color: item.color}}>
+                        {item.title}
+                      </Text>
+                      <Text size="small" color="inherit">
+                        {item.description}
+                      </Text>
+                    </ItemContent>
+                  </Item>
+                ))}
+              </ItemsList>
+            </ComparisonCard>
+          </AnimatedElement>
+        </CardsGrid>
+      </Container>
+    </Section>
+  )
+}
+
+const Subtitle = styled.p`
+  font-size: 18px;
+  color: var(--color-grey);
   text-align: center;
-  margin-bottom: 64px;
+  margin-top: 16px;
 `
 
-const ComparisonGrid = styled.div`
+const CardsGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 32px;
   max-width: 1000px;
   margin: 0 auto;
 
   @media ${device.M} {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 `
 
-const ComparisonCard = styled.div<{isPositive?: boolean}>`
+const ComparisonCard = styled(GradientBorderCard)<{highlight?: boolean}>`
   position: relative;
-  background: var(--color-primary);
-  border-radius: 16px;
-  padding: 32px;
-  transition: transform 0.3s ease;
+  overflow: hidden;
+  transition: transform 0.3s ease-out;
 
   &:hover {
     transform: translateY(-8px);
   }
+`
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 16px;
-    padding: 2px;
-    background: ${(props) =>
-      props.isPositive
-        ? 'linear-gradient(135deg, var(--color-accent), #4169E1, #00CED1)'
-        : 'linear-gradient(135deg, #666, #999)'};
-    -webkit-mask: linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-  }
-
-  ${(props) =>
-    props.isPositive &&
-    `
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 128px;
-      height: 128px;
-      background: radial-gradient(circle, var(--color-accent), transparent);
-      opacity: 0.1;
-      border-radius: 50%;
-      blur: 48px;
-    }
-  `}
+const GlowEffect = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 128px;
+  height: 128px;
+  background: radial-gradient(
+    circle,
+    rgba(126, 80, 230, 0.2) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  filter: blur(30px);
 `
 
 const CardHeader = styled.div`
@@ -94,7 +209,7 @@ const CardHeader = styled.div`
   position: relative;
 `
 
-const IconWrapper = styled.div<{isPositive?: boolean}>`
+const IconCircle = styled.div<{variant: 'danger' | 'success'}>`
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -102,177 +217,46 @@ const IconWrapper = styled.div<{isPositive?: boolean}>`
   align-items: center;
   justify-content: center;
   background: ${(props) =>
-    props.isPositive ? 'rgba(126, 80, 230, 0.1)' : 'rgba(239, 68, 68, 0.1)'};
+    props.variant === 'danger'
+      ? 'rgba(203, 32, 65, 0.1)'
+      : 'rgba(126, 80, 230, 0.1)'};
 
   svg {
     width: 24px;
     height: 24px;
-    color: ${(props) => (props.isPositive ? 'var(--color-accent)' : '#ef4444')};
+    color: ${(props) =>
+      props.variant === 'danger'
+        ? 'var(--color-danger)'
+        : 'var(--color-accent)'};
   }
 `
 
-const FeatureList = styled.div`
+const ItemsList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
   position: relative;
 `
 
-const FeatureItem = styled.div`
+const Item = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 12px;
 
-  svg {
+  > svg {
     width: 20px;
     height: 20px;
-    flex-shrink: 0;
-    margin-top: 2px;
-    opacity: 0.6;
+    min-width: 20px;
+    color: var(--color-grey);
+    margin-top: 4px;
   }
 `
 
-const FeatureContent = styled.div`
-  flex: 1;
+const ItemContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--color-grey);
 `
 
-export const ComparisonSection: React.FC = () => {
-  return (
-    <SectionWrapper>
-      <Container>
-        <SectionHeader>
-          <Heading variant="h2">Aký je rozdiel?</Heading>
-          <Text size="large" color="secondary">
-            Porovnanie tradičného a AI-powered prístupu
-          </Text>
-        </SectionHeader>
-
-        <ComparisonGrid>
-          {/* Without AI */}
-          <ComparisonCard>
-            <CardHeader>
-              <IconWrapper>
-                <AiOutlineClose />
-              </IconWrapper>
-              <Heading variant="h3">Bez AI nástrojov</Heading>
-            </CardHeader>
-
-            <FeatureList>
-              <FeatureItem>
-                <AiOutlineClockCircle />
-                <FeatureContent>
-                  <Text weight="bold">8 hodín na feature</Text>
-                  <Text size="small" color="secondary">
-                    Pomalý development cyklus
-                  </Text>
-                </FeatureContent>
-              </FeatureItem>
-
-              <FeatureItem>
-                <AiOutlineBook />
-                <FeatureContent>
-                  <Text weight="bold">Stack Overflow hunting</Text>
-                  <Text size="small" color="secondary">
-                    Manuálne hľadanie riešení
-                  </Text>
-                </FeatureContent>
-              </FeatureItem>
-
-              <FeatureItem>
-                <AiOutlineBug />
-                <FeatureContent>
-                  <Text weight="bold">Debugging hell</Text>
-                  <Text size="small" color="secondary">
-                    Ťažké hľadanie bugov
-                  </Text>
-                </FeatureContent>
-              </FeatureItem>
-
-              <FeatureItem>
-                <AiOutlineBook />
-                <FeatureContent>
-                  <Text weight="bold">Čítanie dokumentácie</Text>
-                  <Text size="small" color="secondary">
-                    Časovo náročné štúdium
-                  </Text>
-                </FeatureContent>
-              </FeatureItem>
-
-              <FeatureItem>
-                <AiOutlineClockCircle />
-                <FeatureContent>
-                  <Text weight="bold">Opakujúca sa práca</Text>
-                  <Text size="small" color="secondary">
-                    Manuálne písanie boilerplate
-                  </Text>
-                </FeatureContent>
-              </FeatureItem>
-            </FeatureList>
-          </ComparisonCard>
-
-          {/* With AI */}
-          <ComparisonCard isPositive>
-            <CardHeader>
-              <IconWrapper isPositive>
-                <AiOutlineCheck />
-              </IconWrapper>
-              <Heading variant="h3">S AI nástrojmi</Heading>
-            </CardHeader>
-
-            <FeatureList>
-              <FeatureItem>
-                <AiOutlineThunderbolt />
-                <FeatureContent>
-                  <Text weight="bold">2 hodiny na feature</Text>
-                  <Text size="small" color="secondary">
-                    4x rýchlejší vývoj
-                  </Text>
-                </FeatureContent>
-              </FeatureItem>
-
-              <FeatureItem>
-                <AiOutlineThunderbolt />
-                <FeatureContent>
-                  <Text weight="bold">AI asistent v IDE</Text>
-                  <Text size="small" color="secondary">
-                    Okamžité odpovede a riešenia
-                  </Text>
-                </FeatureContent>
-              </FeatureItem>
-
-              <FeatureItem>
-                <AiOutlineThunderbolt />
-                <FeatureContent>
-                  <Text weight="bold">Auto code review</Text>
-                  <Text size="small" color="secondary">
-                    AI kontroluje kvalitu kódu
-                  </Text>
-                </FeatureContent>
-              </FeatureItem>
-
-              <FeatureItem>
-                <AiOutlineThunderbolt />
-                <FeatureContent>
-                  <Text weight="bold">Inteligentné návrhy</Text>
-                  <Text size="small" color="secondary">
-                    Kontextové dopĺňanie kódu
-                  </Text>
-                </FeatureContent>
-              </FeatureItem>
-
-              <FeatureItem>
-                <AiOutlineThunderbolt />
-                <FeatureContent>
-                  <Text weight="bold">Auto-generovanie</Text>
-                  <Text size="small" color="secondary">
-                    Boilerplate kód za sekundy
-                  </Text>
-                </FeatureContent>
-              </FeatureItem>
-            </FeatureList>
-          </ComparisonCard>
-        </ComparisonGrid>
-      </Container>
-    </SectionWrapper>
-  )
-}
+export default ComparisonSection

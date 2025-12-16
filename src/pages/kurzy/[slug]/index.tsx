@@ -244,7 +244,7 @@ const CourseDetailContent = ({
     }
   }
 
-  if (courseOverview.slug === 'informatika-101') {
+  if (courseOverview.slug === 'ai') {
     return (
       <PageContentWrapper>
         <BackLink to={routes.kurzy.index} text={'Späť na kurzy'} />

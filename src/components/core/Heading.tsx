@@ -111,7 +111,7 @@ const styleValuesBasedOnDevice = {
     h6: {fontSize: '18px', lineHeight: '1.4'},
   },
   S: {
-    h1: {fontSize: '48px', lineHeight: '1.0'},
+    h1: {fontSize: '44px', lineHeight: '1.0'},
     h2: {fontSize: '42px', lineHeight: '1.1'},
     h3: {fontSize: '32px', lineHeight: '1.2'},
     h4: {fontSize: '22px', lineHeight: '1.3'},
