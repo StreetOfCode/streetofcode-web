@@ -25,7 +25,7 @@ const faqs = [
     question: 'Máme záujem o firemné školenie',
     answer:
       'Ak máš záujem o firemné školenie, kontaktuj nás na info@streetofcode.sk. ' +
-      'Pripravím vám ponuku do mailu pre školenie vo vašich priestoroch.'
+      'Pripravím vám ponuku do mailu pre školenie vo vašich priestoroch.',
   },
   {
     question: 'Ako dlho budem mať prístup ku kurzu?',
