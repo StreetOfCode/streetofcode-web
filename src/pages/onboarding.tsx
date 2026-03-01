@@ -238,14 +238,13 @@ const OnboardingPage: NextPage = () => {
         sendDiscordInvitation: discordInvitation,
         subscribedFrom: 'ONBOARDING',
       })
-    } catch (err) {
-      setLoading(false)
-    } finally {
       if (router.query && router.query.from) {
         router.push(router.query.from as string)
       } else {
         router.push(routes.root)
       }
+    } catch (err) {
+      setLoading(false)
     }
   }
 

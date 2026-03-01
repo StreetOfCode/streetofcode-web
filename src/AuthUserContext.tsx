@@ -35,7 +35,7 @@ export const AuthContextProvider = ({
   children: React.ReactNode
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [user, setUser] = useState<User | null>(Auth.getUser())
+  const [user, setUser] = useState<User | null>(null)
   const [error, setError] = useState<Error | null>(null)
   const router = useRouter()
 

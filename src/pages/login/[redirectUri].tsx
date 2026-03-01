@@ -19,14 +19,19 @@ import {device} from '../../theme/device'
 const LoginPage: NextPage = () => {
   const {user, isLoading, logout, error, setError} = useAuth()
   const router = useRouter()
+  const [isCheckingRedirect, setIsCheckingRedirect] = React.useState(true)
 
   useEffect(() => {
-    Auth.getRedirectResults().catch((err) => {
-      setError(err)
-    })
+    Auth.getRedirectResults()
+      .catch((err) => {
+        setError(err)
+      })
+      .finally(() => {
+        setIsCheckingRedirect(false)
+      })
   }, [])
 
-  if (user && router?.query?.redirectUri) {
+  if (!isCheckingRedirect && user && router?.query?.redirectUri) {
     router.push(decodeURIComponent(router.query.redirectUri as string))
   }
 
