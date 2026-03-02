@@ -31,7 +31,7 @@ const LoginPage: NextPage = () => {
       })
   }, [])
 
-  if (!isCheckingRedirect && user && router?.query?.redirectUri) {
+  if (!isCheckingRedirect && !error && user && router?.query?.redirectUri) {
     router.push(decodeURIComponent(router.query.redirectUri as string))
   }
 

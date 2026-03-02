@@ -215,6 +215,7 @@ const OnboardingPage: NextPage = () => {
   const [name, setName] = useState(user?.displayName || '')
   const [receiveNewsletter, setReceiveNewsletter] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [onboardingError, setOnboardingError] = useState(false)
   const email = user?.email || ''
 
   const useAddSocUser = useAddUser()
@@ -245,6 +246,7 @@ const OnboardingPage: NextPage = () => {
       }
     } catch (err) {
       setLoading(false)
+      setOnboardingError(true)
     }
   }
 
@@ -279,6 +281,12 @@ const OnboardingPage: NextPage = () => {
         alignItems="center"
         alignContent="center"
       >
+        {onboardingError && (
+          <Text align="center" weight="bold">
+            Nastala chyba pri vytváraní účtu. Skús to prosím znova. Ak problém
+            pretrváva, kontaktuj nás.
+          </Text>
+        )}
         {currentStep === 0 && (
           <ConfirmName
             currentStep={currentStep}
