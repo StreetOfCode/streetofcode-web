@@ -22,10 +22,12 @@ export const getRedirectResults = async () => await getRedirectResult(auth)
 
 export const signOut = async () => await auth.signOut()
 
-export const loginWithGoogle = () => {
+export const loginWithGoogle = async () => {
+  await auth.signOut()
   signInWithRedirect(auth, googleProvider)
 }
 
-export const loginWithGithub = () => {
+export const loginWithGithub = async () => {
+  await auth.signOut()
   signInWithRedirect(auth, githubProvider)
 }
